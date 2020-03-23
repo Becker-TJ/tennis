@@ -37,8 +37,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $dates = ['created_at', 'updated_at'];
+
     public function school() {
-        return $this->hasOne(School::class);
+        return $this->belongsTo(School::class);
     }
 
 }

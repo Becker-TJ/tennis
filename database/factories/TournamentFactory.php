@@ -8,9 +8,10 @@ use Faker\Generator as Faker;
 $factory->define(Tournament::class, function (Faker $faker) {
     return [
         'name' => $faker->name . ' Invitational',
-        'location' => $faker->locale,
+        'location_name' => $faker->locale,
         'host_id' => $faker->randomDigit,
         'total_teams' => 8,
-        'gender' => 'M'
+        'gender' => 'M',
+        'address' => $faker->address
     ];
 });

@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
         factory(App\School::class, 9)->create();
         factory(App\Tournament::class, 9)->create();
         factory(App\User::class, 9)->create();
+        factory(App\SchoolAttendant::class, 50)->create();
     }
 }

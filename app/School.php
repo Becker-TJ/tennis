@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\User;
 
 class School extends Model
 {
@@ -12,4 +13,9 @@ class School extends Model
     public function players() {
         return $this->hasMany(Player::class);
     }
+
+    public function users() {
+        return $this->hasMany(User::Class);
+    }
+
 }

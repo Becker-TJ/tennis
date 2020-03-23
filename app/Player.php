@@ -12,6 +12,6 @@ class player extends Model
     protected $dates = ['created_at', 'updated_at'];
 
     public function school() {
-        return $this->hasOne(School::class);
+        return $this->belongsTo(School::class);
     }
 }

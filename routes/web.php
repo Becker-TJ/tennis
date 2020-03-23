@@ -27,6 +27,11 @@ Route::get('/register', function () {
 Route::get('/verify', function () {
     return view('verify');
 });
+Route::get('/createtournament', function () {
+    return view('createtournament');
+});
+Route::post('CreateTournament', 'TournamentController@create');
+//Route::post('createtournament'), 'TournamentController@createTournament');
 
 
 
