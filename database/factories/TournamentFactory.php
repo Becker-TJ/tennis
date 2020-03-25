@@ -10,7 +10,7 @@ $factory->define(Tournament::class, function (Faker $faker) {
         'name' => $faker->name . ' Invitational',
         'location_name' => $faker->locale,
         'host_id' => $faker->randomDigit,
-        'total_teams' => 8,
+        'team_count' => 8,
         'gender' => 'M',
         'address' => $faker->address
     ];

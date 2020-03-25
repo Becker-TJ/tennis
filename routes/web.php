@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use app\Http\Controllers;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,13 +28,27 @@ Route::get('/register', function () {
 Route::get('/verify', function () {
     return view('verify');
 });
-Route::get('/createtournament', function () {
-    return view('createtournament');
-});
-Route::post('CreateTournament', 'TournamentController@create');
-//Route::post('createtournament'), 'TournamentController@createTournament');
 
+Route::get('/createtournament', 'TournamentController@showCreateTournament');
 
+Route::get('/tournaments', 'TournamentController@showTournaments');
+
+Route::post('/createtournament', 'TournamentController@create');
+
+//Route::get('/posts/{post}', function ($post) {
+//    $posts = [
+//        'my-first-post' => 'Hello, this is my first blog post!',
+//        'my-second-post' => 'Now I am getting the hang of this blogging thing.'
+//    ];
+//
+//    if(! array_key_exists($post, $posts)) {
+//        abort(404, 'Sorry that post was not found.');
+//    }
+//
+//    return view('post', [
+//        'post' => $post[$post]
+//    ]);
+//});
 
 Auth::routes();
 
