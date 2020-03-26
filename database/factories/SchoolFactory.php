@@ -8,6 +8,7 @@ use Faker\Generator as Faker;
 $factory->define(School::class, function (Faker $faker) {
     return [
         'name' => $faker->name . ' High School',
-        'city' => $faker->locale,
+        'address' => $faker->address,
+        'class' => "6A",
     ];
 });

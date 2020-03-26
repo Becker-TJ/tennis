@@ -17,7 +17,8 @@ class CreateSchoolsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->string('city');
+            $table->string('address');
+            $table->string('class');
         });
     }
 

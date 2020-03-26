@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 use App\Tournament;
-use Illuminate\Http\Request;
+
+
+
 
 class TournamentController extends Controller
 {
-//    public function __construct()
-//    {
-//        $this->middleware('auth');
-//    }
+    public function __construct()
+    {
+        $this->middleware('check.school');
+    }
 
     public function showCreateTournament() {
         return view('createtournament');

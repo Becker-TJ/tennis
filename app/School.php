@@ -7,7 +7,7 @@ use App\User;
 
 class School extends Model
 {
-    protected $fillable = ['name', 'city'];
+    protected $fillable = ['name', 'address', 'class'];
     protected $dates = ['created_at', 'updated_at'];
 
     public function players() {

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+    <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -36,7 +36,21 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="team_count" class="col-md-4 col-form-label text-md-right">Number of Teams (Max 16)</label>
+                            <label for="date" class="col-md-4 col-form-label text-md-right">Date</label>
+                            <div class="col-md-6">
+                                <input id="date" type="date" class="form-control" name="date" required autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="time" class="col-md-4 col-form-label text-md-right">Start Time</label>
+                            <div class="col-md-6">
+                                <input id="time" type="time" class="form-control" name="time" required value="08:00" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="team_count" class="col-md-4 col-form-label text-md-right">Number of Teams</label>
                             <div class="col-md-6">
                                 <select class="form-control" id="team_count" name="team_count">
                                     <?php for($x = 4; $x <= 16; $x++) {?><option><?php echo $x;?></option><?php }?>}
