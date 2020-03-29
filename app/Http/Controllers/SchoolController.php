@@ -14,32 +14,34 @@ class SchoolController extends Controller
 
     public function showAddSchoolView() {
         $schools = School::all();
-
         return view('addschool', [
             'schools' => $schools
         ]);
     }
 
+
     public function createOrTie() {
         if($_POST['not_listed'] == "true") {
-            $this->create();
+            return $this->create();
         } else {
-            $this->tieUserToExistingSchool();
+            return $this->tieUserToExistingSchool();
         }
     }
 
     public function create() {
         $data = $_POST;
-        $schools = new School;
-        $user = Auth::user();
+        $school = new School;
 
-        $schools['name'] = $data['school_name'];
-        $schools['address'] = $data['school_address'];
-        $schools['class'] = $data['school_class'];
+        $school['name'] = $data['school_name'];
+        $school['address'] = $data['school_address'];
+        $school['class'] = $data['school_class'];
 
-        $schools->saveOrFail();
-        $lastInsertedId = $schools->id;
+        $school->saveOrFail();
+
+        $lastInsertedId = $school->id;
         $this->tieUserToExistingSchool($lastInsertedId);
+
+        return $this->showAddSchoolView();
     }
 
     public function tieUserToExistingSchool($id = false) {
@@ -51,13 +53,8 @@ class SchoolController extends Controller
             $user->school_id = $_POST['school_id_to_tie'];
         }
 
-//        $user->saveOrFail();
-//        $yeah = 0;
-//        $yo = 4;
-//        $teej = 6;
-
-        $this->showAddSchoolView();
-
+        $user->saveOrFail();
+        return $this->showAddSchoolView();
     }
 
 }

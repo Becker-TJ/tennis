@@ -27,27 +27,19 @@
     <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet"> {{--for table sorting--}}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" /> {{--for sorting dropdowns--}}
     <style>
-        table tr td{
-            padding:0px !important;
-            font-family: Tahoma;
-            border:1px solid lightgray !important;
-        }
-        table{
-            border: 3px solid lightblue;
-        }
         th {
-            background-color:lightblue;
+            background-color:#32383e;
             position:sticky;top:0;
             border-top:3px solid lightblue;
+            color:white;
         }
-        .material-icons{
-            line-height:2;
+        .dataTables_filter {
+            float: left !important;
         }
-        .table-cell {
-            display: table-cell !important;
-            vertical-align: middle !important;
-            /*padding-left: 25px;*/
-            /*padding-right: 25px;*/
+        .card-header {
+            font-weight:bold;
+            font-size:24px;
+            text-align:center;
         }
     </style>
 

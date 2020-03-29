@@ -31,13 +31,16 @@ Route::get('/verify', function () {
 });
 
 Route::get('/createtournament', 'TournamentController@showCreateTournament');
+Route::post('/createtournament', 'TournamentController@create');
 
 Route::get('/tournaments', 'TournamentController@showTournaments');
 
-Route::post('/createtournament', 'TournamentController@create');
-
 Route::get('/addschool', 'SchoolController@showAddSchoolView');
 Route::post('/addschool', 'SchoolController@createOrTie');
+Route::get('/players', 'PlayerController@showPlayers');
+Route::get('/roster/{school_id}', 'PlayerController@showRoster');
+
+
 
 //Route::get('/posts/{post}', function ($post) {
 //    $posts = [

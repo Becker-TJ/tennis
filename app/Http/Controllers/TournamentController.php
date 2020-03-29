@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 use App\Tournament;
 
-
-
-
 class TournamentController extends Controller
 {
     public function __construct()
