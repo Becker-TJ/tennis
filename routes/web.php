@@ -35,10 +35,12 @@ Route::post('/createtournament', 'TournamentController@create');
 
 Route::get('/tournaments', 'TournamentController@showTournaments');
 
-Route::get('/addschool', 'SchoolController@showAddSchoolView');
+Route::get('/addschool', 'SchoolController@showAddSchool');
 Route::post('/addschool', 'SchoolController@createOrTie');
 Route::get('/players', 'PlayerController@showPlayers');
-Route::get('/roster/{school_id}', 'PlayerController@showRoster');
+Route::get('schools', 'SchoolController@showSchools');
+Route::get('/school/{school}', 'SchoolController@showRoster');
+
 
 
 

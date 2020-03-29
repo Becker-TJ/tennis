@@ -20,6 +20,7 @@ class CreatePlayersTable extends Migration
             $table->string('last_name');
             $table->unsignedInteger('school_id')->default(0);
         });
+
     }
 
     /**

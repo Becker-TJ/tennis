@@ -39,8 +39,4 @@ class User extends Authenticatable
 
     protected $dates = ['created_at', 'updated_at'];
 
-    public function school() {
-        return $this->belongsTo(School::class);
-    }
-
 }

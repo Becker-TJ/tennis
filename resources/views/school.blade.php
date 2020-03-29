@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Roster</div>
+                    <div class="card-header">Roster for {{$school->name}}</div>
                     <div class="card-body">
                         <table id="myTable" class="table table-striped">
                             <thead>

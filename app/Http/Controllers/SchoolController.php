@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Auth;
 use Illuminate\Routing\Controller;
 use App\School;
+use App\Player;
 
 class SchoolController extends Controller
 {
@@ -12,10 +13,25 @@ class SchoolController extends Controller
 
     }
 
-    public function showAddSchoolView() {
+    public function showAddSchool() {
         $schools = School::all();
         return view('addschool', [
             'schools' => $schools
+        ]);
+    }
+
+    public function showSchools() {
+        $schools = School::all();
+        return view('schools', [
+            'schools' => $schools
+        ]);
+    }
+
+    public function showRoster(School $school) {
+        $players = Player::all()->where('school_id', '=', $school->id);
+        return view('school', [
+            'school' => $school,
+            'players' => $players
         ]);
     }
 
