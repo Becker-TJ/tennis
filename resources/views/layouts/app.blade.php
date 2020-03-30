@@ -26,6 +26,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> {{--for table icons, edit pen and trash can--}}
     <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet"> {{--for table sorting--}}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" /> {{--for sorting dropdowns--}}
+    <link href="https://cdn.datatables.net/rowreorder/1.2.6/css/rowReorder.dataTables.min.css" rel="stylesheet"> {{--for styling dragging table rows --}}
     <style>
         th {
             background-color:#32383e;
@@ -36,11 +37,18 @@
         .dataTables_filter {
             float: left !important;
         }
+        #roster_button {
+            float: right !important;
+        }
         .card-header {
             font-weight:bold;
             font-size:24px;
             text-align:center;
         }
+        tr {
+            cursor: grab;
+        }
+
     </style>
 
 </head>
@@ -61,35 +69,8 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" ></script> {{--for table sorting--}}
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script> {{--for dropdown sorting--}}
+<script src="https://cdn.datatables.net/rowreorder/1.2.6/js/dataTables.rowReorder.min.js"></script>
 <script>
-    $(document).ready( function () {
-
-        //related to dropdown sorting
-        $('.select2').select2();
-        $('.select2').select2({
-            width: 'resolve' // need to override the changed default
-        });
-
-
-        //this is assigning settings for the sortable tables
-        $('#myTable').DataTable( {
-            paging:false,
-            "lengthChange": false,
-            'columns': [
-                { data: 'name' }, /* index = 0 */
-                { data: 'address' }, /* index = 1 */
-                { data: 'team_count' }, /* index = 2 */
-                { data: 'level' }, /* index = 3 */
-                { data: 'actions' } /* index = 4 */
-            ],
-            'columnDefs': [ {
-                'targets': [4], /* column index */
-                'orderable': false, /* true or false */
-            }]
-        } );
-    } );
-
-
     //for addschool view.  enables and disables part of the form.
     $("#not_listed").change(function() {
         if (this.checked) {
@@ -101,4 +82,5 @@
         }
     });
 </script>
+<script src="{{asset('js/tennisDataTables.js')}}" type="text/javascript"></script>
 </html>

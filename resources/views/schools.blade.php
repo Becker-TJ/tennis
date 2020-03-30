@@ -10,6 +10,7 @@
                         <table id="myTable" class="table table-striped">
                             <thead>
                             <tr class="fa fa-sort-name" align="center">
+                                <th>Seq.</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Location</th>
                                 <th scope="col">Number of Teams</th>
@@ -20,6 +21,7 @@
                             <tbody>
                             @foreach($schools as $school)
                                 <tr>
+                                    <td>{{$school->id}}</td>
                                     <td class="table-cell">{{$school->name}}</td>
                                     <td class="table-cell">{{$school->address}}</td>
                                     <td align="center" class="table-cell">{{$school->class}}</td>

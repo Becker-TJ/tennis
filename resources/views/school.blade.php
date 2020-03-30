@@ -7,9 +7,13 @@
                 <div class="card">
                     <div class="card-header">Roster for {{$school->name}}</div>
                     <div class="card-body">
-                        <table id="myTable" class="table table-striped">
+                        <button type="submit" class="btn btn-primary col-md-2 offset-md-5">Add New Player</button>
+                        <hr>
+                        <table id="schoolTable" class="display table table-striped">
                             <thead>
                             <tr class="fa fa-sort-name" align="center">
+                                <th scope="col">Seq.</th>
+                                <th scope="col">Name</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Location</th>
                                 <th scope="col">Number of Teams</th>
@@ -20,6 +24,8 @@
                             <tbody>
                             @foreach($players as $player)
                                 <tr>
+                                    <td>{{$player->id}}</td>
+                                    <td class="varsity_order">{{$varsityOrder[$increment++]}}</td>
                                     <td class="table-cell">{{$player->first_name}}</td>
                                     <td class="table-cell">{{$player->last_name}}</td>
                                     <td align="center" class="table-cell">{{$player->school_id}}</td>

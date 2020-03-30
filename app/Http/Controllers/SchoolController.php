@@ -29,9 +29,20 @@ class SchoolController extends Controller
 
     public function showRoster(School $school) {
         $players = Player::all()->where('school_id', '=', $school->id);
+        $varsityOrder = [
+            '1 Singles',
+            '2 Singles',
+            '1 Doubles',
+            '1 Doubles',
+            '2 Doubles',
+            '2 Doubles'
+        ];
+        $increment = 0;
         return view('school', [
+            'varsityOrder' => $varsityOrder,
             'school' => $school,
-            'players' => $players
+            'players' => $players,
+            'increment' => $increment
         ]);
     }
 
@@ -57,7 +68,7 @@ class SchoolController extends Controller
         $lastInsertedId = $school->id;
         $this->tieUserToExistingSchool($lastInsertedId);
 
-        return $this->showAddSchoolView();
+        return $this->showAddSchool();
     }
 
     public function tieUserToExistingSchool($id = false) {
