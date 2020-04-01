@@ -20,6 +20,7 @@ class CreateTournamentsTable extends Migration
             $table->unsignedInteger('host_id');
             $table->string('location_name');
             $table->string('address');
+            $table->string('level');
             $table->unsignedInteger('team_count');
             $table->string('gender');
         });

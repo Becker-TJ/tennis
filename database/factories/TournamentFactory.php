@@ -6,12 +6,15 @@ use App\Tournament;
 use Faker\Generator as Faker;
 
 $factory->define(Tournament::class, function (Faker $faker) {
+    $levels = ['Varsity', 'Junior Varsity', 'Junior High'];
+    $randomLevel = $levels[array_rand($levels)];
     return [
         'name' => $faker->name . ' Invitational',
         'location_name' => $faker->locale,
         'host_id' => $faker->randomDigit,
         'team_count' => 8,
         'gender' => 'M',
-        'address' => $faker->address
+        'address' => $faker->address,
+        'level' => $randomLevel
     ];
 });

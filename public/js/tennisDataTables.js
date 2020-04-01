@@ -19,7 +19,6 @@ $(document).ready( function () {
         'columnDefs': [
             { targets: 0, visible: false },
             { targets: [1,2,3,4,5,6], orderable: false }
-
         ],
         //this will be useful for adding a button in the same line as the search bar for creating tournaments etc
         // "initComplete": function( settings, json ) {
@@ -36,13 +35,45 @@ $(document).ready( function () {
         '2 Doubles'
     ];
 
-        //this resets the order of the far left column for a school roster after a click and drag table row event(1 singles, 2 singles, etc)
-    schoolTable.on('row-reorder', function (e, diff, edit) {
-        $('.varsity_order').each(function(index, tableCell){
-            tableCell.innerHTML = varsityOrder[index];
+    //this resets the order of the far left column for a school roster after a click and drag table row event(1 singles, 2 singles, etc)
+    function displayPositionNamesInCorrectOrder() {
+        $('.position_name_td').each(function(index, tableCell){
+            if(varsityOrder[index] !== undefined) {
+                tableCell.innerHTML = varsityOrder[index];
+            } else {
+                tableCell.innerHTML = index + 1;
+            }
         });
+    }
+
+    displayPositionNamesInCorrectOrder();
+
+    schoolTable.on('row-reordered', function (e, diff, edit) {
+       displayPositionNamesInCorrectOrder();
     } );
 
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $("#savePlayerPositionsButton").click(function(e){
+        e.preventDefault();
+
+        var name = 'tj';
+        var password = 'becker';
+        var email = 'rocks';
+
+        $.ajax({
+            type:'POST',
+            url:'/savePlayerPositions',
+            data:{name:name, password:password, email:email},
+            success:function(data){
+                alert(data.success);
+            }
+        });
+    });
 
     //this is assigning settings for the sortable tables
     $('#myTable').DataTable( {
@@ -64,7 +95,5 @@ $(document).ready( function () {
         //     $('#myTable_filter').html("<div id='myTable_filter' class='dataTables_filter'><div><label>Search:<input type='search' class='' placeholder='' aria-controls='myTable'></label><button id='roster_button' type='submit' class='btn btn-primary'>Create</button></div></div>");
         // },
     } );
-
-
 
 } );

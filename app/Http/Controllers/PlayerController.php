@@ -26,6 +26,11 @@ class PlayerController extends Controller
         ]);
     }
 
+    public function saveVarsityPositions($school_id = 0) {
+        $data = $_POST;
+        $varsityPlayers = Player::all()->where('school_id', $school_id);
+    }
+
     public function create() {
         $data = $_POST;
         $player = new Player;

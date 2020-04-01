@@ -29,7 +29,8 @@ class SchoolController extends Controller
 
     public function showRoster(School $school) {
         $players = Player::all()->where('school_id', '=', $school->id);
-        $varsityOrder = [
+
+        $positionNamesOrder = [
             '1 Singles',
             '2 Singles',
             '1 Doubles',
@@ -37,9 +38,14 @@ class SchoolController extends Controller
             '2 Doubles',
             '2 Doubles'
         ];
+        $playerCounter = 7;
+        foreach($players as $player) {
+            array_push($positionNamesOrder, $playerCounter++);
+        }
+
         $increment = 0;
         return view('school', [
-            'varsityOrder' => $varsityOrder,
+            'positionNamesOrder' => $positionNamesOrder,
             'school' => $school,
             'players' => $players,
             'increment' => $increment
