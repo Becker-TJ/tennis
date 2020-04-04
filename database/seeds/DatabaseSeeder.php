@@ -19,11 +19,13 @@ class DatabaseSeeder extends Seeder
         factory(App\SchoolAttendant::class, 50)->create();
 
         $highSchools = $this->getArrayOfHighSchools();
+        $conferenceOptions = ['3A','4A','5A','6A'];
         foreach($highSchools as $highschool) {
+            $randomConferenceOption = $conferenceOptions[array_rand($conferenceOptions)];
             DB::table('schools')->insert([
                 'name' => $highschool,
                 'address' => 'Oklahoma City',
-                'class' => "5A",
+                'conference' => $randomConferenceOption,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
             ]);

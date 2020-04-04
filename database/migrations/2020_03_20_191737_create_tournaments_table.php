@@ -23,6 +23,9 @@ class CreateTournamentsTable extends Migration
             $table->string('level');
             $table->unsignedInteger('team_count');
             $table->string('gender');
+            $table->date('date');
+            $table->time('time', 0);
+            $table->string('privacy_setting');
         });
     }
 

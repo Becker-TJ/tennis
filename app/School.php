@@ -8,7 +8,7 @@ use App\Player;
 
 class School extends Model
 {
-    protected $fillable = ['name', 'address', 'class'];
+    protected $fillable = ['name', 'address', 'conference'];
     protected $dates = ['created_at', 'updated_at'];
 
 }

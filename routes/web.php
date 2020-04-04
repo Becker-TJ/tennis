@@ -37,7 +37,7 @@ Route::get('/tournaments', 'TournamentController@showTournaments');
 
 Route::get('/addschool', 'SchoolController@showAddSchool');
 Route::post('/addschool', 'SchoolController@createOrTie');
-Route::get('/players', 'PlayerController@showPlayers');
+Route::get('/players', 'PlayerController@showAllPlayers');
 Route::get('schools', 'SchoolController@showSchools');
 Route::get('/school/{school}', 'SchoolController@showRoster');
 Route::post('/school/{school}','PlayerController@saveVarsityOrder');
@@ -47,6 +47,8 @@ Route::get('/message',function() {
 Route::post('/getmsg','AjaxController@index');
 
 Route::post('/savePlayerPositions','AjaxController@savePlayerPositions');
+Route::post('/players', 'PlayerController@showFilteredPlayers');
+
 
 
 

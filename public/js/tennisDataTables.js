@@ -65,6 +65,12 @@ $(document).ready( function () {
         var password = 'becker';
         var email = 'rocks';
 
+        $('#schoolTable > tbody > tr').each(function(index, row){
+            console.log(index);
+            console.log(row);
+            alert('hi');
+        });
+
         $.ajax({
             type:'POST',
             url:'/savePlayerPositions',
@@ -90,10 +96,33 @@ $(document).ready( function () {
             'targets': [4], /* column index */
             'orderable': false, /* true or false */
         }],
+
         //this will be useful for adding a button in the same line as the search bar for creating tournaments etc
         // "initComplete": function( settings, json ) {
         //     $('#myTable_filter').html("<div id='myTable_filter' class='dataTables_filter'><div><label>Search:<input type='search' class='' placeholder='' aria-controls='myTable'></label><button id='roster_button' type='submit' class='btn btn-primary'>Create</button></div></div>");
         // },
     } );
 
+    $('#tournamentsTable').DataTable( {
+        paging:false,
+        "lengthChange": false,
+        'columns': [
+            { data: 'name' }, /* index = 0 */
+            { data: 'location_name' }, /* index = 1 */
+            { data: 'date' }, /* index = 2 */
+            { data: 'gender' }, /* index = 3 */
+            { data: 'team_count' }, /* index = 5 */
+            { data: 'level' }, /* index = 6 */
+            { data: 'actions' } /* index = 7 */
+        ],
+        'columnDefs': [ {
+            'targets':[6],
+            'orderable': false
+        }]
+
+
+    } );
+
 } );
+
+
