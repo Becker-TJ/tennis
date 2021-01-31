@@ -48,6 +48,7 @@ Route::post('/getmsg','AjaxController@index');
 
 Route::post('/savePlayerPositions','AjaxController@savePlayerPositions');
 Route::post('/players', 'PlayerController@showFilteredPlayers');
+Route::get('/bracket', 'TournamentController@showBracket');
 
 
 

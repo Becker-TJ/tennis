@@ -19,7 +19,7 @@ $(document).ready( function () {
         'columnDefs': [
             { targets: 0, visible: false },
             { targets: [1,2,3,4,5,6], orderable: false }
-        ],
+        ]
         //this will be useful for adding a button in the same line as the search bar for creating tournaments etc
         // "initComplete": function( settings, json ) {
         //     $('#myTable_filter').html("<div id='myTable_filter' class='dataTables_filter'><div><label>Search:<input type='search' class='' placeholder='' aria-controls='myTable'></label><button id='roster_button' type='submit' class='btn btn-primary'>Create</button></div></div>");
@@ -32,7 +32,13 @@ $(document).ready( function () {
         '1 Doubles',
         '1 Doubles',
         '2 Doubles',
-        '2 Doubles'
+        '2 Doubles',
+        'JV 1 Singles',
+        'JV 2 Singles',
+        'JV 1 Doubles',
+        'JV 1 Doubles',
+        'JV 2 Doubles',
+        'JV 2 Doubles',
     ];
 
     //this resets the order of the far left column for a school roster after a click and drag table row event(1 singles, 2 singles, etc)
@@ -49,7 +55,7 @@ $(document).ready( function () {
     displayPositionNamesInCorrectOrder();
 
     schoolTable.on('row-reordered', function (e, diff, edit) {
-       displayPositionNamesInCorrectOrder();
+        displayPositionNamesInCorrectOrder();
     } );
 
     $.ajaxSetup({

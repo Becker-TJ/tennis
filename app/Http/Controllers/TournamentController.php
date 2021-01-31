@@ -15,6 +15,10 @@ class TournamentController extends Controller
         return view('createtournament');
     }
 
+    public function showBracket() {
+        return view('bracket');
+    }
+
     public function showTournaments() {
         $tournaments = Tournament::all();
         $schoolAttendants = SchoolAttendant::all();
