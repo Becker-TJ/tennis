@@ -31,23 +31,30 @@ Route::get('/verify', function () {
 });
 
 Route::get('/createtournament', 'TournamentController@showCreateTournament');
+Route::get('/createtournament/{tournament}', 'TournamentController@showEditTournament');
 Route::post('/createtournament', 'TournamentController@create');
 
+
 Route::get('/tournaments', 'TournamentController@showTournaments');
+Route::get('/tournament/{tournament}', 'TournamentController@showTournament');
 
 Route::get('/addschool', 'SchoolController@showAddSchool');
 Route::post('/addschool', 'SchoolController@createOrTie');
+
 Route::get('/players', 'PlayerController@showAllPlayers');
+Route::post('/players', 'PlayerController@showFilteredPlayers');
+
 Route::get('schools', 'SchoolController@showSchools');
-Route::get('/school/{school}', 'SchoolController@showRoster');
+Route::get('/school/{school}', 'SchoolController@showSchool');
 Route::post('/school/{school}','PlayerController@saveVarsityOrder');
+
 Route::get('/message',function() {
     return view('message');
 });
 Route::post('/getmsg','AjaxController@index');
 
 Route::post('/savePlayerPositions','AjaxController@savePlayerPositions');
-Route::post('/players', 'PlayerController@showFilteredPlayers');
+
 Route::get('/bracket', 'TournamentController@showBracket');
 
 

@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\SchoolAttendant;
+use App\SchoolAttendee;
 use App\Tournament;
+use App\School;
 
 class TournamentController extends Controller
 {
@@ -15,18 +16,61 @@ class TournamentController extends Controller
         return view('createtournament');
     }
 
+    public function showEditTournament(Tournament $tournament) {
+        $boys = '';
+        $girls = '';
+        $both = '';
+        switch($tournament->gender) {
+            case 'Boys':
+                $boys = 'checked';
+                break;
+            case
+                'Girls':
+                $girls = 'checked';
+                break;
+            case
+                'Both':
+                $both = 'checked';
+            default:
+                break;
+        }
+//        if($tournament->gender == 'Boys') {
+//            $boys = 'checked';
+//        } else if ($tournament)
+
+        return view('createtournament', [
+            'tournament' => $tournament,
+            'boys' => $boys,
+            'girls'=> $girls,
+            'both' => $both
+        ]);
+    }
+
     public function showBracket() {
         return view('bracket');
     }
 
     public function showTournaments() {
         $tournaments = Tournament::all();
-        $schoolAttendants = SchoolAttendant::all();
+        $schoolAttendees = SchoolAttendee::all();
 
         return view('tournaments', [
             'tournaments' => $tournaments,
-            'schoolAttendants' => $schoolAttendants
+            'schoolAttendees' => $schoolAttendees
         ]);
+    }
+
+    public function showTournament(Tournament $tournament) {
+        $school = School::find($tournament->host_id);
+
+        $attendees = SchoolAttendee::all()->where('tournament_id', '=', $tournament->id);
+        $tj = 'hi';
+        return view('tournament', [
+            'tournament' => $tournament,
+            'school' => $school,
+            'attendees' => $attendees
+        ]);
+
     }
 
     public function create() {

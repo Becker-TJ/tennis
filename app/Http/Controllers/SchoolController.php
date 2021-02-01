@@ -27,7 +27,7 @@ class SchoolController extends Controller
         ]);
     }
 
-    public function showRoster(School $school) {
+    public function showSchool(School $school) {
         $players = Player::all()->where('school_id', '=', $school->id);
 
         $positionNamesOrder = [

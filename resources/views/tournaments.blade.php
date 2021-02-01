@@ -29,7 +29,7 @@
                                     <td class="table-cell">{{$tournament->location_name}}</td>
                                     <td class="table-cell">{{$tournament->date}}</td>
                                     <td class="table-cell">{{$tournament->gender}}</td>
-                                    <td align="center" class="table-cell">{{count($schoolAttendants->where('tournament_id', '=', $tournament->id)) . '/' . $tournament->team_count}}</td>
+                                    <td align="center" class="table-cell">{{count($schoolAttendees->where('tournament_id', '=', $tournament->id)) . '/' . $tournament->team_count}}</td>
                                     <td align="center" class="table-cell">{{$tournament->level}}</td>
                                     <td align="center" class="table-cell"><i class="material-icons" style="color:green">mode_edit</i><i class="material-icons" style="color:red">delete</i></td>
                                 </tr>

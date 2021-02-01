@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
         factory(App\School::class, 9)->create();
         factory(App\Tournament::class, 50)->create();
         factory(App\User::class, 9)->create();
-        factory(App\SchoolAttendant::class, 50)->create();
+        factory(App\SchoolAttendee::class, 50)->create();
 
         $highSchools = $this->getArrayOfHighSchools();
         $conferenceOptions = ['3A','4A','5A','6A'];

@@ -15,7 +15,7 @@
                             <label for="tournament_name" class="col-md-4 col-form-label text-md-right">Tournament Name</label>
 
                             <div class="col-md-6">
-                                <input id="tournament_name" type="text" class="form-control" name="tournament_name" required autofocus autocomplete="off">
+                                <input id="tournament_name" type="text" class="form-control" name="tournament_name" value="{{$tournament->name ?? ''}}" required autofocus autocomplete="off">
                             </div>
                         </div>
 
@@ -23,7 +23,7 @@
                             <label for="location_name" class="col-md-4 col-form-label text-md-right">Location Name</label>
 
                             <div class="col-md-6">
-                                <input id="location_name" type="text" class="form-control" name="location_name" required autocomplete="off">
+                                <input id="location_name" type="text" class="form-control" name="location_name" value="{{$tournament->location_name ?? ''}}" required autocomplete="off">
                             </div>
                         </div>
 
@@ -31,21 +31,21 @@
                             <label for="address" class="col-md-4 col-form-label text-md-right">Location Address</label>
 
                             <div class="col-md-6">
-                                <input id="address" type="text" class="form-control" name="address" required autocomplete="off">
+                                <input id="address" type="text" class="form-control" name="address" value="{{$tournament->address ?? ''}}" required autocomplete="off">
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label for="date" class="col-md-4 col-form-label text-md-right">Date</label>
                             <div class="col-md-6">
-                                <input id="date" type="date" class="form-control" name="date" required autocomplete="off">
+                                <input id="date" type="date" class="form-control" name="date" value="{{$tournament->date ?? ''}}" required autocomplete="off">
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label for="time" class="col-md-4 col-form-label text-md-right">Start Time</label>
                             <div class="col-md-6">
-                                <input id="time" type="time" class="form-control" name="time" required value="08:00" autocomplete="off">
+                                <input id="time" type="time" class="form-control" name="time" value="{{$tournament->time ?? ''}}" required value="08:00" autocomplete="off">
                             </div>
                         </div>
 
@@ -53,7 +53,14 @@
                             <label for="team_count" class="col-md-4 col-form-label text-md-right">Number of Teams</label>
                             <div class="col-md-6">
                                 <select class="form-control" id="team_count" name="team_count">
-                                    <?php for($x = 4; $x <= 16; $x++) {?><option><?php echo $x;?></option><?php }?>}
+                                    <?php for($x = 4; $x <= 16; $x++) {?>
+                                        <option <?php if($x == $tournament->team_count){
+                                            echo "selected='selected'";
+                                        }?>
+                                        >
+                                            <?php echo $x;?>
+                                        </option>
+                                        <?php }?>
                                 </select>
                             </div>
                         </div>

@@ -85,11 +85,11 @@ class PlayerController extends Controller
 
 
 
-    public function showRoster($school_id = 0) {
+    public function showSchool($school_id = 0) {
         $players = Player::all();
         $players = $players->where('school_id', $school_id);
 
-        return view('roster', [
+        return view('school', [
             'players' => $players
         ]);
     }
