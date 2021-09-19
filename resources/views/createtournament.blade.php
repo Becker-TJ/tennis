@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
     <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -54,13 +55,16 @@
                             <div class="col-md-6">
                                 <select class="form-control" id="team_count" name="team_count">
                                     <?php for($x = 4; $x <= 16; $x++) {?>
-                                        <option <?php if($x == $tournament->team_count){
-                                            echo "selected='selected'";
+                                        <option <?php if(isset($tournament)) {
+                                            if($x == $tournament->team_count){
+                                                echo "selected='selected'";
+                                            }
                                         }?>
                                         >
                                             <?php echo $x;?>
                                         </option>
-                                        <?php }?>
+                                        <?php
+                                    }?>
                                 </select>
                             </div>
                         </div>
@@ -69,14 +73,14 @@
                             <div class="col-md-4 text-md-right">Gender</div>
 
                             <div class="btn-group btn-group-toggle col-md-6" data-toggle="buttons">
-                                <label for="boys" class="btn btn-secondary active">
-                                    <input class="form-control" type="radio" name="gender" id="boys" autocomplete="off" value="boys" checked> Boys
+                                <label for="boys" class="btn btn-secondary {{$boysActive}}">
+                                    <input class="form-control" type="radio" name="gender" id="boys" autocomplete="off" value="boys" {{$boysCheck}}> Boys
                                 </label>
-                                <label for="girls" class="btn btn-secondary">
-                                    <input class="form-control" type="radio" name="gender" id="girls" autocomplete="off" value="girls"> Girls
+                                <label for="girls" class="btn btn-secondary {{$girlsActive}}">
+                                    <input class="form-control" type="radio" name="gender" id="girls" autocomplete="off" value="girls" {{$girlsCheck}}> Girls
                                 </label>
-                                <label for="both" class="btn btn-secondary">
-                                    <input class="form-control" type="radio" name="gender" id="both" autocomplete="off" value="both"> Both
+                                <label for="both" class="btn btn-secondary {{$bothActive}}">
+                                    <input class="form-control" type="radio" name="gender" id="both" autocomplete="off" value="both" {{$bothCheck}}> Both
                                 </label>
                             </div>
                         </div>
@@ -85,14 +89,14 @@
                             <label for="level" class="col-md-4 col-form-label text-md-right">Level</label>
 
                             <div class="btn-group btn-group-toggle col-md-6" data-toggle="buttons">
-                                <label class="btn btn-secondary active">
-                                    <input type="radio" name="level" id="level" autocomplete="off" value="varsity" checked> Varsity
+                                <label class="btn btn-secondary {{$varsityActive}}">
+                                    <input type="radio" name="level" id="level" autocomplete="off" value="varsity" {{$varsityCheck}}> Varsity
                                 </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="level" id="level" autocomplete="off" value="jv"> JV
+                                <label class="btn btn-secondary {{$jvActive}}">
+                                    <input type="radio" name="level" id="level" autocomplete="off" value="jv" {{$jvCheck}}> JV
                                 </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="level" id="level" autocomplete="off" value="junior high"> Junior High
+                                <label class="btn btn-secondary {{$jhActive}}">
+                                    <input type="radio" name="level" id="level" autocomplete="off" value="junior high" {{$jhCheck}}> Junior High
                                 </label>
                             </div>
                         </div>
@@ -107,11 +111,12 @@
                             <label for="privacy_setting" class="col-md-4 col-form-label text-md-right">Public or Private</label>
 
                             <div class="btn-group btn-group-toggle col-md-6" data-toggle="buttons">
-                                <label class="btn btn-secondary active">
-                                    <input type="radio" name="privacy_setting" id="privacy_setting" autocomplete="off" value="public" checked> Public
+                                <label class="btn btn-secondary {{$publicActive}}">
+                                    <input type="radio" name="privacy_setting" id="privacy_setting" autocomplete="off" value="public"
+                                           {{$publicCheck}}> Public
                                 </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="privacy_setting" id="privacy_setting" autocomplete="off" value="private"> Private
+                                <label class="btn btn-secondary {{$privateActive}}">
+                                    <input type="radio" name="privacy_setting" id="privacy_setting" autocomplete="off" value="private" {{$privateCheck}}> Private
                                 </label>
                             </div>
                         </div>

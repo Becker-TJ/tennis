@@ -15,17 +15,8 @@
   <component name="ChangeListManager">
     <list default="true" id="92c892c9-76f5-40f4-b6dc-3d94bac773eb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PlayerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PlayerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SchoolController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SchoolController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TournamentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TournamentController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/SchoolAttendant.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/SchoolAttendee.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/SchoolAttendantFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/SchoolAttendeeFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_03_21_080409_create_school_attendants_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_03_21_080409_create_school_attendees_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/createtournament.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/createtournament.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/include/navbar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/include/navbar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/tournament.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/tournament.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/tournaments.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/tournaments.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -40,9 +31,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JavaScript File" />
-        <option value="CSS File" />
         <option value="composer.json" />
+        <option value="CSS File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -59,13 +50,12 @@
   </component>
   <component name="PhpServers">
     <servers>
-      <server host="homestead.test" id="e3c9e37f-ff35-4c0a-ae88-2ca7315b4f87" name="homestead.test" use_path_mappings="true">
+      <server host="tennis" id="d45e09de-09c2-4fb9-b215-b7607dc6f3e1" name="tennis" use_path_mappings="true">
         <path_mappings>
           <mapping local-root="$PROJECT_DIR$" remote-root="/home/vagrant/code/tennis" />
           <mapping local-root="$PROJECT_DIR$/public" remote-root="/home/vagrant/code/tennis/public" />
         </path_mappings>
       </server>
-      <server host="tennis" id="aebb2ba7-b351-4997-afba-8c4102d0ff5b" name="tennis" use_path_mappings="true" />
     </servers>
   </component>
   <component name="PhpWebServerValidation" path_to_validation_script="C:\Users\Teej\code\tennis" selected_validation_type="LOCAL" web_path_to_validation_script="http://127.0.0.1/" />
@@ -185,8 +175,9 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php.debug" />
+    <property name="settings.editor.selected.configurable" value="settings.php.debug.servers" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -233,7 +224,19 @@
       <workItem from="1611201208784" duration="204000" />
       <workItem from="1611428128965" duration="1211000" />
       <workItem from="1612036426214" duration="4033000" />
-      <workItem from="1612117689028" duration="16148000" />
+      <workItem from="1612117689028" duration="16906000" />
+      <workItem from="1612640241529" duration="7793000" />
+      <workItem from="1612935203484" duration="911000" />
+      <workItem from="1622574361464" duration="327000" />
+      <workItem from="1622574990821" duration="3902000" />
+      <workItem from="1625529782292" duration="1207000" />
+      <workItem from="1628997037923" duration="599000" />
+      <workItem from="1629493815160" duration="532000" />
+      <workItem from="1629494508042" duration="5074000" />
+      <workItem from="1629504405467" duration="5451000" />
+      <workItem from="1629577145454" duration="3569000" />
+      <workItem from="1629599945160" duration="705000" />
+      <workItem from="1629861421663" duration="1646000" />
     </task>
     <servers />
   </component>
@@ -257,12 +260,7 @@
       <breakpoints>
         <line-breakpoint type="php">
           <url>file://$PROJECT_DIR$/app/Http/Controllers/TournamentController.php</url>
-          <line>15</line>
-          <option name="timeStamp" value="21" />
-        </line-breakpoint>
-        <line-breakpoint type="php">
-          <url>file://$PROJECT_DIR$/app/Http/Controllers/TournamentController.php</url>
-          <line>92</line>
+          <line>187</line>
           <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint type="php">
@@ -272,12 +270,12 @@
         </line-breakpoint>
         <line-breakpoint type="php">
           <url>file://$PROJECT_DIR$/app/Http/Controllers/TournamentController.php</url>
-          <line>53</line>
+          <line>144</line>
           <option name="timeStamp" value="43" />
         </line-breakpoint>
         <line-breakpoint type="php">
           <url>file://$PROJECT_DIR$/app/Http/Controllers/TournamentController.php</url>
-          <line>56</line>
+          <line>147</line>
           <option name="timeStamp" value="44" />
         </line-breakpoint>
         <line-breakpoint type="php">
@@ -292,7 +290,7 @@
         </line-breakpoint>
         <line-breakpoint type="php">
           <url>file://$PROJECT_DIR$/app/Http/Controllers/TournamentController.php</url>
-          <line>57</line>
+          <line>148</line>
           <option name="timeStamp" value="108" />
         </line-breakpoint>
         <line-breakpoint type="php">
@@ -317,7 +315,7 @@
         </line-breakpoint>
         <line-breakpoint type="php">
           <url>file://$PROJECT_DIR$/app/Http/Controllers/TournamentController.php</url>
-          <line>94</line>
+          <line>189</line>
           <option name="timeStamp" value="113" />
         </line-breakpoint>
         <line-breakpoint type="php">
@@ -376,29 +374,58 @@
           <option name="timeStamp" value="193" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/routes/web.php</url>
-          <line>16</line>
-          <option name="timeStamp" value="198" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/routes/web.php</url>
-          <line>19</line>
-          <option name="timeStamp" value="200" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/app/Http/Controllers/TournamentController.php</url>
-          <line>62</line>
+          <line>153</line>
           <option name="timeStamp" value="202" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/app/Http/Controllers/TournamentController.php</url>
-          <line>67</line>
+          <line>158</line>
           <option name="timeStamp" value="207" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/app/Http/Controllers/TournamentController.php</url>
-          <line>66</line>
+          <line>157</line>
           <option name="timeStamp" value="208" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/app/Http/Controllers/TournamentController.php</url>
+          <line>173</line>
+          <option name="timeStamp" value="209" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/app/Http/Controllers/TournamentController.php</url>
+          <line>175</line>
+          <option name="timeStamp" value="211" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/app/Http/Controllers/TournamentController.php</url>
+          <line>167</line>
+          <option name="timeStamp" value="213" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/routes/web.php</url>
+          <line>19</line>
+          <option name="timeStamp" value="216" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/routes/web.php</url>
+          <line>16</line>
+          <option name="timeStamp" value="217" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/resources/views/auth/login.blade.php</url>
+          <option name="timeStamp" value="218" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/routes/web.php</url>
+          <line>22</line>
+          <option name="timeStamp" value="219" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/app/Http/Controllers/TournamentController.php</url>
+          <line>16</line>
+          <option name="timeStamp" value="221" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

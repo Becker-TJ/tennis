@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\SchoolAttendee;
 use App\Tournament;
 use App\School;
+use Illuminate\Http\Request;
 
 class TournamentController extends Controller
 {
@@ -13,36 +14,126 @@ class TournamentController extends Controller
     }
 
     public function showCreateTournament() {
-        return view('createtournament');
+        $boysCheck = 'checked';
+        $boysActive = 'active';
+        $girlsCheck = '';
+        $girlsActive = '';
+        $bothCheck = '';
+        $bothActive = '';
+
+        $varsityCheck = 'checked';
+        $varsityActive = 'active';
+        $jvCheck = '';
+        $jvActive = '';
+        $jhCheck = '';
+        $jhActive = '';
+
+        $publicCheck = 'checked';
+        $publicActive = 'active';
+        $privateCheck = '';
+        $privateActive = '';
+
+        $createOrEdit = 'Create';
+
+        return view('createtournament', [
+            'boysCheck' => $boysCheck,
+            'girlsCheck'=> $girlsCheck,
+            'bothCheck' => $bothCheck,
+            'boysActive' => $boysActive,
+            'girlsActive' => $girlsActive,
+            'bothActive' => $bothActive,
+
+            'varsityCheck' => $varsityCheck,
+            'varsityActive' => $varsityActive,
+            'jvCheck' => $jvCheck,
+            'jvActive' => $jvActive,
+            'jhCheck' => $jhCheck,
+            'jhActive' => $jhActive,
+
+            'publicCheck' => $publicCheck,
+            'publicActive' => $publicActive,
+            'privateCheck' => $privateCheck,
+            'privateActive' => $privateActive,
+
+            'createOrEdit' => $createOrEdit
+        ]);
     }
 
     public function showEditTournament(Tournament $tournament) {
-        $boys = '';
-        $girls = '';
-        $both = '';
-        switch($tournament->gender) {
-            case 'Boys':
-                $boys = 'checked';
-                break;
-            case
-                'Girls':
-                $girls = 'checked';
-                break;
-            case
-                'Both':
-                $both = 'checked';
-            default:
-                break;
+        $boysCheck = 'checked';
+        $boysActive = 'active';
+        $girlsCheck = '';
+        $girlsActive = '';
+        $bothCheck = '';
+        $bothActive = '';
+
+        $varsityCheck = 'checked';
+        $varsityActive = 'active';
+        $jvCheck = '';
+        $jvActive = '';
+        $jhCheck = '';
+        $jhActive = '';
+
+        $publicCheck = 'checked';
+        $publicActive = 'active';
+        $privateCheck = '';
+        $privateActive = '';
+
+        $createOrEdit = 'Edit';
+
+        if($tournament->gender == 'Girls') {
+            $girlsCheck = 'checked';
+            $girlsActive = 'active';
+            $boysCheck = '';
+            $boysActive = '';
+        } else if($tournament->gender == 'Both') {
+            $bothCheck = 'checked';
+            $bothActive = 'active';
+            $boysCheck = '';
+            $boysActive = '';
         }
-//        if($tournament->gender == 'Boys') {
-//            $boys = 'checked';
-//        } else if ($tournament)
+
+        if($tournament->level == 'Junior Varsity') {
+            $jvCheck = 'checked';
+            $jvActive = 'active';
+            $varsityCheck = '';
+            $varsityActive = '';
+        } else if ($tournament->level == 'Junior High') {
+            $jhCheck = 'checked';
+            $jhActive = 'active';
+            $varsityCheck = '';
+            $varsityActive = '';
+        }
+
+        if ($tournament->privacy_setting == 'Private') {
+            $privateCheck = 'checked';
+            $privateActive = 'active';
+            $publicCheck = '';
+            $publicActive = '';
+        }
 
         return view('createtournament', [
             'tournament' => $tournament,
-            'boys' => $boys,
-            'girls'=> $girls,
-            'both' => $both
+            'boysCheck' => $boysCheck,
+            'girlsCheck'=> $girlsCheck,
+            'bothCheck' => $bothCheck,
+            'boysActive' => $boysActive,
+            'girlsActive' => $girlsActive,
+            'bothActive' => $bothActive,
+
+            'varsityCheck' => $varsityCheck,
+            'varsityActive' => $varsityActive,
+            'jvCheck' => $jvCheck,
+            'jvActive' => $jvActive,
+            'jhCheck' => $jhCheck,
+            'jhActive' => $jhActive,
+
+            'publicCheck' => $publicCheck,
+            'publicActive' => $publicActive,
+            'privateCheck' => $privateCheck,
+            'privateActive' => $privateActive,
+
+            'createOrEdit' => $createOrEdit
         ]);
     }
 
@@ -73,9 +164,14 @@ class TournamentController extends Controller
 
     }
 
+    public function edit(Request $request) {
+        $request = 4;
+
+        return view('createtournament');
+    }
+
     public function create() {
         $data = $_POST;
-        $tournament = new Tournament;
 
         $tournament['name'] = $data['tournament_name'];
         $tournament['location_name'] = $data['location_name'];
@@ -86,7 +182,6 @@ class TournamentController extends Controller
         $tournament['gender'] = $data['gender'];
         $tournament['level'] = $data['level'];
         $tournament['privacy_setting'] = $data['privacy_setting'];
-
 
         $tournament ['host_id'] = 3;
 
