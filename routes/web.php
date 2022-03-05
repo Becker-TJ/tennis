@@ -33,7 +33,7 @@ Route::get('/verify', function () {
 Route::get('/createtournament', 'TournamentController@showCreateTournament');
 Route::get('/createtournament/{tournament}', 'TournamentController@showEditTournament');
 Route::post('/createtournament', 'TournamentController@create');
-Route::post('/createtournament', 'TournamentController@edit');
+Route::post('/createtournament/{tournament}', 'TournamentController@edit');
 
 
 Route::get('/tournaments', 'TournamentController@showTournaments');

@@ -69,6 +69,7 @@
                             <thead>
                             <tr class="fa fa-sort-name" align="center">
                                 <th scope="col">Seq.</th>
+                                <th scope="col">id</th>
                                 <th scope="col">Position</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Location</th>
@@ -79,8 +80,16 @@
                             </thead>
                             <tbody>
                             @foreach($players as $index => $player)
-                                <tr>
+                                <tr <?php
+                                    if($increment < 6 && ($increment == 0 || $increment == 1 || $increment == 3 || $increment == 5)){
+                                        echo 'style=background:lightblue class=border_bottom';
+                                    } else if ($increment < 6) {
+                                        echo 'style=background:lightblue';
+                                    }
+                                    ?>
+                                >
                                     <td class="table-cell">{{$player->position}}</td>
+                                    <td class="table-cell">{{$player->id}}</td>
                                     <td class="position_name_td">{{$positionNamesOrder[$increment++]}}</td>
                                     <td class="table-cell">{{$player->first_name}}</td>
                                     <td class="table-cell">{{$player->last_name}}</td>

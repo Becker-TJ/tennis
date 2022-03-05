@@ -49,6 +49,10 @@
             cursor: grab;
         }
 
+        tr.border_bottom td {
+            border-bottom: 2px solid black;
+        }
+
     </style>
 
 </head>

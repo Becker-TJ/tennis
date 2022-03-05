@@ -8,7 +8,7 @@
                     <div class="card-header">Tournaments</div>
                         <div class="card-body">
                             <div class="alert alert-success col-md-12" role="alert">
-                                <p style="text-align:center">You can sort tournaments by clicking column headings.  Shift + click a second or even third column heading to further refine your search. For example, if I wanted to see all Varsity tournaments sorted by date, I could click "Level" then shift + click "Date". </p>
+                                <p style="text-align:center">You can sort tournaments by clicking column headings.  Shift + click a second or even third column heading to further refine your search. For example, if you wanted to see all Varsity tournaments sorted by date, you could click "Level" then shift + click "Date". </p>
                             </div>
                             <table id="tournamentsTable" class="table table-striped">
                                 <thead>

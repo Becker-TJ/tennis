@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Create Tournament</div>
+                <div class="card-header">{{$createOrEdit}} Tournament</div>
 
                 <div class="card-body">
                     <form method="POST" action="createtournament">
@@ -124,7 +124,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary col-md-6 offset-md-3">Create</button>
+                                <button type="submit" class="btn btn-primary col-md-6 offset-md-3">{{$submitButtonText}}</button>
                             </div>
                         </div>
                     </form>

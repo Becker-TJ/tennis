@@ -38,9 +38,9 @@ class SchoolController extends Controller
             '2 Doubles',
             '2 Doubles'
         ];
-        $playerCounter = 7;
+
         foreach($players as $player) {
-            array_push($positionNamesOrder, $playerCounter++);
+            array_push($positionNamesOrder, 'JV');
         }
 
         $increment = 0;

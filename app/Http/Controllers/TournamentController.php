@@ -34,6 +34,7 @@ class TournamentController extends Controller
         $privateActive = '';
 
         $createOrEdit = 'Create';
+        $submitButtonText = 'Create Tournament';
 
         return view('createtournament', [
             'boysCheck' => $boysCheck,
@@ -55,7 +56,8 @@ class TournamentController extends Controller
             'privateCheck' => $privateCheck,
             'privateActive' => $privateActive,
 
-            'createOrEdit' => $createOrEdit
+            'createOrEdit' => $createOrEdit,
+            'submitButtonText' => $submitButtonText
         ]);
     }
 
@@ -80,6 +82,7 @@ class TournamentController extends Controller
         $privateActive = '';
 
         $createOrEdit = 'Edit';
+        $submitButtonText = 'Save Changes';
 
         if($tournament->gender == 'Girls') {
             $girlsCheck = 'checked';
@@ -133,7 +136,8 @@ class TournamentController extends Controller
             'privateCheck' => $privateCheck,
             'privateActive' => $privateActive,
 
-            'createOrEdit' => $createOrEdit
+            'createOrEdit' => $createOrEdit,
+            'submitButtonText' => $submitButtonText
         ]);
     }
 
@@ -165,7 +169,23 @@ class TournamentController extends Controller
     }
 
     public function edit(Request $request) {
-        $request = 4;
+        $data = $_POST;
+        $tournamentID = substr($request->session('attributes')->previousUrl(), 31);
+
+        $tournament = Tournament::find($tournamentID);
+
+        $tournament['name'] = $data['tournament_name'];
+        $tournament['location_name'] = $data['location_name'];
+        $tournament['address'] = $data['address'];
+        $tournament['date'] = $data['date'];
+        $tournament['time'] = $data['time'];
+        $tournament['team_count'] = $data['team_count'];
+        $tournament['gender'] = $data['gender'];
+        $tournament['level'] = $data['level'];
+        $tournament['privacy_setting'] = $data['privacy_setting'];
+//        $tournament['host_id'] = 5;
+
+        $tournament->saveOrFail();
 
         return view('createtournament');
     }

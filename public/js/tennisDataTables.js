@@ -17,8 +17,8 @@ $(document).ready( function () {
         "lengthChange": false,
 
         'columnDefs': [
-            { targets: 0, visible: false },
-            { targets: [1,2,3,4,5,6], orderable: false }
+            { targets: [0,1], visible: false },
+            { targets: [2,3,4,5,6,7], orderable: false }
         ]
         //this will be useful for adding a button in the same line as the search bar for creating tournaments etc
         // "initComplete": function( settings, json ) {
@@ -33,12 +33,6 @@ $(document).ready( function () {
         '1 Doubles',
         '2 Doubles',
         '2 Doubles',
-        'JV 1 Singles',
-        'JV 2 Singles',
-        'JV 1 Doubles',
-        'JV 1 Doubles',
-        'JV 2 Doubles',
-        'JV 2 Doubles',
     ];
 
     //this resets the order of the far left column for a school roster after a click and drag table row event(1 singles, 2 singles, etc)
@@ -47,7 +41,7 @@ $(document).ready( function () {
             if(varsityOrder[index] !== undefined) {
                 tableCell.innerHTML = varsityOrder[index];
             } else {
-                tableCell.innerHTML = index + 1;
+                tableCell.innerHTML = 'JV';
             }
         });
     }
@@ -56,6 +50,33 @@ $(document).ready( function () {
 
     schoolTable.on('row-reordered', function (e, diff, edit) {
         displayPositionNamesInCorrectOrder();
+        var table = $("#schoolTable").DataTable();
+        table.one( 'draw', function () {
+            console.log('Redraw occurred at: ' + new Date().getTime());
+
+
+            var name = 'tj';
+            var password = 'becker';
+            var email = 'rocks';
+
+            table.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                console.log(rowIdx, this.data());
+            });
+
+            $.ajax({
+                type:'POST',
+                url:'/savePlayerPositions',
+                data:{name:name, password:password, email:email},
+                success:function(data){
+                    alert(data.success);
+
+                }
+            });
+
+
+
+
+        });
     } );
 
     $.ajaxSetup({
@@ -71,10 +92,13 @@ $(document).ready( function () {
         var password = 'becker';
         var email = 'rocks';
 
+        var tableData = $("#schoolTable").DataTable();
+        console.log(tableData);
+
         $('#schoolTable > tbody > tr').each(function(index, row){
-            console.log(index);
-            console.log(row);
-            alert('hi');
+            // console.log(index);
+            // console.log(row);
+            console.log(tableData.row(index).data());
         });
 
         $.ajax({
@@ -83,6 +107,7 @@ $(document).ready( function () {
             data:{name:name, password:password, email:email},
             success:function(data){
                 alert(data.success);
+
             }
         });
     });

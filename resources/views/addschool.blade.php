@@ -11,9 +11,9 @@
                             @csrf
 
                             <div class="alert alert-success col-md-12" role="alert">
-                                <p>Tie the school that you coach to your account.
-                                    If your school already exists in the database, select it from the list below.
-                                    Otherwise, select "School Not Listed" and add it.</p>
+                                <p>If your school already exists in the database, select it from the list below.
+                                    <br>
+                                    Otherwise, check "School Not Listed" and add it.</p>
                             </div>
 
                             <div class="form-group row">
