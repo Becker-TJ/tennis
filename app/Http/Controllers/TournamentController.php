@@ -159,7 +159,7 @@ class TournamentController extends Controller
         $school = School::find($tournament->host_id);
 
         $attendees = SchoolAttendee::all()->where('tournament_id', '=', $tournament->id);
-        $tj = 'hi';
+
         return view('tournament', [
             'tournament' => $tournament,
             'school' => $school,
@@ -193,6 +193,8 @@ class TournamentController extends Controller
     public function create() {
         $data = $_POST;
 
+        $tournament = new Tournament;
+
         $tournament['name'] = $data['tournament_name'];
         $tournament['location_name'] = $data['location_name'];
         $tournament['address'] = $data['address'];
@@ -207,7 +209,8 @@ class TournamentController extends Controller
 
         $tournament->saveOrFail();
 
-        return view('createtournament');
+        return redirect()->route('tournament', ['tournament' => $tournament->id]);
+//        return view('createtournament');
     }
 
 }

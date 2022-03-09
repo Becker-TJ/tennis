@@ -52,6 +52,9 @@
         tr.border_bottom td {
             border-bottom: 2px solid black;
         }
+        tr.position_highlight td{
+            background-color:lightblue;
+        }
 
     </style>
 

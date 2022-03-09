@@ -94,25 +94,39 @@ class PlayerController extends Controller
         ]);
     }
 
-    public function saveRosterChanges() {
-
+    public function savePositionChanges($playerID, $newPosition) {
+        $player = Player::find($playerID);
+        $player['position'] = $newPosition;
+        return $player->saveOrFail();
     }
 
 
 
     public function create() {
         $data = $_POST;
+        $players = Player::all();
+        $schoolID = intval($data['school_id']);
+        $lastPosition = $players->where('school_id', $schoolID)->max('position');
+
+        if(!$lastPosition) {
+            $lastPosition = 0;
+        }
+
         $player = new Player;
 
-        $player['name'] = $data['tournament_name'];
-        $player['location_name'] = $data['location_name'];
-        $player['team_count'] = $data['team_count'];
+        $player['first_name'] = $data['new_player_first_name'];
+        $player['last_name'] = $data['new_player_last_name'];
+        $player['position'] = $lastPosition + 1;
+        $player['class'] = $data['class'];
         $player ['gender'] = $data['gender'];
-        $player['address'] = $data['address'];
-        $player ['host_id'] = 3;
+        $player['one_singles_rank'] = 99999;
+        $player['two_singles_rank'] = 99999;
+        $player['one_doubles_rank'] = 99999;
+        $player['two_doubles_rank'] = 99999;
+        $player ['school_id'] = $schoolID;
 
         $player->saveOrFail();
 
-        return view('createtournament');
+        return redirect()->route('school', ['school' => $schoolID]);
     }
 }

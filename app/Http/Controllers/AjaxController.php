@@ -9,12 +9,17 @@ use App\Http\Controllers\PlayerController;
 class AjaxController extends Controller {
     public function savePlayerPositions(Request $request) {
         $input = $request->all();
-
+        $updatedPositionOrder = $input['updatedPositionOrder'];
         $playerController = new PlayerController;
+        $newPosition = 1;
 
-        $playerController->saveRosterChanges();
+        foreach($updatedPositionOrder as $player) {
+            $playerID = intval($player[1]);
+            $playerController->savePositionChanges($playerID, $newPosition);
+            $newPosition++;
+        }
 
-        return response()->json(['success'=>'Got Simple Ajax Request.']);
+        return response()->json(['success'=>'Saved position changes.']);
 
     }
 }

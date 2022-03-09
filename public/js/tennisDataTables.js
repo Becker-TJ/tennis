@@ -18,7 +18,7 @@ $(document).ready( function () {
 
         'columnDefs': [
             { targets: [0,1], visible: false },
-            { targets: [2,3,4,5,6,7], orderable: false }
+            { targets: [2,3,4,5], orderable: false }
         ]
         //this will be useful for adding a button in the same line as the search bar for creating tournaments etc
         // "initComplete": function( settings, json ) {
@@ -46,35 +46,48 @@ $(document).ready( function () {
         });
     }
 
+    function createPositionRowBorders() {
+        $('#schoolTable > tbody > tr').each(function(index, row){
+            if(index == 0 || index == 1 || index == 3 || index == 5) {
+                row.classList.add('border_bottom');
+            } else {
+                row.classList.remove('border_bottom');
+            }
+
+            if(index < 6) {
+                row.classList.add('position_highlight');
+            }   else {
+                row.classList.remove('position_highlight');
+            }
+        });
+    }
+
     displayPositionNamesInCorrectOrder();
+    createPositionRowBorders();
 
     schoolTable.on('row-reordered', function (e, diff, edit) {
         displayPositionNamesInCorrectOrder();
+        createPositionRowBorders();
+
         var table = $("#schoolTable").DataTable();
+
+        //drawing will update the data table with any changes made through reordering rows
         table.one( 'draw', function () {
-            console.log('Redraw occurred at: ' + new Date().getTime());
 
-
-            var name = 'tj';
-            var password = 'becker';
-            var email = 'rocks';
+            var updatedPositionOrder = [];
 
             table.rows().every(function (rowIdx, tableLoop, rowLoop) {
-                console.log(rowIdx, this.data());
+                updatedPositionOrder.push(this.data());
             });
 
             $.ajax({
                 type:'POST',
                 url:'/savePlayerPositions',
-                data:{name:name, password:password, email:email},
+                data:{updatedPositionOrder:updatedPositionOrder},
                 success:function(data){
-                    alert(data.success);
-
+                    console.log('saved positions.');
                 }
             });
-
-
-
 
         });
     } );
