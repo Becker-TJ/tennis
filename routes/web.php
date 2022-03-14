@@ -55,6 +55,7 @@ Route::get('/message',function() {
 Route::post('/getmsg','AjaxController@index');
 
 Route::post('/savePlayerPositions','AjaxController@savePlayerPositions');
+Route::post('/inviteSchools','AjaxController@inviteSchools');
 
 Route::get('/bracket', 'TournamentController@showBracket');
 

@@ -120,7 +120,6 @@ $(document).ready( function () {
             data:{name:name, password:password, email:email},
             success:function(data){
                 alert(data.success);
-
             }
         });
     });
@@ -167,6 +166,45 @@ $(document).ready( function () {
 
     } );
 
+    $('#schools_to_invite').change(function() {
+        $schoolID = $('#schools_to_invite').find(":selected").val();
+        $htmlString = $('#list_to_invite').html();
+        $schoolSelected =  $('#schools_to_invite').find(":selected").text();
+        
+        $removed = $('#schools_to_invite').find(":selected").remove();
+
+        $htmlString +='<li class="school_invitee" data-value="' + $schoolID + '">' + $schoolSelected + '</li><span aria-hidden="true">&times;</span>';
+
+        $('#list_to_invite').html($htmlString);
+
+        $('li.school_invitee').each(function(index, li) {
+            console.log(index);
+            console.log(li.dataset.value);
+        });
+
+    });
+
+    $("#invite_schools_button").click(function(e){
+        e.preventDefault();
+
+        var tournamentID = $('#tournamentID').html();
+        var schoolInviteeIDs = [];
+
+        $('li.school_invitee').each(function(index, li) {
+            console.log(index);
+            console.log(li.dataset.value);
+            schoolInviteeIDs.push(li.dataset.value);
+        });
+
+        $.ajax({
+            type:'POST',
+            url:'/inviteSchools',
+            data:{schoolInviteeIDs:schoolInviteeIDs, tournamentID:tournamentID},
+            success:function(data){
+                alert(data.success);
+            }
+        });
+    });
 } );
 
 

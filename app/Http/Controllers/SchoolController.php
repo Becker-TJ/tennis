@@ -87,7 +87,7 @@ class SchoolController extends Controller
         }
 
         $user->saveOrFail();
-        return $this->showAddSchoolView();
+        return $this->showAddSchool();
     }
 
 }

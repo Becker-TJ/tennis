@@ -157,13 +157,15 @@ class TournamentController extends Controller
 
     public function showTournament(Tournament $tournament) {
         $school = School::find($tournament->host_id);
+        $schools = School::all();
 
         $attendees = SchoolAttendee::all()->where('tournament_id', '=', $tournament->id);
 
         return view('tournament', [
             'tournament' => $tournament,
             'school' => $school,
-            'attendees' => $attendees
+            'attendees' => $attendees,
+            'schools' => $schools
         ]);
 
     }

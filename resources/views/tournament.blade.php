@@ -1,18 +1,63 @@
 @extends('layouts.app')
 
 @section('content')
+
     <div class="container-fluid">
+
+
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-10">
                 <div class="card">
-                    <div class="card-header">{{$tournament->name}}</div>
-                    <div class="card-header">{{date('m-d-Y', strtotime($tournament->date))}} ({{date('g:ia', strtotime($tournament->time))}} Start)</div>
-                    <div class="card-header">Location: {{$tournament->location_name}}</div>
-                    <div class="card-header">Address: {{$tournament->address}}</div>
+                    <div id="tournamentID" style="display:none">{{$tournament->id}}</div>
+                    <div style="background-color:#0a011f;color:white" class="card-header">{{$tournament->name}}</div>
 {{--                    <button class="btn btn-primary col-md-2 offset-md-5" onclick="location.href='/createtournament/{{$tournament->id}}'" type="button">Edit Tournament</button>--}}
 
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <table id="example" class="table table-striped" style="width:100%">
+                                <tbody>
+                                <tr>
+                                    <td>{{date('m-d-Y', strtotime($tournament->date))}} ({{date('g:ia', strtotime($tournament->time))}} Start)</td>
 
-                    <button type="button" class="btn btn-primary col-md-2 offset-md-5" data-toggle="modal" data-target="#editTournamentModal">Edit Tournament</button>
+                                </tr>
+                                <tr>
+                                    <td>Location: {{$tournament->location_name}}</td>
+
+                                </tr>
+                                <tr>
+                                    <td>Address: {{$tournament->address}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-lg-6">
+                            <table id="example" class="table table-striped" style="width:100%">
+                                <tbody>
+                                <tr>
+                                    <td>Host: <a href="/school/{{$tournament->host_id}}">{{$tournament->getHost()->name}}</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Participants:
+                                        <?php
+                                            foreach($attendees as $attendee) {
+                                                if(is_object($attendee->getSchool())) {
+                                                    echo '<a href="' . '/school/' . $attendee->school_id . '">' . $attendee->getSchool()->name . ', </a>';
+                                                }
+                                            }
+                                        ?>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary col-md-2 offset-md-4" data-toggle="modal" data-target="#editTournamentModal">Edit Tournament</button>
+                        <button type="button" class="btn btn-primary col-md-2 offset-md-5" data-toggle="modal" data-target="#inviteTeamsModal">Invite Teams</button>
+                    </div>
+
+
                     <div class="modal fade" id="editTournamentModal" tabindex="-1" role="dialog" aria-labelledby="editTournamentModal" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
@@ -142,10 +187,10 @@
 
 
 
-                    <button type="button" class="btn btn-primary col-md-2 offset-md-5" data-toggle="modal" data-target="#inviteTeamsModal">Invite Teams</button>
+
                     <div class="card-body">
                         <div class="modal fade" id="inviteTeamsModal" tabindex="-1" role="dialog" aria-labelledby="inviteTeamsModal" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
+                            <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="inviteTeamsModal">Invite Teams</h5>
@@ -156,46 +201,32 @@
                                     <div class="modal-body">
                                         <form>
                                             <div class="form-group">
-                                                <label for="new_player_first_name" class="col-form-label">First Name</label>
-                                                <input type="text" class="form-control" id="new_player_first_name">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="new_player_last_name" class="col-form-label">Last Name</label>
-                                                <input type="text" class="form-control" id="new_player_last_name">
-                                            </div>
-                                            <div class="form-group">
-                                                <label style="padding-left:0" for="class" class="col-form-label col-md-12">Class</label>
-                                                <div class="btn-group btn-group-toggle col-md-12" data-toggle="buttons">
-                                                    <label class="btn btn-secondary active">
-                                                        <input type="radio" name="class" id="class" autocomplete="off" value="9" checked> Freshman
-                                                    </label>
-                                                    <label class="btn btn-secondary">
-                                                        <input type="radio" name="class" id="class" autocomplete="off" value="10"> Sophomore
-                                                    </label>
-                                                    <label class="btn btn-secondary">
-                                                        <input type="radio" name="class" id="class" autocomplete="off" value="11"> Junior
-                                                    </label>
-                                                    <label class="btn btn-secondary">
-                                                        <input type="radio" name="class" id="class" autocomplete="off" value="12"> Senior
-                                                    </label>
+                                                <label for="schools_to_invite" class="col-md-3 col-form-label text-md-right">Schools</label>
+                                                <div class="btn-group" class="col-md-12">
+                                                    <select style="width:350px" class="select2 form-control" id="schools_to_invite" name="schools_to_invite">
+                                                        <option value="" disabled selected>Select School</option>
+                                                        @foreach($schools as $school)
+                                                            <option value="{{ $school->id }}">
+                                                                {{ $school->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label style="padding-left:0" for="gender" class="col-form-label col-md-12">Gender</label>
-                                                <div class="btn-group btn-group-toggle col-md-12" data-toggle="buttons">
-                                                    <label class="col-md-3 offset-md-3 btn btn-secondary active">
-                                                        <input type="radio" name="gender" id="gender" autocomplete="off" value="varsity" checked>Boy
-                                                    </label>
-                                                    <label class="col-md-3 btn btn-secondary">
-                                                        <input type="radio" name="gender" id="gender" autocomplete="off" value="jv">Girl
-                                                    </label>
+                                                <div class="form-group row">
+                                                    <label for="list_to_invite" class="col-md-4 col-form-label text-md-right">Invite List</label>
+                                                    <div class="col-md-6">
+                                                        <ol id="list_to_invite"></ol>
+                                                    </div>
                                                 </div>
                                             </div>
+
                                         </form>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary col-md-2" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary col-md-2">Add</button>
+                                        <button id="invite_schools_button" type="button" class="btn btn-primary col-md-2">Send Invites</button>
                                     </div>
                                 </div>
                             </div>
