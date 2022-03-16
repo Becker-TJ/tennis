@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\SchoolAttendee;
 use App\Tournament;
 use App\School;
+use App\Player;
 use Illuminate\Http\Request;
 
 class TournamentController extends Controller
@@ -158,14 +159,42 @@ class TournamentController extends Controller
     public function showTournament(Tournament $tournament) {
         $school = School::find($tournament->host_id);
         $schools = School::all();
-
         $attendees = SchoolAttendee::all()->where('tournament_id', '=', $tournament->id);
+
+        $attendeeSchoolIDs = [];
+        foreach($attendees as $attendee) {
+            $attendeeSchoolIDs[] = $attendee->school_id;
+        }
+
+        $girlsOneSinglesPlayers = Player::all()->where('position', '=', 1)
+            ->where('gender', '=', 'Female')
+            ->whereIn('school_id', $attendeeSchoolIDs)
+            ->sortBy('one_singles_rank');
+
+        $girlsTwoSinglesPlayers = Player::all()->where('position', '=', 2)
+            ->where('gender', '=', 'Female')
+            ->whereIn('school_id', $attendeeSchoolIDs)
+            ->sortBy('two_singles_rank');
+
+        $boysOneSinglesPlayers = Player::all()->where('position', '=', 1)
+            ->where('gender', '=', 'Male')
+            ->whereIn('school_id', $attendeeSchoolIDs)
+            ->sortBy('one_singles_rank');
+
+        $boysTwoSinglesPlayers = Player::all()->where('position', '=', 2)
+            ->where('gender', '=', 'Male')
+            ->whereIn('school_id', $attendeeSchoolIDs)
+            ->sortBy('two_singles_rank');
 
         return view('tournament', [
             'tournament' => $tournament,
             'school' => $school,
             'attendees' => $attendees,
-            'schools' => $schools
+            'schools' => $schools,
+            'girlsOneSinglesPlayers' => $girlsOneSinglesPlayers,
+            'girlsTwoSinglesPlayers' => $girlsTwoSinglesPlayers,
+            'boysOneSinglesPlayers' => $girlsOneSinglesPlayers,
+            'boysTwoSinglesPlayers' => $girlsTwoSinglesPlayers
         ]);
 
     }
@@ -214,5 +243,6 @@ class TournamentController extends Controller
         return redirect()->route('tournament', ['tournament' => $tournament->id]);
 //        return view('createtournament');
     }
+
 
 }

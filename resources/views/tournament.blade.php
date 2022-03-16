@@ -57,6 +57,49 @@
                         <button type="button" class="btn btn-primary col-md-2 offset-md-5" data-toggle="modal" data-target="#inviteTeamsModal">Invite Teams</button>
                     </div>
 
+                    <br>
+
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary col-md-2 offset-md-2" data-toggle="modal">Boys 1 Singles</button>
+                        <button type="button" class="btn btn-primary col-md-2 offset-md-5" data-toggle="modal">Boys 2 Singles</button>
+                        <button type="button" class="btn btn-primary col-md-2 offset-md-5" data-toggle="modal">Boys 1 Doubles</button>
+                        <button type="button" class="btn btn-primary col-md-2 offset-md-5" data-toggle="modal">Boys 2 Doubles</button>
+                    </div>
+
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary col-md-2 offset-md-2" data-toggle="modal">Girls 1 Singles</button>
+                        <button type="button" class="btn btn-primary col-md-2 offset-md-5" data-toggle="modal">Girls 2 Singles</button>
+                        <button type="button" class="btn btn-primary col-md-2 offset-md-5" data-toggle="modal">Girls 1 Doubles</button>
+                        <button type="button" class="btn btn-primary col-md-2 offset-md-5" data-toggle="modal">Girls 2 Doubles</button>
+                    </div>
+
+                    <br>
+
+                    <table id="schoolTable" class="display table table-striped">
+                        <thead>
+                        <tr class="fa fa-sort-name player_row" align="center">
+                            <th scope="col">Seq.</th>
+                            <th scope="col">id</th>
+                            <th scope="col">Position</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Class</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($oneSinglesPlayers as $index => $player)
+                            <tr>
+                                <td class="table-cell">{{$player->position}}</td>
+                                <td class="table-cell">{{$player->id}}</td>
+                                <td class="position_name_td">teej</td>
+                                <td class="table-cell">{{$player->first_name. ' ' . $player->last_name}}</td>
+                                <td class="table-cell">{{$player->class}}</td>
+                                <td align="center" class="table-cell"><i class="material-icons" style="color:green">mode_edit</i><i class="material-icons" style="color:red">delete</i></td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+
 
                     <div class="modal fade" id="editTournamentModal" tabindex="-1" role="dialog" aria-labelledby="editTournamentModal" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
@@ -188,82 +231,342 @@
 
 
 
-                    <div class="card-body">
-                        <div class="modal fade" id="inviteTeamsModal" tabindex="-1" role="dialog" aria-labelledby="inviteTeamsModal" aria-hidden="true">
-                            <div class="modal-dialog modal-lg" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="inviteTeamsModal">Invite Teams</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form>
-                                            <div class="form-group">
-                                                <label for="schools_to_invite" class="col-md-3 col-form-label text-md-right">Schools</label>
-                                                <div class="btn-group" class="col-md-12">
-                                                    <select style="width:350px" class="select2 form-control" id="schools_to_invite" name="schools_to_invite">
-                                                        <option value="" disabled selected>Select School</option>
-                                                        @foreach($schools as $school)
-                                                            <option value="{{ $school->id }}">
-                                                                {{ $school->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
+                    <div class="modal fade" id="inviteTeamsModal" tabindex="-1" role="dialog" aria-labelledby="inviteTeamsModal" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="inviteTeamsModal">Invite Teams</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="schools_to_invite" class="col-md-3 col-form-label text-md-right">Schools</label>
+                                            <div class="btn-group" class="col-md-12">
+                                                <select style="width:350px" class="select2 form-control" id="schools_to_invite" name="schools_to_invite">
+                                                    <option value="" disabled selected>Select School</option>
+                                                    @foreach($schools as $school)
+                                                        <option value="{{ $school->id }}">
+                                                            {{ $school->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group row">
+                                                <label for="list_to_invite" class="col-md-4 col-form-label text-md-right">Invite List</label>
+                                                <div class="col-md-6">
+                                                    <ol id="list_to_invite"></ol>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <div class="form-group row">
-                                                    <label for="list_to_invite" class="col-md-4 col-form-label text-md-right">Invite List</label>
-                                                    <div class="col-md-6">
-                                                        <ol id="list_to_invite"></ol>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary col-md-2" data-dismiss="modal">Close</button>
-                                        <button id="invite_schools_button" type="button" class="btn btn-primary col-md-2">Send Invites</button>
-                                    </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary col-md-2" data-dismiss="modal">Close</button>
+                                    <button id="invite_schools_button" type="button" class="btn btn-primary col-md-2">Send Invites</button>
                                 </div>
                             </div>
                         </div>
-                        <hr>
-                        <table id="schoolTable" class="display table table-striped">
-                            <thead>
-                            <tr class="fa fa-sort-name" align="center">
-                                <th scope="col">Seq.</th>
-                                <th scope="col">Position</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Location</th>
-                                <th scope="col">Number of Teams</th>
-                                <th scope="col">Level</th>
-                                <th scope="col">Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                               @foreach($attendees as $attendee)
-                                <tr>
-                                    <td class="table-cell">{{$attendee->id}}</td>
-                                    <td class="table-cell">{{$attendee->id}}</td>
-                                    <td class="table-cell">hi</td>
-                                    <td class="table-cell">hi</td>
-                                    <td align="center" class="table-cell">hi</td>
-                                    <td align="center" class="table-cell">hi</td>
-                                    <td align="center" class="table-cell"><i class="material-icons" style="color:green">mode_edit</i><i class="material-icons" style="color:red">delete</i></td>
-                                </tr>
-                               @endforeach
-                            </tbody>
-                        </table>
-                        <br>
-                        <button id="savePlayerPositionsButton" class="btn btn-primary col-md-2 offset-md-5">Save Roster Changes</button>
                     </div>
                 </div>
             </div>
         </div>
+        <br>
+        <style>
+            #bracket {
+                margin-left: auto;
+                margin-right: auto;
+                font-size: 15px;
+                width: 100%;
+                table-layout:fixed;
+                overflow:scroll;
+            }
+
+            #bracket th,
+            #bracket td {
+                text-align: center;
+                padding:0;
+                width:200px;
+            }
+
+            #bracket tr {
+                height:35px;
+            }
+
+            .give-top-border {
+                border-top: 2px solid black;
+            }
+
+            .give-bottom-border {
+                border-bottom: 2px solid black;
+            }
+
+            .give-right-border {
+                border-right: 2px solid black;
+            }
+
+            .give-left-border {
+                border-left: 2px solid black;
+            }
+        </style>
+        <table id="bracket">
+            <tr>
+                <th>Consolation Champion</th>
+                <th>Consolation Final</th>
+                <th>Consolation Semis</th>
+                <th>First Round</th>
+                <th>Winner's Semis</th>
+                <th>Winner's Final</th>
+                <th>Champion</th>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Justine Henin</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="give-left-border give-top-border give-right-border">Durant</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="give-left-border give-right-border"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td class="give-top-border give-left-border"></td>
+                <td class="give-left-border give-right-border">Olivia Sparks</td>
+                <td class="give-top-border give-right-border"></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td class="give-left-border"></td>
+                <td class="give-top-border">Del City</td>
+                <td class="give-right-border"></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td class="give-left-border"></td>
+                <td></td>
+                <td class="give-right-border"></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="give-top-border give-left-border"></td>
+                <td class="give-left-border"></td>
+                <td></td>
+                <td class="give-right-border"></td>
+                <td class="give-top-border give-right-border"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="give-left-border"></td>
+                <td class="give-left-border"></td>
+                <td>Winnie Du</td>
+                <td class="give-right-border"></td>
+                <td class="give-right-border"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="give-left-border"></td>
+                <td class="give-left-border"></td>
+                <td class="give-left-border give-right-border give-top-border">PCN</td>
+                <td class="give-right-border"></td>
+                <td class="give-right-border"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="give-left-border"></td>
+                <td class="give-top-border"></td>
+                <td class="give-left-border give-right-border"></td>
+                <td class="give-top-border"></td>
+                <td class="give-right-border"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="give-left-border"></td>
+                <td></td>
+                <td class="give-left-border give-right-border">Lua Huynh</td>
+                <td></td>
+                <td class="give-right-border"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="give-left-border"></td>
+                <td></td>
+                <td class="give-top-border">Westmoore</td>
+                <td></td>
+                <td class="give-right-border"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="give-left-border"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="give-right-border"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="give-top-border"></td>
+                <td class="give-left-border"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="give-right-border"></td>
+                <td class="give-top-border">Lily Truchet</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="give-left-border"></td>
+                <td></td>
+                <td>Lily Truchet</td>
+                <td></td>
+                <td class="give-right-border"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="give-left-border"></td>
+                <td></td>
+                <td class="give-left-border give-top-border give-right-border">Moore</td>
+                <td></td>
+                <td class="give-right-border"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="give-left-border"></td>
+                <td></td>
+                <td class="give-left-border give-right-border"></td>
+                <td>Lily Truchet</td>
+                <td class="give-right-border"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="give-left-border"></td>
+                <td class="give-top-border give-left-border"></td>
+                <td class="give-left-border give-right-border">Gracie Graham</td>
+                <td class="give-top-border give-right-border"></td>
+                <td class="give-right-border"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="give-left-border"></td>
+                <td class="give-left-border"></td>
+                <td class="give-top-border">Southmoore</td>
+                <td class="give-right-border"></td>
+                <td class="give-right-border"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="give-left-border"></td>
+                <td class="give-left-border"></td>
+                <td></td>
+                <td class="give-right-border"></td>
+                <td class="give-right-border">Lily Truchet</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="give-top-border"></td>
+                <td class="give-left-border"></td>
+                <td></td>
+                <td class="give-right-border"></td>
+                <td class="give-top-border"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td class="give-left-border"></td>
+                <td>Ivette Sarabia</td>
+                <td class="give-right-border"></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td class="give-left-border"></td>
+                <td class="give-top-border give-right-border give-left-border">Lawton High</td>
+                <td class="give-right-border"></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td class="give-top-border"></td>
+                <td class="give-left-border give-right-border"></td>
+                <td class="give-top-border"></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="give-left-border give-right-border">Makensie Butler</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="give-top-border">Choctaw</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
     </div>
 
 @endsection
