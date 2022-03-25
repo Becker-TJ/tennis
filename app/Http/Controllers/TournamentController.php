@@ -160,28 +160,31 @@ class TournamentController extends Controller
         $school = School::find($tournament->host_id);
         $schools = School::all();
         $attendees = SchoolAttendee::all()->where('tournament_id', '=', $tournament->id);
+        $oneSinglesPlayers = Player::all()->where('position', '=', 1);
 
         $attendeeSchoolIDs = [];
         foreach($attendees as $attendee) {
             $attendeeSchoolIDs[] = $attendee->school_id;
         }
 
-        $girlsOneSinglesPlayers = Player::all()->where('position', '=', 1)
+        $girlsOneSinglesPlayers = $oneSinglesPlayers
             ->where('gender', '=', 'Female')
             ->whereIn('school_id', $attendeeSchoolIDs)
             ->sortBy('one_singles_rank');
 
-        $girlsTwoSinglesPlayers = Player::all()->where('position', '=', 2)
+        $oneSeed = $girlsOneSinglesPlayers->where('one_singles_rank', '=', 1);
+
+        $girlsTwoSinglesPlayers = $oneSinglesPlayers
             ->where('gender', '=', 'Female')
             ->whereIn('school_id', $attendeeSchoolIDs)
             ->sortBy('two_singles_rank');
 
-        $boysOneSinglesPlayers = Player::all()->where('position', '=', 1)
+        $boysOneSinglesPlayers = $oneSinglesPlayers
             ->where('gender', '=', 'Male')
             ->whereIn('school_id', $attendeeSchoolIDs)
             ->sortBy('one_singles_rank');
 
-        $boysTwoSinglesPlayers = Player::all()->where('position', '=', 2)
+        $boysTwoSinglesPlayers = $oneSinglesPlayers
             ->where('gender', '=', 'Male')
             ->whereIn('school_id', $attendeeSchoolIDs)
             ->sortBy('two_singles_rank');
@@ -193,8 +196,8 @@ class TournamentController extends Controller
             'schools' => $schools,
             'girlsOneSinglesPlayers' => $girlsOneSinglesPlayers,
             'girlsTwoSinglesPlayers' => $girlsTwoSinglesPlayers,
-            'boysOneSinglesPlayers' => $girlsOneSinglesPlayers,
-            'boysTwoSinglesPlayers' => $girlsTwoSinglesPlayers
+            'boysOneSinglesPlayers' => $boysOneSinglesPlayers,
+            'boysTwoSinglesPlayers' => $boysTwoSinglesPlayers
         ]);
 
     }

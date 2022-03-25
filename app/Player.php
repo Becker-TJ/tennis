@@ -18,4 +18,5 @@ class Player extends Model
         return $school;
     }
 
+
 }

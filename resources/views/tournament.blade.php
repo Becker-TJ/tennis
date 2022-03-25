@@ -8,7 +8,7 @@
         <div class="row justify-content-center">
             <div class="col-md-10">
                 <div class="card">
-                    <div id="tournamentID" style="display:none">{{$tournament->id}}</div>
+                    <div id="tournament_id" style="display:none">{{$tournament->id}}</div>
                     <div style="background-color:#0a011f;color:white" class="card-header">{{$tournament->name}}</div>
 {{--                    <button class="btn btn-primary col-md-2 offset-md-5" onclick="location.href='/createtournament/{{$tournament->id}}'" type="button">Edit Tournament</button>--}}
 
@@ -60,17 +60,17 @@
                     <br>
 
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary col-md-2 offset-md-2" data-toggle="modal">Boys 1 Singles</button>
-                        <button type="button" class="btn btn-primary col-md-2 offset-md-5" data-toggle="modal">Boys 2 Singles</button>
-                        <button type="button" class="btn btn-primary col-md-2 offset-md-5" data-toggle="modal">Boys 1 Doubles</button>
-                        <button type="button" class="btn btn-primary col-md-2 offset-md-5" data-toggle="modal">Boys 2 Doubles</button>
+                        <button id="boysOneSingles" type="button" class="bracket-button btn btn-boys col-md-2 offset-md-2 selected-button" data-toggle="modal">Boys 1 Singles</button>
+                        <button id="boysTwoSingles" type="button" class="bracket-button btn btn-boys col-md-2 offset-md-5" data-toggle="modal">Boys 2 Singles</button>
+                        <button id="boysOneDoubles" type="button" class="bracket-button btn btn-boys col-md-2 offset-md-5" data-toggle="modal">Boys 1 Doubles</button>
+                        <button id="boysTwoDoubles" type="button" class="bracket-button btn btn-boys col-md-2 offset-md-5" data-toggle="modal">Boys 2 Doubles</button>
                     </div>
 
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-primary col-md-2 offset-md-2" data-toggle="modal">Girls 1 Singles</button>
-                        <button type="button" class="btn btn-primary col-md-2 offset-md-5" data-toggle="modal">Girls 2 Singles</button>
-                        <button type="button" class="btn btn-primary col-md-2 offset-md-5" data-toggle="modal">Girls 1 Doubles</button>
-                        <button type="button" class="btn btn-primary col-md-2 offset-md-5" data-toggle="modal">Girls 2 Doubles</button>
+                    <div class="btn-group .btn-girls">
+                        <button id="girlsOneSingles" type="button" class="bracket-button btn btn-girls col-md-2 offset-md-2">Girls 1 Singles</button>
+                        <button id="girlsTwoSingles" type="button" class="bracket-button btn btn-girls col-md-2 offset-md-5" data-toggle="modal">Girls 2 Singles</button>
+                        <button id="girlsOneDoubles" type="button" class="bracket-button btn btn-girls col-md-2 offset-md-5" data-toggle="modal">Girls 1 Doubles</button>
+                        <button id="girlsTwoDoubles" type="button" class="bracket-button btn btn-girls col-md-2 offset-md-5" data-toggle="modal">Girls 2 Doubles</button>
                     </div>
 
                     <br>
@@ -87,7 +87,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($oneSinglesPlayers as $index => $player)
+                        @foreach($girlsOneSinglesPlayers as $index => $player)
                             <tr>
                                 <td class="table-cell">{{$player->position}}</td>
                                 <td class="table-cell">{{$player->id}}</td>
@@ -327,7 +327,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>Justine Henin</td>
+                <td class="advanceable" id="1-seed-name">First Seed</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -336,7 +336,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="give-left-border give-top-border give-right-border">Durant</td>
+                <td id="1-seed-school" class="give-left-border give-top-border give-right-border">School Name</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -344,27 +344,18 @@
             <tr>
                 <td></td>
                 <td></td>
-                <td></td>
+                <td id="first-consolation-round-one-top">First Consolation Round One Top</td>
                 <td class="give-left-border give-right-border"></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td class="give-top-border give-left-border"></td>
-                <td class="give-left-border give-right-border">Olivia Sparks</td>
-                <td class="give-top-border give-right-border"></td>
+                <td id="first-winners-round-one-top">First Winners Round One Top</td>
                 <td></td>
                 <td></td>
             </tr>
             <tr>
                 <td></td>
                 <td></td>
-                <td class="give-left-border"></td>
-                <td class="give-top-border">Del City</td>
-                <td class="give-right-border"></td>
+                <td class="give-top-border give-left-border"><input hidden class="score-input" type="text" id="first-consolation-round-one-top-score-input"></td>
+                <td id="8-seed-name" class="advanceable give-left-border give-right-border">Eighth Seed</td>
+                <td class="give-top-border give-right-border"><input hidden class="score-input" type="text" id="first-winners-round-one-top-score-input"></td>
                 <td></td>
                 <td></td>
             </tr>
@@ -372,25 +363,34 @@
                 <td></td>
                 <td></td>
                 <td class="give-left-border"></td>
-                <td></td>
+                <td id="8-seed-school" class="give-top-border">School Name</td>
                 <td class="give-right-border"></td>
                 <td></td>
                 <td></td>
             </tr>
             <tr>
                 <td></td>
-                <td class="give-top-border give-left-border"></td>
+                <td id="first-consolation-round-two-top">First Consolation Round Two Top</td>
                 <td class="give-left-border"></td>
                 <td></td>
                 <td class="give-right-border"></td>
-                <td class="give-top-border give-right-border"></td>
+                <td id="first-winners-round-two-top">First Winners Round Two Top</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="give-top-border give-left-border"><input hidden class="score-input" type="text" id="first-consolation-round-two-top-score-input"></td>
+                <td class="give-left-border"></td>
+                <td></td>
+                <td class="give-right-border"></td>
+                <td class="give-top-border give-right-border"><input hidden class="score-input" type="text" id="first-winners-round-two-top-score-input"></td>
                 <td></td>
             </tr>
             <tr>
                 <td></td>
                 <td class="give-left-border"></td>
                 <td class="give-left-border"></td>
-                <td>Winnie Du</td>
+                <td class="advanceable" id="5-seed-name">Fifth Seed</td>
                 <td class="give-right-border"></td>
                 <td class="give-right-border"></td>
                 <td></td>
@@ -398,18 +398,18 @@
             <tr>
                 <td></td>
                 <td class="give-left-border"></td>
-                <td class="give-left-border"></td>
-                <td class="give-left-border give-right-border give-top-border">PCN</td>
-                <td class="give-right-border"></td>
+                <td id="first-consolation-round-one-bottom" class="give-left-border">First Consolation Round One Bottom</td>
+                <td id="5-seed-school" class="give-left-border give-right-border give-top-border">School Name</td>
+                <td id="first-winners-round-one-bottom" class="give-right-border">First Winners Round One Bottom</td>
                 <td class="give-right-border"></td>
                 <td></td>
             </tr>
             <tr>
                 <td></td>
                 <td class="give-left-border"></td>
-                <td class="give-top-border"></td>
+                <td class="give-top-border"><input hidden class="score-input" type="text" id="first-consolation-round-one-bottom-score-input"></td>
                 <td class="give-left-border give-right-border"></td>
-                <td class="give-top-border"></td>
+                <td class="give-top-border"><input hidden class="score-input" type="text" id="first-winners-round-one-bottom-score-input"></td>
                 <td class="give-right-border"></td>
                 <td></td>
             </tr>
@@ -417,16 +417,7 @@
                 <td></td>
                 <td class="give-left-border"></td>
                 <td></td>
-                <td class="give-left-border give-right-border">Lua Huynh</td>
-                <td></td>
-                <td class="give-right-border"></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td class="give-left-border"></td>
-                <td></td>
-                <td class="give-top-border">Westmoore</td>
+                <td id="4-seed-name" class="advanceable give-left-border give-right-border">Fourth Seed</td>
                 <td></td>
                 <td class="give-right-border"></td>
                 <td></td>
@@ -435,34 +426,34 @@
                 <td></td>
                 <td class="give-left-border"></td>
                 <td></td>
-                <td></td>
-                <td></td>
-                <td class="give-right-border"></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td class="give-top-border"></td>
-                <td class="give-left-border"></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="give-right-border"></td>
-                <td class="give-top-border">Lily Truchet</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td class="give-left-border"></td>
-                <td></td>
-                <td>Lily Truchet</td>
+                <td id="4-seed-school" class="give-top-border">School Name</td>
                 <td></td>
                 <td class="give-right-border"></td>
                 <td></td>
             </tr>
             <tr>
+                <td id="consolation-champion">Consolation Champion</td>
+                <td class="give-left-border"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="give-right-border"></td>
+                <td id="champion">Champion</td>
+            </tr>
+            <tr>
+                <td class="give-top-border"><input hidden class="score-input" type="text" id="consolation-champion-score-input"></td>
+                <td class="give-left-border"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="give-right-border"></td>
+                <td class="give-top-border"><input hidden class="score-input" type="text" id="champion-score-input"></td>
+            </tr>
+            <tr>
                 <td></td>
                 <td class="give-left-border"></td>
                 <td></td>
-                <td class="give-left-border give-top-border give-right-border">Moore</td>
+                <td class="advanceable" id="3-seed-name">Third Seed</td>
                 <td></td>
                 <td class="give-right-border"></td>
                 <td></td>
@@ -471,26 +462,26 @@
                 <td></td>
                 <td class="give-left-border"></td>
                 <td></td>
+                <td id="3-seed-school" class="give-left-border give-top-border give-right-border">School Name</td>
+                <td></td>
+                <td class="give-right-border"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="give-left-border"></td>
+                <td id="second-consolation-round-one-top">Second Consolation Round One Top</td>
                 <td class="give-left-border give-right-border"></td>
-                <td>Lily Truchet</td>
+                <td id="second-winners-round-one-top">Second Winners Round One Top</td>
                 <td class="give-right-border"></td>
                 <td></td>
             </tr>
             <tr>
                 <td></td>
                 <td class="give-left-border"></td>
-                <td class="give-top-border give-left-border"></td>
-                <td class="give-left-border give-right-border">Gracie Graham</td>
-                <td class="give-top-border give-right-border"></td>
-                <td class="give-right-border"></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td class="give-left-border"></td>
-                <td class="give-left-border"></td>
-                <td class="give-top-border">Southmoore</td>
-                <td class="give-right-border"></td>
+                <td class="give-top-border give-left-border"><input hidden class="score-input" type="text" id="second-consolation-round-one-top-score-input"></td>
+                <td id="6-seed-name" class="advanceable give-left-border give-right-border">Sixth Seed</td>
+                <td class="give-top-border give-right-border"><input hidden class="score-input" type="text" id="second-winners-round-one-top-score-input"></td>
                 <td class="give-right-border"></td>
                 <td></td>
             </tr>
@@ -498,25 +489,34 @@
                 <td></td>
                 <td class="give-left-border"></td>
                 <td class="give-left-border"></td>
-                <td></td>
+                <td id="6-seed-school" class="give-top-border">School Name</td>
                 <td class="give-right-border"></td>
-                <td class="give-right-border">Lily Truchet</td>
+                <td class="give-right-border"></td>
                 <td></td>
             </tr>
             <tr>
                 <td></td>
-                <td class="give-top-border"></td>
+                <td id="first-consolation-round-two-bottom" class="give-left-border">First Consolation Round Two Bottom</td>
                 <td class="give-left-border"></td>
                 <td></td>
                 <td class="give-right-border"></td>
-                <td class="give-top-border"></td>
+                <td id="first-winners-round-two-bottom" class="give-right-border">First Winners Round Two Bottom</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="give-top-border"><input hidden class="score-input" type="text" id="first-consolation-round-two-bottom-score-input"></td>
+                <td class="give-left-border"></td>
+                <td></td>
+                <td class="give-right-border"></td>
+                <td class="give-top-border"><input hidden class="score-input" type="text" id="first-winners-round-two-bottom-score-input"></td>
                 <td></td>
             </tr>
             <tr>
                 <td></td>
                 <td></td>
                 <td class="give-left-border"></td>
-                <td>Ivette Sarabia</td>
+                <td class="advanceable" id="7-seed-name">Seventh Seed</td>
                 <td class="give-right-border"></td>
                 <td></td>
                 <td></td>
@@ -524,18 +524,18 @@
             <tr>
                 <td></td>
                 <td></td>
-                <td class="give-left-border"></td>
-                <td class="give-top-border give-right-border give-left-border">Lawton High</td>
-                <td class="give-right-border"></td>
+                <td id="second-consolation-round-one-bottom" class="give-left-border">Second Consolation Round One Bottom</td>
+                <td id="7-seed-school" class="give-top-border give-right-border give-left-border">School Name</td>
+                <td id="second-winners-round-one-bottom" class="give-right-border">Second Winners Round One Bottom</td>
                 <td></td>
                 <td></td>
             </tr>
             <tr>
                 <td></td>
                 <td></td>
-                <td class="give-top-border"></td>
+                <td class="give-top-border"><input hidden class="score-input" type="text" id="second-consolation-round-one-bottom-score-input"></td>
                 <td class="give-left-border give-right-border"></td>
-                <td class="give-top-border"></td>
+                <td class="give-top-border"><input hidden class="score-input" type="text" id="second-winners-round-one-bottom-score-input"></td>
                 <td></td>
                 <td></td>
             </tr>
@@ -543,16 +543,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="give-left-border give-right-border">Makensie Butler</td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="give-top-border">Choctaw</td>
+                <td id="2-seed-name" class="advanceable give-left-border give-right-border">Second Seed</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -561,11 +552,94 @@
                 <td></td>
                 <td></td>
                 <td></td>
+                <td id="2-seed-school" class="give-top-border">School Name</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
             </tr>
+            <table id="bracket">
+                <tr>
+                    <th></th>
+                    <th>Seventh Place</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th>Third Place</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td id="first-consolation-lower-bracket-round-one-top">First Consolation Lower Bracket Round One Top</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td id="first-winners-lower-bracket-round-one-top">First Winners Lower Bracket Round One Top</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="give-top-border give-left-border">School Name</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="give-top-border give-right-border">School Name</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td id="seventh-place">Seventh Place</td>
+                    <td class="give-left-border"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="give-right-border"></td>
+                    <td id="third-place">Third Place</td>
+                </tr>
+                <tr>
+                    <td class="give-top-border"><input hidden class="score-input" type="text" id="seventh-place-score-input"></td>
+                    <td class="give-left-border"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="give-right-border"></td>
+                    <td class="give-top-border"><input hidden class="score-input" type="text" id="third-place-score-input"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td id="first-consolation-lower-bracket-round-one-bottom" class="give-left-border">First Consolation Lower Bracket Round One Bottom</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td id="first-winners-lower-bracket-round-one-bottom" class="give-right-border">First Winners Lower Bracket Round One Bottom</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="give-top-border">School Name</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="give-top-border">School Name</td>
+                    <td></td>
+                </tr>
+            </table>
         </table>
     </div>
 

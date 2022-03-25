@@ -124,6 +124,227 @@ $(document).ready( function () {
         });
     });
 
+    $(".bracket-button").click(function(e){
+        e.preventDefault();
+        $(".bracket-button").removeClass('selected-button');
+        $(this).addClass('selected-button');
+
+        var tournament_id = $('#tournament_id').html();
+        var requestedBracket = $(this).attr('id');
+
+        $.ajax({
+            type:'POST',
+            url:'/getBracketData',
+            data:{tournament_id:tournament_id,requestedBracket:requestedBracket},
+            success:function(data){
+
+                //repopulates tournament bracket with user selection of boys, girls, 1 singles, 2 singles, etc
+                for(const seedNumber in data.seeds) {
+                    $('#' + seedNumber + '-seed-name').html(data.seeds[seedNumber].first_name + ' ' + data.seeds[seedNumber].last_name);
+                    $('#' + seedNumber + '-seed-name').attr('data-id', data.seeds[seedNumber].id);
+                    $('#' + seedNumber + '-seed-school').html(data.seeds[seedNumber].school_name);
+                }
+
+            }
+        });
+    });
+
+    $(".score-input").keydown(function(e) {
+        $inputString = $(this).val();
+        var checkScoreValidity = true;
+        var tournament_id = $('#tournament_id').html();
+        var scoreInput = $(this).attr('id');
+
+        if (e.which == 48 || e.which == 96) {
+            var numberPressed = 0;
+        } else if (e.which === 49 || e.which === 97) {
+            var numberPressed = 1;
+        } else if (e.which === 50 || e.which === 98) {
+            var numberPressed = 2;
+        } else if (e.which === 51 || e.which === 99) {
+            var numberPressed = 3;
+        } else if (e.which === 52 || e.which === 100) {
+            var numberPressed = 4;
+        } else if (e.which === 53 || e.which === 101) {
+            var numberPressed = 5;
+        } else if (e.which === 54 || e.which === 102) {
+            var numberPressed = 6;
+        } else if (e.which === 55 || e.which === 103) {
+            var numberPressed = 7;
+        } else if (e.which === 8 || e.which === 46) {
+            $(this).val('');
+            $(this).removeClass('invalid-score');
+            $(this).removeClass('match-complete');
+            return false;
+        } else {
+            return false;
+        }
+
+        if($inputString.length === 0) {
+            if (numberPressed === 7) {
+                $(this).val('7-6');
+            } else if(numberPressed === 6) {
+                $(this).val(numberPressed + '-');
+            } else if(numberPressed === 5) {
+                $(this).val(numberPressed + '-7');
+            } else {
+                $(this).val(numberPressed + '-6');
+            }
+        }
+
+        else if (($inputString.length === 2)) {
+            if(numberPressed === 5 || numberPressed === 6) {
+                return false;
+            }
+            $(this).val($inputString + numberPressed);
+        }
+
+        else if ($inputString.length === 3) {
+
+            if (numberPressed === 7) {
+                $inputString += ', 7-6'
+                $(this).val($inputString);
+            } else if (numberPressed === 6) {
+                $inputString += ', 6-';
+                checkScoreValidity = false;
+                $(this).val($inputString);
+            } else if(numberPressed === 5) {
+                $inputString += ', 5-7';
+                $(this).val($inputString);
+            } else {
+                $inputString += ', ' + numberPressed + '-6'
+                $(this).val($inputString);
+            }
+            if(checkScoreValidity) {
+                $setsWon = calculateSetsWon($inputString);
+                if($setsWon === 0) {
+                    $(this).addClass('invalid-score');
+                } else if ($setsWon === 2) {
+                    $(this).addClass('match-complete');
+                    $winner = $(this).attr('data-winner');
+                    $loser = $(this).attr('data-loser');
+                    $winnerBracketPosition = $(this).attr('data-winner-bracket-position');
+                    $loserBracketPosition = $(this).attr('data-loser-bracket-position');
+                    $score = $inputString;
+                    saveScore($winner, $loser, $winnerBracketPosition, $loserBracketPosition, $score, tournament_id, scoreInput);
+                }
+            }
+        }
+
+        else if (($inputString.length === 7)) {
+            if(numberPressed === 5 || numberPressed === 6) {
+                return false;
+            }
+            $inputString += numberPressed;
+            $(this).val($inputString);
+            $setsWon = calculateSetsWon($inputString);
+            if($setsWon === 0) {
+                $(this).addClass('invalid-score');
+            } else if ($setsWon === 2) {
+                $(this).addClass('match-complete');
+                $winner = $(this).attr('data-winner');
+                $loser = $(this).attr('data-loser');
+                $winnerBracketPosition = $(this).attr('data-winner-bracket-position');
+                $loserBracketPosition = $(this).attr('data-loser-bracket-position');
+                $score = $inputString;
+                saveScore($winner, $loser, $winnerBracketPosition, $loserBracketPosition, $score, tournament_id, scoreInput);
+            }
+        }
+
+        else if ($inputString.length === 8) {
+            checkScoreValidity = true;
+            if (numberPressed === 7) {
+                $inputString += ', 7-6'
+                $(this).val($inputString);
+            } else if (numberPressed === 6) {
+                $inputString += ', 6-';
+                checkScoreValidity = false;
+                $(this).val($inputString);
+            } else if(numberPressed === 5) {
+                $inputString += ', 5-7';
+                $(this).val($inputString);
+            } else {
+                $inputString += ', ' + numberPressed + '-6'
+                $(this).val($inputString);
+            }
+            if(checkScoreValidity) {
+                $setsWon = calculateSetsWon($inputString);
+                if($setsWon === 0 || $setsWon === 1) {
+                    $(this).addClass('invalid-score');
+                } else if ($setsWon === 2) {
+                    $(this).addClass('match-complete');
+                    $winner = $(this).attr('data-winner');
+                    $loser = $(this).attr('data-loser');
+                    $winnerBracketPosition = $(this).attr('data-winner-bracket-position');
+                    $loserBracketPosition = $(this).attr('data-loser-bracket-position');
+                    $score = $inputString;
+                    saveScore($winner, $loser, $winnerBracketPosition, $loserBracketPosition, $score, tournament_id, scoreInput);
+                }
+            }
+
+        } else if ($inputString.length === 12) {
+            if(numberPressed === 5 || numberPressed === 6) {
+                return false;
+            }
+            $inputString += numberPressed;
+            $(this).val($inputString);
+            $setsWon = calculateSetsWon($inputString);
+            if($setsWon === 0 || $setsWon === 1) {
+                $(this).addClass('invalid-score');
+            } else if ($setsWon === 2) {
+                $(this).addClass('match-complete');
+                $winner = $(this).attr('data-winner');
+                $loser = $(this).attr('data-loser');
+                $winnerBracketPosition = $(this).attr('data-winner-bracket-position');
+                $loserBracketPosition = $(this).attr('data-loser-bracket-position');
+                $score = $inputString;
+                saveScore($winner, $loser, $winnerBracketPosition, $loserBracketPosition, $score, tournament_id, scoreInput);
+            }
+        }
+
+        return false;
+    });
+
+    function saveScore(winner, loser, winnerBracketPosition, loserBracketPosition, score, tournament_id,scoreInput) {
+        $.ajax({
+            type:'POST',
+            url:'/saveScore',
+            data:{winner:winner, loser:loser, winnerBracketPosition:winnerBracketPosition, loserBracketPosition:loserBracketPosition, score:score, tournament_id:tournament_id,scoreInput:scoreInput},
+            success:function(data){
+                alert(data.success);
+            }
+        });
+    }
+
+    function calculateSetsWon(string) {
+        $setsWon = 0;
+        $firstScore = parseInt(string.charAt(0));
+        $secondScore = parseInt(string.charAt(2));
+        $thirdScore = parseInt(string.charAt(5));
+        $fourthScore = parseInt(string.charAt(7));
+
+        console.log($firstScore);
+        console.log($secondScore);
+        console.log($thirdScore);
+        console.log($fourthScore);
+
+        if($firstScore > $secondScore) {
+            $setsWon++;
+        }
+        if($thirdScore > $fourthScore) {
+            $setsWon++;
+        }
+        if(string.length > 8){
+            $fifthScore = parseInt(string.charAt(10));
+            $sixthScore = parseInt(string.charAt(12));
+            if($fifthScore > $sixthScore) {
+                $setsWon++;
+            }
+        }
+
+        return $setsWon;
+    }
+
     //this is assigning settings for the sortable tables
     $('#myTable').DataTable( {
         paging:false,
@@ -170,7 +391,7 @@ $(document).ready( function () {
         $schoolID = $('#schools_to_invite').find(":selected").val();
         $htmlString = $('#list_to_invite').html();
         $schoolSelected =  $('#schools_to_invite').find(":selected").text();
-        
+
         $removed = $('#schools_to_invite').find(":selected").remove();
 
         $htmlString +='<li class="school_invitee" data-value="' + $schoolID + '">' + $schoolSelected + '</li><span aria-hidden="true">&times;</span>';
@@ -187,7 +408,7 @@ $(document).ready( function () {
     $("#invite_schools_button").click(function(e){
         e.preventDefault();
 
-        var tournamentID = $('#tournamentID').html();
+        var tournament_id = $('#tournament_id').html();
         var schoolInviteeIDs = [];
 
         $('li.school_invitee').each(function(index, li) {
@@ -199,12 +420,142 @@ $(document).ready( function () {
         $.ajax({
             type:'POST',
             url:'/inviteSchools',
-            data:{schoolInviteeIDs:schoolInviteeIDs, tournamentID:tournamentID},
+            data:{schoolInviteeIDs:schoolInviteeIDs, tournament_id:tournament_id},
             success:function(data){
                 alert(data.success);
             }
         });
     });
 } );
+
+$(document).on('click', '.advanceable', function() {
+
+    console.log('hiiiiii');
+    console.log($(this).attr('id'));
+
+    let matchupAssociations = {};
+    matchupAssociations['1-seed-name'] = '8-seed-name';
+    matchupAssociations['2-seed-name'] = '7-seed-name';
+    matchupAssociations['3-seed-name'] = '6-seed-name';
+    matchupAssociations['4-seed-name'] = '5-seed-name';
+    matchupAssociations['5-seed-name'] = '4-seed-name';
+    matchupAssociations['6-seed-name'] = '3-seed-name';
+    matchupAssociations['7-seed-name'] = '2-seed-name';
+    matchupAssociations['8-seed-name'] = '1-seed-name';
+
+    matchupAssociations['first-winners-round-one-top'] = 'first-winners-round-one-bottom';
+    matchupAssociations['first-winners-round-one-bottom'] = 'first-winners-round-one-top';
+    matchupAssociations['second-winners-round-one-top'] = 'second-winners-round-one-bottom';
+    matchupAssociations['second-winners-round-one-bottom'] = 'second-winners-round-one-top';
+    matchupAssociations['first-consolation-round-one-top'] = 'first-consolation-round-one-bottom';
+    matchupAssociations['first-consolation-round-one-bottom'] = 'first-consolation-round-one-top';
+    matchupAssociations['second-consolation-round-one-top'] = 'second-consolation-round-one-bottom';
+    matchupAssociations['second-consolation-round-one-bottom'] = 'second-consolation-round-one-top';
+
+    matchupAssociations['first-winners-round-two-top'] = 'first-winners-round-two-bottom';
+    matchupAssociations['first-winners-round-two-bottom'] = 'first-winners-round-two-top';
+    matchupAssociations['first-consolation-round-two-top'] = 'first-consolation-round-two-bottom';
+    matchupAssociations['first-consolation-round-two-bottom'] = 'first-consolation-round-two-top';
+
+    matchupAssociations['first-consolation-lower-bracket-round-one-top'] = 'first-consolation-lower-bracket-round-one-bottom';
+    matchupAssociations['first-consolation-lower-bracket-round-one-bottom'] = 'first-consolation-lower-bracket-round-one-top';
+    matchupAssociations['first-winners-lower-bracket-round-one-top'] = 'first-winners-lower-bracket-round-one-bottom';
+    matchupAssociations['first-winners-lower-bracket-round-one-bottom'] = 'first-winners-lower-bracket-round-one-top';
+
+
+    let winningPathAssociations = {};
+    winningPathAssociations['1-seed-name'] = 'first-winners-round-one-top';
+    winningPathAssociations['2-seed-name'] = 'second-winners-round-one-bottom';
+    winningPathAssociations['3-seed-name'] = 'second-winners-round-one-top';
+    winningPathAssociations['4-seed-name'] = 'first-winners-round-one-bottom';
+    winningPathAssociations['5-seed-name'] = 'first-winners-round-one-bottom';
+    winningPathAssociations['6-seed-name'] = 'second-winners-round-one-top';
+    winningPathAssociations['7-seed-name'] = 'second-winners-round-one-bottom';
+    winningPathAssociations['8-seed-name'] = 'first-winners-round-one-top';
+
+    winningPathAssociations['first-winners-round-one-top'] = 'first-winners-round-two-top';
+    winningPathAssociations['first-winners-round-one-bottom'] = 'first-winners-round-two-top';
+    winningPathAssociations['second-winners-round-one-top'] = 'first-winners-round-two-bottom';
+    winningPathAssociations['second-winners-round-one-bottom'] = 'first-winners-round-two-bottom';
+
+    winningPathAssociations['first-consolation-round-one-top'] = 'first-consolation-round-two-top';
+    winningPathAssociations['first-consolation-round-one-bottom'] = 'first-consolation-round-two-top';
+    winningPathAssociations['second-consolation-round-one-top'] = 'first-consolation-round-two-bottom';
+    winningPathAssociations['second-consolation-round-one-bottom'] = 'first-consolation-round-two-bottom';
+
+    winningPathAssociations['first-winners-round-two-top'] = 'champion';
+    winningPathAssociations['first-winners-round-two-bottom'] = 'champion';
+
+    winningPathAssociations['first-consolation-round-two-top'] = 'consolation-champion';
+    winningPathAssociations['first-consolation-round-two-bottom'] = 'consolation-champion';
+
+    winningPathAssociations['first-winners-lower-bracket-round-one-top'] = 'third-place';
+    winningPathAssociations['first-winners-lower-bracket-round-one-bottom'] = 'third-place';
+
+    winningPathAssociations['first-consolation-lower-bracket-round-one-top'] = 'seventh-place';
+    winningPathAssociations['first-consolation-lower-bracket-round-one-bottom'] = 'seventh-place';
+
+
+    let losingPathAssociations = {};
+    losingPathAssociations['1-seed-name'] = 'first-consolation-round-one-top';
+    losingPathAssociations['2-seed-name'] = 'second-consolation-round-one-bottom';
+    losingPathAssociations['3-seed-name'] = 'second-consolation-round-one-top';
+    losingPathAssociations['4-seed-name'] = 'first-consolation-round-one-bottom';
+    losingPathAssociations['5-seed-name'] = 'first-consolation-round-one-bottom';
+    losingPathAssociations['6-seed-name'] = 'second-consolation-round-one-top';
+    losingPathAssociations['7-seed-name'] = 'second-consolation-round-one-bottom';
+    losingPathAssociations['8-seed-name'] = 'first-consolation-round-one-top';
+
+    losingPathAssociations['first-consolation-round-one-top'] = 'first-consolation-lower-bracket-round-one-top';
+    losingPathAssociations['first-consolation-round-one-bottom'] = 'first-consolation-lower-bracket-round-one-top';
+
+    losingPathAssociations['second-consolation-round-one-top'] = 'first-consolation-lower-bracket-round-one-bottom';
+    losingPathAssociations['second-consolation-round-one-bottom'] = 'first-consolation-lower-bracket-round-one-bottom';
+
+    losingPathAssociations['first-winners-round-one-top'] = 'first-winners-lower-bracket-round-one-top';
+    losingPathAssociations['first-winners-round-one-bottom'] = 'first-winners-lower-bracket-round-one-top';
+
+    losingPathAssociations['second-winners-round-one-top'] = 'first-winners-lower-bracket-round-one-bottom';
+    losingPathAssociations['second-winners-round-one-bottom'] = 'first-winners-lower-bracket-round-one-bottom';
+
+
+    $winningPlayerBracketPosition = $(this).attr('id');
+    $winningPlayerName = $(this).html();
+    $winningPlayerID = $(this).attr('data-id');
+
+    $losingPlayerBracketPosition = matchupAssociations[$winningPlayerBracketPosition];
+    $losingPlayerName = $('#' + $losingPlayerBracketPosition).html();
+    $losingPlayerID = $('#' + $losingPlayerBracketPosition).attr('data-id');
+
+    $winningPath = winningPathAssociations[$winningPlayerBracketPosition];
+    $losingPath = losingPathAssociations[$losingPlayerBracketPosition];
+
+    $('#' + $winningPlayerBracketPosition).removeClass('winner');
+    $('#' + $losingPlayerBracketPosition).removeClass('winner');
+
+    $('#' + $winningPath).html($winningPlayerName);
+    $('#' + $winningPath).addClass('advanceable');
+    $('#' + $winningPath).attr('data-id', $winningPlayerID);
+    $('#' + $winningPath + '-score-input').removeAttr('hidden');
+    $('#' + $winningPath + '-score-input').attr('data-winner', $winningPlayerID);
+    $('#' + $winningPath + '-score-input').attr('data-loser', $losingPlayerID);
+    $('#' + $winningPath + '-score-input').attr('data-winner-bracket-position', $winningPlayerBracketPosition);
+    $('#' + $winningPath + '-score-input').attr('data-loser-bracket-position', $losingPlayerBracketPosition);
+
+    $('#' + $losingPath).html($losingPlayerName);
+    $('#' + $losingPath).addClass('advanceable');
+    $('#' + $losingPath).attr('data-id', $losingPlayerID);
+
+    $(this).addClass('winner');
+    if($winningPath == 'champion') {
+        $('#champion').addClass('winner');
+    } else if ($winningPath == 'consolation-champion') {
+        $('#consolation-champion').addClass('winner');
+    } else if ($winningPath == 'third-place') {
+        $('#third-place').addClass('winner');
+    } else if ($winningPath == 'seventh-place') {
+        $('#seventh-place').addClass('winner');
+    }
+});
 
 

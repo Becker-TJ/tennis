@@ -56,12 +56,40 @@
             background-color:lightblue;
         }
         .btn-group button {
-            background-color: #04AA6D; /* Green background */
-            border: 1px solid green; /* Green border */
-            color: white; /* White text */
+            border: 1px solid black; /* Green border */
             padding: 10px 24px; /* Some padding */
             cursor: pointer; /* Pointer/hand icon */
             float: left; /* Float the buttons side by side */
+        }
+
+        .btn-group button:hover {
+            border: 1px solid black; /* Green border */
+            background-color:#28474B;
+            color:white !important;
+        }
+
+        .btn-boys {
+            background-color:#84CDD2;
+        }
+
+        .btn-girls {
+            background-color:#CDB6B5;
+        }
+
+        .invalid-score {
+            background-color:#e67073;
+        }
+
+        .advanceable {
+
+        }
+
+        .winner {
+            background-color:#abffc0;
+        }
+
+        .match-complete {
+            background-color:mediumspringgreen;
         }
 
         .btn-group button:not(:last-child) {
@@ -75,10 +103,20 @@
             display: table;
         }
 
-        /* Add a background color on hover */
-        .btn-group button:hover {
-            background-color: #3e8e41;
+        .score-input {
+            text-align:center;
         }
+
+        /* Add a background color on hover */
+        /*.btn-group button:hover {*/
+        /*    background-color: #000000;*/
+        /*}*/
+
+        .selected-button {
+            background-color:#28474B !important;
+            color:white;
+        }
+
 
 
     </style>
