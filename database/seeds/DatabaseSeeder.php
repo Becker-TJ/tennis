@@ -31,6 +31,10 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
             ]);
         }
+        $girlsOneSinglesRank = 'girls_one_singles_rank';
+        $girlsTwoSinglesRank = 'girls_two_singles_rank';
+        $girlsOneDoublesRank = 'girls_one_doubles_rank';
+        $girlsTwoDoublesRank = 'girls_two_doubles_rank';
 
         $lawtonEisenhowerOneSingles = new Player;
         $lawtonEisenhowerOneSingles['first_name'] = 'Genevieve';
@@ -38,11 +42,11 @@ class DatabaseSeeder extends Seeder
         $lawtonEisenhowerOneSingles['position'] = 1;
         $lawtonEisenhowerOneSingles['class'] = 'Senior';
         $lawtonEisenhowerOneSingles ['gender'] = 'Female';
-        $lawtonEisenhowerOneSingles['one_singles_rank'] = 1;
-        $lawtonEisenhowerOneSingles['two_singles_rank'] = 99999;
-        $lawtonEisenhowerOneSingles['one_doubles_rank'] = 99999;
-        $lawtonEisenhowerOneSingles['two_doubles_rank'] = 99999;
-        $lawtonEisenhowerOneSingles ['school_id'] = 513;
+        $lawtonEisenhowerOneSingles[$girlsOneSinglesRank] = 1;
+        $lawtonEisenhowerOneSingles[$girlsTwoSinglesRank] = 99999;
+        $lawtonEisenhowerOneSingles[$girlsOneDoublesRank] = 99999;
+        $lawtonEisenhowerOneSingles[$girlsTwoDoublesRank] = 99999;
+        $lawtonEisenhowerOneSingles['school_id'] = 513;
         $lawtonEisenhowerOneSingles->saveOrFail();
         $lawtonEisenhowerTwoSingles = new Player;
         $lawtonEisenhowerTwoSingles['first_name'] = 'Kaitlyn';
@@ -50,10 +54,10 @@ class DatabaseSeeder extends Seeder
         $lawtonEisenhowerTwoSingles['position'] = 2;
         $lawtonEisenhowerTwoSingles['class'] = 'Senior';
         $lawtonEisenhowerTwoSingles ['gender'] = 'Female';
-        $lawtonEisenhowerTwoSingles['one_singles_rank'] = 99999;
-        $lawtonEisenhowerTwoSingles['two_singles_rank'] = 99999;
-        $lawtonEisenhowerTwoSingles['one_doubles_rank'] = 99999;
-        $lawtonEisenhowerTwoSingles['two_doubles_rank'] = 99999;
+        $lawtonEisenhowerTwoSingles[$girlsOneSinglesRank] = 99999;
+        $lawtonEisenhowerTwoSingles[$girlsTwoSinglesRank] = 99999;
+        $lawtonEisenhowerTwoSingles[$girlsOneDoublesRank] = 99999;
+        $lawtonEisenhowerTwoSingles[$girlsTwoDoublesRank] = 99999;
         $lawtonEisenhowerTwoSingles ['school_id'] = 513;
         $lawtonEisenhowerTwoSingles->saveOrFail();
         $lawtonEisenhowerOneDoublesPlayerOne = new Player;
@@ -62,10 +66,10 @@ class DatabaseSeeder extends Seeder
         $lawtonEisenhowerOneDoublesPlayerOne['position'] = 3;
         $lawtonEisenhowerOneDoublesPlayerOne['class'] = 'Senior';
         $lawtonEisenhowerOneDoublesPlayerOne ['gender'] = 'Female';
-        $lawtonEisenhowerOneDoublesPlayerOne['one_singles_rank'] = 99999;
-        $lawtonEisenhowerOneDoublesPlayerOne['two_singles_rank'] = 99999;
-        $lawtonEisenhowerOneDoublesPlayerOne['one_doubles_rank'] = 99999;
-        $lawtonEisenhowerOneDoublesPlayerOne['two_doubles_rank'] = 99999;
+        $lawtonEisenhowerOneDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
+        $lawtonEisenhowerOneDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
+        $lawtonEisenhowerOneDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
+        $lawtonEisenhowerOneDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $lawtonEisenhowerOneDoublesPlayerOne ['school_id'] = 513;
         $lawtonEisenhowerOneDoublesPlayerOne->saveOrFail();
         $lawtonEisenhowerOneDoublesPlayerTwo = new Player;
@@ -74,10 +78,10 @@ class DatabaseSeeder extends Seeder
         $lawtonEisenhowerOneDoublesPlayerTwo['position'] = 4;
         $lawtonEisenhowerOneDoublesPlayerTwo['class'] = 'Senior';
         $lawtonEisenhowerOneDoublesPlayerTwo ['gender'] = 'Female';
-        $lawtonEisenhowerOneDoublesPlayerTwo['one_singles_rank'] = 99999;
-        $lawtonEisenhowerOneDoublesPlayerTwo['two_singles_rank'] = 99999;
-        $lawtonEisenhowerOneDoublesPlayerTwo['one_doubles_rank'] = 99999;
-        $lawtonEisenhowerOneDoublesPlayerTwo['two_doubles_rank'] = 99999;
+        $lawtonEisenhowerOneDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
+        $lawtonEisenhowerOneDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
+        $lawtonEisenhowerOneDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
+        $lawtonEisenhowerOneDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $lawtonEisenhowerOneDoublesPlayerTwo ['school_id'] = 513;
         $lawtonEisenhowerOneDoublesPlayerTwo->saveOrFail();
         $lawtonEisenhowerTwoDoublesPlayerOne = new Player;
@@ -86,10 +90,10 @@ class DatabaseSeeder extends Seeder
         $lawtonEisenhowerTwoDoublesPlayerOne['position'] = 5;
         $lawtonEisenhowerTwoDoublesPlayerOne['class'] = 'Senior';
         $lawtonEisenhowerTwoDoublesPlayerOne ['gender'] = 'Female';
-        $lawtonEisenhowerTwoDoublesPlayerOne['one_singles_rank'] = 99999;
-        $lawtonEisenhowerTwoDoublesPlayerOne['two_singles_rank'] = 99999;
-        $lawtonEisenhowerTwoDoublesPlayerOne['one_doubles_rank'] = 99999;
-        $lawtonEisenhowerTwoDoublesPlayerOne['two_doubles_rank'] = 99999;
+        $lawtonEisenhowerTwoDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
+        $lawtonEisenhowerTwoDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
+        $lawtonEisenhowerTwoDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
+        $lawtonEisenhowerTwoDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $lawtonEisenhowerTwoDoublesPlayerOne ['school_id'] = 513;
         $lawtonEisenhowerTwoDoublesPlayerOne->saveOrFail();
         $lawtonEisenhowerTwoDoublesPlayerTwo = new Player;
@@ -98,10 +102,10 @@ class DatabaseSeeder extends Seeder
         $lawtonEisenhowerTwoDoublesPlayerTwo['position'] = 6;
         $lawtonEisenhowerTwoDoublesPlayerTwo['class'] = 'Senior';
         $lawtonEisenhowerTwoDoublesPlayerTwo ['gender'] = 'Female';
-        $lawtonEisenhowerTwoDoublesPlayerTwo['one_singles_rank'] = 99999;
-        $lawtonEisenhowerTwoDoublesPlayerTwo['two_singles_rank'] = 99999;
-        $lawtonEisenhowerTwoDoublesPlayerTwo['one_doubles_rank'] = 99999;
-        $lawtonEisenhowerTwoDoublesPlayerTwo['two_doubles_rank'] = 99999;
+        $lawtonEisenhowerTwoDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
+        $lawtonEisenhowerTwoDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
+        $lawtonEisenhowerTwoDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
+        $lawtonEisenhowerTwoDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $lawtonEisenhowerTwoDoublesPlayerTwo ['school_id'] = 513;
         $lawtonEisenhowerTwoDoublesPlayerTwo->saveOrFail();
 
@@ -111,10 +115,10 @@ class DatabaseSeeder extends Seeder
         $delCityOneSingles['position'] = 1;
         $delCityOneSingles['class'] = 'Senior';
         $delCityOneSingles ['gender'] = 'Female';
-        $delCityOneSingles['one_singles_rank'] = 8;
-        $delCityOneSingles['two_singles_rank'] = 99999;
-        $delCityOneSingles['one_doubles_rank'] = 99999;
-        $delCityOneSingles['two_doubles_rank'] = 99999;
+        $delCityOneSingles[$girlsOneSinglesRank] = 8;
+        $delCityOneSingles[$girlsTwoSinglesRank] = 99999;
+        $delCityOneSingles[$girlsOneDoublesRank] = 99999;
+        $delCityOneSingles[$girlsTwoDoublesRank] = 99999;
         $delCityOneSingles ['school_id'] = 317;
         $delCityOneSingles->saveOrFail();
         $delCityTwoSingles = new Player;
@@ -123,10 +127,10 @@ class DatabaseSeeder extends Seeder
         $delCityTwoSingles['position'] = 2;
         $delCityTwoSingles['class'] = 'Senior';
         $delCityTwoSingles ['gender'] = 'Female';
-        $delCityTwoSingles['one_singles_rank'] = 99999;
-        $delCityTwoSingles['two_singles_rank'] = 99999;
-        $delCityTwoSingles['one_doubles_rank'] = 99999;
-        $delCityTwoSingles['two_doubles_rank'] = 99999;
+        $delCityTwoSingles[$girlsOneSinglesRank] = 99999;
+        $delCityTwoSingles[$girlsTwoSinglesRank] = 99999;
+        $delCityTwoSingles[$girlsOneDoublesRank] = 99999;
+        $delCityTwoSingles[$girlsTwoDoublesRank] = 99999;
         $delCityTwoSingles ['school_id'] = 317;
         $delCityTwoSingles->saveOrFail();
         $delCityOneDoublesPlayerOne = new Player;
@@ -135,10 +139,10 @@ class DatabaseSeeder extends Seeder
         $delCityOneDoublesPlayerOne['position'] = 3;
         $delCityOneDoublesPlayerOne['class'] = 'Senior';
         $delCityOneDoublesPlayerOne ['gender'] = 'Female';
-        $delCityOneDoublesPlayerOne['one_singles_rank'] = 99999;
-        $delCityOneDoublesPlayerOne['two_singles_rank'] = 99999;
-        $delCityOneDoublesPlayerOne['one_doubles_rank'] = 99999;
-        $delCityOneDoublesPlayerOne['two_doubles_rank'] = 99999;
+        $delCityOneDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
+        $delCityOneDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
+        $delCityOneDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
+        $delCityOneDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $delCityOneDoublesPlayerOne ['school_id'] = 317;
         $delCityOneDoublesPlayerOne->saveOrFail();
         $delCityOneDoublesPlayerTwo = new Player;
@@ -147,10 +151,10 @@ class DatabaseSeeder extends Seeder
         $delCityOneDoublesPlayerTwo['position'] = 4;
         $delCityOneDoublesPlayerTwo['class'] = 'Senior';
         $delCityOneDoublesPlayerTwo ['gender'] = 'Female';
-        $delCityOneDoublesPlayerTwo['one_singles_rank'] = 99999;
-        $delCityOneDoublesPlayerTwo['two_singles_rank'] = 99999;
-        $delCityOneDoublesPlayerTwo['one_doubles_rank'] = 99999;
-        $delCityOneDoublesPlayerTwo['two_doubles_rank'] = 99999;
+        $delCityOneDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
+        $delCityOneDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
+        $delCityOneDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
+        $delCityOneDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $delCityOneDoublesPlayerTwo ['school_id'] = 317;
         $delCityOneDoublesPlayerTwo->saveOrFail();
         $delCityTwoDoublesPlayerOne = new Player;
@@ -159,10 +163,10 @@ class DatabaseSeeder extends Seeder
         $delCityTwoDoublesPlayerOne['position'] = 5;
         $delCityTwoDoublesPlayerOne['class'] = 'Senior';
         $delCityTwoDoublesPlayerOne ['gender'] = 'Female';
-        $delCityTwoDoublesPlayerOne['one_singles_rank'] = 99999;
-        $delCityTwoDoublesPlayerOne['two_singles_rank'] = 99999;
-        $delCityTwoDoublesPlayerOne['one_doubles_rank'] = 99999;
-        $delCityTwoDoublesPlayerOne['two_doubles_rank'] = 99999;
+        $delCityTwoDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
+        $delCityTwoDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
+        $delCityTwoDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
+        $delCityTwoDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $delCityTwoDoublesPlayerOne ['school_id'] = 317;
         $delCityTwoDoublesPlayerOne->saveOrFail();
         $delCityTwoDoublesPlayerTwo = new Player;
@@ -171,10 +175,10 @@ class DatabaseSeeder extends Seeder
         $delCityTwoDoublesPlayerTwo['position'] = 6;
         $delCityTwoDoublesPlayerTwo['class'] = 'Senior';
         $delCityTwoDoublesPlayerTwo ['gender'] = 'Female';
-        $delCityTwoDoublesPlayerTwo['one_singles_rank'] = 99999;
-        $delCityTwoDoublesPlayerTwo['two_singles_rank'] = 99999;
-        $delCityTwoDoublesPlayerTwo['one_doubles_rank'] = 99999;
-        $delCityTwoDoublesPlayerTwo['two_doubles_rank'] = 99999;
+        $delCityTwoDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
+        $delCityTwoDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
+        $delCityTwoDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
+        $delCityTwoDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $delCityTwoDoublesPlayerTwo ['school_id'] = 317;
         $delCityTwoDoublesPlayerTwo->saveOrFail();
 
@@ -184,10 +188,10 @@ class DatabaseSeeder extends Seeder
         $PCNOneSingles['position'] = 1;
         $PCNOneSingles['class'] = 'Senior';
         $PCNOneSingles ['gender'] = 'Female';
-        $PCNOneSingles['one_singles_rank'] = 5;
-        $PCNOneSingles['two_singles_rank'] = 99999;
-        $PCNOneSingles['one_doubles_rank'] = 99999;
-        $PCNOneSingles['two_doubles_rank'] = 99999;
+        $PCNOneSingles[$girlsOneSinglesRank] = 5;
+        $PCNOneSingles[$girlsTwoSinglesRank] = 99999;
+        $PCNOneSingles[$girlsOneDoublesRank] = 99999;
+        $PCNOneSingles[$girlsTwoDoublesRank] = 99999;
         $PCNOneSingles ['school_id'] = 340;
         $PCNOneSingles->saveOrFail();
         $PCNTwoSingles = new Player;
@@ -196,10 +200,10 @@ class DatabaseSeeder extends Seeder
         $PCNTwoSingles['position'] = 2;
         $PCNTwoSingles['class'] = 'Senior';
         $PCNTwoSingles ['gender'] = 'Female';
-        $PCNTwoSingles['one_singles_rank'] = 99999;
-        $PCNTwoSingles['two_singles_rank'] = 99999;
-        $PCNTwoSingles['one_doubles_rank'] = 99999;
-        $PCNTwoSingles['two_doubles_rank'] = 99999;
+        $PCNTwoSingles[$girlsOneSinglesRank] = 99999;
+        $PCNTwoSingles[$girlsTwoSinglesRank] = 99999;
+        $PCNTwoSingles[$girlsOneDoublesRank] = 99999;
+        $PCNTwoSingles[$girlsTwoDoublesRank] = 99999;
         $PCNTwoSingles ['school_id'] = 340;
         $PCNTwoSingles->saveOrFail();
         $PCNOneDoublesPlayerOne = new Player;
@@ -208,10 +212,10 @@ class DatabaseSeeder extends Seeder
         $PCNOneDoublesPlayerOne['position'] = 3;
         $PCNOneDoublesPlayerOne['class'] = 'Senior';
         $PCNOneDoublesPlayerOne ['gender'] = 'Female';
-        $PCNOneDoublesPlayerOne['one_singles_rank'] = 99999;
-        $PCNOneDoublesPlayerOne['two_singles_rank'] = 99999;
-        $PCNOneDoublesPlayerOne['one_doubles_rank'] = 99999;
-        $PCNOneDoublesPlayerOne['two_doubles_rank'] = 99999;
+        $PCNOneDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
+        $PCNOneDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
+        $PCNOneDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
+        $PCNOneDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $PCNOneDoublesPlayerOne ['school_id'] = 340;
         $PCNOneDoublesPlayerOne->saveOrFail();
         $PCNOneDoublesPlayerTwo = new Player;
@@ -220,10 +224,10 @@ class DatabaseSeeder extends Seeder
         $PCNOneDoublesPlayerTwo['position'] = 4;
         $PCNOneDoublesPlayerTwo['class'] = 'Senior';
         $PCNOneDoublesPlayerTwo ['gender'] = 'Female';
-        $PCNOneDoublesPlayerTwo['one_singles_rank'] = 99999;
-        $PCNOneDoublesPlayerTwo['two_singles_rank'] = 99999;
-        $PCNOneDoublesPlayerTwo['one_doubles_rank'] = 99999;
-        $PCNOneDoublesPlayerTwo['two_doubles_rank'] = 99999;
+        $PCNOneDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
+        $PCNOneDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
+        $PCNOneDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
+        $PCNOneDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $PCNOneDoublesPlayerTwo ['school_id'] = 340;
         $PCNOneDoublesPlayerTwo->saveOrFail();
         $PCNTwoDoublesPlayerOne = new Player;
@@ -232,10 +236,10 @@ class DatabaseSeeder extends Seeder
         $PCNTwoDoublesPlayerOne['position'] = 5;
         $PCNTwoDoublesPlayerOne['class'] = 'Senior';
         $PCNTwoDoublesPlayerOne ['gender'] = 'Female';
-        $PCNTwoDoublesPlayerOne['one_singles_rank'] = 99999;
-        $PCNTwoDoublesPlayerOne['two_singles_rank'] = 99999;
-        $PCNTwoDoublesPlayerOne['one_doubles_rank'] = 99999;
-        $PCNTwoDoublesPlayerOne['two_doubles_rank'] = 99999;
+        $PCNTwoDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
+        $PCNTwoDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
+        $PCNTwoDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
+        $PCNTwoDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $PCNTwoDoublesPlayerOne ['school_id'] = 340;
         $PCNTwoDoublesPlayerOne->saveOrFail();
         $PCNTwoDoublesPlayerTwo = new Player;
@@ -244,10 +248,10 @@ class DatabaseSeeder extends Seeder
         $PCNTwoDoublesPlayerTwo['position'] = 6;
         $PCNTwoDoublesPlayerTwo['class'] = 'Senior';
         $PCNTwoDoublesPlayerTwo ['gender'] = 'Female';
-        $PCNTwoDoublesPlayerTwo['one_singles_rank'] = 99999;
-        $PCNTwoDoublesPlayerTwo['two_singles_rank'] = 99999;
-        $PCNTwoDoublesPlayerTwo['one_doubles_rank'] = 99999;
-        $PCNTwoDoublesPlayerTwo['two_doubles_rank'] = 99999;
+        $PCNTwoDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
+        $PCNTwoDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
+        $PCNTwoDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
+        $PCNTwoDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $PCNTwoDoublesPlayerTwo ['school_id'] = 340;
         $PCNTwoDoublesPlayerTwo->saveOrFail();
 
@@ -257,10 +261,10 @@ class DatabaseSeeder extends Seeder
         $westmooreOneSingles['position'] = 1;
         $westmooreOneSingles['class'] = 'Senior';
         $westmooreOneSingles ['gender'] = 'Female';
-        $westmooreOneSingles['one_singles_rank'] = 4;
-        $westmooreOneSingles['two_singles_rank'] = 99999;
-        $westmooreOneSingles['one_doubles_rank'] = 99999;
-        $westmooreOneSingles['two_doubles_rank'] = 99999;
+        $westmooreOneSingles[$girlsOneSinglesRank] = 4;
+        $westmooreOneSingles[$girlsTwoSinglesRank] = 99999;
+        $westmooreOneSingles[$girlsOneDoublesRank] = 99999;
+        $westmooreOneSingles[$girlsTwoDoublesRank] = 99999;
         $westmooreOneSingles ['school_id'] = 81;
         $westmooreOneSingles->saveOrFail();
         $westmooreTwoSingles = new Player;
@@ -269,10 +273,10 @@ class DatabaseSeeder extends Seeder
         $westmooreTwoSingles['position'] = 2;
         $westmooreTwoSingles['class'] = 'Senior';
         $westmooreTwoSingles ['gender'] = 'Female';
-        $westmooreTwoSingles['one_singles_rank'] = 99999;
-        $westmooreTwoSingles['two_singles_rank'] = 99999;
-        $westmooreTwoSingles['one_doubles_rank'] = 99999;
-        $westmooreTwoSingles['two_doubles_rank'] = 99999;
+        $westmooreTwoSingles[$girlsOneSinglesRank] = 99999;
+        $westmooreTwoSingles[$girlsTwoSinglesRank] = 99999;
+        $westmooreTwoSingles[$girlsOneDoublesRank] = 99999;
+        $westmooreTwoSingles[$girlsTwoDoublesRank] = 99999;
         $westmooreTwoSingles ['school_id'] = 81;
         $westmooreTwoSingles->saveOrFail();
         $westmooreOneDoublesPlayerOne = new Player;
@@ -281,10 +285,10 @@ class DatabaseSeeder extends Seeder
         $westmooreOneDoublesPlayerOne['position'] = 3;
         $westmooreOneDoublesPlayerOne['class'] = 'Senior';
         $westmooreOneDoublesPlayerOne ['gender'] = 'Female';
-        $westmooreOneDoublesPlayerOne['one_singles_rank'] = 99999;
-        $westmooreOneDoublesPlayerOne['two_singles_rank'] = 99999;
-        $westmooreOneDoublesPlayerOne['one_doubles_rank'] = 99999;
-        $westmooreOneDoublesPlayerOne['two_doubles_rank'] = 99999;
+        $westmooreOneDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
+        $westmooreOneDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
+        $westmooreOneDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
+        $westmooreOneDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $westmooreOneDoublesPlayerOne ['school_id'] = 81;
         $westmooreOneDoublesPlayerOne->saveOrFail();
         $westmooreOneDoublesPlayerTwo = new Player;
@@ -293,10 +297,10 @@ class DatabaseSeeder extends Seeder
         $westmooreOneDoublesPlayerTwo['position'] = 4;
         $westmooreOneDoublesPlayerTwo['class'] = 'Senior';
         $westmooreOneDoublesPlayerTwo ['gender'] = 'Female';
-        $westmooreOneDoublesPlayerTwo['one_singles_rank'] = 99999;
-        $westmooreOneDoublesPlayerTwo['two_singles_rank'] = 99999;
-        $westmooreOneDoublesPlayerTwo['one_doubles_rank'] = 99999;
-        $westmooreOneDoublesPlayerTwo['two_doubles_rank'] = 99999;
+        $westmooreOneDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
+        $westmooreOneDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
+        $westmooreOneDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
+        $westmooreOneDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $westmooreOneDoublesPlayerTwo ['school_id'] = 81;
         $westmooreOneDoublesPlayerTwo->saveOrFail();
         $westmooreTwoDoublesPlayerOne = new Player;
@@ -305,10 +309,10 @@ class DatabaseSeeder extends Seeder
         $westmooreTwoDoublesPlayerOne['position'] = 5;
         $westmooreTwoDoublesPlayerOne['class'] = 'Senior';
         $westmooreTwoDoublesPlayerOne ['gender'] = 'Female';
-        $westmooreTwoDoublesPlayerOne['one_singles_rank'] = 99999;
-        $westmooreTwoDoublesPlayerOne['two_singles_rank'] = 99999;
-        $westmooreTwoDoublesPlayerOne['one_doubles_rank'] = 99999;
-        $westmooreTwoDoublesPlayerOne['two_doubles_rank'] = 99999;
+        $westmooreTwoDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
+        $westmooreTwoDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
+        $westmooreTwoDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
+        $westmooreTwoDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $westmooreTwoDoublesPlayerOne ['school_id'] = 81;
         $westmooreTwoDoublesPlayerOne->saveOrFail();
         $westmooreTwoDoublesPlayerTwo = new Player;
@@ -317,10 +321,10 @@ class DatabaseSeeder extends Seeder
         $westmooreTwoDoublesPlayerTwo['position'] = 6;
         $westmooreTwoDoublesPlayerTwo['class'] = 'Senior';
         $westmooreTwoDoublesPlayerTwo ['gender'] = 'Female';
-        $westmooreTwoDoublesPlayerTwo['one_singles_rank'] = 99999;
-        $westmooreTwoDoublesPlayerTwo['two_singles_rank'] = 99999;
-        $westmooreTwoDoublesPlayerTwo['one_doubles_rank'] = 99999;
-        $westmooreTwoDoublesPlayerTwo['two_doubles_rank'] = 99999;
+        $westmooreTwoDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
+        $westmooreTwoDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
+        $westmooreTwoDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
+        $westmooreTwoDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $westmooreTwoDoublesPlayerTwo ['school_id'] = 81;
         $westmooreTwoDoublesPlayerTwo->saveOrFail();
 
@@ -330,10 +334,10 @@ class DatabaseSeeder extends Seeder
         $mooreOneSingles['position'] = 1;
         $mooreOneSingles['class'] = 'Senior';
         $mooreOneSingles ['gender'] = 'Female';
-        $mooreOneSingles['one_singles_rank'] = 3;
-        $mooreOneSingles['two_singles_rank'] = 99999;
-        $mooreOneSingles['one_doubles_rank'] = 99999;
-        $mooreOneSingles['two_doubles_rank'] = 99999;
+        $mooreOneSingles[$girlsOneSinglesRank] = 3;
+        $mooreOneSingles[$girlsTwoSinglesRank] = 99999;
+        $mooreOneSingles[$girlsOneDoublesRank] = 99999;
+        $mooreOneSingles[$girlsTwoDoublesRank] = 99999;
         $mooreOneSingles ['school_id'] = 80;
         $mooreOneSingles->saveOrFail();
         $mooreTwoSingles = new Player;
@@ -341,11 +345,11 @@ class DatabaseSeeder extends Seeder
         $mooreTwoSingles['last_name'] = 'Hall';
         $mooreTwoSingles['position'] = 2;
         $mooreTwoSingles['class'] = 'Senior';
-        $mooreTwoSingles ['gender'] = 'Female';
-        $mooreTwoSingles['one_singles_rank'] = 99999;
-        $mooreTwoSingles['two_singles_rank'] = 99999;
-        $mooreTwoSingles['one_doubles_rank'] = 99999;
-        $mooreTwoSingles['two_doubles_rank'] = 99999;
+        $mooreTwoSingles ['gender']= 'Female';
+        $mooreTwoSingles[$girlsOneSinglesRank] = 99999;
+        $mooreTwoSingles[$girlsTwoSinglesRank] = 99999;
+        $mooreTwoSingles[$girlsOneDoublesRank] = 99999;
+        $mooreTwoSingles[$girlsTwoDoublesRank] = 99999;
         $mooreTwoSingles ['school_id'] = 80;
         $mooreTwoSingles->saveOrFail();
         $mooreOneDoublesPlayerOne = new Player;
@@ -354,10 +358,10 @@ class DatabaseSeeder extends Seeder
         $mooreOneDoublesPlayerOne['position'] = 3;
         $mooreOneDoublesPlayerOne['class'] = 'Senior';
         $mooreOneDoublesPlayerOne ['gender'] = 'Female';
-        $mooreOneDoublesPlayerOne['one_singles_rank'] = 99999;
-        $mooreOneDoublesPlayerOne['two_singles_rank'] = 99999;
-        $mooreOneDoublesPlayerOne['one_doubles_rank'] = 99999;
-        $mooreOneDoublesPlayerOne['two_doubles_rank'] = 99999;
+        $mooreOneDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
+        $mooreOneDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
+        $mooreOneDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
+        $mooreOneDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $mooreOneDoublesPlayerOne ['school_id'] = 80;
         $mooreOneDoublesPlayerOne->saveOrFail();
         $mooreOneDoublesPlayerTwo = new Player;
@@ -366,10 +370,10 @@ class DatabaseSeeder extends Seeder
         $mooreOneDoublesPlayerTwo['position'] = 4;
         $mooreOneDoublesPlayerTwo['class'] = 'Senior';
         $mooreOneDoublesPlayerTwo ['gender'] = 'Female';
-        $mooreOneDoublesPlayerTwo['one_singles_rank'] = 99999;
-        $mooreOneDoublesPlayerTwo['two_singles_rank'] = 99999;
-        $mooreOneDoublesPlayerTwo['one_doubles_rank'] = 99999;
-        $mooreOneDoublesPlayerTwo['two_doubles_rank'] = 99999;
+        $mooreOneDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
+        $mooreOneDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
+        $mooreOneDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
+        $mooreOneDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $mooreOneDoublesPlayerTwo ['school_id'] = 80;
         $mooreOneDoublesPlayerTwo->saveOrFail();
         $mooreTwoDoublesPlayerOne = new Player;
@@ -378,10 +382,10 @@ class DatabaseSeeder extends Seeder
         $mooreTwoDoublesPlayerOne['position'] = 5;
         $mooreTwoDoublesPlayerOne['class'] = 'Senior';
         $mooreTwoDoublesPlayerOne ['gender'] = 'Female';
-        $mooreTwoDoublesPlayerOne['one_singles_rank'] = 99999;
-        $mooreTwoDoublesPlayerOne['two_singles_rank'] = 99999;
-        $mooreTwoDoublesPlayerOne['one_doubles_rank'] = 99999;
-        $mooreTwoDoublesPlayerOne['two_doubles_rank'] = 99999;
+        $mooreTwoDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
+        $mooreTwoDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
+        $mooreTwoDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
+        $mooreTwoDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $mooreTwoDoublesPlayerOne ['school_id'] = 80;
         $mooreTwoDoublesPlayerOne->saveOrFail();
         $mooreTwoDoublesPlayerTwo = new Player;
@@ -390,10 +394,10 @@ class DatabaseSeeder extends Seeder
         $mooreTwoDoublesPlayerTwo['position'] = 6;
         $mooreTwoDoublesPlayerTwo['class'] = 'Senior';
         $mooreTwoDoublesPlayerTwo ['gender'] = 'Female';
-        $mooreTwoDoublesPlayerTwo['one_singles_rank'] = 99999;
-        $mooreTwoDoublesPlayerTwo['two_singles_rank'] = 99999;
-        $mooreTwoDoublesPlayerTwo['one_doubles_rank'] = 99999;
-        $mooreTwoDoublesPlayerTwo['two_doubles_rank'] = 99999;
+        $mooreTwoDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
+        $mooreTwoDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
+        $mooreTwoDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
+        $mooreTwoDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $mooreTwoDoublesPlayerTwo ['school_id'] = 80;
         $mooreTwoDoublesPlayerTwo->saveOrFail();
 
@@ -403,10 +407,10 @@ class DatabaseSeeder extends Seeder
         $southmooreOneSingles['position'] = 1;
         $southmooreOneSingles['class'] = 'Senior';
         $southmooreOneSingles ['gender'] = 'Female';
-        $southmooreOneSingles['one_singles_rank'] = 6;
-        $southmooreOneSingles['two_singles_rank'] = 99999;
-        $southmooreOneSingles['one_doubles_rank'] = 99999;
-        $southmooreOneSingles['two_doubles_rank'] = 99999;
+        $southmooreOneSingles[$girlsOneSinglesRank] = 6;
+        $southmooreOneSingles[$girlsTwoSinglesRank] = 99999;
+        $southmooreOneSingles[$girlsOneDoublesRank] = 99999;
+        $southmooreOneSingles[$girlsTwoDoublesRank] = 99999;
         $southmooreOneSingles ['school_id'] = 82;
         $southmooreOneSingles->saveOrFail();
         $southmooreTwoSingles = new Player;
@@ -415,10 +419,10 @@ class DatabaseSeeder extends Seeder
         $southmooreTwoSingles['position'] = 2;
         $southmooreTwoSingles['class'] = 'Senior';
         $southmooreTwoSingles ['gender'] = 'Female';
-        $southmooreTwoSingles['one_singles_rank'] = 99999;
-        $southmooreTwoSingles['two_singles_rank'] = 99999;
-        $southmooreTwoSingles['one_doubles_rank'] = 99999;
-        $southmooreTwoSingles['two_doubles_rank'] = 99999;
+        $southmooreTwoSingles[$girlsOneSinglesRank] = 99999;
+        $southmooreTwoSingles[$girlsTwoSinglesRank] = 99999;
+        $southmooreTwoSingles[$girlsOneDoublesRank] = 99999;
+        $southmooreTwoSingles[$girlsTwoDoublesRank] = 99999;
         $southmooreTwoSingles ['school_id'] = 82;
         $southmooreTwoSingles->saveOrFail();
         $southmooreOneDoublesPlayerOne = new Player;
@@ -427,10 +431,10 @@ class DatabaseSeeder extends Seeder
         $southmooreOneDoublesPlayerOne['position'] = 3;
         $southmooreOneDoublesPlayerOne['class'] = 'Senior';
         $southmooreOneDoublesPlayerOne ['gender'] = 'Female';
-        $southmooreOneDoublesPlayerOne['one_singles_rank'] = 99999;
-        $southmooreOneDoublesPlayerOne['two_singles_rank'] = 99999;
-        $southmooreOneDoublesPlayerOne['one_doubles_rank'] = 99999;
-        $southmooreOneDoublesPlayerOne['two_doubles_rank'] = 99999;
+        $southmooreOneDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
+        $southmooreOneDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
+        $southmooreOneDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
+        $southmooreOneDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $southmooreOneDoublesPlayerOne ['school_id'] = 82;
         $southmooreOneDoublesPlayerOne->saveOrFail();
         $southmooreOneDoublesPlayerTwo = new Player;
@@ -439,10 +443,10 @@ class DatabaseSeeder extends Seeder
         $southmooreOneDoublesPlayerTwo['position'] = 4;
         $southmooreOneDoublesPlayerTwo['class'] = 'Senior';
         $southmooreOneDoublesPlayerTwo ['gender'] = 'Female';
-        $southmooreOneDoublesPlayerTwo['one_singles_rank'] = 99999;
-        $southmooreOneDoublesPlayerTwo['two_singles_rank'] = 99999;
-        $southmooreOneDoublesPlayerTwo['one_doubles_rank'] = 99999;
-        $southmooreOneDoublesPlayerTwo['two_doubles_rank'] = 99999;
+        $southmooreOneDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
+        $southmooreOneDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
+        $southmooreOneDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
+        $southmooreOneDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $southmooreOneDoublesPlayerTwo ['school_id'] = 82;
         $southmooreOneDoublesPlayerTwo->saveOrFail();
         $southmooreTwoDoublesPlayerOne = new Player;
@@ -451,10 +455,10 @@ class DatabaseSeeder extends Seeder
         $southmooreTwoDoublesPlayerOne['position'] = 5;
         $southmooreTwoDoublesPlayerOne['class'] = 'Senior';
         $southmooreTwoDoublesPlayerOne ['gender'] = 'Female';
-        $southmooreTwoDoublesPlayerOne['one_singles_rank'] = 99999;
-        $southmooreTwoDoublesPlayerOne['two_singles_rank'] = 99999;
-        $southmooreTwoDoublesPlayerOne['one_doubles_rank'] = 99999;
-        $southmooreTwoDoublesPlayerOne['two_doubles_rank'] = 99999;
+        $southmooreTwoDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
+        $southmooreTwoDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
+        $southmooreTwoDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
+        $southmooreTwoDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $southmooreTwoDoublesPlayerOne ['school_id'] = 82;
         $southmooreTwoDoublesPlayerOne->saveOrFail();
         $southmooreTwoDoublesPlayerTwo = new Player;
@@ -463,10 +467,10 @@ class DatabaseSeeder extends Seeder
         $southmooreTwoDoublesPlayerTwo['position'] = 6;
         $southmooreTwoDoublesPlayerTwo['class'] = 'Senior';
         $southmooreTwoDoublesPlayerTwo ['gender'] = 'Female';
-        $southmooreTwoDoublesPlayerTwo['one_singles_rank'] = 99999;
-        $southmooreTwoDoublesPlayerTwo['two_singles_rank'] = 99999;
-        $southmooreTwoDoublesPlayerTwo['one_doubles_rank'] = 99999;
-        $southmooreTwoDoublesPlayerTwo['two_doubles_rank'] = 99999;
+        $southmooreTwoDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
+        $southmooreTwoDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
+        $southmooreTwoDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
+        $southmooreTwoDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $southmooreTwoDoublesPlayerTwo ['school_id'] = 82;
         $southmooreTwoDoublesPlayerTwo->saveOrFail();
 
@@ -476,10 +480,10 @@ class DatabaseSeeder extends Seeder
         $lawtonHighOneSingles['position'] = 1;
         $lawtonHighOneSingles['class'] = 'Senior';
         $lawtonHighOneSingles ['gender'] = 'Female';
-        $lawtonHighOneSingles['one_singles_rank'] = 7;
-        $lawtonHighOneSingles['two_singles_rank'] = 99999;
-        $lawtonHighOneSingles['one_doubles_rank'] = 99999;
-        $lawtonHighOneSingles['two_doubles_rank'] = 99999;
+        $lawtonHighOneSingles[$girlsOneSinglesRank] = 7;
+        $lawtonHighOneSingles[$girlsTwoSinglesRank] = 99999;
+        $lawtonHighOneSingles[$girlsOneDoublesRank] = 99999;
+        $lawtonHighOneSingles[$girlsTwoDoublesRank] = 99999;
         $lawtonHighOneSingles ['school_id'] = 99;
         $lawtonHighOneSingles->saveOrFail();
         $lawtonHighTwoSingles = new Player;
@@ -488,10 +492,10 @@ class DatabaseSeeder extends Seeder
         $lawtonHighTwoSingles['position'] = 2;
         $lawtonHighTwoSingles['class'] = 'Senior';
         $lawtonHighTwoSingles ['gender'] = 'Female';
-        $lawtonHighTwoSingles['one_singles_rank'] = 99999;
-        $lawtonHighTwoSingles['two_singles_rank'] = 99999;
-        $lawtonHighTwoSingles['one_doubles_rank'] = 99999;
-        $lawtonHighTwoSingles['two_doubles_rank'] = 99999;
+        $lawtonHighTwoSingles[$girlsOneSinglesRank] = 99999;
+        $lawtonHighTwoSingles[$girlsTwoSinglesRank] = 99999;
+        $lawtonHighTwoSingles[$girlsOneDoublesRank] = 99999;
+        $lawtonHighTwoSingles[$girlsTwoDoublesRank] = 99999;
         $lawtonHighTwoSingles ['school_id'] = 99;
         $lawtonHighTwoSingles->saveOrFail();
         $lawtonHighOneDoublesPlayerOne = new Player;
@@ -500,10 +504,10 @@ class DatabaseSeeder extends Seeder
         $lawtonHighOneDoublesPlayerOne['position'] = 3;
         $lawtonHighOneDoublesPlayerOne['class'] = 'Senior';
         $lawtonHighOneDoublesPlayerOne ['gender'] = 'Female';
-        $lawtonHighOneDoublesPlayerOne['one_singles_rank'] = 99999;
-        $lawtonHighOneDoublesPlayerOne['two_singles_rank'] = 99999;
-        $lawtonHighOneDoublesPlayerOne['one_doubles_rank'] = 99999;
-        $lawtonHighOneDoublesPlayerOne['two_doubles_rank'] = 99999;
+        $lawtonHighOneDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
+        $lawtonHighOneDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
+        $lawtonHighOneDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
+        $lawtonHighOneDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $lawtonHighOneDoublesPlayerOne ['school_id'] = 99;
         $lawtonHighOneDoublesPlayerOne->saveOrFail();
         $lawtonHighOneDoublesPlayerTwo = new Player;
@@ -512,10 +516,10 @@ class DatabaseSeeder extends Seeder
         $lawtonHighOneDoublesPlayerTwo['position'] = 4;
         $lawtonHighOneDoublesPlayerTwo['class'] = 'Senior';
         $lawtonHighOneDoublesPlayerTwo ['gender'] = 'Female';
-        $lawtonHighOneDoublesPlayerTwo['one_singles_rank'] = 99999;
-        $lawtonHighOneDoublesPlayerTwo['two_singles_rank'] = 99999;
-        $lawtonHighOneDoublesPlayerTwo['one_doubles_rank'] = 99999;
-        $lawtonHighOneDoublesPlayerTwo['two_doubles_rank'] = 99999;
+        $lawtonHighOneDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
+        $lawtonHighOneDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
+        $lawtonHighOneDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
+        $lawtonHighOneDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $lawtonHighOneDoublesPlayerTwo ['school_id'] = 99;
         $lawtonHighOneDoublesPlayerTwo->saveOrFail();
         $lawtonHighTwoDoublesPlayerOne = new Player;
@@ -524,10 +528,10 @@ class DatabaseSeeder extends Seeder
         $lawtonHighTwoDoublesPlayerOne['position'] = 5;
         $lawtonHighTwoDoublesPlayerOne['class'] = 'Senior';
         $lawtonHighTwoDoublesPlayerOne ['gender'] = 'Female';
-        $lawtonHighTwoDoublesPlayerOne['one_singles_rank'] = 99999;
-        $lawtonHighTwoDoublesPlayerOne['two_singles_rank'] = 99999;
-        $lawtonHighTwoDoublesPlayerOne['one_doubles_rank'] = 99999;
-        $lawtonHighTwoDoublesPlayerOne['two_doubles_rank'] = 99999;
+        $lawtonHighTwoDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
+        $lawtonHighTwoDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
+        $lawtonHighTwoDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
+        $lawtonHighTwoDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $lawtonHighTwoDoublesPlayerOne ['school_id'] = 99;
         $lawtonHighTwoDoublesPlayerOne->saveOrFail();
         $lawtonHighTwoDoublesPlayerTwo = new Player;
@@ -536,10 +540,10 @@ class DatabaseSeeder extends Seeder
         $lawtonHighTwoDoublesPlayerTwo['position'] = 6;
         $lawtonHighTwoDoublesPlayerTwo['class'] = 'Senior';
         $lawtonHighTwoDoublesPlayerTwo ['gender'] = 'Female';
-        $lawtonHighTwoDoublesPlayerTwo['one_singles_rank'] = 99999;
-        $lawtonHighTwoDoublesPlayerTwo['two_singles_rank'] = 99999;
-        $lawtonHighTwoDoublesPlayerTwo['one_doubles_rank'] = 99999;
-        $lawtonHighTwoDoublesPlayerTwo['two_doubles_rank'] = 99999;
+        $lawtonHighTwoDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
+        $lawtonHighTwoDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
+        $lawtonHighTwoDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
+        $lawtonHighTwoDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $lawtonHighTwoDoublesPlayerTwo ['school_id'] = 99;
         $lawtonHighTwoDoublesPlayerTwo->saveOrFail();
 
@@ -549,10 +553,10 @@ class DatabaseSeeder extends Seeder
         $choctawOneSingles['position'] = 1;
         $choctawOneSingles['class'] = 'Senior';
         $choctawOneSingles ['gender'] = 'Female';
-        $choctawOneSingles['one_singles_rank'] = 2;
-        $choctawOneSingles['two_singles_rank'] = 99999;
-        $choctawOneSingles['one_doubles_rank'] = 99999;
-        $choctawOneSingles['two_doubles_rank'] = 99999;
+        $choctawOneSingles[$girlsOneSinglesRank] = 2;
+        $choctawOneSingles[$girlsTwoSinglesRank] = 99999;
+        $choctawOneSingles[$girlsOneDoublesRank] = 99999;
+        $choctawOneSingles[$girlsTwoDoublesRank] = 99999;
         $choctawOneSingles ['school_id'] = 298;
         $choctawOneSingles->saveOrFail();
         $choctawTwoSingles = new Player;
@@ -561,10 +565,10 @@ class DatabaseSeeder extends Seeder
         $choctawTwoSingles['position'] = 2;
         $choctawTwoSingles['class'] = 'Senior';
         $choctawTwoSingles ['gender'] = 'Female';
-        $choctawTwoSingles['one_singles_rank'] = 99999;
-        $choctawTwoSingles['two_singles_rank'] = 99999;
-        $choctawTwoSingles['one_doubles_rank'] = 99999;
-        $choctawTwoSingles['two_doubles_rank'] = 99999;
+        $choctawTwoSingles[$girlsOneSinglesRank] = 99999;
+        $choctawTwoSingles[$girlsTwoSinglesRank] = 99999;
+        $choctawTwoSingles[$girlsOneDoublesRank] = 99999;
+        $choctawTwoSingles[$girlsTwoDoublesRank] = 99999;
         $choctawTwoSingles ['school_id'] = 298;
         $choctawTwoSingles->saveOrFail();
         $choctawOneDoublesPlayerOne = new Player;
@@ -573,10 +577,10 @@ class DatabaseSeeder extends Seeder
         $choctawOneDoublesPlayerOne['position'] = 3;
         $choctawOneDoublesPlayerOne['class'] = 'Senior';
         $choctawOneDoublesPlayerOne ['gender'] = 'Female';
-        $choctawOneDoublesPlayerOne['one_singles_rank'] = 99999;
-        $choctawOneDoublesPlayerOne['two_singles_rank'] = 99999;
-        $choctawOneDoublesPlayerOne['one_doubles_rank'] = 99999;
-        $choctawOneDoublesPlayerOne['two_doubles_rank'] = 99999;
+        $choctawOneDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
+        $choctawOneDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
+        $choctawOneDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
+        $choctawOneDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $choctawOneDoublesPlayerOne ['school_id'] = 298;
         $choctawOneDoublesPlayerOne->saveOrFail();
         $choctawOneDoublesPlayerTwo = new Player;
@@ -585,10 +589,10 @@ class DatabaseSeeder extends Seeder
         $choctawOneDoublesPlayerTwo['position'] = 4;
         $choctawOneDoublesPlayerTwo['class'] = 'Senior';
         $choctawOneDoublesPlayerTwo ['gender'] = 'Female';
-        $choctawOneDoublesPlayerTwo['one_singles_rank'] = 99999;
-        $choctawOneDoublesPlayerTwo['two_singles_rank'] = 99999;
-        $choctawOneDoublesPlayerTwo['one_doubles_rank'] = 99999;
-        $choctawOneDoublesPlayerTwo['two_doubles_rank'] = 99999;
+        $choctawOneDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
+        $choctawOneDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
+        $choctawOneDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
+        $choctawOneDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $choctawOneDoublesPlayerTwo ['school_id'] = 298;
         $choctawOneDoublesPlayerTwo->saveOrFail();
         $choctawTwoDoublesPlayerOne = new Player;
@@ -597,10 +601,10 @@ class DatabaseSeeder extends Seeder
         $choctawTwoDoublesPlayerOne['position'] = 5;
         $choctawTwoDoublesPlayerOne['class'] = 'Senior';
         $choctawTwoDoublesPlayerOne ['gender'] = 'Female';
-        $choctawTwoDoublesPlayerOne['one_singles_rank'] = 99999;
-        $choctawTwoDoublesPlayerOne['two_singles_rank'] = 99999;
-        $choctawTwoDoublesPlayerOne['one_doubles_rank'] = 99999;
-        $choctawTwoDoublesPlayerOne['two_doubles_rank'] = 99999;
+        $choctawTwoDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
+        $choctawTwoDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
+        $choctawTwoDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
+        $choctawTwoDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $choctawTwoDoublesPlayerOne ['school_id'] = 298;
         $choctawTwoDoublesPlayerOne->saveOrFail();
         $choctawTwoDoublesPlayerTwo = new Player;
@@ -609,10 +613,10 @@ class DatabaseSeeder extends Seeder
         $choctawTwoDoublesPlayerTwo['position'] = 6;
         $choctawTwoDoublesPlayerTwo['class'] = 'Senior';
         $choctawTwoDoublesPlayerTwo ['gender'] = 'Female';
-        $choctawTwoDoublesPlayerTwo['one_singles_rank'] = 99999;
-        $choctawTwoDoublesPlayerTwo['two_singles_rank'] = 99999;
-        $choctawTwoDoublesPlayerTwo['one_doubles_rank'] = 99999;
-        $choctawTwoDoublesPlayerTwo['two_doubles_rank'] = 99999;
+        $choctawTwoDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
+        $choctawTwoDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
+        $choctawTwoDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
+        $choctawTwoDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $choctawTwoDoublesPlayerTwo ['school_id'] = 298;
         $choctawTwoDoublesPlayerTwo->saveOrFail();
 
@@ -623,13 +627,14 @@ class DatabaseSeeder extends Seeder
         $positions = [1,2,3,4,5,6];
 
         foreach($playerIDs as $playerID) {
-            DB::table('tournament_seeds')->insert([
-                'seed' => array_pop($possibleSeeds),
-                'tournament_id' => 2,
-                'player_id' => $playerID,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            ]);
+//            DB::table('tournament_seeds')->insert([
+//                'seed' => array_pop($possibleSeeds),
+//                'tournament_id' => 2,
+//                'player_id' => $playerID,
+//                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+//                'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+//            ]);
+
 
             DB::table('tournament_positions')->insert([
                 'position' => array_pop($positions),
@@ -643,6 +648,32 @@ class DatabaseSeeder extends Seeder
                 $positions = [1,2,3,4,5,6];
             }
         }
+
+        $schoolIDs = [513,317,340,80,81,82,99,298];
+        foreach($schoolIDs as $schoolID) {
+            DB::table('school_attendees')->insert([
+                'invite_accepted' => 1,
+                'tournament_id' => 51,
+                'school_id' => $schoolID,
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            ]);
+        }
+
+        DB::table('tournaments')->insert([
+            'name' => 'Moore Invitational',
+            'host_id' => 80,
+            'location_name' => 'Earlywine',
+            'address' => 'Moore',
+            'level' => 'Varsity',
+            'team_count' => 8,
+            'gender' => 'Both',
+            'date' => '1991-05-21',
+            'time' => '08:00:00',
+            'privacy_setting' => 'Private',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
 
 
 

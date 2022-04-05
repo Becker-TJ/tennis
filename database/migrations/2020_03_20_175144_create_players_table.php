@@ -21,10 +21,14 @@ class CreatePlayersTable extends Migration
             $table->unsignedInteger('position');
             $table->string('class');
             $table->string('gender');
-            $table->unsignedInteger('one_singles_rank');
-            $table->unsignedInteger('two_singles_rank');
-            $table->unsignedInteger('one_doubles_rank');
-            $table->unsignedInteger('two_doubles_rank');
+            $table->unsignedInteger('boys_one_singles_rank')->default(99999);
+            $table->unsignedInteger('boys_two_singles_rank')->default(99999);
+            $table->unsignedInteger('boys_one_doubles_rank')->default(99999);
+            $table->unsignedInteger('boys_two_doubles_rank')->default(99999);
+            $table->unsignedInteger('girls_one_singles_rank');
+            $table->unsignedInteger('girls_two_singles_rank');
+            $table->unsignedInteger('girls_one_doubles_rank');
+            $table->unsignedInteger('girls_two_doubles_rank');
             $table->unsignedInteger('school_id')->default(0);
         });
 

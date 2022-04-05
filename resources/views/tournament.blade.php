@@ -39,9 +39,16 @@
                                 <tr>
                                     <td>Participants:
                                         <?php
+                                            $iteration = 1;
+                                            $lastIteration = count($attendees);
                                             foreach($attendees as $attendee) {
                                                 if(is_object($attendee->getSchool())) {
-                                                    echo '<a href="' . '/school/' . $attendee->school_id . '">' . $attendee->getSchool()->name . ', </a>';
+                                                    echo '<a href="' . '/school/' . $attendee->school_id . '">' . $attendee->getSchool()->name;
+                                                        if($iteration !== $lastIteration) {
+                                                            echo ',  ';
+                                                        }
+                                                        echo '</a>';
+                                                        $iteration++;
                                                 }
                                             }
                                         ?>
@@ -59,19 +66,21 @@
 
                     <br>
 
+                    <div class="btn-group .btn-girls">
+                        <button id="girlsOneSingles" type="button" class="bracket-button btn btn-girls col-md-2 offset-md-2 selected-button">Girls 1 Singles</button>
+                        <button id="girlsTwoSingles" type="button" class="bracket-button btn btn-girls col-md-2 offset-md-5" data-toggle="modal">Girls 2 Singles</button>
+                        <button id="girlsOneDoubles" type="button" class="bracket-button btn btn-girls col-md-2 offset-md-5" data-toggle="modal">Girls 1 Doubles</button>
+                        <button id="girlsTwoDoubles" type="button" class="bracket-button btn btn-girls col-md-2 offset-md-5" data-toggle="modal">Girls 2 Doubles</button>
+                    </div>
+
                     <div class="btn-group">
-                        <button id="boysOneSingles" type="button" class="bracket-button btn btn-boys col-md-2 offset-md-2 selected-button" data-toggle="modal">Boys 1 Singles</button>
+                        <button id="boysOneSingles" type="button" class="bracket-button btn btn-boys col-md-2 offset-md-2" data-toggle="modal">Boys 1 Singles</button>
                         <button id="boysTwoSingles" type="button" class="bracket-button btn btn-boys col-md-2 offset-md-5" data-toggle="modal">Boys 2 Singles</button>
                         <button id="boysOneDoubles" type="button" class="bracket-button btn btn-boys col-md-2 offset-md-5" data-toggle="modal">Boys 1 Doubles</button>
                         <button id="boysTwoDoubles" type="button" class="bracket-button btn btn-boys col-md-2 offset-md-5" data-toggle="modal">Boys 2 Doubles</button>
                     </div>
 
-                    <div class="btn-group .btn-girls">
-                        <button id="girlsOneSingles" type="button" class="bracket-button btn btn-girls col-md-2 offset-md-2">Girls 1 Singles</button>
-                        <button id="girlsTwoSingles" type="button" class="bracket-button btn btn-girls col-md-2 offset-md-5" data-toggle="modal">Girls 2 Singles</button>
-                        <button id="girlsOneDoubles" type="button" class="bracket-button btn btn-girls col-md-2 offset-md-5" data-toggle="modal">Girls 1 Doubles</button>
-                        <button id="girlsTwoDoubles" type="button" class="bracket-button btn btn-girls col-md-2 offset-md-5" data-toggle="modal">Girls 2 Doubles</button>
-                    </div>
+
 
                     <br>
 
@@ -327,16 +336,16 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="advanceable" id="1-seed-name">First Seed</td>
+                <td class="advanceable" id="1-seed">1 Seed</td>
                 <td></td>
                 <td></td>
-                <td></td>
+                <td></td
             </tr>
             <tr>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td id="1-seed-school" class="give-left-border give-top-border give-right-border">School Name</td>
+                <td id="1-seed-school" class="give-left-border give-top-border give-right-border">1 seed school</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -354,7 +363,7 @@
                 <td></td>
                 <td></td>
                 <td class="give-top-border give-left-border"><input hidden class="score-input" type="text" id="first-consolation-round-one-top-score-input"></td>
-                <td id="8-seed-name" class="advanceable give-left-border give-right-border">Eighth Seed</td>
+                <td id="8-seed" class="advanceable give-left-border give-right-border" data-id="<?php echo $bracketPositions->{'8_seed'} ?>">8 seed</td>
                 <td class="give-top-border give-right-border"><input hidden class="score-input" type="text" id="first-winners-round-one-top-score-input"></td>
                 <td></td>
                 <td></td>
@@ -363,7 +372,7 @@
                 <td></td>
                 <td></td>
                 <td class="give-left-border"></td>
-                <td id="8-seed-school" class="give-top-border">School Name</td>
+                <td id="8-seed-school" class="give-top-border">8 seed school</td>
                 <td class="give-right-border"></td>
                 <td></td>
                 <td></td>
@@ -390,7 +399,7 @@
                 <td></td>
                 <td class="give-left-border"></td>
                 <td class="give-left-border"></td>
-                <td class="advanceable" id="5-seed-name">Fifth Seed</td>
+                <td class="advanceable" id="5-seed" data-id="<?php echo $bracketPositions->{'5_seed'} ?>">5 seed</td>
                 <td class="give-right-border"></td>
                 <td class="give-right-border"></td>
                 <td></td>
@@ -398,9 +407,9 @@
             <tr>
                 <td></td>
                 <td class="give-left-border"></td>
-                <td id="first-consolation-round-one-bottom" class="give-left-border">First Consolation Round One Bottom</td>
-                <td id="5-seed-school" class="give-left-border give-right-border give-top-border">School Name</td>
-                <td id="first-winners-round-one-bottom" class="give-right-border">First Winners Round One Bottom</td>
+                <td id="first-consolation-round-one-bottom" class="give-left-border">first consolation round one bottom</td>
+                <td id="5-seed-school" class="give-left-border give-right-border give-top-border">5 seed school</td>
+                <td id="first-winners-round-one-bottom" class="give-right-border">first winners round one bottom</td>
                 <td class="give-right-border"></td>
                 <td></td>
             </tr>
@@ -417,7 +426,7 @@
                 <td></td>
                 <td class="give-left-border"></td>
                 <td></td>
-                <td id="4-seed-name" class="advanceable give-left-border give-right-border">Fourth Seed</td>
+                <td id="4-seed" class="advanceable give-left-border give-right-border" data-id="<?php echo $bracketPositions->{'4_seed'} ?>">4 seed</td>
                 <td></td>
                 <td class="give-right-border"></td>
                 <td></td>
@@ -426,7 +435,7 @@
                 <td></td>
                 <td class="give-left-border"></td>
                 <td></td>
-                <td id="4-seed-school" class="give-top-border">School Name</td>
+                <td id="4-seed-school" class="give-top-border">4 seed school</td>
                 <td></td>
                 <td class="give-right-border"></td>
                 <td></td>
@@ -453,7 +462,7 @@
                 <td></td>
                 <td class="give-left-border"></td>
                 <td></td>
-                <td class="advanceable" id="3-seed-name">Third Seed</td>
+                <td class="advanceable" id="3-seed" data-id="<?php echo $bracketPositions->{'3_seed'} ?>">3 seed</td>
                 <td></td>
                 <td class="give-right-border"></td>
                 <td></td>
@@ -462,7 +471,7 @@
                 <td></td>
                 <td class="give-left-border"></td>
                 <td></td>
-                <td id="3-seed-school" class="give-left-border give-top-border give-right-border">School Name</td>
+                <td id="3-seed-school" class="give-left-border give-top-border give-right-border">3 seed school</td>
                 <td></td>
                 <td class="give-right-border"></td>
                 <td></td>
@@ -470,9 +479,9 @@
             <tr>
                 <td></td>
                 <td class="give-left-border"></td>
-                <td id="second-consolation-round-one-top">Second Consolation Round One Top</td>
+                <td id="second-consolation-round-one-top">second consolation round one top</td>
                 <td class="give-left-border give-right-border"></td>
-                <td id="second-winners-round-one-top">Second Winners Round One Top</td>
+                <td id="second-winners-round-one-top">second winners round one top</td>
                 <td class="give-right-border"></td>
                 <td></td>
             </tr>
@@ -480,7 +489,7 @@
                 <td></td>
                 <td class="give-left-border"></td>
                 <td class="give-top-border give-left-border"><input hidden class="score-input" type="text" id="second-consolation-round-one-top-score-input"></td>
-                <td id="6-seed-name" class="advanceable give-left-border give-right-border">Sixth Seed</td>
+                <td id="6-seed" class="advanceable give-left-border give-right-border" data-id="<?php echo $bracketPositions->{'6_seed'} ?>">6 seed</td>
                 <td class="give-top-border give-right-border"><input hidden class="score-input" type="text" id="second-winners-round-one-top-score-input"></td>
                 <td class="give-right-border"></td>
                 <td></td>
@@ -489,7 +498,7 @@
                 <td></td>
                 <td class="give-left-border"></td>
                 <td class="give-left-border"></td>
-                <td id="6-seed-school" class="give-top-border">School Name</td>
+                <td id="6-seed-school" class="give-top-border">6 seed school</td>
                 <td class="give-right-border"></td>
                 <td class="give-right-border"></td>
                 <td></td>
@@ -516,7 +525,7 @@
                 <td></td>
                 <td></td>
                 <td class="give-left-border"></td>
-                <td class="advanceable" id="7-seed-name">Seventh Seed</td>
+                <td class="advanceable" id="7-seed" data-id="<?php echo $bracketPositions->{'7_seed'} ?>">7 seed</td>
                 <td class="give-right-border"></td>
                 <td></td>
                 <td></td>
@@ -524,9 +533,9 @@
             <tr>
                 <td></td>
                 <td></td>
-                <td id="second-consolation-round-one-bottom" class="give-left-border">Second Consolation Round One Bottom</td>
-                <td id="7-seed-school" class="give-top-border give-right-border give-left-border">School Name</td>
-                <td id="second-winners-round-one-bottom" class="give-right-border">Second Winners Round One Bottom</td>
+                <td id="second-consolation-round-one-bottom" class="give-left-border">second consolation round one bottom</td>
+                <td id="7-seed-school" class="give-top-border give-right-border give-left-border">7 seed school</td>
+                <td id="second-winners-round-one-bottom" class="give-right-border">second winners round one bottom</td>
                 <td></td>
                 <td></td>
             </tr>
@@ -543,7 +552,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td id="2-seed-name" class="advanceable give-left-border give-right-border">Second Seed</td>
+                <td id="2-seed" class="advanceable give-left-border give-right-border" data-id="<?php echo $bracketPositions->{'2_seed'} ?>">2 seed</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -552,7 +561,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td id="2-seed-school" class="give-top-border">School Name</td>
+                <td id="2-seed-school" class="give-top-border">2 seed school</td>
                 <td></td>
                 <td></td>
                 <td></td>

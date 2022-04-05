@@ -24,8 +24,21 @@
                                 </thead>
                                 <tbody>
                                 @foreach($tournaments as $tournament)
-                                <tr>
-                                    <td class="table-cell">{{$tournament->name}}</td>
+                                <tr
+                                    <?php
+                                        if($tournament->acceptedInvite) {
+                                            echo 'class="accepted-invite"';
+                                        }
+                                        if($tournament->pendingInvite) {
+                                            echo 'class="pending-invite"';
+                                        }
+                                    ?>
+                                >
+                                    <td class="table-cell">
+                                        <?php
+                                            echo '<a href="' . '/tournament/' . $tournament->id . '">' . $tournament->name . '</a>';
+                                        ?>
+                                    </td>
                                     <td class="table-cell">{{$tournament->location_name}}</td>
                                     <td class="table-cell">{{$tournament->date}}</td>
                                     <td class="table-cell">{{$tournament->gender}}</td>

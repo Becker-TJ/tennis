@@ -132,22 +132,50 @@ $(document).ready( function () {
         var tournament_id = $('#tournament_id').html();
         var requestedBracket = $(this).attr('id');
 
+        fillBracketData(requestedBracket, tournament_id);
+    });
+
+    function fillBracketData(requestedBracket, tournament_id) {
         $.ajax({
             type:'POST',
             url:'/getBracketData',
             data:{tournament_id:tournament_id,requestedBracket:requestedBracket},
             success:function(data){
-
                 //repopulates tournament bracket with user selection of boys, girls, 1 singles, 2 singles, etc
-                for(const seedNumber in data.seeds) {
-                    $('#' + seedNumber + '-seed-name').html(data.seeds[seedNumber].first_name + ' ' + data.seeds[seedNumber].last_name);
-                    $('#' + seedNumber + '-seed-name').attr('data-id', data.seeds[seedNumber].id);
-                    $('#' + seedNumber + '-seed-school').html(data.seeds[seedNumber].school_name);
-                }
+                // for(const seedNumber in data.seeds) {
+                //     $('#' + seedNumber + '-seed').html(data.seeds[seedNumber].first_name + ' ' + data.seeds[seedNumber].last_name);
+                //     $('#' + seedNumber + '-seed').attr('data-id', data.seeds[seedNumber].id);
+                //     $('#' + seedNumber + '-seed-school').html(data.seeds[seedNumber].school_name);
+                // }
 
+                $increment = 1;
+                $bracketPositions = data.bracketPositions;
+                for (const [$position, $value] of Object.entries($bracketPositions)) {
+                    if($increment > 4) {
+                        if($value === 0) {
+                            continue;
+                        }
+                        $positionWithDashes = $position.replace(/_/g, '-');
+                        if($position.indexOf('school') !== -1) {
+                            //does include the substring school
+                            $('#' + $positionWithDashes).html($value);
+                        } else if ($position.indexOf('id') !== -1){
+                            //does include the substring id;
+                            console.log($positionWithDashes, $value);
+                            $positionCorrected = $positionWithDashes.slice(0, -3);
+                            $('#' + $positionCorrected).attr('data-id', $value);
+                        }else {
+                            $('#' + $positionWithDashes).html($value);
+                            console.log('#' + $positionWithDashes);
+                            console.log($position);
+                            console.log($value);
+                        }
+                    }
+                    $increment++;
+                }
             }
         });
-    });
+    }
 
     $(".score-input").keydown(function(e) {
         $inputString = $(this).val();
@@ -225,8 +253,10 @@ $(document).ready( function () {
                     $loser = $(this).attr('data-loser');
                     $winnerBracketPosition = $(this).attr('data-winner-bracket-position');
                     $loserBracketPosition = $(this).attr('data-loser-bracket-position');
+                    $newWinnerBracketPosition = $(this).attr('data-new-winner-bracket-position');
+                    $newLoserBracketPosition = $(this).attr('data-new-loser-bracket-position');
                     $score = $inputString;
-                    saveScore($winner, $loser, $winnerBracketPosition, $loserBracketPosition, $score, tournament_id, scoreInput);
+                    saveScore($winner, $loser, $winnerBracketPosition, $loserBracketPosition, $newWinnerBracketPosition, $newLoserBracketPosition, $score, tournament_id, scoreInput);
                 }
             }
         }
@@ -246,8 +276,10 @@ $(document).ready( function () {
                 $loser = $(this).attr('data-loser');
                 $winnerBracketPosition = $(this).attr('data-winner-bracket-position');
                 $loserBracketPosition = $(this).attr('data-loser-bracket-position');
+                $newWinnerBracketPosition = $(this).attr('data-new-winner-bracket-position');
+                $newLoserBracketPosition = $(this).attr('data-new-loser-bracket-position');
                 $score = $inputString;
-                saveScore($winner, $loser, $winnerBracketPosition, $loserBracketPosition, $score, tournament_id, scoreInput);
+                saveScore($winner, $loser, $winnerBracketPosition, $loserBracketPosition, $newWinnerBracketPosition, $newLoserBracketPosition, $score, tournament_id, scoreInput);
             }
         }
 
@@ -277,8 +309,10 @@ $(document).ready( function () {
                     $loser = $(this).attr('data-loser');
                     $winnerBracketPosition = $(this).attr('data-winner-bracket-position');
                     $loserBracketPosition = $(this).attr('data-loser-bracket-position');
+                    $newWinnerBracketPosition = $(this).attr('data-new-winner-bracket-position');
+                    $newLoserBracketPosition = $(this).attr('data-new-loser-bracket-position');
                     $score = $inputString;
-                    saveScore($winner, $loser, $winnerBracketPosition, $loserBracketPosition, $score, tournament_id, scoreInput);
+                    saveScore($winner, $loser, $winnerBracketPosition, $loserBracketPosition, $newWinnerBracketPosition, $newLoserBracketPosition, $score, tournament_id, scoreInput);
                 }
             }
 
@@ -297,19 +331,31 @@ $(document).ready( function () {
                 $loser = $(this).attr('data-loser');
                 $winnerBracketPosition = $(this).attr('data-winner-bracket-position');
                 $loserBracketPosition = $(this).attr('data-loser-bracket-position');
+                $newWinnerBracketPosition = $(this).attr('data-new-winner-bracket-position');
+                $newLoserBracketPosition = $(this).attr('data-new-loser-bracket-position');
                 $score = $inputString;
-                saveScore($winner, $loser, $winnerBracketPosition, $loserBracketPosition, $score, tournament_id, scoreInput);
+                saveScore($winner, $loser, $winnerBracketPosition, $loserBracketPosition, $newWinnerBracketPosition, $newLoserBracketPosition, $score, tournament_id, scoreInput);
             }
         }
 
         return false;
     });
 
-    function saveScore(winner, loser, winnerBracketPosition, loserBracketPosition, score, tournament_id,scoreInput) {
+    function saveScore(winner, loser, winnerBracketPosition, loserBracketPosition, newWinnerBracketPosition, newLoserBracketPosition, score, tournament_id,scoreInput) {
         $.ajax({
             type:'POST',
             url:'/saveScore',
-            data:{winner:winner, loser:loser, winnerBracketPosition:winnerBracketPosition, loserBracketPosition:loserBracketPosition, score:score, tournament_id:tournament_id,scoreInput:scoreInput},
+            data:{
+                winner:winner,
+                loser:loser,
+                winnerBracketPosition:winnerBracketPosition,
+                loserBracketPosition:loserBracketPosition,
+                score:score,
+                tournament_id:tournament_id,
+                scoreInput:scoreInput,
+                newLoserBracketPosition:newLoserBracketPosition,
+                newWinnerBracketPosition:newWinnerBracketPosition
+            },
             success:function(data){
                 alert(data.success);
             }
@@ -379,6 +425,7 @@ $(document).ready( function () {
             { data: 'level' }, /* index = 6 */
             { data: 'actions' } /* index = 7 */
         ],
+        'order': [],
         'columnDefs': [ {
             'targets':[6],
             'orderable': false
@@ -430,18 +477,15 @@ $(document).ready( function () {
 
 $(document).on('click', '.advanceable', function() {
 
-    console.log('hiiiiii');
-    console.log($(this).attr('id'));
-
     let matchupAssociations = {};
-    matchupAssociations['1-seed-name'] = '8-seed-name';
-    matchupAssociations['2-seed-name'] = '7-seed-name';
-    matchupAssociations['3-seed-name'] = '6-seed-name';
-    matchupAssociations['4-seed-name'] = '5-seed-name';
-    matchupAssociations['5-seed-name'] = '4-seed-name';
-    matchupAssociations['6-seed-name'] = '3-seed-name';
-    matchupAssociations['7-seed-name'] = '2-seed-name';
-    matchupAssociations['8-seed-name'] = '1-seed-name';
+    matchupAssociations['1-seed'] = '8-seed';
+    matchupAssociations['2-seed'] = '7-seed';
+    matchupAssociations['3-seed'] = '6-seed';
+    matchupAssociations['4-seed'] = '5-seed';
+    matchupAssociations['5-seed'] = '4-seed';
+    matchupAssociations['6-seed'] = '3-seed';
+    matchupAssociations['7-seed'] = '2-seed';
+    matchupAssociations['8-seed'] = '1-seed';
 
     matchupAssociations['first-winners-round-one-top'] = 'first-winners-round-one-bottom';
     matchupAssociations['first-winners-round-one-bottom'] = 'first-winners-round-one-top';
@@ -457,21 +501,21 @@ $(document).on('click', '.advanceable', function() {
     matchupAssociations['first-consolation-round-two-top'] = 'first-consolation-round-two-bottom';
     matchupAssociations['first-consolation-round-two-bottom'] = 'first-consolation-round-two-top';
 
-    matchupAssociations['first-consolation-lower-bracket-round-one-top'] = 'first-consolation-lower-bracket-round-one-bottom';
-    matchupAssociations['first-consolation-lower-bracket-round-one-bottom'] = 'first-consolation-lower-bracket-round-one-top';
     matchupAssociations['first-winners-lower-bracket-round-one-top'] = 'first-winners-lower-bracket-round-one-bottom';
     matchupAssociations['first-winners-lower-bracket-round-one-bottom'] = 'first-winners-lower-bracket-round-one-top';
+    matchupAssociations['first-consolation-lower-bracket-round-one-top'] = 'first-consolation-lower-bracket-round-one-bottom';
+    matchupAssociations['first-consolation-lower-bracket-round-one-bottom'] = 'first-consolation-lower-bracket-round-one-top';
 
 
     let winningPathAssociations = {};
-    winningPathAssociations['1-seed-name'] = 'first-winners-round-one-top';
-    winningPathAssociations['2-seed-name'] = 'second-winners-round-one-bottom';
-    winningPathAssociations['3-seed-name'] = 'second-winners-round-one-top';
-    winningPathAssociations['4-seed-name'] = 'first-winners-round-one-bottom';
-    winningPathAssociations['5-seed-name'] = 'first-winners-round-one-bottom';
-    winningPathAssociations['6-seed-name'] = 'second-winners-round-one-top';
-    winningPathAssociations['7-seed-name'] = 'second-winners-round-one-bottom';
-    winningPathAssociations['8-seed-name'] = 'first-winners-round-one-top';
+    winningPathAssociations['1-seed'] = 'first-winners-round-one-top';
+    winningPathAssociations['2-seed'] = 'second-winners-round-one-bottom';
+    winningPathAssociations['3-seed'] = 'second-winners-round-one-top';
+    winningPathAssociations['4-seed'] = 'first-winners-round-one-bottom';
+    winningPathAssociations['5-seed'] = 'first-winners-round-one-bottom';
+    winningPathAssociations['6-seed'] = 'second-winners-round-one-top';
+    winningPathAssociations['7-seed'] = 'second-winners-round-one-bottom';
+    winningPathAssociations['8-seed'] = 'first-winners-round-one-top';
 
     winningPathAssociations['first-winners-round-one-top'] = 'first-winners-round-two-top';
     winningPathAssociations['first-winners-round-one-bottom'] = 'first-winners-round-two-top';
@@ -497,14 +541,14 @@ $(document).on('click', '.advanceable', function() {
 
 
     let losingPathAssociations = {};
-    losingPathAssociations['1-seed-name'] = 'first-consolation-round-one-top';
-    losingPathAssociations['2-seed-name'] = 'second-consolation-round-one-bottom';
-    losingPathAssociations['3-seed-name'] = 'second-consolation-round-one-top';
-    losingPathAssociations['4-seed-name'] = 'first-consolation-round-one-bottom';
-    losingPathAssociations['5-seed-name'] = 'first-consolation-round-one-bottom';
-    losingPathAssociations['6-seed-name'] = 'second-consolation-round-one-top';
-    losingPathAssociations['7-seed-name'] = 'second-consolation-round-one-bottom';
-    losingPathAssociations['8-seed-name'] = 'first-consolation-round-one-top';
+    losingPathAssociations['1-seed'] = 'first-consolation-round-one-top';
+    losingPathAssociations['2-seed'] = 'second-consolation-round-one-bottom';
+    losingPathAssociations['3-seed'] = 'second-consolation-round-one-top';
+    losingPathAssociations['4-seed'] = 'first-consolation-round-one-bottom';
+    losingPathAssociations['5-seed'] = 'first-consolation-round-one-bottom';
+    losingPathAssociations['6-seed'] = 'second-consolation-round-one-top';
+    losingPathAssociations['7-seed'] = 'second-consolation-round-one-bottom';
+    losingPathAssociations['8-seed'] = 'first-consolation-round-one-top';
 
     losingPathAssociations['first-consolation-round-one-top'] = 'first-consolation-lower-bracket-round-one-top';
     losingPathAssociations['first-consolation-round-one-bottom'] = 'first-consolation-lower-bracket-round-one-top';
@@ -541,6 +585,8 @@ $(document).on('click', '.advanceable', function() {
     $('#' + $winningPath + '-score-input').attr('data-loser', $losingPlayerID);
     $('#' + $winningPath + '-score-input').attr('data-winner-bracket-position', $winningPlayerBracketPosition);
     $('#' + $winningPath + '-score-input').attr('data-loser-bracket-position', $losingPlayerBracketPosition);
+    $('#' + $winningPath + '-score-input').attr('data-new-winner-bracket-position', $winningPath);
+    $('#' + $winningPath + '-score-input').attr('data-new-loser-bracket-position', $losingPath);
 
     $('#' + $losingPath).html($losingPlayerName);
     $('#' + $losingPath).addClass('advanceable');

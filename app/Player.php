@@ -9,7 +9,21 @@ use DB;
 
 class Player extends Model
 {
-    protected $fillable = ['first_name', 'last_name', 'school_id', 'position', 'class', 'one_singles_rank', 'two_singles_rank', 'one_doubles_rank', 'two_doubles_rank'];
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'school_id',
+        'position',
+        'class',
+        'boys_one_singles_rank',
+        'boys_two_singles_rank',
+        'boys_one_doubles_rank',
+        'boys_two_doubles_rank',
+        'girls_one_singles_rank',
+        'girls_two_singles_rank',
+        'girls_one_doubles_rank',
+        'girls_two_doubles_rank'
+    ];
     protected $dates = ['created_at', 'updated_at'];
 
     public function getSchool()

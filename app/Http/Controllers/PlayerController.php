@@ -39,10 +39,14 @@ class PlayerController extends Controller
             '5A' => '5A',
             '4A' => '4A',
             '3A' => '3A',
-            'one_singles_rank' => 'One Singles',
-            'two_singles_rank' => 'Two Singles',
-            'one_doubles_rank' => 'One Doubles',
-            'two_doubles_rank' => 'Two Doubles',
+            'girls_one_singles_rank' => 'One Singles',
+            'girls_two_singles_rank' => 'Two Singles',
+            'girls_one_doubles_rank' => 'One Doubles',
+            'girls_two_doubles_rank' => 'Two Doubles',
+            'boys_one_singles_rank' => 'One Singles',
+            'boys_two_singles_rank' => 'Two Singles',
+            'boys_one_doubles_rank' => 'One Doubles',
+            'boys_two_doubles_rank' => 'Two Doubles',
             'Male' => 'Boys',
             'Female' => 'Girls'
 
@@ -65,12 +69,12 @@ class PlayerController extends Controller
     public function showAllPlayers() {
         $players = DB::table('players')->join('schools', 'players.school_id', 'schools.id')
             ->where('players.gender', 'Male')
-            ->orderBy('players.one_singles_rank', 'asc')
+            ->orderBy('players.boys_one_singles_rank', 'asc')
             ->get();
 
         $radioButtonSettings = [
             'conference_setting' => 'all_classes',
-            'bracket_rank' => 'one_singles_rank',
+            'bracket_rank' => 'boys_one_singles_rank',
             'gender' => 'Male'
         ];
 
@@ -119,10 +123,14 @@ class PlayerController extends Controller
         $player['position'] = $lastPosition + 1;
         $player['class'] = $data['class'];
         $player ['gender'] = $data['gender'];
-        $player['one_singles_rank'] = 99999;
-        $player['two_singles_rank'] = 99999;
-        $player['one_doubles_rank'] = 99999;
-        $player['two_doubles_rank'] = 99999;
+        $player['boys_one_singles_rank'] = 99999;
+        $player['boys_two_singles_rank'] = 99999;
+        $player['boys_one_doubles_rank'] = 99999;
+        $player['boys_two_doubles_rank'] = 99999;
+        $player['girls_one_singles_rank'] = 99999;
+        $player['girls_two_singles_rank'] = 99999;
+        $player['girls_one_doubles_rank'] = 99999;
+        $player['girls_two_doubles_rank'] = 99999;
         $player ['school_id'] = $schoolID;
 
         $player->saveOrFail();

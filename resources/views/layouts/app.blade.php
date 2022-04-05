@@ -92,6 +92,14 @@
             background-color:mediumspringgreen;
         }
 
+        .accepted-invite {
+            background-color:mediumspringgreen !important;
+        }
+
+        .pending-invite {
+            background-color:indianred !important;
+        }
+
         .btn-group button:not(:last-child) {
             border-right: none; /* Prevent double borders */
         }

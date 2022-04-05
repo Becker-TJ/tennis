@@ -27,8 +27,8 @@
         <a class="navbar-brand" href="{{ url('/school/1') }}">
             {{ config('school/1', 'school/1') }}
         </a>
-        <a class="navbar-brand" href="{{ url('/tournament/2') }}">
-            {{ config('tournament/2', 'tournament/2') }}
+        <a class="navbar-brand" href="{{ url('/tournament/51') }}">
+            {{ config('tournament/51', 'tournament/51') }}
         </a>
         <a class="navbar-brand" href="{{ url('/bracket')}}">
             {{ config('bracket', 'bracket') }}

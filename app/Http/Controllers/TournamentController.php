@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\BracketPosition;
 use App\SchoolAttendee;
 use App\Tournament;
 use App\School;
 use App\Player;
+use DemeterChain\B;
 use Illuminate\Http\Request;
 
 class TournamentController extends Controller
@@ -147,8 +149,37 @@ class TournamentController extends Controller
     }
 
     public function showTournaments() {
-        $tournaments = Tournament::all();
+        $tournaments = Tournament::all()->sortBy('date');
         $schoolAttendees = SchoolAttendee::all();
+
+        //FIX LATER the value at the end of the query for invitations should be the logged in school id
+        $invitations = $schoolAttendees->where('school_id', '=', 80);
+        $pendingInvitations = $invitations->where('invite_accepted', '=', 0);
+        $acceptedInvitations = $invitations->where('invite_accepted', '=', 1);
+
+
+        foreach($pendingInvitations as $invitation) {
+            foreach($tournaments as $key => $tournament) {
+                if ($tournament->id == $invitation->tournament_id) {
+                    $tournament->pendingInvite = true;
+                    $moveTournament = $tournament;
+                    $tournaments->forget($key);
+                    $tournaments->prepend($moveTournament);
+                }
+            }
+        }
+
+        foreach($acceptedInvitations as $invitation) {
+            foreach($tournaments as $key => $tournament) {
+                if ($tournament->id == $invitation->tournament_id) {
+                    $tournament->acceptedInvite = true;
+                    $moveTournament = $tournament;
+                    $tournaments->forget($key);
+                    $tournaments->prepend($moveTournament);
+                }
+            }
+        }
+
 
         return view('tournaments', [
             'tournaments' => $tournaments,
@@ -159,7 +190,9 @@ class TournamentController extends Controller
     public function showTournament(Tournament $tournament) {
         $school = School::find($tournament->host_id);
         $schools = School::all();
-        $attendees = SchoolAttendee::all()->where('tournament_id', '=', $tournament->id);
+        $bracketPositions = BracketPosition::all()->where('tournament_id' ,'=', $tournament->id)->first();
+
+        $attendees = SchoolAttendee::all()->where('tournament_id', '=', $tournament->id)->where('invite_accepted', '=', 1);
         $oneSinglesPlayers = Player::all()->where('position', '=', 1);
 
         $attendeeSchoolIDs = [];
@@ -170,24 +203,56 @@ class TournamentController extends Controller
         $girlsOneSinglesPlayers = $oneSinglesPlayers
             ->where('gender', '=', 'Female')
             ->whereIn('school_id', $attendeeSchoolIDs)
-            ->sortBy('one_singles_rank');
-
-        $oneSeed = $girlsOneSinglesPlayers->where('one_singles_rank', '=', 1);
+            ->sortBy('girls_one_singles_rank');
 
         $girlsTwoSinglesPlayers = $oneSinglesPlayers
             ->where('gender', '=', 'Female')
             ->whereIn('school_id', $attendeeSchoolIDs)
-            ->sortBy('two_singles_rank');
+            ->sortBy('girls_two_singles_rank');
 
         $boysOneSinglesPlayers = $oneSinglesPlayers
             ->where('gender', '=', 'Male')
             ->whereIn('school_id', $attendeeSchoolIDs)
-            ->sortBy('one_singles_rank');
+            ->sortBy('boys_one_singles_rank');
 
         $boysTwoSinglesPlayers = $oneSinglesPlayers
             ->where('gender', '=', 'Male')
             ->whereIn('school_id', $attendeeSchoolIDs)
-            ->sortBy('two_singles_rank');
+            ->sortBy('boys_two_singles_rank');
+
+        if($bracketPositions == null) {
+            $bracketPositions = new BracketPosition();
+            $bracketPositions->tournament_id = $tournament->id;
+            $increment = 1;
+            foreach($girlsOneSinglesPlayers as $player) {
+                $seed = $increment . '_seed';
+                $bracketPositions->$seed = $player->id;
+                $increment++;
+            }
+            $bracketPositions->saveOrFail();
+        } else {
+            $bracketPositions = BracketPosition::all()->where('tournament_id', '=', $tournament->id)->first();
+        }
+            for ($increment = 1; $increment < (count($girlsOneSinglesPlayers) + 1); $increment++) {
+                foreach($girlsOneSinglesPlayers as $player) {
+                    if($player->id == $bracketPositions->{$increment . '_seed'}) {
+                        $bracketPositions->{$increment . '_seed_name'} = $player->first_name . ' ' . $player->last_name;
+                        $bracketPositions->{$increment . '_seed_school'} = $player->getSchool()->name;
+                        break;
+                    }
+                }
+            }
+            $bracketPositionTitles = $bracketPositions->getFillable();
+            array_shift($bracketPositionTitles);
+
+            foreach($bracketPositionTitles as $key => $title) {
+                if($bracketPositions->$title != 0) {
+                    $player = $girlsOneSinglesPlayers->find($bracketPositions->$title);
+                    $playerName = $player->first_name . ' ' . $player->last_name;
+                    $bracketPositions->{$title . '_name'} = $playerName;
+                }
+            }
+
 
         return view('tournament', [
             'tournament' => $tournament,
@@ -197,7 +262,8 @@ class TournamentController extends Controller
             'girlsOneSinglesPlayers' => $girlsOneSinglesPlayers,
             'girlsTwoSinglesPlayers' => $girlsTwoSinglesPlayers,
             'boysOneSinglesPlayers' => $boysOneSinglesPlayers,
-            'boysTwoSinglesPlayers' => $boysTwoSinglesPlayers
+            'boysTwoSinglesPlayers' => $boysTwoSinglesPlayers,
+            'bracketPositions' => $bracketPositions
         ]);
 
     }
@@ -239,12 +305,19 @@ class TournamentController extends Controller
         $tournament['level'] = $data['level'];
         $tournament['privacy_setting'] = $data['privacy_setting'];
 
-        $tournament ['host_id'] = 3;
+        $tournament ['host_id'] = 80;
 
         $tournament->saveOrFail();
 
+        $schoolAttendee = new SchoolAttendee;
+        $schoolAttendee->school_id = $tournament['host_id'];;
+        $schoolAttendee->tournament_id = $tournament->id;
+        $schoolAttendee->invite_accepted = 1;
+        $schoolAttendee->saveOrFail();
+
+
         return redirect()->route('tournament', ['tournament' => $tournament->id]);
-//        return view('createtournament');
+
     }
 
 

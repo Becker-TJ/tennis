@@ -18,9 +18,13 @@ $factory->define(Player::class, function (Faker $faker) {
         'position' => $increment,
         'class' => $randomClassOption,
         'gender' => $randomGender,
-        'one_singles_rank' => 99999,
-        'two_singles_rank' => $increment,
-        'one_doubles_rank' => $increment,
-        'two_doubles_rank' => $increment++
+        'boys_one_singles_rank' => 99999,
+        'boys_two_singles_rank' => $increment,
+        'boys_one_doubles_rank' => $increment,
+        'boys_two_doubles_rank' => $increment,
+        'girls_one_singles_rank' => 99999,
+        'girls_two_singles_rank' => $increment,
+        'girls_one_doubles_rank' => $increment,
+        'girls_two_doubles_rank' => $increment++
     ];
 });

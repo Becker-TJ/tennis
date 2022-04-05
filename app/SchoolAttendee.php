@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SchoolAttendee extends Model
 {
-    protected $hidden = ['school_id', 'tournament_id'];
+    protected $fillable = ['school_id', 'tournament_id', 'invite_accepted'];
     protected $dates = ['created_at', 'updated_at'];
 
     public function getSchool()

@@ -48,21 +48,21 @@
                             <label for="bracket_rank" class="col-md-3 col-form-label text-md-right">Bracket</label>
 
                             <div id="bracket_rank" class="btn-group btn-group-toggle col-md-6" data-toggle="buttons">
-                                <label class="btn btn-secondary @if($radioButtonSettings['bracket_rank'] == "one_singles_rank") active @endif">
-                                    <input type="radio" name="bracket_rank" id="one_singles" autocomplete="off" value="one_singles_rank"
-                                           @if($radioButtonSettings['bracket_rank'] == "one_singles_rank") checked @endif> 1 Singles
+                                <label class="btn btn-secondary @if($radioButtonSettings['bracket_rank'] == "boys_one_singles_rank") active @endif">
+                                    <input type="radio" name="bracket_rank" id="one_singles" autocomplete="off" value="boys_one_singles_rank"
+                                           @if($radioButtonSettings['bracket_rank'] == "boys_one_singles_rank") checked @endif> 1 Singles
                                 </label>
-                                <label class="btn btn-secondary @if($radioButtonSettings['bracket_rank'] == "two_singles_rank") active @endif">
-                                    <input type="radio" name="bracket_rank" id="two_singles" autocomplete="off" value="two_singles_rank"
-                                           @if($radioButtonSettings['bracket_rank'] == "two_singles_rank") checked @endif> 2 Singles
+                                <label class="btn btn-secondary @if($radioButtonSettings['bracket_rank'] == "boys_two_singles_rank") active @endif">
+                                    <input type="radio" name="bracket_rank" id="two_singles" autocomplete="off" value="boys_two_singles_rank"
+                                           @if($radioButtonSettings['bracket_rank'] == "boys_two_singles_rank") checked @endif> 2 Singles
                                 </label>
-                                <label class="btn btn-secondary @if($radioButtonSettings['bracket_rank'] == "one_doubles_rank") active @endif">
-                                    <input type="radio" name="bracket_rank" id="one_doubles" autocomplete="off" value="one_doubles_rank"
-                                           @if($radioButtonSettings['bracket_rank'] == "one_doubles_rank") checked @endif> 1 Doubles
+                                <label class="btn btn-secondary @if($radioButtonSettings['bracket_rank'] == "boys_one_doubles_rank") active @endif">
+                                    <input type="radio" name="bracket_rank" id="one_doubles" autocomplete="off" value="boys_one_doubles_rank"
+                                           @if($radioButtonSettings['bracket_rank'] == "boys_one_doubles_rank") checked @endif> 1 Doubles
                                 </label>
-                                <label class="btn btn-secondary @if($radioButtonSettings['bracket_rank'] == "two_doubles_rank") active @endif">
-                                    <input type="radio" name="bracket_rank" id="two_doubles" autocomplete="off" value="two_doubles_rank"
-                                           @if($radioButtonSettings['bracket_rank'] == "two_doubles_rank") checked @endif> 2 Doubles
+                                <label class="btn btn-secondary @if($radioButtonSettings['bracket_rank'] == "boys_two_doubles_rank") active @endif">
+                                    <input type="radio" name="bracket_rank" id="two_doubles" autocomplete="off" value="boys_two_doubles_rank"
+                                           @if($radioButtonSettings['bracket_rank'] == "boys_two_doubles_rank") checked @endif> 2 Doubles
                                 </label>
                             </div>
 
@@ -86,7 +86,7 @@
                             <tbody>
                             @foreach($players as $player)
                                 <tr>
-                                    <td class="table-cell">{{$player->one_singles_rank}}</td>
+                                    <td class="table-cell">{{$player->boys_one_singles_rank}}</td>
                                     <td class="table-cell">{{$player->first_name . ' ' . $player->last_name}}</td>
                                     <td class="table-cell">{{$player->name}}</td>
                                     <td align="center" class="table-cell">{{$player->conference}}</td>
