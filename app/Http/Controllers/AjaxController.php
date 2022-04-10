@@ -47,19 +47,24 @@ class AjaxController extends Controller {
     public function saveScore(Request $request) {
         $input = $request->all();
 
+        $tournamentID = intval($input['tournament_id']);
+        $bracketPositions = BracketPosition::all()->where('tournament_id' ,'=', $tournamentID)->first();
+
         $winner = intval($input['winner']);
         $loser = intval($input['loser']);
         $winnerBracketPosition = $input['winnerBracketPosition'];
         $loserBracketPosition = $input['loserBracketPosition'];
         $newWinnerBracketPosition = str_replace('-', '_', $input['newWinnerBracketPosition']);
-        $newLoserBracketPosition = str_replace('-', '_', $input['newLoserBracketPosition']);
+
+        $bracketPositions->$newWinnerBracketPosition = $winner;
+        if(isset($input['newLoserBracketPosition'])) {
+            $newLoserBracketPosition = str_replace('-', '_', $input['newLoserBracketPosition']);
+            $bracketPositions->$newLoserBracketPosition = $loser;
+        }
+
         $score = $input['score'];
-        $tournamentID = intval($input['tournament_id']);
         $scoreInput = $input['scoreInput'];
 
-        $bracketPositions = BracketPosition::all()->where('tournament_id' ,'=', $tournamentID)->first();
-        $bracketPositions->$newWinnerBracketPosition = $winner;
-        $bracketPositions->$newLoserBracketPosition = $loser;
         $bracketPositions->saveOrFail();
 
         $match = SinglesMatch::all()
@@ -186,13 +191,16 @@ class AjaxController extends Controller {
                 $player = $girlsOneSinglesPlayers->find($bracketPositions->$title);
                 $playerName = $player->first_name . ' ' . $player->last_name;
                 $bracketPositions->{$title} = $playerName;
+                $bracketPositions->{$title . '_id'} = $player->id;
             }
         }
 
+        $matches = SinglesMatch::all()->where('tournament_id', '=', $tournament_id);
+
         return response()->json([
             'players' => $girlsOneSinglesPlayers,
-//            'seeds' => $seeds,
-            'bracketPositions' => $bracketPositions
+            'bracketPositions' => $bracketPositions,
+            'matches' => $matches
         ]);
     }
 

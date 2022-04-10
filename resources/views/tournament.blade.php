@@ -363,7 +363,7 @@
                 <td></td>
                 <td></td>
                 <td class="give-top-border give-left-border"><input hidden class="score-input" type="text" id="first-consolation-round-one-top-score-input"></td>
-                <td id="8-seed" class="advanceable give-left-border give-right-border" data-id="<?php echo $bracketPositions->{'8_seed'} ?>">8 seed</td>
+                <td id="8-seed" class="advanceable give-left-border give-right-border">8 seed</td>
                 <td class="give-top-border give-right-border"><input hidden class="score-input" type="text" id="first-winners-round-one-top-score-input"></td>
                 <td></td>
                 <td></td>
@@ -399,7 +399,7 @@
                 <td></td>
                 <td class="give-left-border"></td>
                 <td class="give-left-border"></td>
-                <td class="advanceable" id="5-seed" data-id="<?php echo $bracketPositions->{'5_seed'} ?>">5 seed</td>
+                <td class="advanceable" id="5-seed">5 seed</td>
                 <td class="give-right-border"></td>
                 <td class="give-right-border"></td>
                 <td></td>
@@ -426,7 +426,7 @@
                 <td></td>
                 <td class="give-left-border"></td>
                 <td></td>
-                <td id="4-seed" class="advanceable give-left-border give-right-border" data-id="<?php echo $bracketPositions->{'4_seed'} ?>">4 seed</td>
+                <td id="4-seed" class="advanceable give-left-border give-right-border">4 seed</td>
                 <td></td>
                 <td class="give-right-border"></td>
                 <td></td>
@@ -462,7 +462,7 @@
                 <td></td>
                 <td class="give-left-border"></td>
                 <td></td>
-                <td class="advanceable" id="3-seed" data-id="<?php echo $bracketPositions->{'3_seed'} ?>">3 seed</td>
+                <td class="advanceable" id="3-seed">3 seed</td>
                 <td></td>
                 <td class="give-right-border"></td>
                 <td></td>
@@ -489,7 +489,7 @@
                 <td></td>
                 <td class="give-left-border"></td>
                 <td class="give-top-border give-left-border"><input hidden class="score-input" type="text" id="second-consolation-round-one-top-score-input"></td>
-                <td id="6-seed" class="advanceable give-left-border give-right-border" data-id="<?php echo $bracketPositions->{'6_seed'} ?>">6 seed</td>
+                <td id="6-seed" class="advanceable give-left-border give-right-border">6 seed</td>
                 <td class="give-top-border give-right-border"><input hidden class="score-input" type="text" id="second-winners-round-one-top-score-input"></td>
                 <td class="give-right-border"></td>
                 <td></td>
@@ -525,7 +525,7 @@
                 <td></td>
                 <td></td>
                 <td class="give-left-border"></td>
-                <td class="advanceable" id="7-seed" data-id="<?php echo $bracketPositions->{'7_seed'} ?>">7 seed</td>
+                <td class="advanceable" id="7-seed">7 seed</td>
                 <td class="give-right-border"></td>
                 <td></td>
                 <td></td>
@@ -552,7 +552,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td id="2-seed" class="advanceable give-left-border give-right-border" data-id="<?php echo $bracketPositions->{'2_seed'} ?>">2 seed</td>
+                <td id="2-seed" class="advanceable give-left-border give-right-border">2 seed</td>
                 <td></td>
                 <td></td>
                 <td></td>

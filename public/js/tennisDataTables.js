@@ -129,7 +129,7 @@ $(document).ready( function () {
         $(".bracket-button").removeClass('selected-button');
         $(this).addClass('selected-button');
 
-        var tournament_id = $('#tournament_id').html();
+        const tournament_id = $('#tournament_id').html();
         var requestedBracket = $(this).attr('id');
 
         fillBracketData(requestedBracket, tournament_id);
@@ -150,6 +150,7 @@ $(document).ready( function () {
 
                 $increment = 1;
                 $bracketPositions = data.bracketPositions;
+                $nonAdvanceablePositions = ['champion', 'consolation-champion', 'third-place', 'seventh-place'];
                 for (const [$position, $value] of Object.entries($bracketPositions)) {
                     if($increment > 4) {
                         if($value === 0) {
@@ -161,29 +162,45 @@ $(document).ready( function () {
                             $('#' + $positionWithDashes).html($value);
                         } else if ($position.indexOf('id') !== -1){
                             //does include the substring id;
-                            console.log($positionWithDashes, $value);
                             $positionCorrected = $positionWithDashes.slice(0, -3);
                             $('#' + $positionCorrected).attr('data-id', $value);
-                        }else {
+                        } else {
                             $('#' + $positionWithDashes).html($value);
-                            console.log('#' + $positionWithDashes);
-                            console.log($position);
-                            console.log($value);
+                            if(!$nonAdvanceablePositions.includes($positionWithDashes)) {
+                                $('#' + $positionWithDashes).addClass('advanceable');
+                            }
                         }
                     }
                     $increment++;
                 }
+
+                $matches = data.matches;
+                $matches.forEach(function($match, $index) {
+                    $winnerPosition = $match.score_input.slice(0, -12);
+                    $winnerPositions = ['champion', 'consolation-champion', 'third-place', 'seventh-place'];
+                    $('#' + $match.winner_bracket_position).addClass('winner');
+                    $('#' + $match.score_input).removeAttr('hidden').val($match.score).addClass('match-complete');
+                    if($winnerPositions.includes($winnerPosition)) {
+                        $('#' + $winnerPosition).addClass('winner');
+                    }
+                });
+
             }
         });
     }
 
+
     $(".score-input").keydown(function(e) {
         $inputString = $(this).val();
-        var checkScoreValidity = true;
+        var checkScoreValidity = false;
         var tournament_id = $('#tournament_id').html();
         var scoreInput = $(this).attr('id');
+        var validScoresAfterOneThroughFour = [6];
+        var validScoresAfterFive = [7];
+        var validScoresAfterSix = [0,1,2,3,4,7];
+        var validScoresAfterSeven = [5,6];
 
-        if (e.which == 48 || e.which == 96) {
+        if (e.which === 48 || e.which === 96) {
             var numberPressed = 0;
         } else if (e.which === 49 || e.which === 97) {
             var numberPressed = 1;
@@ -199,6 +216,10 @@ $(document).ready( function () {
             var numberPressed = 6;
         } else if (e.which === 55 || e.which === 103) {
             var numberPressed = 7;
+        } else if ((e.which === 56 || e.which === 104) && $inputString.length > 7) {
+            var numberPressed = 8;
+        } else if ((e.which === 57 || e.which === 105) && $inputString.length > 7) {
+            var numberPressed = 9;
         } else if (e.which === 8 || e.which === 46) {
             $(this).val('');
             $(this).removeClass('invalid-score');
@@ -208,124 +229,106 @@ $(document).ready( function () {
             return false;
         }
 
+        if($(this).hasClass('match-complete') || $(this).hasClass('invalid-score')) {
+            return false;
+        }
+
+        var firstScore = parseInt($inputString.charAt(0));
+        var secondScore = parseInt($inputString.charAt(2));
+        var thirdScore = parseInt($inputString.charAt(5));
+        var fourthScore = parseInt($inputString.charAt(7));
+
         if($inputString.length === 0) {
-            if (numberPressed === 7) {
-                $(this).val('7-6');
-            } else if(numberPressed === 6) {
-                $(this).val(numberPressed + '-');
-            } else if(numberPressed === 5) {
-                $(this).val(numberPressed + '-7');
-            } else {
-                $(this).val(numberPressed + '-6');
+            $(this).val(numberPressed + '-');
+        }
+
+        else if ($inputString.length === 2) {
+            if(firstScore === 7) {
+                if(validScoresAfterSeven.includes(numberPressed)) {
+                    $(this).val($inputString + numberPressed);
+                }
+            }
+            else if(firstScore === 6) {
+                if(validScoresAfterSix.includes(numberPressed)) {
+                    $(this).val($inputString + numberPressed);
+                }
+            } else if(firstScore === 5) {
+                if(validScoresAfterFive.includes(numberPressed)) {
+                    $(this).val($inputString + numberPressed);
+                }
+            } else if(firstScore < 5) {
+                if(validScoresAfterOneThroughFour.includes(numberPressed)) {
+                    $(this).val($inputString + numberPressed);
+                }
             }
         }
 
-        else if (($inputString.length === 2)) {
-            if(numberPressed === 5 || numberPressed === 6) {
-                return false;
-            }
-            $(this).val($inputString + numberPressed);
-        }
 
         else if ($inputString.length === 3) {
+            $(this).val($inputString + ', ' + numberPressed + '-');
+        }
 
-            if (numberPressed === 7) {
-                $inputString += ', 7-6'
-                $(this).val($inputString);
-            } else if (numberPressed === 6) {
-                $inputString += ', 6-';
-                checkScoreValidity = false;
-                $(this).val($inputString);
-            } else if(numberPressed === 5) {
-                $inputString += ', 5-7';
-                $(this).val($inputString);
-            } else {
-                $inputString += ', ' + numberPressed + '-6'
-                $(this).val($inputString);
+
+        else if ($inputString.length === 7) {
+            if(thirdScore === 7) {
+                if(validScoresAfterSeven.includes(numberPressed)) {
+                    $(this).val($inputString + numberPressed);
+                    checkScoreValidity = true;
+                }
             }
-            if(checkScoreValidity) {
-                $setsWon = calculateSetsWon($inputString);
-                if($setsWon === 0) {
-                    $(this).addClass('invalid-score');
-                } else if ($setsWon === 2) {
-                    $(this).addClass('match-complete');
-                    $winner = $(this).attr('data-winner');
-                    $loser = $(this).attr('data-loser');
-                    $winnerBracketPosition = $(this).attr('data-winner-bracket-position');
-                    $loserBracketPosition = $(this).attr('data-loser-bracket-position');
-                    $newWinnerBracketPosition = $(this).attr('data-new-winner-bracket-position');
-                    $newLoserBracketPosition = $(this).attr('data-new-loser-bracket-position');
-                    $score = $inputString;
-                    saveScore($winner, $loser, $winnerBracketPosition, $loserBracketPosition, $newWinnerBracketPosition, $newLoserBracketPosition, $score, tournament_id, scoreInput);
+            else if(thirdScore === 6) {
+                if(validScoresAfterSix.includes(numberPressed)) {
+                    $(this).val($inputString + numberPressed);
+                    checkScoreValidity = true;
+                }
+            } else if(thirdScore === 5) {
+                if(validScoresAfterFive.includes(numberPressed)) {
+                    $(this).val($inputString + numberPressed);
+                    checkScoreValidity = true;
+                }
+            } else if(thirdScore < 5) {
+                if(validScoresAfterOneThroughFour.includes(numberPressed)) {
+                    $(this).val($inputString + numberPressed);
+                    checkScoreValidity = true;
                 }
             }
         }
 
-        else if (($inputString.length === 7)) {
-            if(numberPressed === 5 || numberPressed === 6) {
-                return false;
-            }
-            $inputString += numberPressed;
-            $(this).val($inputString);
-            $setsWon = calculateSetsWon($inputString);
-            if($setsWon === 0) {
-                $(this).addClass('invalid-score');
-            } else if ($setsWon === 2) {
-                $(this).addClass('match-complete');
-                $winner = $(this).attr('data-winner');
-                $loser = $(this).attr('data-loser');
-                $winnerBracketPosition = $(this).attr('data-winner-bracket-position');
-                $loserBracketPosition = $(this).attr('data-loser-bracket-position');
-                $newWinnerBracketPosition = $(this).attr('data-new-winner-bracket-position');
-                $newLoserBracketPosition = $(this).attr('data-new-loser-bracket-position');
-                $score = $inputString;
-                saveScore($winner, $loser, $winnerBracketPosition, $loserBracketPosition, $newWinnerBracketPosition, $newLoserBracketPosition, $score, tournament_id, scoreInput);
-            }
-        }
 
         else if ($inputString.length === 8) {
-            checkScoreValidity = true;
-            if (numberPressed === 7) {
-                $inputString += ', 7-6'
-                $(this).val($inputString);
-            } else if (numberPressed === 6) {
-                $inputString += ', 6-';
-                checkScoreValidity = false;
-                $(this).val($inputString);
-            } else if(numberPressed === 5) {
-                $inputString += ', 5-7';
-                $(this).val($inputString);
-            } else {
-                $inputString += ', ' + numberPressed + '-6'
-                $(this).val($inputString);
-            }
-            if(checkScoreValidity) {
-                $setsWon = calculateSetsWon($inputString);
-                if($setsWon === 0 || $setsWon === 1) {
-                    $(this).addClass('invalid-score');
-                } else if ($setsWon === 2) {
-                    $(this).addClass('match-complete');
-                    $winner = $(this).attr('data-winner');
-                    $loser = $(this).attr('data-loser');
-                    $winnerBracketPosition = $(this).attr('data-winner-bracket-position');
-                    $loserBracketPosition = $(this).attr('data-loser-bracket-position');
-                    $newWinnerBracketPosition = $(this).attr('data-new-winner-bracket-position');
-                    $newLoserBracketPosition = $(this).attr('data-new-loser-bracket-position');
-                    $score = $inputString;
-                    saveScore($winner, $loser, $winnerBracketPosition, $loserBracketPosition, $newWinnerBracketPosition, $newLoserBracketPosition, $score, tournament_id, scoreInput);
-                }
-            }
-
-        } else if ($inputString.length === 12) {
-            if(numberPressed === 5 || numberPressed === 6) {
+            if(numberPressed === 0) {
                 return false;
             }
-            $inputString += numberPressed;
-            $(this).val($inputString);
-            $setsWon = calculateSetsWon($inputString);
-            if($setsWon === 0 || $setsWon === 1) {
-                $(this).addClass('invalid-score');
-            } else if ($setsWon === 2) {
+            $(this).val($inputString + ', (' + numberPressed);
+        }
+
+        else if ($inputString.length === 12) {
+            $(this).val($inputString + numberPressed + '-');
+        }
+
+        else if ($inputString.length === 14) {
+            $(this).val($inputString + numberPressed);
+            checkScoreValidity = true;
+        }
+
+        else if ($inputString.length === 15) {
+            $(this).val($inputString + numberPressed);
+            checkScoreValidity = true;
+        }
+
+
+        if(checkScoreValidity) {
+            $score = $inputString + numberPressed;
+            console.log(isScoreValid($score));
+
+            if(isScoreValid($score) === 'third set needed' || isScoreValid($score) === 'needs to finish score') {
+                return false;
+            }
+
+            if(isScoreValid($score)) {
+                if($score.length > 8) {
+                    $score += ')';
+                }
                 $(this).addClass('match-complete');
                 $winner = $(this).attr('data-winner');
                 $loser = $(this).attr('data-loser');
@@ -333,12 +336,21 @@ $(document).ready( function () {
                 $loserBracketPosition = $(this).attr('data-loser-bracket-position');
                 $newWinnerBracketPosition = $(this).attr('data-new-winner-bracket-position');
                 $newLoserBracketPosition = $(this).attr('data-new-loser-bracket-position');
-                $score = $inputString;
+
                 saveScore($winner, $loser, $winnerBracketPosition, $loserBracketPosition, $newWinnerBracketPosition, $newLoserBracketPosition, $score, tournament_id, scoreInput);
+
+                $(this).val($score);
+            } else {
+                if($score.length > 8) {
+                    $score += ')';
+                }
+                $(this).val($score);
+                $(this).addClass('invalid-score');
             }
         }
 
         return false;
+
     });
 
     function saveScore(winner, loser, winnerBracketPosition, loserBracketPosition, newWinnerBracketPosition, newLoserBracketPosition, score, tournament_id,scoreInput) {
@@ -362,17 +374,35 @@ $(document).ready( function () {
         });
     }
 
-    function calculateSetsWon(string) {
+    function isScoreValid(string) {
         $setsWon = 0;
         $firstScore = parseInt(string.charAt(0));
         $secondScore = parseInt(string.charAt(2));
         $thirdScore = parseInt(string.charAt(5));
         $fourthScore = parseInt(string.charAt(7));
+        if(string.length > 8){
+            $fifthScore = parseInt(string.substring(11,13));
+            if(string.length === 15) {
+                $sixthScore = parseInt(string.charAt(14));
+            } else if (string.length === 16) {
+                $sixthScore = parseInt(string.substring(14,16));
+            }
 
-        console.log($firstScore);
-        console.log($secondScore);
-        console.log($thirdScore);
-        console.log($fourthScore);
+            if($sixthScore + 2 > $fifthScore) {
+                return false;
+            }
+
+            if(($fifthScore > 10) && ($sixthScore != ($fifthScore - 2))) {
+                if($sixthScore.toString().length > 1) {
+                    return false;
+                }
+                return 'needs to finish score';
+            }
+
+            if($fifthScore > $sixthScore) {
+                $setsWon++;
+            }
+        }
 
         if($firstScore > $secondScore) {
             $setsWon++;
@@ -380,15 +410,16 @@ $(document).ready( function () {
         if($thirdScore > $fourthScore) {
             $setsWon++;
         }
-        if(string.length > 8){
-            $fifthScore = parseInt(string.charAt(10));
-            $sixthScore = parseInt(string.charAt(12));
-            if($fifthScore > $sixthScore) {
-                $setsWon++;
-            }
+
+        if($setsWon === 2) {
+            return true;
+
+        } else if ($setsWon === 1) {
+            return 'third set needed';
         }
 
-        return $setsWon;
+        return false;
+
     }
 
     //this is assigning settings for the sortable tables

@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 use App\Player;
+use App\DoublesTeam;
 
 class DatabaseSeeder extends Seeder
 {
@@ -109,6 +110,16 @@ class DatabaseSeeder extends Seeder
         $lawtonEisenhowerTwoDoublesPlayerTwo ['school_id'] = 513;
         $lawtonEisenhowerTwoDoublesPlayerTwo->saveOrFail();
 
+        $doublesTeam = new DoublesTeam;
+        $doublesTeam->player_1 = $lawtonEisenhowerOneDoublesPlayerOne->id;
+        $doublesTeam->player_2 = $lawtonEisenhowerOneDoublesPlayerTwo->id;
+        $doublesTeam->saveOrFail();
+
+        $doublesTeam = new DoublesTeam;
+        $doublesTeam->player_1 = $lawtonEisenhowerTwoDoublesPlayerOne->id;
+        $doublesTeam->player_2 = $lawtonEisenhowerTwoDoublesPlayerTwo->id;
+        $doublesTeam->saveOrFail();
+
         $delCityOneSingles = new Player;
         $delCityOneSingles['first_name'] = 'Olivia';
         $delCityOneSingles['last_name'] = 'Sparks';
@@ -181,6 +192,16 @@ class DatabaseSeeder extends Seeder
         $delCityTwoDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $delCityTwoDoublesPlayerTwo ['school_id'] = 317;
         $delCityTwoDoublesPlayerTwo->saveOrFail();
+
+        $doublesTeam = new DoublesTeam;
+        $doublesTeam->player_1 = $delCityOneDoublesPlayerOne->id;
+        $doublesTeam->player_2 = $delCityOneDoublesPlayerTwo->id;
+        $doublesTeam->saveOrFail();
+
+        $doublesTeam = new DoublesTeam;
+        $doublesTeam->player_1 = $delCityTwoDoublesPlayerOne->id;
+        $doublesTeam->player_2 = $delCityTwoDoublesPlayerTwo->id;
+        $doublesTeam->saveOrFail();
 
         $PCNOneSingles = new Player;
         $PCNOneSingles['first_name'] = 'Winnie';
@@ -255,6 +276,16 @@ class DatabaseSeeder extends Seeder
         $PCNTwoDoublesPlayerTwo ['school_id'] = 340;
         $PCNTwoDoublesPlayerTwo->saveOrFail();
 
+        $doublesTeam = new DoublesTeam;
+        $doublesTeam->player_1 = $PCNOneDoublesPlayerOne->id;
+        $doublesTeam->player_2 = $PCNOneDoublesPlayerTwo->id;
+        $doublesTeam->saveOrFail();
+
+        $doublesTeam = new DoublesTeam;
+        $doublesTeam->player_1 = $PCNTwoDoublesPlayerOne->id;
+        $doublesTeam->player_2 = $PCNTwoDoublesPlayerTwo->id;
+        $doublesTeam->saveOrFail();
+
         $westmooreOneSingles = new Player;
         $westmooreOneSingles['first_name'] = 'Lua';
         $westmooreOneSingles['last_name'] = 'Huynh';
@@ -327,6 +358,16 @@ class DatabaseSeeder extends Seeder
         $westmooreTwoDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $westmooreTwoDoublesPlayerTwo ['school_id'] = 81;
         $westmooreTwoDoublesPlayerTwo->saveOrFail();
+
+        $doublesTeam = new DoublesTeam;
+        $doublesTeam->player_1 = $westmooreOneDoublesPlayerOne->id;
+        $doublesTeam->player_2 = $westmooreOneDoublesPlayerTwo->id;
+        $doublesTeam->saveOrFail();
+
+        $doublesTeam = new DoublesTeam;
+        $doublesTeam->player_1 = $westmooreTwoDoublesPlayerOne->id;
+        $doublesTeam->player_2 = $westmooreTwoDoublesPlayerTwo->id;
+        $doublesTeam->saveOrFail();
 
         $mooreOneSingles = new Player;
         $mooreOneSingles['first_name'] = 'Lily';
@@ -401,6 +442,16 @@ class DatabaseSeeder extends Seeder
         $mooreTwoDoublesPlayerTwo ['school_id'] = 80;
         $mooreTwoDoublesPlayerTwo->saveOrFail();
 
+        $doublesTeam = new DoublesTeam;
+        $doublesTeam->player_1 = $mooreOneDoublesPlayerOne->id;
+        $doublesTeam->player_2 = $mooreOneDoublesPlayerTwo->id;
+        $doublesTeam->saveOrFail();
+
+        $doublesTeam = new DoublesTeam;
+        $doublesTeam->player_1 = $mooreTwoDoublesPlayerOne->id;
+        $doublesTeam->player_2 = $mooreTwoDoublesPlayerTwo->id;
+        $doublesTeam->saveOrFail();
+
         $southmooreOneSingles = new Player;
         $southmooreOneSingles['first_name'] = 'Gracie';
         $southmooreOneSingles['last_name'] = 'Graham';
@@ -473,6 +524,16 @@ class DatabaseSeeder extends Seeder
         $southmooreTwoDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $southmooreTwoDoublesPlayerTwo ['school_id'] = 82;
         $southmooreTwoDoublesPlayerTwo->saveOrFail();
+
+        $doublesTeam = new DoublesTeam;
+        $doublesTeam->player_1 = $southmooreOneDoublesPlayerOne->id;
+        $doublesTeam->player_2 = $southmooreOneDoublesPlayerTwo->id;
+        $doublesTeam->saveOrFail();
+
+        $doublesTeam = new DoublesTeam;
+        $doublesTeam->player_1 = $southmooreTwoDoublesPlayerOne->id;
+        $doublesTeam->player_2 = $southmooreTwoDoublesPlayerTwo->id;
+        $doublesTeam->saveOrFail();
 
         $lawtonHighOneSingles = new Player;
         $lawtonHighOneSingles['first_name'] = 'Ivette';
@@ -547,6 +608,16 @@ class DatabaseSeeder extends Seeder
         $lawtonHighTwoDoublesPlayerTwo ['school_id'] = 99;
         $lawtonHighTwoDoublesPlayerTwo->saveOrFail();
 
+        $doublesTeam = new DoublesTeam;
+        $doublesTeam->player_1 = $lawtonHighOneDoublesPlayerOne->id;
+        $doublesTeam->player_2 = $lawtonHighOneDoublesPlayerTwo->id;
+        $doublesTeam->saveOrFail();
+
+        $doublesTeam = new DoublesTeam;
+        $doublesTeam->player_1 = $lawtonHighTwoDoublesPlayerOne->id;
+        $doublesTeam->player_2 = $lawtonHighTwoDoublesPlayerTwo->id;
+        $doublesTeam->saveOrFail();
+
         $choctawOneSingles = new Player;
         $choctawOneSingles['first_name'] = 'Makensie';
         $choctawOneSingles['last_name'] = 'Butler';
@@ -619,6 +690,16 @@ class DatabaseSeeder extends Seeder
         $choctawTwoDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $choctawTwoDoublesPlayerTwo ['school_id'] = 298;
         $choctawTwoDoublesPlayerTwo->saveOrFail();
+
+        $doublesTeam = new DoublesTeam;
+        $doublesTeam->player_1 = $choctawOneDoublesPlayerOne->id;
+        $doublesTeam->player_2 = $choctawOneDoublesPlayerTwo->id;
+        $doublesTeam->saveOrFail();
+
+        $doublesTeam = new DoublesTeam;
+        $doublesTeam->player_1 = $choctawTwoDoublesPlayerOne->id;
+        $doublesTeam->player_2 = $choctawTwoDoublesPlayerTwo->id;
+        $doublesTeam->saveOrFail();
 
 
 

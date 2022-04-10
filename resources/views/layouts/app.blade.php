@@ -89,11 +89,11 @@
         }
 
         .match-complete {
-            background-color:mediumspringgreen;
+            background-color:#abffc0;
         }
 
         .accepted-invite {
-            background-color:mediumspringgreen !important;
+            background-color:#abffc0 !important;
         }
 
         .pending-invite {

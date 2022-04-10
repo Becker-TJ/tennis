@@ -16,6 +16,13 @@ class CreateDoublesMatchesTable extends Migration
         Schema::create('doubles_matches', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->unsignedInteger('tournament_id');
+            $table->unsignedInteger('winner');
+            $table->unsignedInteger('loser');
+            $table->string('score');
+            $table->string('winner_bracket_position');
+            $table->string('loser_bracket_position');
+            $table->string('score_input');
         });
     }
 

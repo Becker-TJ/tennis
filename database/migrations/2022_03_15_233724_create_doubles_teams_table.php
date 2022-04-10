@@ -16,6 +16,8 @@ class CreateDoublesTeamsTable extends Migration
         Schema::create('doubles_teams', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->unsignedInteger('player_1');
+            $table->unsignedInteger('player_2');
         });
     }
 
