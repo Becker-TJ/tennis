@@ -98,32 +98,6 @@ $(document).ready( function () {
         }
     });
 
-    $("#savePlayerPositionsButton").click(function(e){
-        e.preventDefault();
-
-        var name = 'tj';
-        var password = 'becker';
-        var email = 'rocks';
-
-        var tableData = $("#schoolTable").DataTable();
-        console.log(tableData);
-
-        $('#schoolTable > tbody > tr').each(function(index, row){
-            // console.log(index);
-            // console.log(row);
-            console.log(tableData.row(index).data());
-        });
-
-        $.ajax({
-            type:'POST',
-            url:'/savePlayerPositions',
-            data:{name:name, password:password, email:email},
-            success:function(data){
-                alert(data.success);
-            }
-        });
-    });
-
     $(".bracket-button").click(function(e){
         e.preventDefault();
         $(".bracket-button").removeClass('selected-button');
@@ -148,11 +122,10 @@ $(document).ready( function () {
                 //     $('#' + seedNumber + '-seed-school').html(data.seeds[seedNumber].school_name);
                 // }
 
-                $increment = 1;
                 $bracketPositions = data.bracketPositions;
                 $nonAdvanceablePositions = ['champion', 'consolation-champion', 'third-place', 'seventh-place'];
                 for (const [$position, $value] of Object.entries($bracketPositions)) {
-                    if($increment > 4) {
+                    if(!($position == 'tournament_id' || $position == 'bracket' || $position == 'id' || $position == 'created_at' || $position == 'updated_at')) {
                         if($value === 0) {
                             continue;
                         }
@@ -171,7 +144,6 @@ $(document).ready( function () {
                             }
                         }
                     }
-                    $increment++;
                 }
 
                 $matches = data.matches;
@@ -319,7 +291,6 @@ $(document).ready( function () {
 
         if(checkScoreValidity) {
             $score = $inputString + numberPressed;
-            console.log(isScoreValid($score));
 
             if(isScoreValid($score) === 'third set needed' || isScoreValid($score) === 'needs to finish score') {
                 return false;
@@ -330,6 +301,8 @@ $(document).ready( function () {
                     $score += ')';
                 }
                 $(this).addClass('match-complete');
+
+                $bracket = $('.selected-button').attr('id');
                 $winner = $(this).attr('data-winner');
                 $loser = $(this).attr('data-loser');
                 $winnerBracketPosition = $(this).attr('data-winner-bracket-position');
@@ -337,7 +310,7 @@ $(document).ready( function () {
                 $newWinnerBracketPosition = $(this).attr('data-new-winner-bracket-position');
                 $newLoserBracketPosition = $(this).attr('data-new-loser-bracket-position');
 
-                saveScore($winner, $loser, $winnerBracketPosition, $loserBracketPosition, $newWinnerBracketPosition, $newLoserBracketPosition, $score, tournament_id, scoreInput);
+                saveScore($bracket, $winner, $loser, $winnerBracketPosition, $loserBracketPosition, $newWinnerBracketPosition, $newLoserBracketPosition, $score, tournament_id, scoreInput);
 
                 $(this).val($score);
             } else {
@@ -353,11 +326,12 @@ $(document).ready( function () {
 
     });
 
-    function saveScore(winner, loser, winnerBracketPosition, loserBracketPosition, newWinnerBracketPosition, newLoserBracketPosition, score, tournament_id,scoreInput) {
+    function saveScore(bracket, winner, loser, winnerBracketPosition, loserBracketPosition, newWinnerBracketPosition, newLoserBracketPosition, score, tournament_id,scoreInput) {
         $.ajax({
             type:'POST',
             url:'/saveScore',
             data:{
+                bracket:bracket,
                 winner:winner,
                 loser:loser,
                 winnerBracketPosition:winnerBracketPosition,

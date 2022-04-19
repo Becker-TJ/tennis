@@ -5,6 +5,7 @@ use App\Player;
 use App\School;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\DoublesTeam;
 use DB;
 
 class PlayerController extends Controller
@@ -122,18 +123,45 @@ class PlayerController extends Controller
         $player['last_name'] = $data['new_player_last_name'];
         $player['position'] = $lastPosition + 1;
         $player['class'] = $data['class'];
-        $player ['gender'] = $data['gender'];
+        $player['gender'] = $data['gender'];
         $player['boys_one_singles_rank'] = 99999;
         $player['boys_two_singles_rank'] = 99999;
-        $player['boys_one_doubles_rank'] = 99999;
-        $player['boys_two_doubles_rank'] = 99999;
         $player['girls_one_singles_rank'] = 99999;
         $player['girls_two_singles_rank'] = 99999;
-        $player['girls_one_doubles_rank'] = 99999;
-        $player['girls_two_doubles_rank'] = 99999;
         $player ['school_id'] = $schoolID;
 
         $player->saveOrFail();
+
+        $schoolPlayers = $players->where('school_id', '=', $schoolID)->sortBy('position');
+
+        if($schoolPlayers->count() > 2) {
+
+            if($player['position'] === 4) {
+                $playerAtPositionThree = $schoolPlayers->where('position', '=', 3)->first();
+
+                $newDoublesTeam = new DoublesTeam;
+                $newDoublesTeam->player_1 = $playerAtPositionThree->id;
+                $newDoublesTeam->player_2 = $player->id;
+                $newDoublesTeam->saveDoublesTeam();
+
+            }
+
+            if($player['position'] === 6) {
+                $playerAtPositionFive = $schoolPlayers->where('position', '=', 5)->first();
+
+                $newDoublesTeam = new DoublesTeam;
+                $newDoublesTeam->player_1 = $playerAtPositionFive->id;
+                $newDoublesTeam->player_2 = $player->id;
+                $newDoublesTeam->saveDoublesTeam();
+
+            }
+        }
+
+
+
+
+
+
 
         return redirect()->route('school', ['school' => $schoolID]);
     }

@@ -14,4 +14,5 @@ class SchoolAttendee extends Model
         $school = School::where('id', $this->school_id)->first();
         return $school;
     }
+
 }

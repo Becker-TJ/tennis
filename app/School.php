@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\Player;
+use App\DoublesTeam;
 
 class School extends Model
 {
@@ -19,10 +20,18 @@ class School extends Model
         $player = Player::where('school_id', '=', $this->id)->where('position','=', 2)->first();
         return $player;
     }
-    public function getOneDoublesTeam() {
+    public function getGirlsOneDoublesTeam() {
         $players = [];
-        $players[] = Player::where('school_id', '=', $this->id)->where('position','=', 3)->first();
-        $players[] = Player::where('school_id', '=', $this->id)->where('position','=', 4)->first();
+        $players[] = Player::where('school_id', '=', $this->id)->where('position','=', 3)->where('gender', '=', 'Female')->first();
+        $players[] = Player::where('school_id', '=', $this->id)->where('position','=', 4)->where('gender', '=', 'Female')->first();
+        return $players;
+    }
+
+    public function getBoysOneDoublesTeam() {
+        $players = [];
+        $players[] = Player::where('school_id', '=', $this->id)->where('position','=', 3)->where('gender', '=', 'Male')->first();
+        $players[] = Player::where('school_id', '=', $this->id)->where('position','=', 4)->where('gender', '=', 'Male')->first();
+
         return $players;
     }
     public function getTwoDoublesTeam() {

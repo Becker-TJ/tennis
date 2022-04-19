@@ -10,6 +10,7 @@ class BracketPosition extends Model
 {
     protected $fillable = [
         'tournament_id',
+        'bracket',
         'first_winners_round_one_top',
         'first_winners_round_one_bottom',
         'second_winners_round_one_top',

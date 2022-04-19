@@ -18,6 +18,10 @@ class CreateDoublesTeamsTable extends Migration
             $table->timestamps();
             $table->unsignedInteger('player_1');
             $table->unsignedInteger('player_2');
+            $table->unsignedInteger('boys_one_doubles_rank')->default(99999);
+            $table->unsignedInteger('boys_two_doubles_rank')->default(99999);
+            $table->unsignedInteger('girls_one_doubles_rank')->default(99999);
+            $table->unsignedInteger('girls_two_doubles_rank')->default(99999);
         });
     }
 

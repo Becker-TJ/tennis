@@ -17,6 +17,7 @@ class CreateDoublesMatchesTable extends Migration
             $table->id();
             $table->timestamps();
             $table->unsignedInteger('tournament_id');
+            $table->string('bracket');
             $table->unsignedInteger('winner');
             $table->unsignedInteger('loser');
             $table->string('score');

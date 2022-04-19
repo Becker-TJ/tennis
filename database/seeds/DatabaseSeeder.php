@@ -45,8 +45,6 @@ class DatabaseSeeder extends Seeder
         $lawtonEisenhowerOneSingles ['gender'] = 'Female';
         $lawtonEisenhowerOneSingles[$girlsOneSinglesRank] = 1;
         $lawtonEisenhowerOneSingles[$girlsTwoSinglesRank] = 99999;
-        $lawtonEisenhowerOneSingles[$girlsOneDoublesRank] = 99999;
-        $lawtonEisenhowerOneSingles[$girlsTwoDoublesRank] = 99999;
         $lawtonEisenhowerOneSingles['school_id'] = 513;
         $lawtonEisenhowerOneSingles->saveOrFail();
         $lawtonEisenhowerTwoSingles = new Player;
@@ -57,8 +55,6 @@ class DatabaseSeeder extends Seeder
         $lawtonEisenhowerTwoSingles ['gender'] = 'Female';
         $lawtonEisenhowerTwoSingles[$girlsOneSinglesRank] = 99999;
         $lawtonEisenhowerTwoSingles[$girlsTwoSinglesRank] = 99999;
-        $lawtonEisenhowerTwoSingles[$girlsOneDoublesRank] = 99999;
-        $lawtonEisenhowerTwoSingles[$girlsTwoDoublesRank] = 99999;
         $lawtonEisenhowerTwoSingles ['school_id'] = 513;
         $lawtonEisenhowerTwoSingles->saveOrFail();
         $lawtonEisenhowerOneDoublesPlayerOne = new Player;
@@ -69,8 +65,6 @@ class DatabaseSeeder extends Seeder
         $lawtonEisenhowerOneDoublesPlayerOne ['gender'] = 'Female';
         $lawtonEisenhowerOneDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
         $lawtonEisenhowerOneDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
-        $lawtonEisenhowerOneDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
-        $lawtonEisenhowerOneDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $lawtonEisenhowerOneDoublesPlayerOne ['school_id'] = 513;
         $lawtonEisenhowerOneDoublesPlayerOne->saveOrFail();
         $lawtonEisenhowerOneDoublesPlayerTwo = new Player;
@@ -81,8 +75,6 @@ class DatabaseSeeder extends Seeder
         $lawtonEisenhowerOneDoublesPlayerTwo ['gender'] = 'Female';
         $lawtonEisenhowerOneDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
         $lawtonEisenhowerOneDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
-        $lawtonEisenhowerOneDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
-        $lawtonEisenhowerOneDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $lawtonEisenhowerOneDoublesPlayerTwo ['school_id'] = 513;
         $lawtonEisenhowerOneDoublesPlayerTwo->saveOrFail();
         $lawtonEisenhowerTwoDoublesPlayerOne = new Player;
@@ -93,8 +85,6 @@ class DatabaseSeeder extends Seeder
         $lawtonEisenhowerTwoDoublesPlayerOne ['gender'] = 'Female';
         $lawtonEisenhowerTwoDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
         $lawtonEisenhowerTwoDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
-        $lawtonEisenhowerTwoDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
-        $lawtonEisenhowerTwoDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $lawtonEisenhowerTwoDoublesPlayerOne ['school_id'] = 513;
         $lawtonEisenhowerTwoDoublesPlayerOne->saveOrFail();
         $lawtonEisenhowerTwoDoublesPlayerTwo = new Player;
@@ -105,8 +95,6 @@ class DatabaseSeeder extends Seeder
         $lawtonEisenhowerTwoDoublesPlayerTwo ['gender'] = 'Female';
         $lawtonEisenhowerTwoDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
         $lawtonEisenhowerTwoDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
-        $lawtonEisenhowerTwoDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
-        $lawtonEisenhowerTwoDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $lawtonEisenhowerTwoDoublesPlayerTwo ['school_id'] = 513;
         $lawtonEisenhowerTwoDoublesPlayerTwo->saveOrFail();
 
@@ -128,8 +116,6 @@ class DatabaseSeeder extends Seeder
         $delCityOneSingles ['gender'] = 'Female';
         $delCityOneSingles[$girlsOneSinglesRank] = 8;
         $delCityOneSingles[$girlsTwoSinglesRank] = 99999;
-        $delCityOneSingles[$girlsOneDoublesRank] = 99999;
-        $delCityOneSingles[$girlsTwoDoublesRank] = 99999;
         $delCityOneSingles ['school_id'] = 317;
         $delCityOneSingles->saveOrFail();
         $delCityTwoSingles = new Player;
@@ -140,8 +126,6 @@ class DatabaseSeeder extends Seeder
         $delCityTwoSingles ['gender'] = 'Female';
         $delCityTwoSingles[$girlsOneSinglesRank] = 99999;
         $delCityTwoSingles[$girlsTwoSinglesRank] = 99999;
-        $delCityTwoSingles[$girlsOneDoublesRank] = 99999;
-        $delCityTwoSingles[$girlsTwoDoublesRank] = 99999;
         $delCityTwoSingles ['school_id'] = 317;
         $delCityTwoSingles->saveOrFail();
         $delCityOneDoublesPlayerOne = new Player;
@@ -152,8 +136,6 @@ class DatabaseSeeder extends Seeder
         $delCityOneDoublesPlayerOne ['gender'] = 'Female';
         $delCityOneDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
         $delCityOneDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
-        $delCityOneDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
-        $delCityOneDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $delCityOneDoublesPlayerOne ['school_id'] = 317;
         $delCityOneDoublesPlayerOne->saveOrFail();
         $delCityOneDoublesPlayerTwo = new Player;
@@ -164,8 +146,6 @@ class DatabaseSeeder extends Seeder
         $delCityOneDoublesPlayerTwo ['gender'] = 'Female';
         $delCityOneDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
         $delCityOneDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
-        $delCityOneDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
-        $delCityOneDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $delCityOneDoublesPlayerTwo ['school_id'] = 317;
         $delCityOneDoublesPlayerTwo->saveOrFail();
         $delCityTwoDoublesPlayerOne = new Player;
@@ -176,8 +156,6 @@ class DatabaseSeeder extends Seeder
         $delCityTwoDoublesPlayerOne ['gender'] = 'Female';
         $delCityTwoDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
         $delCityTwoDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
-        $delCityTwoDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
-        $delCityTwoDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $delCityTwoDoublesPlayerOne ['school_id'] = 317;
         $delCityTwoDoublesPlayerOne->saveOrFail();
         $delCityTwoDoublesPlayerTwo = new Player;
@@ -188,8 +166,6 @@ class DatabaseSeeder extends Seeder
         $delCityTwoDoublesPlayerTwo ['gender'] = 'Female';
         $delCityTwoDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
         $delCityTwoDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
-        $delCityTwoDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
-        $delCityTwoDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $delCityTwoDoublesPlayerTwo ['school_id'] = 317;
         $delCityTwoDoublesPlayerTwo->saveOrFail();
 
@@ -211,8 +187,6 @@ class DatabaseSeeder extends Seeder
         $PCNOneSingles ['gender'] = 'Female';
         $PCNOneSingles[$girlsOneSinglesRank] = 5;
         $PCNOneSingles[$girlsTwoSinglesRank] = 99999;
-        $PCNOneSingles[$girlsOneDoublesRank] = 99999;
-        $PCNOneSingles[$girlsTwoDoublesRank] = 99999;
         $PCNOneSingles ['school_id'] = 340;
         $PCNOneSingles->saveOrFail();
         $PCNTwoSingles = new Player;
@@ -223,8 +197,6 @@ class DatabaseSeeder extends Seeder
         $PCNTwoSingles ['gender'] = 'Female';
         $PCNTwoSingles[$girlsOneSinglesRank] = 99999;
         $PCNTwoSingles[$girlsTwoSinglesRank] = 99999;
-        $PCNTwoSingles[$girlsOneDoublesRank] = 99999;
-        $PCNTwoSingles[$girlsTwoDoublesRank] = 99999;
         $PCNTwoSingles ['school_id'] = 340;
         $PCNTwoSingles->saveOrFail();
         $PCNOneDoublesPlayerOne = new Player;
@@ -235,8 +207,6 @@ class DatabaseSeeder extends Seeder
         $PCNOneDoublesPlayerOne ['gender'] = 'Female';
         $PCNOneDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
         $PCNOneDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
-        $PCNOneDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
-        $PCNOneDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $PCNOneDoublesPlayerOne ['school_id'] = 340;
         $PCNOneDoublesPlayerOne->saveOrFail();
         $PCNOneDoublesPlayerTwo = new Player;
@@ -247,8 +217,6 @@ class DatabaseSeeder extends Seeder
         $PCNOneDoublesPlayerTwo ['gender'] = 'Female';
         $PCNOneDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
         $PCNOneDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
-        $PCNOneDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
-        $PCNOneDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $PCNOneDoublesPlayerTwo ['school_id'] = 340;
         $PCNOneDoublesPlayerTwo->saveOrFail();
         $PCNTwoDoublesPlayerOne = new Player;
@@ -259,8 +227,6 @@ class DatabaseSeeder extends Seeder
         $PCNTwoDoublesPlayerOne ['gender'] = 'Female';
         $PCNTwoDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
         $PCNTwoDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
-        $PCNTwoDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
-        $PCNTwoDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $PCNTwoDoublesPlayerOne ['school_id'] = 340;
         $PCNTwoDoublesPlayerOne->saveOrFail();
         $PCNTwoDoublesPlayerTwo = new Player;
@@ -271,8 +237,6 @@ class DatabaseSeeder extends Seeder
         $PCNTwoDoublesPlayerTwo ['gender'] = 'Female';
         $PCNTwoDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
         $PCNTwoDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
-        $PCNTwoDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
-        $PCNTwoDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $PCNTwoDoublesPlayerTwo ['school_id'] = 340;
         $PCNTwoDoublesPlayerTwo->saveOrFail();
 
@@ -294,8 +258,6 @@ class DatabaseSeeder extends Seeder
         $westmooreOneSingles ['gender'] = 'Female';
         $westmooreOneSingles[$girlsOneSinglesRank] = 4;
         $westmooreOneSingles[$girlsTwoSinglesRank] = 99999;
-        $westmooreOneSingles[$girlsOneDoublesRank] = 99999;
-        $westmooreOneSingles[$girlsTwoDoublesRank] = 99999;
         $westmooreOneSingles ['school_id'] = 81;
         $westmooreOneSingles->saveOrFail();
         $westmooreTwoSingles = new Player;
@@ -306,8 +268,6 @@ class DatabaseSeeder extends Seeder
         $westmooreTwoSingles ['gender'] = 'Female';
         $westmooreTwoSingles[$girlsOneSinglesRank] = 99999;
         $westmooreTwoSingles[$girlsTwoSinglesRank] = 99999;
-        $westmooreTwoSingles[$girlsOneDoublesRank] = 99999;
-        $westmooreTwoSingles[$girlsTwoDoublesRank] = 99999;
         $westmooreTwoSingles ['school_id'] = 81;
         $westmooreTwoSingles->saveOrFail();
         $westmooreOneDoublesPlayerOne = new Player;
@@ -318,8 +278,6 @@ class DatabaseSeeder extends Seeder
         $westmooreOneDoublesPlayerOne ['gender'] = 'Female';
         $westmooreOneDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
         $westmooreOneDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
-        $westmooreOneDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
-        $westmooreOneDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $westmooreOneDoublesPlayerOne ['school_id'] = 81;
         $westmooreOneDoublesPlayerOne->saveOrFail();
         $westmooreOneDoublesPlayerTwo = new Player;
@@ -330,8 +288,6 @@ class DatabaseSeeder extends Seeder
         $westmooreOneDoublesPlayerTwo ['gender'] = 'Female';
         $westmooreOneDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
         $westmooreOneDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
-        $westmooreOneDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
-        $westmooreOneDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $westmooreOneDoublesPlayerTwo ['school_id'] = 81;
         $westmooreOneDoublesPlayerTwo->saveOrFail();
         $westmooreTwoDoublesPlayerOne = new Player;
@@ -342,8 +298,6 @@ class DatabaseSeeder extends Seeder
         $westmooreTwoDoublesPlayerOne ['gender'] = 'Female';
         $westmooreTwoDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
         $westmooreTwoDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
-        $westmooreTwoDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
-        $westmooreTwoDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $westmooreTwoDoublesPlayerOne ['school_id'] = 81;
         $westmooreTwoDoublesPlayerOne->saveOrFail();
         $westmooreTwoDoublesPlayerTwo = new Player;
@@ -354,8 +308,6 @@ class DatabaseSeeder extends Seeder
         $westmooreTwoDoublesPlayerTwo ['gender'] = 'Female';
         $westmooreTwoDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
         $westmooreTwoDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
-        $westmooreTwoDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
-        $westmooreTwoDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $westmooreTwoDoublesPlayerTwo ['school_id'] = 81;
         $westmooreTwoDoublesPlayerTwo->saveOrFail();
 
@@ -377,8 +329,6 @@ class DatabaseSeeder extends Seeder
         $mooreOneSingles ['gender'] = 'Female';
         $mooreOneSingles[$girlsOneSinglesRank] = 3;
         $mooreOneSingles[$girlsTwoSinglesRank] = 99999;
-        $mooreOneSingles[$girlsOneDoublesRank] = 99999;
-        $mooreOneSingles[$girlsTwoDoublesRank] = 99999;
         $mooreOneSingles ['school_id'] = 80;
         $mooreOneSingles->saveOrFail();
         $mooreTwoSingles = new Player;
@@ -389,8 +339,6 @@ class DatabaseSeeder extends Seeder
         $mooreTwoSingles ['gender']= 'Female';
         $mooreTwoSingles[$girlsOneSinglesRank] = 99999;
         $mooreTwoSingles[$girlsTwoSinglesRank] = 99999;
-        $mooreTwoSingles[$girlsOneDoublesRank] = 99999;
-        $mooreTwoSingles[$girlsTwoDoublesRank] = 99999;
         $mooreTwoSingles ['school_id'] = 80;
         $mooreTwoSingles->saveOrFail();
         $mooreOneDoublesPlayerOne = new Player;
@@ -401,8 +349,6 @@ class DatabaseSeeder extends Seeder
         $mooreOneDoublesPlayerOne ['gender'] = 'Female';
         $mooreOneDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
         $mooreOneDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
-        $mooreOneDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
-        $mooreOneDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $mooreOneDoublesPlayerOne ['school_id'] = 80;
         $mooreOneDoublesPlayerOne->saveOrFail();
         $mooreOneDoublesPlayerTwo = new Player;
@@ -413,8 +359,6 @@ class DatabaseSeeder extends Seeder
         $mooreOneDoublesPlayerTwo ['gender'] = 'Female';
         $mooreOneDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
         $mooreOneDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
-        $mooreOneDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
-        $mooreOneDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $mooreOneDoublesPlayerTwo ['school_id'] = 80;
         $mooreOneDoublesPlayerTwo->saveOrFail();
         $mooreTwoDoublesPlayerOne = new Player;
@@ -425,8 +369,6 @@ class DatabaseSeeder extends Seeder
         $mooreTwoDoublesPlayerOne ['gender'] = 'Female';
         $mooreTwoDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
         $mooreTwoDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
-        $mooreTwoDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
-        $mooreTwoDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $mooreTwoDoublesPlayerOne ['school_id'] = 80;
         $mooreTwoDoublesPlayerOne->saveOrFail();
         $mooreTwoDoublesPlayerTwo = new Player;
@@ -437,8 +379,6 @@ class DatabaseSeeder extends Seeder
         $mooreTwoDoublesPlayerTwo ['gender'] = 'Female';
         $mooreTwoDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
         $mooreTwoDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
-        $mooreTwoDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
-        $mooreTwoDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $mooreTwoDoublesPlayerTwo ['school_id'] = 80;
         $mooreTwoDoublesPlayerTwo->saveOrFail();
 
@@ -460,8 +400,6 @@ class DatabaseSeeder extends Seeder
         $southmooreOneSingles ['gender'] = 'Female';
         $southmooreOneSingles[$girlsOneSinglesRank] = 6;
         $southmooreOneSingles[$girlsTwoSinglesRank] = 99999;
-        $southmooreOneSingles[$girlsOneDoublesRank] = 99999;
-        $southmooreOneSingles[$girlsTwoDoublesRank] = 99999;
         $southmooreOneSingles ['school_id'] = 82;
         $southmooreOneSingles->saveOrFail();
         $southmooreTwoSingles = new Player;
@@ -472,8 +410,6 @@ class DatabaseSeeder extends Seeder
         $southmooreTwoSingles ['gender'] = 'Female';
         $southmooreTwoSingles[$girlsOneSinglesRank] = 99999;
         $southmooreTwoSingles[$girlsTwoSinglesRank] = 99999;
-        $southmooreTwoSingles[$girlsOneDoublesRank] = 99999;
-        $southmooreTwoSingles[$girlsTwoDoublesRank] = 99999;
         $southmooreTwoSingles ['school_id'] = 82;
         $southmooreTwoSingles->saveOrFail();
         $southmooreOneDoublesPlayerOne = new Player;
@@ -484,8 +420,6 @@ class DatabaseSeeder extends Seeder
         $southmooreOneDoublesPlayerOne ['gender'] = 'Female';
         $southmooreOneDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
         $southmooreOneDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
-        $southmooreOneDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
-        $southmooreOneDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $southmooreOneDoublesPlayerOne ['school_id'] = 82;
         $southmooreOneDoublesPlayerOne->saveOrFail();
         $southmooreOneDoublesPlayerTwo = new Player;
@@ -496,8 +430,6 @@ class DatabaseSeeder extends Seeder
         $southmooreOneDoublesPlayerTwo ['gender'] = 'Female';
         $southmooreOneDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
         $southmooreOneDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
-        $southmooreOneDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
-        $southmooreOneDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $southmooreOneDoublesPlayerTwo ['school_id'] = 82;
         $southmooreOneDoublesPlayerTwo->saveOrFail();
         $southmooreTwoDoublesPlayerOne = new Player;
@@ -508,8 +440,6 @@ class DatabaseSeeder extends Seeder
         $southmooreTwoDoublesPlayerOne ['gender'] = 'Female';
         $southmooreTwoDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
         $southmooreTwoDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
-        $southmooreTwoDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
-        $southmooreTwoDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $southmooreTwoDoublesPlayerOne ['school_id'] = 82;
         $southmooreTwoDoublesPlayerOne->saveOrFail();
         $southmooreTwoDoublesPlayerTwo = new Player;
@@ -520,8 +450,6 @@ class DatabaseSeeder extends Seeder
         $southmooreTwoDoublesPlayerTwo ['gender'] = 'Female';
         $southmooreTwoDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
         $southmooreTwoDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
-        $southmooreTwoDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
-        $southmooreTwoDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $southmooreTwoDoublesPlayerTwo ['school_id'] = 82;
         $southmooreTwoDoublesPlayerTwo->saveOrFail();
 
@@ -543,8 +471,6 @@ class DatabaseSeeder extends Seeder
         $lawtonHighOneSingles ['gender'] = 'Female';
         $lawtonHighOneSingles[$girlsOneSinglesRank] = 7;
         $lawtonHighOneSingles[$girlsTwoSinglesRank] = 99999;
-        $lawtonHighOneSingles[$girlsOneDoublesRank] = 99999;
-        $lawtonHighOneSingles[$girlsTwoDoublesRank] = 99999;
         $lawtonHighOneSingles ['school_id'] = 99;
         $lawtonHighOneSingles->saveOrFail();
         $lawtonHighTwoSingles = new Player;
@@ -555,8 +481,6 @@ class DatabaseSeeder extends Seeder
         $lawtonHighTwoSingles ['gender'] = 'Female';
         $lawtonHighTwoSingles[$girlsOneSinglesRank] = 99999;
         $lawtonHighTwoSingles[$girlsTwoSinglesRank] = 99999;
-        $lawtonHighTwoSingles[$girlsOneDoublesRank] = 99999;
-        $lawtonHighTwoSingles[$girlsTwoDoublesRank] = 99999;
         $lawtonHighTwoSingles ['school_id'] = 99;
         $lawtonHighTwoSingles->saveOrFail();
         $lawtonHighOneDoublesPlayerOne = new Player;
@@ -567,8 +491,6 @@ class DatabaseSeeder extends Seeder
         $lawtonHighOneDoublesPlayerOne ['gender'] = 'Female';
         $lawtonHighOneDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
         $lawtonHighOneDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
-        $lawtonHighOneDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
-        $lawtonHighOneDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $lawtonHighOneDoublesPlayerOne ['school_id'] = 99;
         $lawtonHighOneDoublesPlayerOne->saveOrFail();
         $lawtonHighOneDoublesPlayerTwo = new Player;
@@ -579,8 +501,6 @@ class DatabaseSeeder extends Seeder
         $lawtonHighOneDoublesPlayerTwo ['gender'] = 'Female';
         $lawtonHighOneDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
         $lawtonHighOneDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
-        $lawtonHighOneDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
-        $lawtonHighOneDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $lawtonHighOneDoublesPlayerTwo ['school_id'] = 99;
         $lawtonHighOneDoublesPlayerTwo->saveOrFail();
         $lawtonHighTwoDoublesPlayerOne = new Player;
@@ -591,8 +511,6 @@ class DatabaseSeeder extends Seeder
         $lawtonHighTwoDoublesPlayerOne ['gender'] = 'Female';
         $lawtonHighTwoDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
         $lawtonHighTwoDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
-        $lawtonHighTwoDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
-        $lawtonHighTwoDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $lawtonHighTwoDoublesPlayerOne ['school_id'] = 99;
         $lawtonHighTwoDoublesPlayerOne->saveOrFail();
         $lawtonHighTwoDoublesPlayerTwo = new Player;
@@ -603,8 +521,6 @@ class DatabaseSeeder extends Seeder
         $lawtonHighTwoDoublesPlayerTwo ['gender'] = 'Female';
         $lawtonHighTwoDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
         $lawtonHighTwoDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
-        $lawtonHighTwoDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
-        $lawtonHighTwoDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $lawtonHighTwoDoublesPlayerTwo ['school_id'] = 99;
         $lawtonHighTwoDoublesPlayerTwo->saveOrFail();
 
@@ -626,8 +542,6 @@ class DatabaseSeeder extends Seeder
         $choctawOneSingles ['gender'] = 'Female';
         $choctawOneSingles[$girlsOneSinglesRank] = 2;
         $choctawOneSingles[$girlsTwoSinglesRank] = 99999;
-        $choctawOneSingles[$girlsOneDoublesRank] = 99999;
-        $choctawOneSingles[$girlsTwoDoublesRank] = 99999;
         $choctawOneSingles ['school_id'] = 298;
         $choctawOneSingles->saveOrFail();
         $choctawTwoSingles = new Player;
@@ -638,8 +552,6 @@ class DatabaseSeeder extends Seeder
         $choctawTwoSingles ['gender'] = 'Female';
         $choctawTwoSingles[$girlsOneSinglesRank] = 99999;
         $choctawTwoSingles[$girlsTwoSinglesRank] = 99999;
-        $choctawTwoSingles[$girlsOneDoublesRank] = 99999;
-        $choctawTwoSingles[$girlsTwoDoublesRank] = 99999;
         $choctawTwoSingles ['school_id'] = 298;
         $choctawTwoSingles->saveOrFail();
         $choctawOneDoublesPlayerOne = new Player;
@@ -650,8 +562,6 @@ class DatabaseSeeder extends Seeder
         $choctawOneDoublesPlayerOne ['gender'] = 'Female';
         $choctawOneDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
         $choctawOneDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
-        $choctawOneDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
-        $choctawOneDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $choctawOneDoublesPlayerOne ['school_id'] = 298;
         $choctawOneDoublesPlayerOne->saveOrFail();
         $choctawOneDoublesPlayerTwo = new Player;
@@ -662,8 +572,6 @@ class DatabaseSeeder extends Seeder
         $choctawOneDoublesPlayerTwo ['gender'] = 'Female';
         $choctawOneDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
         $choctawOneDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
-        $choctawOneDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
-        $choctawOneDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $choctawOneDoublesPlayerTwo ['school_id'] = 298;
         $choctawOneDoublesPlayerTwo->saveOrFail();
         $choctawTwoDoublesPlayerOne = new Player;
@@ -674,8 +582,6 @@ class DatabaseSeeder extends Seeder
         $choctawTwoDoublesPlayerOne ['gender'] = 'Female';
         $choctawTwoDoublesPlayerOne[$girlsOneSinglesRank] = 99999;
         $choctawTwoDoublesPlayerOne[$girlsTwoSinglesRank] = 99999;
-        $choctawTwoDoublesPlayerOne[$girlsOneDoublesRank] = 99999;
-        $choctawTwoDoublesPlayerOne[$girlsTwoDoublesRank] = 99999;
         $choctawTwoDoublesPlayerOne ['school_id'] = 298;
         $choctawTwoDoublesPlayerOne->saveOrFail();
         $choctawTwoDoublesPlayerTwo = new Player;
@@ -686,8 +592,6 @@ class DatabaseSeeder extends Seeder
         $choctawTwoDoublesPlayerTwo ['gender'] = 'Female';
         $choctawTwoDoublesPlayerTwo[$girlsOneSinglesRank] = 99999;
         $choctawTwoDoublesPlayerTwo[$girlsTwoSinglesRank] = 99999;
-        $choctawTwoDoublesPlayerTwo[$girlsOneDoublesRank] = 99999;
-        $choctawTwoDoublesPlayerTwo[$girlsTwoDoublesRank] = 99999;
         $choctawTwoDoublesPlayerTwo ['school_id'] = 298;
         $choctawTwoDoublesPlayerTwo->saveOrFail();
 

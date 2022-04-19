@@ -17,6 +17,7 @@ class CreateBracketPositionsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->unsignedInteger('tournament_id');
+            $table->string('bracket');
             $table->unsignedInteger('1_seed')->default(0);
             $table->unsignedInteger('2_seed')->default(0);
             $table->unsignedInteger('3_seed')->default(0);

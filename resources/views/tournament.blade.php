@@ -339,7 +339,7 @@
                 <td class="advanceable" id="1-seed">1 Seed</td>
                 <td></td>
                 <td></td>
-                <td></td
+                <td></td>
             </tr>
             <tr>
                 <td></td>
