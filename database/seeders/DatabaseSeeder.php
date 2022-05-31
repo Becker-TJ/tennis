@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\DoublesTeam;
 use App\Player;
 use Carbon\Carbon;
