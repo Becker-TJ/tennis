@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\DoublesTeam;
 use App\Player;
 use App\User;
@@ -9,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class School extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['name', 'address', 'conference'];
     public function getOneSinglesPlayer()
     {

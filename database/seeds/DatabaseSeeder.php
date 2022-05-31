@@ -14,11 +14,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Player::class, 500)->create();
-        factory(App\School::class, 9)->create();
-        factory(App\Tournament::class, 50)->create();
-        factory(App\User::class, 9)->create();
-        factory(App\SchoolAttendee::class, 50)->create();
+        \App\Player::factory()->count(500)->create();
+        \App\School::factory()->count(9)->create();
+        \App\Tournament::factory()->count(50)->create();
+        \App\User::factory()->count(9)->create();
+        \App\SchoolAttendee::factory()->count(50)->create();
 
         $highSchools = $this->getArrayOfHighSchools();
         $conferenceOptions = ['3A', '4A', '5A', '6A'];

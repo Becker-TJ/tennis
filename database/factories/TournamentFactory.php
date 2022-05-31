@@ -1,28 +1,39 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+
+namespace Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Tournament;
-use Faker\Generator as Faker;
 
-$factory->define(Tournament::class, function (Faker $faker) {
-    $levels = ['Varsity', 'Junior Varsity', 'Junior High'];
-    $randomLevel = $levels[array_rand($levels)];
-    $privacySettings = ['Public', 'Private'];
-    $randomPrivacy = $privacySettings[array_rand($privacySettings)];
-    $genderSettings = ['Boys', 'Girls', 'Both'];
-    $randomGender = $genderSettings[array_rand($genderSettings)];
+class TournamentFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        $levels = ['Varsity', 'Junior Varsity', 'Junior High'];
+        $randomLevel = $levels[array_rand($levels)];
+        $privacySettings = ['Public', 'Private'];
+        $randomPrivacy = $privacySettings[array_rand($privacySettings)];
+        $genderSettings = ['Boys', 'Girls', 'Both'];
+        $randomGender = $genderSettings[array_rand($genderSettings)];
 
-    return [
-        'name' => $faker->name.' Invitational',
-        'location_name' => $faker->city,
-        'host_id' => $faker->randomDigit,
-        'team_count' => 8,
-        'gender' => $randomGender,
-        'address' => $faker->address,
-        'level' => $randomLevel,
-        'privacy_setting' => $randomPrivacy,
-        'date' => $faker->date('2020-m-d'),
-        'time' => $faker->time('H:i'),
-    ];
-});
+        return [
+            'name' => $this->faker->name.' Invitational',
+            'location_name' => $this->faker->city,
+            'host_id' => $this->faker->randomDigit,
+            'team_count' => 8,
+            'gender' => $randomGender,
+            'address' => $this->faker->address,
+            'level' => $randomLevel,
+            'privacy_setting' => $randomPrivacy,
+            'date' => $this->faker->date('2020-m-d'),
+            'time' => $this->faker->time('H:i'),
+        ];
+    }
+}
