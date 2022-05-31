@@ -31,6 +31,4 @@ class BracketPosition extends Model
         'first_consolation_lower_bracket_round_one_bottom',
         'seventh_place',
     ];
-
-    protected $dates = ['created_at', 'updated_at'];
 }

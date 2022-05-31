@@ -10,9 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 class School extends Model
 {
     protected $fillable = ['name', 'address', 'conference'];
-
-    protected $dates = ['created_at', 'updated_at'];
-
     public function getOneSinglesPlayer()
     {
         $player = Player::where('school_id', '=', $this->id)->where('position', '=', 1)->first();
