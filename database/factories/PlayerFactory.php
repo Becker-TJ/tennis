@@ -11,6 +11,7 @@ $factory->define(Player::class, function (Faker $faker) {
     $genders = ['Male', 'Female'];
     $randomGender = $genders[array_rand($genders)];
     static $increment = 1;
+
     return [
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
@@ -21,6 +22,6 @@ $factory->define(Player::class, function (Faker $faker) {
         'boys_one_singles_rank' => 99999,
         'boys_two_singles_rank' => $increment,
         'girls_one_singles_rank' => 99999,
-        'girls_two_singles_rank' => $increment
+        'girls_two_singles_rank' => $increment,
     ];
 });

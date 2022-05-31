@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use app\Http\Controllers;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +35,6 @@ Route::get('/createtournament/{tournament}', 'TournamentController@showEditTourn
 Route::post('/createtournament', 'TournamentController@create');
 Route::post('/createtournament/{tournament}', 'TournamentController@edit');
 
-
 Route::get('/tournaments', 'TournamentController@showTournaments');
 Route::get('/tournament/{tournament}', 'TournamentController@showTournament')->name('tournament');
 
@@ -49,22 +48,17 @@ Route::get('schools', 'SchoolController@showSchools');
 Route::get('/school/{school}', 'SchoolController@showSchool')->name('school');
 Route::post('/school/addnewplayer', 'PlayerController@create');
 
-Route::get('/message',function() {
+Route::get('/message', function () {
     return view('message');
 });
-Route::post('/getmsg','AjaxController@index');
+Route::post('/getmsg', 'AjaxController@index');
 
-Route::post('/savePlayerPositions','AjaxController@savePlayerPositions');
-Route::post('/inviteSchools','AjaxController@inviteSchools');
-Route::post('/getBracketData','AjaxController@getBracketData');
-Route::post('/saveScore','AjaxController@saveScore');
+Route::post('/savePlayerPositions', 'AjaxController@savePlayerPositions');
+Route::post('/inviteSchools', 'AjaxController@inviteSchools');
+Route::post('/getBracketData', 'AjaxController@getBracketData');
+Route::post('/saveScore', 'AjaxController@saveScore');
 
 Route::get('/bracket', 'TournamentController@showBracket');
-
-
-
-
-
 
 //Route::get('/posts/{post}', function ($post) {
 //    $posts = [

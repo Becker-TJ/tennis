@@ -12,8 +12,9 @@ $factory->define(Tournament::class, function (Faker $faker) {
     $randomPrivacy = $privacySettings[array_rand($privacySettings)];
     $genderSettings = ['Boys', 'Girls', 'Both'];
     $randomGender = $genderSettings[array_rand($genderSettings)];
+
     return [
-        'name' => $faker->name . ' Invitational',
+        'name' => $faker->name.' Invitational',
         'location_name' => $faker->city,
         'host_id' => $faker->randomDigit,
         'team_count' => 8,
@@ -22,6 +23,6 @@ $factory->define(Tournament::class, function (Faker $faker) {
         'level' => $randomLevel,
         'privacy_setting' => $randomPrivacy,
         'date' => $faker->date('2020-m-d'),
-        'time' => $faker->time('H:i')
+        'time' => $faker->time('H:i'),
     ];
 });

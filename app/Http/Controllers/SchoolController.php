@@ -1,33 +1,38 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Player;
+use App\School;
 use Auth;
 use Illuminate\Routing\Controller;
-use App\School;
-use App\Player;
 
 class SchoolController extends Controller
 {
     public function __construct()
     {
-
     }
 
-    public function showAddSchool() {
+    public function showAddSchool()
+    {
         $schools = School::all();
+
         return view('addschool', [
-            'schools' => $schools
+            'schools' => $schools,
         ]);
     }
 
-    public function showSchools() {
+    public function showSchools()
+    {
         $schools = School::all();
+
         return view('schools', [
-            'schools' => $schools
+            'schools' => $schools,
         ]);
     }
 
-    public function showSchool(School $school) {
+    public function showSchool(School $school)
+    {
         $players = Player::all()->where('school_id', '=', $school->id);
 
         $positionNamesOrder = [
@@ -36,32 +41,34 @@ class SchoolController extends Controller
             '1 Doubles',
             '1 Doubles',
             '2 Doubles',
-            '2 Doubles'
+            '2 Doubles',
         ];
 
-        foreach($players as $player) {
+        foreach ($players as $player) {
             array_push($positionNamesOrder, 'JV');
         }
 
         $increment = 0;
+
         return view('school', [
             'positionNamesOrder' => $positionNamesOrder,
             'school' => $school,
             'players' => $players,
-            'increment' => $increment
+            'increment' => $increment,
         ]);
     }
 
-
-    public function createOrTie() {
-        if($_POST['not_listed'] == "true") {
+    public function createOrTie()
+    {
+        if ($_POST['not_listed'] == 'true') {
             return $this->create();
         } else {
             return $this->tieUserToExistingSchool();
         }
     }
 
-    public function create() {
+    public function create()
+    {
         $data = $_POST;
         $school = new School;
 
@@ -77,17 +84,18 @@ class SchoolController extends Controller
         return $this->showAddSchool();
     }
 
-    public function tieUserToExistingSchool($id = false) {
+    public function tieUserToExistingSchool($id = false)
+    {
         $user = Auth::user();
 
-        if($id) {
+        if ($id) {
             $user->school_id = $id;
         } else {
             $user->school_id = $_POST['school_id_to_tie'];
         }
 
         $user->saveOrFail();
+
         return $this->showAddSchool();
     }
-
 }

@@ -1,31 +1,32 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\DoublesTeam;
 use App\Player;
 use App\School;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\DoublesTeam;
-use DB;
 
 class PlayerController extends Controller
 {
-
-    public function showFilteredPlayers() {
+    public function showFilteredPlayers()
+    {
         $data = $_POST;
 
-        if($data['conference_setting'] == 'all_classes') {
+        if ($data['conference_setting'] == 'all_classes') {
             $players = DB::table('players')->join('schools', 'players.school_id', 'schools.id')
                 ->where('players.gender', $data['gender'])
-                ->where('players.' . $data['bracket_rank'], '>', 0)
-                ->orderBy('players.' . $data['bracket_rank'], 'asc')
+                ->where('players.'.$data['bracket_rank'], '>', 0)
+                ->orderBy('players.'.$data['bracket_rank'], 'asc')
                 ->get();
         } else {
             $players = DB::table('players')->join('schools', 'players.school_id', 'schools.id')
                 ->where('schools.conference', $data['conference_setting'])
                 ->where('players.gender', $data['gender'])
-                ->where('players.' . $data['bracket_rank'], '>', 0)
-                ->orderBy('players.' . $data['bracket_rank'], 'asc')
+                ->where('players.'.$data['bracket_rank'], '>', 0)
+                ->orderBy('players.'.$data['bracket_rank'], 'asc')
                 ->get();
         }
 
@@ -49,25 +50,24 @@ class PlayerController extends Controller
             'boys_one_doubles_rank' => 'One Doubles',
             'boys_two_doubles_rank' => 'Two Doubles',
             'Male' => 'Boys',
-            'Female' => 'Girls'
+            'Female' => 'Girls',
 
         ];
-        $tableTitle = $cleanNamesForTableTitle[$radioButtonSettings['conference_setting']] .
-            ' ' .
-            $cleanNamesForTableTitle[$radioButtonSettings['gender']] .
-            ' ' .
+        $tableTitle = $cleanNamesForTableTitle[$radioButtonSettings['conference_setting']].
+            ' '.
+            $cleanNamesForTableTitle[$radioButtonSettings['gender']].
+            ' '.
             $cleanNamesForTableTitle[$radioButtonSettings['bracket_rank']];
 
         return view('players', [
             'players' => $players,
             'radioButtonSettings' => $radioButtonSettings,
-            'tableTitle' => $tableTitle
+            'tableTitle' => $tableTitle,
         ]);
     }
 
-
-
-    public function showAllPlayers() {
+    public function showAllPlayers()
+    {
         $players = DB::table('players')->join('schools', 'players.school_id', 'schools.id')
             ->where('players.gender', 'Male')
             ->orderBy('players.boys_one_singles_rank', 'asc')
@@ -76,44 +76,44 @@ class PlayerController extends Controller
         $radioButtonSettings = [
             'conference_setting' => 'all_classes',
             'bracket_rank' => 'boys_one_singles_rank',
-            'gender' => 'Male'
+            'gender' => 'Male',
         ];
 
-        $tableTitle = "All Boys One Singles";
+        $tableTitle = 'All Boys One Singles';
 
         return view('players', [
             'players' => $players,
             'radioButtonSettings' => $radioButtonSettings,
-            'tableTitle' => $tableTitle
+            'tableTitle' => $tableTitle,
         ]);
     }
 
-
-
-    public function showSchool($school_id = 0) {
+    public function showSchool($school_id = 0)
+    {
         $players = Player::all();
         $players = $players->where('school_id', $school_id);
 
         return view('school', [
-            'players' => $players
+            'players' => $players,
         ]);
     }
 
-    public function savePositionChanges($playerID, $newPosition) {
+    public function savePositionChanges($playerID, $newPosition)
+    {
         $player = Player::find($playerID);
         $player['position'] = $newPosition;
+
         return $player->saveOrFail();
     }
 
-
-
-    public function create() {
+    public function create()
+    {
         $data = $_POST;
         $players = Player::all();
         $schoolID = intval($data['school_id']);
         $lastPosition = $players->where('school_id', $schoolID)->max('position');
 
-        if(!$lastPosition) {
+        if (! $lastPosition) {
             $lastPosition = 0;
         }
 
@@ -128,40 +128,31 @@ class PlayerController extends Controller
         $player['boys_two_singles_rank'] = 99999;
         $player['girls_one_singles_rank'] = 99999;
         $player['girls_two_singles_rank'] = 99999;
-        $player ['school_id'] = $schoolID;
+        $player['school_id'] = $schoolID;
 
         $player->saveOrFail();
 
         $schoolPlayers = $players->where('school_id', '=', $schoolID)->sortBy('position');
 
-        if($schoolPlayers->count() > 2) {
-
-            if($player['position'] === 4) {
+        if ($schoolPlayers->count() > 2) {
+            if ($player['position'] === 4) {
                 $playerAtPositionThree = $schoolPlayers->where('position', '=', 3)->first();
 
                 $newDoublesTeam = new DoublesTeam;
                 $newDoublesTeam->player_1 = $playerAtPositionThree->id;
                 $newDoublesTeam->player_2 = $player->id;
                 $newDoublesTeam->saveDoublesTeam();
-
             }
 
-            if($player['position'] === 6) {
+            if ($player['position'] === 6) {
                 $playerAtPositionFive = $schoolPlayers->where('position', '=', 5)->first();
 
                 $newDoublesTeam = new DoublesTeam;
                 $newDoublesTeam->player_1 = $playerAtPositionFive->id;
                 $newDoublesTeam->player_2 = $player->id;
                 $newDoublesTeam->saveDoublesTeam();
-
             }
         }
-
-
-
-
-
-
 
         return redirect()->route('school', ['school' => $schoolID]);
     }
