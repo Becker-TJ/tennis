@@ -22,9 +22,9 @@ class RedirectIfNoSchool
         if ($isLoggedIn) {
             $user = Auth::user();
             if ($user->school == null) {
-                return redirect()->action('SchoolController@showAddSchool');
+                return redirect()->action([\App\Http\Controllers\SchoolController::class, 'showAddSchool']);
 
-//                return redirect()->action('SchoolController@showAddSchoolView', ['id' => $user->school->id]);
+//                return redirect()->action([\App\Http\Controllers\SchoolController::class, 'showAddSchoolView'], ['id' => $user->school->id]);
                 //more than what I need here.  id part goes for viewing actual roster page.
             }
         }
