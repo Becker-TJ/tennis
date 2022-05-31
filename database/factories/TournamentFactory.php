@@ -1,11 +1,9 @@
 <?php
 
-
-
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Tournament;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TournamentFactory extends Factory
 {

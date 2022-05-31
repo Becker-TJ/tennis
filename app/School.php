@@ -2,10 +2,10 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\DoublesTeam;
 use App\Player;
 use App\User;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class School extends Model
@@ -13,6 +13,7 @@ class School extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'address', 'conference'];
+
     public function getOneSinglesPlayer()
     {
         $player = Player::where('school_id', '=', $this->id)->where('position', '=', 1)->first();

@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\School;
 use DB;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Player extends Model
@@ -22,6 +22,7 @@ class Player extends Model
         'girls_one_singles_rank',
         'girls_two_singles_rank',
     ];
+
     public function getSchool()
     {
         $school = School::where('id', $this->school_id)->firstOrFail();

@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\DoublesTeam;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Tournament extends Model
@@ -11,6 +11,7 @@ class Tournament extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'host_id', 'location_name', 'team_count', 'gender', 'address', 'level', 'privacy_setting', 'date', 'time'];
+
     public function getHost()
     {
         $school = School::where('id', $this->host_id)->first();

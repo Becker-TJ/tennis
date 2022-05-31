@@ -1,11 +1,11 @@
 <?php
 
+use app\Http\Controllers;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\TournamentController;
-use app\Http\Controllers;
 use Illuminate\Support\Facades\Route;
 
 /*

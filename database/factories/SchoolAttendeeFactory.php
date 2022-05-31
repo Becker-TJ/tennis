@@ -1,11 +1,9 @@
 <?php
 
-
-
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\SchoolAttendee;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class SchoolAttendeeFactory extends Factory
 {

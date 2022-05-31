@@ -10,6 +10,7 @@ class SchoolAttendee extends Model
     use HasFactory;
 
     protected $fillable = ['school_id', 'tournament_id', 'invite_accepted'];
+
     public function getSchool()
     {
         $school = School::where('id', $this->school_id)->first();

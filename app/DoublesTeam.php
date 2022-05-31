@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class DoublesTeam extends Model
 {
     protected $fillable = ['player_1', 'player_2'];
+
     public function saveDoublesTeam()
     {
         $teamAlreadyExists = false;

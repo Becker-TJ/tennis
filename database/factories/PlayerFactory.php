@@ -1,11 +1,9 @@
 <?php
 
-
-
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Player;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PlayerFactory extends Factory
 {
