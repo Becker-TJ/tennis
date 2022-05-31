@@ -1,16 +1,26 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use App\School;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(School::class, function (Faker $faker) {
-    $conferenceOptions = ['3A','4A','5A','6A'];
-    $randomConferenceOption = $conferenceOptions[array_rand($conferenceOptions)];
-    return [
-        'name' => $faker->name . ' High School',
-        'address' => $faker->address,
-        'conference' => $randomConferenceOption,
-    ];
-});
+class SchoolFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        $conferenceOptions = ['3A', '4A', '5A', '6A'];
+        $randomConferenceOption = $conferenceOptions[array_rand($conferenceOptions)];
+
+        return [
+            'name' => $this->faker->name.' High School',
+            'address' => $this->faker->address,
+            'conference' => $randomConferenceOption,
+        ];
+    }
+}

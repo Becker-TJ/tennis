@@ -1,10 +1,9 @@
 <?php
 
-
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use DB;
+use Illuminate\Database\Eloquent\Model;
 
 class BracketPosition extends Model
 {
@@ -30,11 +29,6 @@ class BracketPosition extends Model
         'third_place',
         'first_consolation_lower_bracket_round_one_top',
         'first_consolation_lower_bracket_round_one_bottom',
-        'seventh_place'
+        'seventh_place',
     ];
-    protected $dates = ['created_at', 'updated_at'];
-
-
-
-
 }

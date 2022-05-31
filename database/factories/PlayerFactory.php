@@ -1,26 +1,36 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use App\Player;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Player::class, function (Faker $faker) {
-    $classOptions = ['Freshman', 'Sophomore', 'Junior', 'Senior'];
-    $randomClassOption = $classOptions[array_rand($classOptions)];
-    $genders = ['Male', 'Female'];
-    $randomGender = $genders[array_rand($genders)];
-    static $increment = 1;
-    return [
-        'first_name' => $faker->firstName,
-        'last_name' => $faker->lastName,
-        'school_id' => $faker->randomDigit,
-        'position' => $increment,
-        'class' => $randomClassOption,
-        'gender' => $randomGender,
-        'boys_one_singles_rank' => 99999,
-        'boys_two_singles_rank' => $increment,
-        'girls_one_singles_rank' => 99999,
-        'girls_two_singles_rank' => $increment
-    ];
-});
+class PlayerFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        $classOptions = ['Freshman', 'Sophomore', 'Junior', 'Senior'];
+        $randomClassOption = $classOptions[array_rand($classOptions)];
+        $genders = ['Male', 'Female'];
+        $randomGender = $genders[array_rand($genders)];
+        static $increment = 1;
+
+        return [
+            'first_name' => $this->faker->firstName,
+            'last_name' => $this->faker->lastName,
+            'school_id' => $this->faker->randomDigit,
+            'position' => $increment,
+            'class' => $randomClassOption,
+            'gender' => $randomGender,
+            'boys_one_singles_rank' => 99999,
+            'boys_two_singles_rank' => $increment,
+            'girls_one_singles_rank' => 99999,
+            'girls_two_singles_rank' => $increment,
+        ];
+    }
+}
