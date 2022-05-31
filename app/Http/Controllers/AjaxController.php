@@ -262,7 +262,7 @@ class AjaxController extends Controller {
             }
 
             $tournament = Tournament::find($tournament_id);
-            $doublesTeams = $tournament->getGirlsOneDoublesSortedByRank();
+            $doublesTeams = $tournament->getGirlsDoublesSortedByRank($requestedBracket);
 
             if($bracketPositions == null) {
                 $bracketPositions = new BracketPosition();

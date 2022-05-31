@@ -27,23 +27,8 @@
                                     <input type="radio" name="conference_setting" id="4A" autocomplete="off" value="4A"
                                     @if($radioButtonSettings['conference_setting'] == "4A") checked @endif> 4A
                                 </label>
-                                <label class="btn btn-secondary @if($radioButtonSettings['conference_setting'] == "3A") active @endif">
-                                    <input type="radio" name="conference_setting" id="3A" autocomplete="off" value="3A"
-                                           @if($radioButtonSettings['conference_setting'] == "3A") checked @endif> 3A
-                                </label>
                             </div>
 
-                            <label for="genders" class="col-md-3 col-form-label text-md-right">Gender</label>
-                            <div id="genders" class="btn-group btn-group-toggle col-md-6" data-toggle="buttons">
-                                <label for="boys" class="btn btn-secondary @if($radioButtonSettings['gender'] == "Male") active @endif">
-                                    <input class="form-control" type="radio" name="gender" id="boys" autocomplete="off" value="Male"
-                                           @if($radioButtonSettings['gender'] == "Male") checked @endif> Boys
-                                </label>
-                                <label for="girls" class="btn btn-secondary @if($radioButtonSettings['gender'] == "Female") active @endif">
-                                    <input class="form-control" type="radio" name="gender" id="girls" autocomplete="off" value="Female"
-                                           @if($radioButtonSettings['gender'] == "Female") checked @endif> Girls
-                                </label>
-                            </div>
 
                             <label for="bracket_rank" class="col-md-3 col-form-label text-md-right">Bracket</label>
 
@@ -63,6 +48,18 @@
                                 <label class="btn btn-secondary @if($radioButtonSettings['bracket_rank'] == "boys_two_doubles_rank") active @endif">
                                     <input type="radio" name="bracket_rank" id="two_doubles" autocomplete="off" value="boys_two_doubles_rank"
                                            @if($radioButtonSettings['bracket_rank'] == "boys_two_doubles_rank") checked @endif> 2 Doubles
+                                </label>
+                            </div>
+
+                            <label for="genders" class="col-md-3 col-form-label text-md-right">Gender</label>
+                            <div id="genders" class="btn-group btn-group-toggle col-md-6" data-toggle="buttons">
+                                <label for="boys" class="btn btn-secondary @if($radioButtonSettings['gender'] == "Male") active @endif">
+                                    <input class="form-control" type="radio" name="gender" id="boys" autocomplete="off" value="Male"
+                                           @if($radioButtonSettings['gender'] == "Male") checked @endif> Boys
+                                </label>
+                                <label for="girls" class="btn btn-secondary @if($radioButtonSettings['gender'] == "Female") active @endif">
+                                    <input class="form-control" type="radio" name="gender" id="girls" autocomplete="off" value="Female"
+                                           @if($radioButtonSettings['gender'] == "Female") checked @endif> Girls
                                 </label>
                             </div>
 

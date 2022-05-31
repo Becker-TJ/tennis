@@ -35,6 +35,26 @@ $(document).ready( function () {
         '2 Doubles',
     ];
 
+    var seedsTable = $('#seedsTable').DataTable( {
+        paging:false,
+        searching:false,
+        rowReorder: {
+            selector: 'tr',
+            snapX:true,
+        },
+        bInfo:false,
+        "lengthChange": false,
+
+        'columnDefs': [
+            { targets: [0,1], visible: false },
+            { targets: [2,3,4,5], orderable: false }
+        ]
+        //this will be useful for adding a button in the same line as the search bar for creating tournaments etc
+        // "initComplete": function( settings, json ) {
+        //     $('#myTable_filter').html("<div id='myTable_filter' class='dataTables_filter'><div><label>Search:<input type='search' class='' placeholder='' aria-controls='myTable'></label><button id='roster_button' type='submit' class='btn btn-primary'>Create</button></div></div>");
+        // },
+    } );
+
     //this resets the order of the far left column for a school roster after a click and drag table row event(1 singles, 2 singles, etc)
     function displayPositionNamesInCorrectOrder() {
         $('.position_name_td').each(function(index, tableCell){

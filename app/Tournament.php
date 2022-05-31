@@ -18,13 +18,18 @@ class Tournament extends Model
         return $school;
     }
 
-    public function getGirlsOneDoublesSortedByRank() {
+    public function getGirlsDoublesSortedByRank($requestedBracket) {
         $attendees = SchoolAttendee::all()->where('tournament_id', '=', $this->id);
 
         foreach($attendees as $attendee) {
             $school = $attendee->getSchool();
-            $oneDoublesTeam = $school->getGirlsOneDoublesTeam();
-            $doublesTeams[$attendee->school_id] = $oneDoublesTeam;
+            if($requestedBracket === 'girlsOneDoubles') {
+                $doublesTeam = $school->getGirlsOneDoublesTeam();
+            } else {
+                $doublesTeam = $school->getGirlsTwoDoublesTeam();
+            }
+
+            $doublesTeams[$attendee->school_id] = $doublesTeam;
         }
 
         $stillSorting = true;

@@ -27,6 +27,13 @@ class School extends Model
         return $players;
     }
 
+    public function getGirlsTwoDoublesTeam() {
+        $players = [];
+        $players[] = Player::where('school_id', '=', $this->id)->where('position','=', 5)->where('gender', '=', 'Female')->first();
+        $players[] = Player::where('school_id', '=', $this->id)->where('position','=', 6)->where('gender', '=', 'Female')->first();
+        return $players;
+    }
+
     public function getBoysOneDoublesTeam() {
         $players = [];
         $players[] = Player::where('school_id', '=', $this->id)->where('position','=', 3)->where('gender', '=', 'Male')->first();

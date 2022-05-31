@@ -84,7 +84,7 @@
 
                     <br>
 
-                    <table id="schoolTable" class="display table table-striped">
+                    <table id="seedsTable" class="display table table-striped">
                         <thead>
                         <tr class="fa fa-sort-name player_row" align="center">
                             <th scope="col">Seq.</th>

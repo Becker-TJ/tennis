@@ -100,5 +100,6 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript" src="{{ URL::asset('js/school.js') }}"></script>
 
 @endsection
