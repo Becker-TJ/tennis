@@ -21,9 +21,9 @@ class PlayerFactory extends Factory
         static $increment = 1;
 
         return [
-            'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'school_id' => $this->faker->randomDigit,
+            'first_name' => $this->faker->firstName(),
+            'last_name' => $this->faker->lastName(),
+            'school_id' => $this->faker->randomDigit(),
             'position' => $increment,
             'class' => $randomClassOption,
             'gender' => $randomGender,
