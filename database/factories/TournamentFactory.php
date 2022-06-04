@@ -22,12 +22,12 @@ class TournamentFactory extends Factory
         $randomGender = $genderSettings[array_rand($genderSettings)];
 
         return [
-            'name' => $this->faker->name.' Invitational',
-            'location_name' => $this->faker->city,
-            'host_id' => $this->faker->randomDigit,
+            'name' => $this->faker->name().' Invitational',
+            'location_name' => $this->faker->city(),
+            'host_id' => $this->faker->randomDigit(),
             'team_count' => 8,
             'gender' => $randomGender,
-            'address' => $this->faker->address,
+            'address' => $this->faker->address(),
             'level' => $randomLevel,
             'privacy_setting' => $randomPrivacy,
             'date' => $this->faker->date('2020-m-d'),

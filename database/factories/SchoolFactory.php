@@ -18,8 +18,8 @@ class SchoolFactory extends Factory
         $randomConferenceOption = $conferenceOptions[array_rand($conferenceOptions)];
 
         return [
-            'name' => $this->faker->name.' High School',
-            'address' => $this->faker->address,
+            'name' => $this->faker->name().' High School',
+            'address' => $this->faker->address(),
             'conference' => $randomConferenceOption,
         ];
     }

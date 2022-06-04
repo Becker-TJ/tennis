@@ -15,8 +15,8 @@ class SchoolAttendeeFactory extends Factory
     public function definition()
     {
         return [
-            'school_id' => $this->faker->randomDigit,
-            'tournament_id' => $this->faker->randomDigit,
+            'school_id' => $this->faker->randomDigit(),
+            'tournament_id' => $this->faker->randomDigit(),
         ];
     }
 }
