@@ -1,14 +1,16 @@
 <?php
 
-
 namespace App;
-use App\School;
 
-use Illuminate\Database\Eloquent\Model;
+use App\School;
 use DB;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Player extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'first_name',
         'last_name',
@@ -18,15 +20,13 @@ class Player extends Model
         'boys_one_singles_rank',
         'boys_two_singles_rank',
         'girls_one_singles_rank',
-        'girls_two_singles_rank'
+        'girls_two_singles_rank',
     ];
-    protected $dates = ['created_at', 'updated_at'];
 
     public function getSchool()
     {
         $school = School::where('id', $this->school_id)->firstOrFail();
+
         return $school;
     }
-
-
 }

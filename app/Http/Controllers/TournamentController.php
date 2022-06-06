@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\BracketPosition;
+use App\Player;
+use App\School;
 use App\SchoolAttendee;
 use App\Tournament;
-use App\School;
-use App\Player;
 use DemeterChain\B;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,8 @@ class TournamentController extends Controller
         $this->middleware('check.school');
     }
 
-    public function showCreateTournament() {
+    public function showCreateTournament()
+    {
         $boysCheck = 'checked';
         $boysActive = 'active';
         $girlsCheck = '';
@@ -60,11 +62,12 @@ class TournamentController extends Controller
             'privateActive' => $privateActive,
 
             'createOrEdit' => $createOrEdit,
-            'submitButtonText' => $submitButtonText
+            'submitButtonText' => $submitButtonText,
         ]);
     }
 
-    public function showEditTournament(Tournament $tournament) {
+    public function showEditTournament(Tournament $tournament)
+    {
         $boysCheck = 'checked';
         $boysActive = 'active';
         $girlsCheck = '';
@@ -87,24 +90,24 @@ class TournamentController extends Controller
         $createOrEdit = 'Edit';
         $submitButtonText = 'Save Changes';
 
-        if($tournament->gender == 'Girls') {
+        if ($tournament->gender == 'Girls') {
             $girlsCheck = 'checked';
             $girlsActive = 'active';
             $boysCheck = '';
             $boysActive = '';
-        } else if($tournament->gender == 'Both') {
+        } elseif ($tournament->gender == 'Both') {
             $bothCheck = 'checked';
             $bothActive = 'active';
             $boysCheck = '';
             $boysActive = '';
         }
 
-        if($tournament->level == 'Junior Varsity') {
+        if ($tournament->level == 'Junior Varsity') {
             $jvCheck = 'checked';
             $jvActive = 'active';
             $varsityCheck = '';
             $varsityActive = '';
-        } else if ($tournament->level == 'Junior High') {
+        } elseif ($tournament->level == 'Junior High') {
             $jhCheck = 'checked';
             $jhActive = 'active';
             $varsityCheck = '';
@@ -140,15 +143,17 @@ class TournamentController extends Controller
             'privateActive' => $privateActive,
 
             'createOrEdit' => $createOrEdit,
-            'submitButtonText' => $submitButtonText
+            'submitButtonText' => $submitButtonText,
         ]);
     }
 
-    public function showBracket() {
+    public function showBracket()
+    {
         return view('bracket');
     }
 
-    public function showTournaments() {
+    public function showTournaments()
+    {
         $tournaments = Tournament::all()->sortBy('date');
         $schoolAttendees = SchoolAttendee::all();
 
@@ -157,9 +162,8 @@ class TournamentController extends Controller
         $pendingInvitations = $invitations->where('invite_accepted', '=', 0);
         $acceptedInvitations = $invitations->where('invite_accepted', '=', 1);
 
-
-        foreach($pendingInvitations as $invitation) {
-            foreach($tournaments as $key => $tournament) {
+        foreach ($pendingInvitations as $invitation) {
+            foreach ($tournaments as $key => $tournament) {
                 if ($tournament->id == $invitation->tournament_id) {
                     $tournament->pendingInvite = true;
                     $moveTournament = $tournament;
@@ -169,8 +173,8 @@ class TournamentController extends Controller
             }
         }
 
-        foreach($acceptedInvitations as $invitation) {
-            foreach($tournaments as $key => $tournament) {
+        foreach ($acceptedInvitations as $invitation) {
+            foreach ($tournaments as $key => $tournament) {
                 if ($tournament->id == $invitation->tournament_id) {
                     $tournament->acceptedInvite = true;
                     $moveTournament = $tournament;
@@ -180,14 +184,14 @@ class TournamentController extends Controller
             }
         }
 
-
         return view('tournaments', [
             'tournaments' => $tournaments,
-            'schoolAttendees' => $schoolAttendees
+            'schoolAttendees' => $schoolAttendees,
         ]);
     }
 
-    public function showTournament(Tournament $tournament) {
+    public function showTournament(Tournament $tournament)
+    {
         $school = School::find($tournament->host_id);
         $schools = School::all();
 //        $bracketPositions = BracketPosition::all()->where('tournament_id' ,'=', $tournament->id)->first();
@@ -195,9 +199,8 @@ class TournamentController extends Controller
         $attendees = SchoolAttendee::all()->where('tournament_id', '=', $tournament->id)->where('invite_accepted', '=', 1);
         $oneSinglesPlayers = Player::all()->where('position', '=', 1);
 
-
         $attendeeSchoolIDs = [];
-        foreach($attendees as $attendee) {
+        foreach ($attendees as $attendee) {
             $attendeeSchoolIDs[] = $attendee->school_id;
         }
 
@@ -240,19 +243,18 @@ class TournamentController extends Controller
 //            }
 //        }
 
-
         return view('tournament', [
             'tournament' => $tournament,
             'school' => $school,
             'attendees' => $attendees,
             'schools' => $schools,
             'girlsOneSinglesPlayers' => $girlsOneSinglesPlayers,
-//            'bracketPositions' => $bracketPositions
+            //            'bracketPositions' => $bracketPositions
         ]);
-
     }
 
-    public function edit(Request $request) {
+    public function edit(Request $request)
+    {
         $data = $_POST;
         $tournamentID = substr($request->session('attributes')->previousUrl(), 31);
 
@@ -274,7 +276,8 @@ class TournamentController extends Controller
         return view('createtournament');
     }
 
-    public function create() {
+    public function create()
+    {
         $data = $_POST;
 
         $tournament = new Tournament;
@@ -289,22 +292,16 @@ class TournamentController extends Controller
         $tournament['level'] = $data['level'];
         $tournament['privacy_setting'] = $data['privacy_setting'];
 
-        $tournament ['host_id'] = 80;
+        $tournament['host_id'] = 80;
 
         $tournament->saveOrFail();
 
         $schoolAttendee = new SchoolAttendee;
-        $schoolAttendee->school_id = $tournament['host_id'];;
+        $schoolAttendee->school_id = $tournament['host_id'];
         $schoolAttendee->tournament_id = $tournament->id;
         $schoolAttendee->invite_accepted = 1;
         $schoolAttendee->saveOrFail();
 
-
         return redirect()->route('tournament', ['tournament' => $tournament->id]);
-
     }
-
-
-
-
 }

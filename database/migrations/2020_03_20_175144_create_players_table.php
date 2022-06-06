@@ -27,7 +27,6 @@ class CreatePlayersTable extends Migration
             $table->unsignedInteger('girls_two_singles_rank');
             $table->unsignedInteger('school_id')->default(0);
         });
-
     }
 
     /**
