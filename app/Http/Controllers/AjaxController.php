@@ -68,34 +68,59 @@ class AjaxController extends Controller
         return response()->json(['success'=>'Invites sent.']);
     }
 
-    public function saveScore(Request $request)
-    {
-        $input = $request->all();
-
-        $tournamentID = intval($input['tournament_id']);
-        $bracketPositions = BracketPosition::all()->where('tournament_id', '=', $tournamentID)->where('bracket', '=', 'bracket')->first();
+    public function saveScore(Request $request) {
+        $scoreData = $request->all();
+        $scoreInput = $scoreData['scoreInput'];
+        $tournamentID = intval($scoreData['tournament_id']);
+        $bracket = $scoreData['bracket'];
 
         $singles = false;
-        $bracket = $input['bracket'];
+
         if (strpos($bracket, 'Singles') !== false) {
             $singles = true;
         }
-        $winner = intval($input['winner']);
-        $loser = intval($input['loser']);
-        $winnerBracketPosition = $input['winnerBracketPosition'];
-        $loserBracketPosition = $input['loserBracketPosition'];
-        $newWinnerBracketPosition = str_replace('-', '_', $input['newWinnerBracketPosition']);
 
-        $bracketPositions->$newWinnerBracketPosition = $winner;
-        if (isset($input['newLoserBracketPosition'])) {
-            $newLoserBracketPosition = str_replace('-', '_', $input['newLoserBracketPosition']);
-            $bracketPositions->$newLoserBracketPosition = $loser;
+        if ($singles) {
+            $match = SinglesMatch::all()
+                ->where('tournament_id', '=', $tournamentID)
+                ->where('score_input', '=', $scoreInput)
+                ->where('bracket', '=', $bracket)
+                ->first();
+        } else {
+            $match = DoublesMatch::all()
+                ->where('tournament_id', '=', $tournamentID)
+                ->where('score_input', '=', $scoreInput)
+                ->where('bracket', '=', $bracket)
+                ->first();
         }
 
-        $score = $input['score'];
-        $scoreInput = $input['scoreInput'];
+        $score = $scoreData['score'];
+        $match->score = $score;
+        $match->saveOrFail();
 
-        $bracketPositions->saveOrFail();
+        return response()->json(['success'=>'Saved Score.']);
+    }
+
+    public function saveMatch(Request $request)
+    {
+        $scoreData = $request->all();
+
+        $tournamentID = intval($scoreData['tournament_id']);
+        $bracket = $scoreData['bracket'];
+        $bracketPositions = BracketPosition::all()->where('tournament_id', '=', $tournamentID)->where('bracket', '=', $bracket)->first();
+
+        //finds the new bracket position for the winner and loser
+        $scoreData['newWinnerBracketPosition'] = $bracketPositions->winningPathAssociations[$scoreData['winnerBracketPosition']];
+        $scoreData['newLoserBracketPosition'] = $bracketPositions->losingPathAssociations[$scoreData['loserBracketPosition']];
+
+        $singles = false;
+
+        if (strpos($bracket, 'Singles') !== false) {
+            $singles = true;
+        }
+
+        $score = $scoreData['score'];
+        $scoreInput = $bracketPositions->winningPathAssociations[$scoreData['winnerBracketPosition']] . '-score-input';
 
         if ($singles) {
             $match = SinglesMatch::all()
@@ -117,6 +142,19 @@ class AjaxController extends Controller
             }
         }
 
+        $winner = intval($scoreData['winner']);
+        $loser = intval($scoreData['loser']);
+        $winnerBracketPosition = $scoreData['winnerBracketPosition'];
+        $loserBracketPosition = $scoreData['loserBracketPosition'];
+        $newWinnerBracketPosition = str_replace('-', '_', $scoreData['newWinnerBracketPosition']);
+
+        $bracketPositions->$newWinnerBracketPosition = $winner;
+        if (isset($scoreData['newLoserBracketPosition'])) {
+            $newLoserBracketPosition = str_replace('-', '_', $scoreData['newLoserBracketPosition']);
+            $bracketPositions->$newLoserBracketPosition = $loser;
+        }
+        $bracketPositions->saveOrFail();
+
         $match->bracket = $bracket;
         $match->winner = $winner;
         $match->loser = $loser;
@@ -125,7 +163,6 @@ class AjaxController extends Controller
         $match->tournament_id = $tournamentID;
         $match->score = $score;
         $match->score_input = $scoreInput;
-
         $match->saveOrFail();
 
         return response()->json(['success'=>'Saved Score.']);
@@ -137,7 +174,6 @@ class AjaxController extends Controller
         $tournament_id = $request['tournament_id'];
         $attendees = SchoolAttendee::all()->where('tournament_id', '=', $tournament_id);
         $singles = false;
-        $doubles = false;
 
         $requestedBracket = $request['requestedBracket'];
         switch ($requestedBracket) {

@@ -345,7 +345,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td id="1-seed-school" class="give-left-border give-top-border give-right-border">1 seed school</td>
+                <td id="1-seed-school" class="give-left-border give-top-border give-right-border advanceable">1 seed school</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -372,7 +372,7 @@
                 <td></td>
                 <td></td>
                 <td class="give-left-border"></td>
-                <td id="8-seed-school" class="give-top-border">8 seed school</td>
+                <td id="8-seed-school" class="give-top-border advanceable">8 seed school</td>
                 <td class="give-right-border"></td>
                 <td></td>
                 <td></td>
@@ -408,7 +408,7 @@
                 <td></td>
                 <td class="give-left-border"></td>
                 <td id="first-consolation-round-one-bottom" class="give-left-border">first consolation round one bottom</td>
-                <td id="5-seed-school" class="give-left-border give-right-border give-top-border">5 seed school</td>
+                <td id="5-seed-school" class="give-left-border give-right-border give-top-border advanceable">5 seed school</td>
                 <td id="first-winners-round-one-bottom" class="give-right-border">first winners round one bottom</td>
                 <td class="give-right-border"></td>
                 <td></td>
@@ -435,7 +435,7 @@
                 <td></td>
                 <td class="give-left-border"></td>
                 <td></td>
-                <td id="4-seed-school" class="give-top-border">4 seed school</td>
+                <td id="4-seed-school" class="give-top-border advanceable">4 seed school</td>
                 <td></td>
                 <td class="give-right-border"></td>
                 <td></td>
@@ -471,7 +471,7 @@
                 <td></td>
                 <td class="give-left-border"></td>
                 <td></td>
-                <td id="3-seed-school" class="give-left-border give-top-border give-right-border">3 seed school</td>
+                <td id="3-seed-school" class="give-left-border give-top-border give-right-border advanceable">3 seed school</td>
                 <td></td>
                 <td class="give-right-border"></td>
                 <td></td>
@@ -498,7 +498,7 @@
                 <td></td>
                 <td class="give-left-border"></td>
                 <td class="give-left-border"></td>
-                <td id="6-seed-school" class="give-top-border">6 seed school</td>
+                <td id="6-seed-school" class="give-top-border advanceable">6 seed school</td>
                 <td class="give-right-border"></td>
                 <td class="give-right-border"></td>
                 <td></td>
@@ -534,7 +534,7 @@
                 <td></td>
                 <td></td>
                 <td id="second-consolation-round-one-bottom" class="give-left-border">second consolation round one bottom</td>
-                <td id="7-seed-school" class="give-top-border give-right-border give-left-border">7 seed school</td>
+                <td id="7-seed-school" class="give-top-border give-right-border give-left-border advanceable">7 seed school</td>
                 <td id="second-winners-round-one-bottom" class="give-right-border">second winners round one bottom</td>
                 <td></td>
                 <td></td>
@@ -561,7 +561,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td id="2-seed-school" class="give-top-border">2 seed school</td>
+                <td id="2-seed-school" class="give-top-border advanceable">2 seed school</td>
                 <td></td>
                 <td></td>
                 <td></td>
