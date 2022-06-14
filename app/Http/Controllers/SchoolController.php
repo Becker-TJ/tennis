@@ -74,7 +74,7 @@ class SchoolController extends Controller
 
         $school['name'] = $data['school_name'];
         $school['address'] = $data['school_address'];
-        $school['class'] = $data['school_class'];
+        $school['conference'] = $data['school_class'];
 
         $school->saveOrFail();
 

@@ -302,6 +302,24 @@ class TournamentController extends Controller
         $schoolAttendee->invite_accepted = 1;
         $schoolAttendee->saveOrFail();
 
+        $brackets = ['girlsOneSingles', 'girlsTwoSingles', 'girlsOneDoubles', 'girlsTwoDoubles', 'boysOneSingles', 'boysTwoSingles', 'boysOneDoubles', 'boysTwoDoubles'];
+        foreach($brackets as $bracket) {
+            $bracketPosition = new BracketPosition;
+            $bracketPosition->{'tournament_id'} = $tournament->id;
+            $bracketPosition->{'bracket'} = $bracket;
+
+            $bracketPositions = $bracketPosition->getFillable();
+            array_shift($bracketPositions);
+            array_shift($bracketPositions);
+
+            foreach($bracketPositions as $position) {
+                $bracketPosition->$position = 0;
+            }
+
+            $bracketPosition->saveOrFail();
+
+        }
+
         return redirect()->route('tournament', ['tournament' => $tournament->id]);
     }
 }

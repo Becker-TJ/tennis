@@ -20,7 +20,7 @@ class CreateSinglesMatchesTable extends Migration
             $table->string('bracket');
             $table->unsignedInteger('winner');
             $table->unsignedInteger('loser');
-            $table->string('score');
+            $table->string('score')->nullable();
             $table->string('winner_bracket_position');
             $table->string('loser_bracket_position');
             $table->string('score_input');

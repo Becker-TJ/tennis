@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="a4e1c420-c194-4624-adec-fdf79bc27c6f" name="Test" url="http://tennis">
+        <fileTransfer mountedRoot="C:\Users\Teej\code\tennis\public" accessType="MOUNT" port="0" />
+      </webServer>
+    </option>
+  </component>
+</project>
