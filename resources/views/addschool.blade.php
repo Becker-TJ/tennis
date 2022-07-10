@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Add School</div>
+                    <div class="card-header">Which School Do You Coach?</div>
                     <div class="card-body">
                         <form method="POST" action="addschool">
                             @csrf
@@ -80,5 +80,7 @@
             </div>
         </div>
     </div>
-
+@endsection
+@section('javascript')
+    <script type="text/javascript" src="{{ URL::asset('js/addSchool.js') }}"></script>
 @endsection

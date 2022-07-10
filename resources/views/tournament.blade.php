@@ -64,6 +64,11 @@
                         <button type="button" class="btn btn-primary col-md-2 offset-md-5" data-toggle="modal" data-target="#inviteTeamsModal">Invite Teams</button>
                     </div>
 
+                    <div class="btn-group">
+                        <button type="button" id="decline_tournament_invitation_button" class="btn btn-primary col-md-2 offset-md-4" data-toggle="modal">Decline Tournament Invitation</button>
+                        <button type="button" id="accept_tournament_invitation_button" class="btn btn-primary col-md-2 offset-md-5" data-toggle="modal">Accept Tournament Invitation</button>
+                    </div>
+
                     <br>
 
                     <div class="btn-group .btn-girls">
@@ -256,7 +261,7 @@
                                             <div class="btn-group" class="col-md-12">
                                                 <select style="width:350px" class="select2 form-control" id="schools_to_invite" name="schools_to_invite">
                                                     <option value="" disabled selected>Select School</option>
-                                                    @foreach($schools as $school)
+                                                    @foreach($schools as $key => $school)
                                                         <option value="{{ $school->id }}">
                                                             {{ $school->name }}
                                                         </option>

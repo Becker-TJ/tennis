@@ -9,7 +9,7 @@ class SchoolAttendee extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['school_id', 'tournament_id', 'invite_accepted'];
+    protected $fillable = ['school_id', 'tournament_id', 'invite_status'];
 
     public function getSchool()
     {

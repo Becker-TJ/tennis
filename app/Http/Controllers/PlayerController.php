@@ -9,7 +9,8 @@ use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-class PlayerController extends Controller
+class
+PlayerController extends Controller
 {
     public function showFilteredPlayers()
     {

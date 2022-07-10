@@ -45,9 +45,7 @@
             font-size:24px;
             text-align:center;
         }
-        tr {
-            cursor: grab;
-        }
+
 
         tr.border_bottom td {
             border-bottom: 2px solid black;
@@ -56,16 +54,36 @@
             background-color:lightblue;
         }
         .btn-group button {
-            border: 1px solid black; /* Green border */
-            padding: 10px 24px; /* Some padding */
-            cursor: pointer; /* Pointer/hand icon */
-            float: left; /* Float the buttons side by side */
+            border: 1px solid black;
+            padding: 10px 24px;
+            cursor: pointer;
+            float: left;
         }
 
         .btn-group button:hover {
-            border: 1px solid black; /* Green border */
+            border: 1px solid black;
             background-color:#28474B;
             color:white !important;
+        }
+
+        tr {
+
+        }
+
+
+        .edit-pen:hover, .delete-trash-can:hover {
+            cursor: pointer;
+            transform: scale(1.3);
+        }
+
+        .reorder-cell {
+            cursor: grab;
+            text-align:center;
+        }
+
+        .reorder-icon {
+            width:25px;
+            height:25px;
         }
 
         .btn-boys {
@@ -82,6 +100,10 @@
 
         .advanceable {
 
+        }
+
+        .button-crew {
+            display: inline;
         }
 
         .winner {
@@ -125,6 +147,22 @@
             color:white;
         }
 
+        #boys-roster {
+            margin-right: 15px;
+            background-color:dodgerblue;
+        }
+        #girls-roster {
+            margin-left: 15px;
+            background-color:lightpink;
+            color:black;
+        }
+
+        .selected-roster-button {
+            transform: scale(1.2);
+            border-color:black;
+            border-width:3px;
+        }
+
 
 
     </style>
@@ -147,17 +185,6 @@
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" ></script> {{--for table sorting--}}
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script> {{--for dropdown sorting--}}
 <script src="https://cdn.datatables.net/rowreorder/1.2.6/js/dataTables.rowReorder.min.js"></script>
-<script>
-    //for addschool view.  enables and disables part of the form.
-    $("#not_listed").change(function() {
-        if (this.checked) {
-            $(".toggle_show").removeAttr('disabled').attr('required', true);
-            $("#switch_button_name").html("Add New School");
-        } else {
-            $(".toggle_show").attr('disabled', true).val('').attr('required', false);
-                $("#switch_button_name").html("Tie Existing School");
-        }
-    });
-</script>
 <script src="{{asset('js/tennisDataTables.js')}}" type="text/javascript"></script>
+@yield('javascript')
 </html>

@@ -10,7 +10,7 @@ $(document).ready( function () {
         paging:false,
         searching:false,
         rowReorder: {
-            selector: 'tr',
+            selector: '.reorder-cell',
             snapX:true,
         },
         bInfo:false,
@@ -18,13 +18,15 @@ $(document).ready( function () {
 
         'columnDefs': [
             { targets: [0,1], visible: false },
-            { targets: [2,3,4,5], orderable: false }
+            { targets: [2,3,4,5,6], orderable: false },
+            {targets: [2], width: "5%" },
         ]
         //this will be useful for adding a button in the same line as the search bar for creating tournaments etc
         // "initComplete": function( settings, json ) {
         //     $('#myTable_filter').html("<div id='myTable_filter' class='dataTables_filter'><div><label>Search:<input type='search' class='' placeholder='' aria-controls='myTable'></label><button id='roster_button' type='submit' class='btn btn-primary'>Create</button></div></div>");
         // },
     } );
+
 
     var varsityOrder = [
         '1 Singles',
@@ -438,17 +440,34 @@ $(document).ready( function () {
         $htmlString = $('#list_to_invite').html();
         $schoolSelected =  $('#schools_to_invite').find(":selected").text();
 
-        $removed = $('#schools_to_invite').find(":selected").remove();
+        $removed = ($('#schools_to_invite').find(":selected").remove());
 
-        $htmlString +='<li class="school_invitee" data-value="' + $schoolID + '">' + $schoolSelected + '</li><span aria-hidden="true">&times;</span>';
+        $htmlString +='<li class="school_invitee" data-value="' + $schoolID + '">' + $schoolSelected + '<span data-id="remove_school_button" aria-hidden="true">&#10060;</span></li>';
 
         $('#list_to_invite').html($htmlString);
 
         $('li.school_invitee').each(function(index, li) {
-            console.log(index);
-            console.log(li.dataset.value);
+            // console.log(index);
+            // console.log(li.dataset.value);
         });
 
+        $("[data-id=remove_school_button]").click(function(e){
+            e.preventDefault();
+            $schoolHtml = this.parentNode;
+
+            $('#schools_to_invite').append($('<option>', {
+                value:$schoolHtml.getAttribute('data-value'),
+                text:$schoolHtml.childNodes[0].nodeValue
+            }));
+
+            this.parentElement.remove();
+        });
+
+    });
+
+    $('#select2-schools_to_invite-container').click(function() {
+        //this prevents the first option in the dropdown from locking after a selection has been made
+        $("#select2-schools_to_invite-results li:nth-child(2)").attr('aria-selected', false);
     });
 
     $("#invite_schools_button").click(function(e){
@@ -458,8 +477,6 @@ $(document).ready( function () {
         var schoolInviteeIDs = [];
 
         $('li.school_invitee').each(function(index, li) {
-            console.log(index);
-            console.log(li.dataset.value);
             schoolInviteeIDs.push(li.dataset.value);
         });
 
@@ -471,6 +488,119 @@ $(document).ready( function () {
                 alert(data.success);
             }
         });
+    });
+
+    $("#decline_tournament_invitation_button").click(function(e){
+        e.preventDefault();
+
+        var tournament_id = $('#tournament_id').html();
+        var user_school_id = 80;
+
+        $.ajax({
+            type:'POST',
+            url:'/declineInvite',
+            data:{tournament_id:tournament_id, user_school_id:user_school_id},
+            success:function(data){
+                window.location = data.redirect_url;
+            }
+        });
+    });
+
+    $("#accept_tournament_invitation_button").click(function(e){
+        e.preventDefault();
+
+        var tournament_id = $('#tournament_id').html();
+        var user_school_id = 80;
+
+        $.ajax({
+            type:'POST',
+            url:'/acceptInvite',
+            data:{tournament_id:tournament_id, user_school_id:user_school_id},
+            success:function(data){
+                window.location = data.redirect_url;
+            }
+        });
+    });
+
+    $('.edit-pen').click(function(e) {
+        e.preventDefault();
+
+        if($('#boys-roster').hasClass('selected-roster-button')) {
+            $tableIDString = '#schoolTable';
+        } else {
+            $tableIDString = '#girlsSchoolTable';
+        }
+
+        $('#class-freshman').removeClass('active');
+        $('#class-sophomore').removeClass('active');
+        $('#class-junior').removeClass('active');
+        $('#class-senior').removeClass('active');
+        $('#gender-male').removeClass('active');
+        $('#gender-female').removeClass('active');
+
+        var currentRow = $(this).closest('tr');
+        var data = $($tableIDString).DataTable().row(currentRow).data();
+        var playerID = data[1];
+
+        $.ajax({
+            type:'POST',
+            url:'/getPlayerDetails',
+            data:{playerID:playerID},
+            success:function(data){
+
+                console.log(data.player.gender.toLowerCase());
+                $('#edit_player_first_name').val(data.player.first_name);
+                $('#edit_player_last_name').val(data.player.last_name);
+                $('#class-' + data.player.class.toLowerCase()).addClass('active');
+                $('#gender-' + data.player.gender.toLowerCase()).addClass('active');
+            }
+        });
+
+    });
+
+    $('#boys-roster').click(function(e) {
+        e.preventDefault();
+
+        $('#girls-roster').removeClass('selected-roster-button');
+        $('#boys-roster').addClass('selected-roster-button');
+
+        $('#girlsSchoolTable').attr('hidden', true);
+        $('#schoolTable').removeAttr('hidden');
+    });
+
+    $('#girls-roster').click(function(e) {
+        e.preventDefault();
+
+        $('#boys-roster').removeClass('selected-roster-button');
+        $('#girls-roster').addClass('selected-roster-button');
+
+        $('#schoolTable').attr('hidden', true);
+        $('#girlsSchoolTable').removeAttr('hidden');
+
+
+        if (! $.fn.DataTable.isDataTable('#girlsSchoolTable')) {
+            var girlsSchoolTable = $('#girlsSchoolTable').DataTable( {
+                paging:false,
+                searching:false,
+                rowReorder: {
+                    selector: '.reorder-cell',
+                    snapX:true,
+                },
+                bInfo:false,
+                "lengthChange": false,
+
+                'columnDefs': [
+                    { targets: [0,1], visible: false },
+                    { targets: [2,3,4,5,6], orderable: false },
+                    {targets: [2], width: "5%" },
+                ]
+                //this will be useful for adding a button in the same line as the search bar for creating tournaments etc
+                // "initComplete": function( settings, json ) {
+                //     $('#myTable_filter').html("<div id='myTable_filter' class='dataTables_filter'><div><label>Search:<input type='search' class='' placeholder='' aria-controls='myTable'></label><button id='roster_button' type='submit' class='btn btn-primary'>Create</button></div></div>");
+                // },
+            } );
+        }
+
     });
 } );
 
@@ -648,6 +778,8 @@ function saveMatch(bracket, winner, loser, winnerBracketPosition, loserBracketPo
         }
     });
 }
+
+
 
 
 

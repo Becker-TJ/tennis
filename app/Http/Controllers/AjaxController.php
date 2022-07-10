@@ -51,6 +51,37 @@ class AjaxController extends Controller
         return response()->json(['success'=>'Saved position changes.']);
     }
 
+    public function declineInvite(Request $request) {
+        $input = $request->all();
+        $tournamentID = intval($input['tournament_id']);
+        $userSchoolID = intval($input['user_school_id']);
+
+        $schoolAttendee = SchoolAttendee::all()->where('tournament_id', '=', $tournamentID)->where('school_id', '=', $userSchoolID)->first();
+        $schoolAttendee->invite_status = 'declined';
+        $schoolAttendee->saveOrFail();
+        return response()->json(['redirect_url'=> url('tournaments')]);
+    }
+
+    public function acceptInvite(Request $request) {
+        $input = $request->all();
+        $tournamentID = intval($input['tournament_id']);
+        $userSchoolID = intval($input['user_school_id']);
+
+        $schoolAttendee = SchoolAttendee::all()->where('tournament_id', '=', $tournamentID)->where('school_id', '=', $userSchoolID)->first();
+        $schoolAttendee->invite_status = 'accepted';
+        $schoolAttendee->saveOrFail();
+        return response()->json(['redirect_url'=> url('tournaments')]);
+    }
+
+    public function getPlayerDetails(Request $request) {
+        $input = $request->all();
+        $playerID = intval($input['playerID']);
+        $player = Player::all()->where('id', '=', $playerID)->first();
+        return response()->json([
+            'player' => $player
+        ]);
+    }
+
     public function inviteSchools(Request $request)
     {
         $input = $request->all();
@@ -62,6 +93,7 @@ class AjaxController extends Controller
             $schoolAttendee = new SchoolAttendee;
             $schoolAttendee->school_id = $inviteeID;
             $schoolAttendee->tournament_id = $tournamentID;
+            $schoolAttendee->invite_accepted = 'pending';
             $schoolAttendee->saveOrFail();
         }
 

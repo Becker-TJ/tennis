@@ -19,8 +19,7 @@ class CreateSchoolAttendeesTable extends Migration
             $table->unsignedInteger('school_id');
             $table->unsignedInteger('tournament_id');
 
-            //FIX LATER default should be 0
-            $table->boolean('invite_accepted')->default(1);
+            $table->string('invite_status')->default('accepted');
         });
     }
 

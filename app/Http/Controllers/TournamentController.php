@@ -157,10 +157,9 @@ class TournamentController extends Controller
         $tournaments = Tournament::all()->sortBy('date');
         $schoolAttendees = SchoolAttendee::all();
 
-        //FIX LATER the value at the end of the query for invitations should be the logged in school id
         $invitations = $schoolAttendees->where('school_id', '=', 80);
-        $pendingInvitations = $invitations->where('invite_accepted', '=', 0);
-        $acceptedInvitations = $invitations->where('invite_accepted', '=', 1);
+        $pendingInvitations = $invitations->where('invite_status', '=', 'pending');
+        $acceptedInvitations = $invitations->where('invite_status', '=', 'accepted');
 
         foreach ($pendingInvitations as $invitation) {
             foreach ($tournaments as $key => $tournament) {
@@ -196,7 +195,7 @@ class TournamentController extends Controller
         $schools = School::all();
 //        $bracketPositions = BracketPosition::all()->where('tournament_id' ,'=', $tournament->id)->first();
 
-        $attendees = SchoolAttendee::all()->where('tournament_id', '=', $tournament->id)->where('invite_accepted', '=', 1);
+        $attendees = SchoolAttendee::all()->where('tournament_id', '=', $tournament->id)->where('invite_status', '=', 'accepted');
         $oneSinglesPlayers = Player::all()->where('position', '=', 1);
 
         $attendeeSchoolIDs = [];
@@ -299,7 +298,7 @@ class TournamentController extends Controller
         $schoolAttendee = new SchoolAttendee;
         $schoolAttendee->school_id = $tournament['host_id'];
         $schoolAttendee->tournament_id = $tournament->id;
-        $schoolAttendee->invite_accepted = 1;
+        $schoolAttendee->invite_status = 'accepted';
         $schoolAttendee->saveOrFail();
 
         $brackets = ['girlsOneSingles', 'girlsTwoSingles', 'girlsOneDoubles', 'girlsTwoDoubles', 'boysOneSingles', 'boysTwoSingles', 'boysOneDoubles', 'boysTwoDoubles'];

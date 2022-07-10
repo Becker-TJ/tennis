@@ -35,12 +35,12 @@ Route::get('/verify', function () {
     return view('verify');
 });
 
-Route::get('/createtournament', [TournamentController::class, 'showCreateTournament']);
+Route::get('/createtournament', [TournamentController::class, 'showCreateTournament'])->middleware(['auth', 'check.school']);
 Route::get('/createtournament/{tournament}', [TournamentController::class, 'showEditTournament']);
 Route::post('/createtournament', [TournamentController::class, 'create']);
 Route::post('/createtournament/{tournament}', [TournamentController::class, 'edit']);
 
-Route::get('/tournaments', [TournamentController::class, 'showTournaments']);
+Route::get('/tournaments', [TournamentController::class, 'showTournaments'])->name('tournaments');
 Route::get('/tournament/{tournament}', [TournamentController::class, 'showTournament'])->name('tournament');
 
 Route::get('/addschool', [SchoolController::class, 'showAddSchool']);
@@ -60,6 +60,9 @@ Route::post('/getmsg', [AjaxController::class, 'index']);
 
 Route::post('/savePlayerPositions', [AjaxController::class, 'savePlayerPositions']);
 Route::post('/inviteSchools', [AjaxController::class, 'inviteSchools']);
+Route::post('/declineInvite', [AjaxController::class, 'declineInvite']);
+Route::post('/acceptInvite', [AjaxController::class, 'acceptInvite']);
+Route::post('/getPlayerDetails', [AjaxController::class, 'getPlayerDetails']);
 Route::post('/getBracketData', [AjaxController::class, 'getBracketData']);
 Route::post('/saveScore', [AjaxController::class, 'saveScore']);
 Route::post('/saveMatch', [AjaxController::class, 'saveMatch']);

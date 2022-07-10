@@ -33,7 +33,8 @@ class SchoolController extends Controller
 
     public function showSchool(School $school)
     {
-        $players = Player::all()->where('school_id', '=', $school->id);
+        $boys = Player::all()->where('school_id', '=', $school->id)->where('gender', '=', 'Male');
+        $girls = Player::all()->where('school_id', '=', $school->id)->where('gender', '=', 'Female');
 
         $positionNamesOrder = [
             '1 Singles',
@@ -44,7 +45,11 @@ class SchoolController extends Controller
             '2 Doubles',
         ];
 
-        foreach ($players as $player) {
+        foreach ($boys as $player) {
+            array_push($positionNamesOrder, 'JV');
+        }
+
+        foreach($girls as $player) {
             array_push($positionNamesOrder, 'JV');
         }
 
@@ -53,7 +58,8 @@ class SchoolController extends Controller
         return view('school', [
             'positionNamesOrder' => $positionNamesOrder,
             'school' => $school,
-            'players' => $players,
+            'boys' => $boys,
+            'girls' => $girls,
             'increment' => $increment,
         ]);
     }

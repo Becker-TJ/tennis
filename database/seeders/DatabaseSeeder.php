@@ -637,7 +637,7 @@ class DatabaseSeeder extends Seeder
         $schoolIDs = [513, 317, 340, 80, 81, 82, 99, 298];
         foreach ($schoolIDs as $schoolID) {
             DB::table('school_attendees')->insert([
-                'invite_accepted' => 1,
+                'invite_status' => 'accepted',
                 'tournament_id' => 51,
                 'school_id' => $schoolID,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
