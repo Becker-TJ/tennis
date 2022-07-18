@@ -41,15 +41,28 @@ $(document).ready( function () {
         paging:false,
         searching:false,
         rowReorder: {
-            selector: 'tr',
+            selector: '.reorder-cell',
             snapX:true,
+            dataSrc:'seq'
         },
         bInfo:false,
         "lengthChange": false,
 
+        'columns': [
+            { data: 'seq' }, /* index = 0 */
+            { data: 'id' }, /* index = 1 */
+            { data: 'reorder'},/* index = 2 */
+            { data: 'position' }, /* index = 3 */
+            { data: 'name' }, /* index = 4 */
+            { data: 'conference' }, /* index = 5 */
+            { data: 'actions' }, /* index = 6 */
+        ],
+
         'columnDefs': [
             { targets: [0,1], visible: false },
-            { targets: [2,3,4,5], orderable: false }
+            { targets: [2], orderable: false, className:'reorder-cell'},
+            { targets: [3,5,6], orderable: false, 'className': 'center-align' },
+            { targets: [4], orderable:false}
         ]
         //this will be useful for adding a button in the same line as the search bar for creating tournaments etc
         // "initComplete": function( settings, json ) {
@@ -57,9 +70,86 @@ $(document).ready( function () {
         // },
     } );
 
+    var editRosterTable = $('#editRosterTable').DataTable( {
+        paging:false,
+        searching:false,
+        rowReorder: {
+            selector: 'tr',
+            snapX:true,
+            dataSrc:'seq'
+        },
+        bInfo:false,
+        "lengthChange": false,
+
+        'columns': [
+            { data: 'seq' }, /* index = 0 */
+            { data: 'id' }, /* index = 1 */
+            { data: 'position' }, /* index = 2 */
+            { data: 'name' }, /* index = 3 */
+            { data: 'conference' }, /* index = 4 */
+            { data: 'actions' }, /* index = 5 */
+        ],
+
+        'columnDefs': [
+            { targets: [0,1], visible: false },
+            { targets: [2,4,5], orderable: false, 'className': 'center-align' },
+            { targets: [3], orderable:false}
+        ]
+        //this will be useful for adding a button in the same line as the search bar for creating tournaments etc
+        // "initComplete": function( settings, json ) {
+        //     $('#myTable_filter').html("<div id='myTable_filter' class='dataTables_filter'><div><label>Search:<input type='search' class='' placeholder='' aria-controls='myTable'></label><button id='roster_button' type='submit' class='btn btn-primary'>Create</button></div></div>");
+        // },
+    } );
+
+    seedsTable.on('row-reordered', function (e, diff, edit) {
+
+        $('#seedsTable').DataTable().rows(function () {
+            // data.position = (rowIdx + 1) + '_seed';
+            // console.log(data.position);
+        }).draw();
+
+
+
+
+        var table = $("#seedsTable").DataTable();
+
+        table.one( 'draw', function () {
+            var bracket = $('.selected-button').attr('id');
+            var tournament_id = $('#tournament_id').html();
+
+            let playerSeeds = {};
+            table.rows().every(function(index, element) {
+                var seed = this.data().position;
+                var id = this.data().id;
+                playerSeeds[seed] = id;
+            });
+
+            $.ajax({
+                type:'POST',
+                url:'/saveTournamentSeeds',
+                data:{playerSeeds:playerSeeds, tournament_id:tournament_id, bracket:bracket},
+                success:function(data){
+                    fillBracketData();
+                }
+            });
+
+        });
+    } );
+
+
+
+
     //this resets the order of the far left column for a school roster after a click and drag table row event(1 singles, 2 singles, etc)
     function displayPositionNamesInCorrectOrder() {
-        $('.position_name_td').each(function(index, tableCell){
+        $('#schoolTable .position_name_td').each(function(index, tableCell){
+            if(varsityOrder[index] !== undefined) {
+                tableCell.innerHTML = varsityOrder[index];
+            } else {
+                tableCell.innerHTML = 'JV';
+            }
+        });
+
+        $('#girlsSchoolTable .position_name_td').each(function(index, tableCell){
             if(varsityOrder[index] !== undefined) {
                 tableCell.innerHTML = varsityOrder[index];
             } else {
@@ -70,6 +160,20 @@ $(document).ready( function () {
 
     function createPositionRowBorders() {
         $('#schoolTable > tbody > tr').each(function(index, row){
+            if(index == 0 || index == 1 || index == 3 || index == 5) {
+                row.classList.add('border_bottom');
+            } else {
+                row.classList.remove('border_bottom');
+            }
+
+            if(index < 6) {
+                row.classList.add('position_highlight');
+            }   else {
+                row.classList.remove('position_highlight');
+            }
+        });
+
+        $('#girlsSchoolTable > tbody > tr').each(function(index, row){
             if(index == 0 || index == 1 || index == 3 || index == 5) {
                 row.classList.add('border_bottom');
             } else {
@@ -125,14 +229,118 @@ $(document).ready( function () {
         $(".bracket-button").removeClass('selected-button');
         $(this).addClass('selected-button');
 
-        const tournament_id = $('#tournament_id').html();
-        var requestedBracket = $(this).attr('id');
-
-        fillBracketData(requestedBracket, tournament_id);
+        fillBracketData();
+        $showRosterCurrentlyEnabled = $("#showEditRosterTable").hasClass('show-roster-enabled');
+        if($showRosterCurrentlyEnabled) {
+            fillRosterTable();
+        }
     });
 
-    function fillBracketData(requestedBracket, tournament_id) {
+    function removePlayerHighlights() {
+        $('#seedsTable').DataTable().rows(function (idx, data, node) {
+            $(node).removeClass('highlight-player');
+        });
+    }
+
+    $("#showEditRosterTable").click(function(e) {
+        e.preventDefault();
+        $currentlyEnabled = $("#showEditRosterTable").hasClass('show-roster-enabled');
+        if($currentlyEnabled) {
+            $('#editRosterTable').hide();
+            $("#showEditRosterTable").removeClass('show-roster-enabled');
+            removePlayerHighlights();
+
+            // $('#seedsTable > tbody > tr').each(function(index, tr) {
+            //     tr.removeClass('accepted-invite');
+            // });
+        } else {
+            $('#editRosterTable').show();
+            $("#showEditRosterTable").addClass('show-roster-enabled');
+            removePlayerHighlights();
+        }
+        fillRosterTable();
+    });
+
+    $("#rosterSelect").change(function(e) {
+        e.preventDefault();
+        removePlayerHighlights();
+        fillRosterTable();
+    });
+
+    function fillRosterTable() {
+        $editRosterDataTable = $("#editRosterTable").DataTable();
+        $editRosterDataTable.clear();
+        var tournament_id = $('#tournament_id').html();
+        var gender = $('.selected-button').attr('data-gender');
+        var bracket = $('.selected-button').attr('id');
+        var school_id = $('#rosterSelect').find(':selected').val();
+
         $.ajax({
+            type:'POST',
+            url:'/getRosterForTournament',
+            async:false,
+            data:{gender:gender, school_id:school_id, tournament_id:tournament_id},
+            success:function(data){
+
+                $players = data.schoolPlayers;
+
+                for (const $key in $players) {
+                    $player = $players[$key];
+
+                    $sequence = $player.position;
+                    $id = $player.id;
+                    $position = $player[bracket];
+                    $name = $player.first_name + ' ' + $player.last_name;
+                    $conference = 'yeah';
+
+                    if($position === true) {
+                        $actions = "";
+                    } else {
+                        $actions = '<span data-id="remove_school_button" aria-hidden="true">&#10060;</span>';
+                    }
+
+                    var row = $editRosterDataTable.row.add({
+                        'seq': $player.id,
+                        'id': $increment,
+                        'position': $position,
+                        'name': $name,
+                        'conference': $conference,
+                        'actions': $actions
+                    }).draw().node();
+
+                    if($position === true) {
+                        $(row).addClass('highlight-player');
+                    }
+
+                    $('#seedsTable').DataTable().rows(function (idx, data, node) {
+                        if(data.id === $player.id){
+                            $(node).addClass('highlight-player');
+                        }
+                    });
+
+
+                }
+            }
+        });
+    }
+
+    $("#not_listed").change(function() {
+        if (this.checked) {
+            $(".toggle_show").removeAttr('disabled').attr('required', true);
+            $("#switch_button_name").html("Add New School");
+        } else {
+            $(".toggle_show").attr('disabled', true).val('').attr('required', false);
+            $("#switch_button_name").html("Tie Existing School");
+        }
+    });
+
+    fillBracketData();
+    function fillBracketData() {
+        var tournament_id = $('#tournament_id').html();
+        var requestedBracket = $('.selected-button').attr('id');
+
+        $.ajax({
+            async: false,
             type:'POST',
             url:'/getBracketData',
             data:{tournament_id:tournament_id,requestedBracket:requestedBracket},
@@ -146,12 +354,19 @@ $(document).ready( function () {
 
                 $bracketPositions = data.bracketPositions;
                 $nonAdvanceablePositions = ['champion', 'consolation-champion', 'third-place', 'seventh-place'];
+
+                $seedsDataTable = $('#seedsTable').DataTable();
+                $seedsDataTable.clear();
+
+                $increment = 0;
+                $reorder = '<img className="reorder-icon" style="width:25px;height:25px" src="/images/reorder-icon.png">'
+                $actions = '<span data-id="remove_seeded_player" aria-hidden="true">&#10060;</span>';
+
                 for (const [$position, $value] of Object.entries($bracketPositions)) {
                     if(!($position == 'tournament_id' || $position == 'bracket' || $position == 'id' || $position == 'created_at' || $position == 'updated_at')) {
-                        if($value === 0) {
-                            continue;
-                        }
+                        $increment++;
                         $positionWithDashes = $position.replace(/_/g, '-');
+
                         if($position.indexOf('school') !== -1) {
                             //does include the substring school
                             $('#' + $positionWithDashes).html($value);
@@ -160,10 +375,53 @@ $(document).ready( function () {
                             $positionCorrected = $positionWithDashes.slice(0, -3);
                             $('#' + $positionCorrected).attr('data-id', $value);
                         } else {
-                            $('#' + $positionWithDashes).html($value);
+
+                            $name = $value;
+                            if($name === 0) {
+                                $name = "";
+                            }
+
+                            $('#' + $positionWithDashes).html($name);
                             if(!$nonAdvanceablePositions.includes($positionWithDashes)) {
                                 $('#' + $positionWithDashes).addClass('advanceable');
                             }
+                        }
+
+                        $isASeed = $position.length < 8;
+                        if(!$isASeed) {
+                            continue;
+                        }
+
+
+                        if($value === 0) {
+                            $seedsDataTable.row.add({
+                                'seq': $increment,
+                                'id': 0,
+                                'reorder': $reorder,
+                                'position': $positionWithDashes,
+                                'name': "-",
+                                'conference': "-",
+                                'actions': "-",
+                            }).draw();
+                            continue;
+                        }
+
+
+
+                        $positionConference = $position + '_conference';
+                        $positionID = $position + '_id';
+
+                        if($isASeed) {
+                            console.log($increment);
+                            $seedsDataTable.row.add({
+                                'seq': $increment,
+                                'id': $bracketPositions[$positionID],
+                                'reorder': $reorder,
+                                'position': $positionWithDashes,
+                                'name': $value,
+                                'conference': $bracketPositions[$positionConference],
+                                'actions': $actions,
+                            }).draw();
                         }
                     }
                 }
@@ -181,6 +439,34 @@ $(document).ready( function () {
                 });
 
             }
+        });
+
+        activate_remove_seeded_player_buttons();
+    }
+
+    function activate_remove_seeded_player_buttons() {
+        $('[data-id=remove_seeded_player]').click(function(e) {
+            e.preventDefault();
+
+            var currentRow = $(this).closest('tr');
+            var data = $('#seedsTable').DataTable().row(currentRow).data();
+
+            var tournament_id = $('#tournament_id').html();
+            var bracket = $('.selected-button').attr('id');
+            var player_id = data.id;
+            var seed = data.position.replace(/-/g, '_');
+
+            $.ajax({
+                type:'POST',
+                async:false,
+                url:'/removeSeededPlayer',
+                data:{tournament_id:tournament_id, bracket:bracket, player_id:player_id, seed:seed},
+                success:function(data){
+                    fillBracketData();
+                    fillRosterTable();
+                }
+            });
+
         });
     }
 
@@ -435,35 +721,104 @@ $(document).ready( function () {
 
     } );
 
+    var invitesTable = $('#invitesTable').DataTable( {
+        paging:false,
+        "lengthChange": false,
+        'columns': [
+            { data: 'seq' }, /* index = 0 */
+            { data: 'id' }, /* index = 1 */
+            { data: 'name' }, /* index = 2 */
+            { data: 'invite_status' }, /* index = 3 */
+            { data: 'conference' }, /* index = 4 */
+            { data: 'actions' }, /* index = 5 */
+        ],
+        'order': [],
+        searching:false,
+
+        'columnDefs': [
+            { targets: [0], visible: false, type:'de_datetime' },
+            { targets: [1], visible: false },
+            { targets: [2,3,4,5], orderable: false }
+        ],
+
+        'autoWidth': false
+
+
+    } );
+
+
     $('#schools_to_invite').change(function() {
         $schoolID = $('#schools_to_invite').find(":selected").val();
         $htmlString = $('#list_to_invite').html();
         $schoolSelected =  $('#schools_to_invite').find(":selected").text();
+        $conference = $('#schools_to_invite').find(":selected").attr('data-conference');
+        $inviteStatus = $('#schools_to_invite').find(":selected").attr('data-invite-status');
 
         $removed = ($('#schools_to_invite').find(":selected").remove());
 
-        $htmlString +='<li class="school_invitee" data-value="' + $schoolID + '">' + $schoolSelected + '<span data-id="remove_school_button" aria-hidden="true">&#10060;</span></li>';
+        table = $('#invitesTable').DataTable();
+
+        let newdata = Array.from(table.data());
+        newdata.unshift({
+            'seq': Date.now,
+            'id': $schoolID,
+            'name': $schoolSelected,
+            'invite_status': $inviteStatus ?? 'Not Sent',
+            'conference': $conference,
+            'actions': '<span data-id="remove_school_button" aria-hidden="true">&#10060;</span>',
+        });
+        table.clear();
+        for (const row of newdata) {
+            table.row.add(row);
+        }
+        table.draw();
+        $increment = 0;
+        $('#invitesTable tr').each(function(){
+            $increment++;
+            if($increment === 1) {
+                return;
+            }
+            $inviteStatus = $(this).find('td:nth-child(2)').text();
+            $removeTD = $(this).find('td:nth-child(4)');
+            $removeTD.addClass('center-align');
+            if($inviteStatus === "Accepted") {
+                $(this).addClass('accepted-invite');
+            }
+            if($inviteStatus === "Pending") {
+                $(this).addClass('pending-invite');
+            }
+            if($inviteStatus === "Declined") {
+                $(this).addClass('declined-invite');
+            }
+        });
 
         $('#list_to_invite').html($htmlString);
 
-        $('li.school_invitee').each(function(index, li) {
-            // console.log(index);
-            // console.log(li.dataset.value);
-        });
-
-        $("[data-id=remove_school_button]").click(function(e){
-            e.preventDefault();
-            $schoolHtml = this.parentNode;
-
-            $('#schools_to_invite').append($('<option>', {
-                value:$schoolHtml.getAttribute('data-value'),
-                text:$schoolHtml.childNodes[0].nodeValue
-            }));
-
-            this.parentElement.remove();
-        });
+        activate_remove_school_button();
 
     });
+    activate_remove_school_button();
+
+    function activate_remove_school_button() {
+        $('[data-id=remove_school_button]').click(function(e) {
+            e.preventDefault();
+
+            var currentRow = $(this).closest('tr');
+            var data = $('#invitesTable').DataTable().row(currentRow).data();
+
+            //TRYING TO LET YOU ADD BACK IN A SCHOOL THAT HAS ALREADY BEEN REMOVED ONCEEEE
+            $('#schools_to_invite').append($('<option>', {
+                value:data['id'],
+                text:data['name']
+            }));
+
+            $('#schools_to_invite option[value="' + data['id'] + '"]').attr('data-conference', data['conference']);
+            $('#schools_to_invite option[value="' + data['id'] + '"]').attr('data-invite-status', data['invite_status']);
+
+            $('#invitesTable').DataTable().row(currentRow).remove().draw();
+
+        });
+    }
 
     $('#select2-schools_to_invite-container').click(function() {
         //this prevents the first option in the dropdown from locking after a selection has been made
@@ -474,18 +829,49 @@ $(document).ready( function () {
         e.preventDefault();
 
         var tournament_id = $('#tournament_id').html();
-        var schoolInviteeIDs = [];
+        // var schoolInviteeIDs = [];
 
-        $('li.school_invitee').each(function(index, li) {
-            schoolInviteeIDs.push(li.dataset.value);
+        // $('li.school_invitee').each(function(index, li) {
+        //     schoolInviteeIDs.push(li.dataset.value);
+        // });
+
+        var inviteeSchoolIDs = [];
+        var inviteStatuses = [];
+        var inviteStatus = 'empty';
+
+        $increment = 0;
+        $('#invitesTable tr').each(function(){
+            console.log($increment);
+            $increment++;
+            if($increment === 1) {
+                return;
+            }
+
+            inviteStatus = $(this).find('td:nth-child(2)').text().toLowerCase();
+            var data = $('#invitesTable').DataTable().row(this).data();
+
+            inviteeSchoolIDs.push(data['id']);
+            inviteStatuses.push(inviteStatus);
         });
 
         $.ajax({
             type:'POST',
             url:'/inviteSchools',
-            data:{schoolInviteeIDs:schoolInviteeIDs, tournament_id:tournament_id},
+            data:{inviteeSchoolIDs:inviteeSchoolIDs, inviteStatuses:inviteStatuses, tournament_id:tournament_id},
             success:function(data){
-                alert(data.success);
+                $increment = 0;
+                $('#invitesTable tr').each(function(){
+                    $increment++;
+                    if($increment === 1) {
+                        return;
+                    }
+                    inviteStatus = $(this).find('td:nth-child(2)').text();
+                    if(inviteStatus === 'Not Sent') {
+                        $(this).find('td:nth-child(2)').text('Pending');
+                        $(this).addClass('pending-invite');
+                    }
+                });
+                alert('Invites Sent and Changes Saved.')
             }
         });
     });
@@ -510,12 +896,11 @@ $(document).ready( function () {
         e.preventDefault();
 
         var tournament_id = $('#tournament_id').html();
-        var user_school_id = 80;
 
         $.ajax({
             type:'POST',
             url:'/acceptInvite',
-            data:{tournament_id:tournament_id, user_school_id:user_school_id},
+            data:{tournament_id:tournament_id},
             success:function(data){
                 window.location = data.redirect_url;
             }
@@ -598,6 +983,36 @@ $(document).ready( function () {
                 // "initComplete": function( settings, json ) {
                 //     $('#myTable_filter').html("<div id='myTable_filter' class='dataTables_filter'><div><label>Search:<input type='search' class='' placeholder='' aria-controls='myTable'></label><button id='roster_button' type='submit' class='btn btn-primary'>Create</button></div></div>");
                 // },
+
+            } );
+
+            displayPositionNamesInCorrectOrder();
+            createPositionRowBorders();
+
+            girlsSchoolTable.on('row-reordered', function (e, diff, edit) {
+                displayPositionNamesInCorrectOrder();
+                createPositionRowBorders();
+                var table = $("#girlsSchoolTable").DataTable();
+
+                //drawing will update the data table with any changes made through reordering rows
+                table.one( 'draw', function () {
+
+                    var updatedPositionOrder = [];
+
+                    table.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                        updatedPositionOrder.push(this.data());
+                    });
+
+                    $.ajax({
+                        type:'POST',
+                        url:'/savePlayerPositions',
+                        data:{updatedPositionOrder:updatedPositionOrder},
+                        success:function(data){
+                            console.log('saved positions.');
+                        }
+                    });
+
+                });
             } );
         }
 

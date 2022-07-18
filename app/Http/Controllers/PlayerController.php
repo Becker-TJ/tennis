@@ -123,7 +123,7 @@ PlayerController extends Controller
         $player['first_name'] = $data['new_player_first_name'];
         $player['last_name'] = $data['new_player_last_name'];
         $player['position'] = $lastPosition + 1;
-        $player['class'] = $data['class'];
+        $player['class'] = $data['grade'];
         $player['gender'] = $data['gender'];
         $player['boys_one_singles_rank'] = 99999;
         $player['boys_two_singles_rank'] = 99999;

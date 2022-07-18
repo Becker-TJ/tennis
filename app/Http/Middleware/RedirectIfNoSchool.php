@@ -21,7 +21,7 @@ class RedirectIfNoSchool
         $isLoggedIn = Auth::check();
         if ($isLoggedIn) {
             $user = Auth::user();
-            if ($user->school == null) {
+            if ($user->school_id == 0) {
                 return redirect()->action([\App\Http\Controllers\SchoolController::class, 'showAddSchool']);
 
 //                return redirect()->action([\App\Http\Controllers\SchoolController::class, 'showAddSchoolView'], ['id' => $user->school->id]);

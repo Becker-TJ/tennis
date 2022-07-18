@@ -7,6 +7,7 @@ use App\Player;
 use App\School;
 use App\SchoolAttendee;
 use App\Tournament;
+use Auth;
 use DemeterChain\B;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class TournamentController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('check.school');
+//        $this->middleware('check.school');
     }
 
     public function showCreateTournament()
@@ -147,11 +148,6 @@ class TournamentController extends Controller
         ]);
     }
 
-    public function showBracket()
-    {
-        return view('bracket');
-    }
-
     public function showTournaments()
     {
         $tournaments = Tournament::all()->sortBy('date');
@@ -191,17 +187,46 @@ class TournamentController extends Controller
 
     public function showTournament(Tournament $tournament)
     {
+        $user = Auth::user();
+        $hostUser = false;
+        $userHasPendingTournamentInvite = false;
+
+        if($user != null) {
+            if($tournament->host_id === $user->school_id) {
+                $hostUser = true;
+            }
+            $schoolAttendee = SchoolAttendee::all()->where('tournament_id', '=', $tournament->id)->where('school_id', '=', $user->school_id)->first();
+            if($schoolAttendee != null) {
+                $userHasPendingTournamentInvite = true;
+            }
+        }
+
+
         $school = School::find($tournament->host_id);
         $schools = School::all();
 //        $bracketPositions = BracketPosition::all()->where('tournament_id' ,'=', $tournament->id)->first();
 
-        $attendees = SchoolAttendee::all()->where('tournament_id', '=', $tournament->id)->where('invite_status', '=', 'accepted');
+        $allAttendees = SchoolAttendee::all()->where('tournament_id', '=', $tournament->id);
+        foreach ($allAttendees as $attendee) {
+            $attendeeSchool = $schools->where('id', '=', $attendee->school_id)->first();
+            $attendee->school_name = $attendeeSchool->name;
+            $attendee->conference = $attendeeSchool->conference;
+            $attendeeSchoolIDs[] = $attendee->school_id;
+            foreach($schools as $key => $school) {
+                if($attendee->school_id === $school->id) {
+                    unset($schools[$key]);
+                }
+            }
+        }
+
+
+        $acceptedAttendees = $allAttendees->where('tournament_id', '=', $tournament->id)->where('invite_status', '=', 'accepted');
+        $pendingAttendees = $allAttendees->where('tournament_id', '=', $tournament->id)->where('invite_status', '=', 'pending');
+        $declinedAttendees = $allAttendees->where('tournament_id', '=', $tournament->id)->where('invite_status', '=', 'declined');
         $oneSinglesPlayers = Player::all()->where('position', '=', 1);
 
         $attendeeSchoolIDs = [];
-        foreach ($attendees as $attendee) {
-            $attendeeSchoolIDs[] = $attendee->school_id;
-        }
+
 
         $girlsOneSinglesPlayers = $oneSinglesPlayers
             ->where('gender', '=', 'Female')
@@ -245,9 +270,14 @@ class TournamentController extends Controller
         return view('tournament', [
             'tournament' => $tournament,
             'school' => $school,
-            'attendees' => $attendees,
+            'allAttendees' => $allAttendees,
+            'pendingAttendees' => $pendingAttendees,
+            'declinedAttendees' => $declinedAttendees,
+            'acceptedAttendees' => $acceptedAttendees,
             'schools' => $schools,
             'girlsOneSinglesPlayers' => $girlsOneSinglesPlayers,
+            'hostUser' => $hostUser,
+            'userHasPendingTournamentInvite' => $userHasPendingTournamentInvite,
             //            'bracketPositions' => $bracketPositions
         ]);
     }

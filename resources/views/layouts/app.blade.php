@@ -62,7 +62,7 @@
 
         .btn-group button:hover {
             border: 1px solid black;
-            background-color:#28474B;
+            background-color:#AAAAAA;
             color:white !important;
         }
 
@@ -114,16 +114,24 @@
             background-color:#abffc0;
         }
 
-        .accepted-invite {
+        .accepted-invite, .highlight-player {
             background-color:#abffc0 !important;
         }
 
         .pending-invite {
-            background-color:indianred !important;
+            background-color:#FFF36D !important;
+        }
+
+        .declined-invite {
+            background-color:#ff9999 !important;
         }
 
         .btn-group button:not(:last-child) {
             border-right: none; /* Prevent double borders */
+        }
+
+        .bracket-button {
+
         }
 
         /* Clear floats (clearfix hack) */
@@ -137,22 +145,34 @@
             text-align:center;
         }
 
+        .center-align{
+            text-align:center;
+        }
+
+        .left-align{
+            text-align:left;
+        }
+
+        .bracket-button {
+
+        }
+
         /* Add a background color on hover */
         /*.btn-group button:hover {*/
         /*    background-color: #000000;*/
         /*}*/
 
-        .selected-button {
+        .selected-button, .show-roster-enabled {
             background-color:#28474B !important;
             color:white;
         }
 
         #boys-roster {
-            margin-right: 15px;
+            margin-right: 30px;
             background-color:dodgerblue;
         }
         #girls-roster {
-            margin-left: 15px;
+            margin-left: 30px;
             background-color:lightpink;
             color:black;
         }
@@ -161,6 +181,10 @@
             transform: scale(1.2);
             border-color:black;
             border-width:3px;
+        }
+
+        #invitesTable {
+            width:100%;
         }
 
 

@@ -25,7 +25,7 @@ class PlayerFactory extends Factory
             'last_name' => $this->faker->lastName(),
             'school_id' => $this->faker->randomDigit(),
             'position' => $increment,
-            'class' => $randomClassOption,
+            'grade' => $randomClassOption,
             'gender' => $randomGender,
             'boys_one_singles_rank' => 99999,
             'boys_two_singles_rank' => $increment,

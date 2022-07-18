@@ -19,7 +19,7 @@ class CreatePlayersTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->unsignedInteger('position');
-            $table->string('class');
+            $table->string('grade');
             $table->string('gender');
             $table->unsignedInteger('boys_one_singles_rank')->default(99999);
             $table->unsignedInteger('boys_two_singles_rank')->default(99999);

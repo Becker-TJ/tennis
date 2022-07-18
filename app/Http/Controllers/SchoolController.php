@@ -31,6 +31,8 @@ class SchoolController extends Controller
         ]);
     }
 
+
+
     public function showSchool(School $school)
     {
         $boys = Player::all()->where('school_id', '=', $school->id)->where('gender', '=', 'Male');
@@ -87,7 +89,10 @@ class SchoolController extends Controller
         $lastInsertedId = $school->id;
         $this->tieUserToExistingSchool($lastInsertedId);
 
-        return $this->showAddSchool();
+        $user = Auth::user();
+        $schoolID = intval($user->school_id);
+        $userSchool = School::find($schoolID);
+        return $this->showSchool($userSchool);
     }
 
     public function tieUserToExistingSchool($id = false)
@@ -102,6 +107,8 @@ class SchoolController extends Controller
 
         $user->saveOrFail();
 
-        return $this->showAddSchool();
+        $schoolID = intval($user->school_id);
+        $userSchool = School::find($schoolID);
+        return $this->showSchool($userSchool);
     }
 }

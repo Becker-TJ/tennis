@@ -24,7 +24,7 @@
                                 <th scope="col">Reorder</th>
                                 <th scope="col">Position</th>
                                 <th scope="col">Name</th>
-                                <th scope="col">Class</th>
+                                <th scope="col">Grade</th>
                                 <th scope="col">Actions</th>
                             </tr>
                             </thead>
@@ -36,7 +36,7 @@
                                     <td class="table-cell reorder-cell"><img class="reorder-icon" src="{{URL::to('/')}}/images/reorder-icon.png"></td>
                                     <td class="position_name_td">{{$positionNamesOrder[$increment++]}}</td>
                                     <td class="table-cell">{{$player->first_name. ' ' . $player->last_name}}</td>
-                                    <td class="table-cell">{{$player->class}}</td>
+                                    <td class="table-cell">{{$player->grade}}</td>
                                     <td align="center" class="table-cell">
                                         <i class="material-icons edit-pen" data-toggle="modal" data-target="#editPlayerModal" style="color:green">mode_edit</i>
                                         <i class="material-icons delete-trash-can" style="color:red">delete</i>
@@ -108,19 +108,19 @@
                             <input type="text" name="new_player_last_name" class="form-control" id="new_player_last_name">
                         </div>
                         <div class="form-group">
-                            <label style="padding-left:0" for="class" class="col-form-label col-md-12">Class</label>
+                            <label style="padding-left:0" for="class" class="col-form-label col-md-12">Grade</label>
                             <div class="btn-group btn-group-toggle col-md-12" data-toggle="buttons">
                                 <label class="btn btn-secondary active">
-                                    <input type="radio" name="class" id="class" autocomplete="off" value="Freshman" checked> Freshman
+                                    <input type="radio" name="grade" id="grade" autocomplete="off" value="Freshman" checked> Freshman
                                 </label>
                                 <label class="btn btn-secondary">
-                                    <input type="radio" name="class" id="class" autocomplete="off" value="Sophomore"> Sophomore
+                                    <input type="radio" name="grade" id="grade" autocomplete="off" value="Sophomore"> Sophomore
                                 </label>
                                 <label class="btn btn-secondary">
-                                    <input type="radio" name="class" id="class" autocomplete="off" value="Junior"> Junior
+                                    <input type="radio" name="grade" id="grade" autocomplete="off" value="Junior"> Junior
                                 </label>
                                 <label class="btn btn-secondary">
-                                    <input type="radio" name="class" id="class" autocomplete="off" value="Senior"> Senior
+                                    <input type="radio" name="grade" id="grade" autocomplete="off" value="Senior"> Senior
                                 </label>
                             </div>
                         </div>
@@ -128,10 +128,10 @@
                             <label style="padding-left:0" for="gender" class="col-form-label col-md-12">Gender</label>
                             <div class="btn-group btn-group-toggle col-md-12" data-toggle="buttons">
                                 <label class="col-md-3 offset-md-3 btn btn-secondary active">
-                                    <input type="radio" name="gender" id="gender" autocomplete="off" value="varsity" checked>Boy
+                                    <input type="radio" name="gender" id="gender" autocomplete="off" value="Male" checked>Boy
                                 </label>
                                 <label class="col-md-3 btn btn-secondary">
-                                    <input type="radio" name="gender" id="gender" autocomplete="off" value="jv">Girl
+                                    <input type="radio" name="gender" id="gender" autocomplete="off" value="Female">Girl
                                 </label>
                             </div>
                         </div>
@@ -172,19 +172,19 @@
                             <input type="text" name="edit_player_last_name" class="form-control" id="edit_player_last_name">
                         </div>
                         <div class="form-group">
-                            <label style="padding-left:0" for="class" class="col-form-label col-md-12">Class</label>
+                            <label style="padding-left:0" for="class" class="col-form-label col-md-12">Grade</label>
                             <div class="btn-group btn-group-toggle col-md-12" data-toggle="buttons">
                                 <label class="btn btn-secondary" id="class-freshman">
                                     <input type="radio" name="edit-class" autocomplete="off" value="Freshman"> Freshman
                                 </label>
-                                <label class="btn btn-secondary" id="class-sophomore">
-                                    <input type="radio" name="edit-class" autocomplete="off" value="Sophomore"> Sophomore
+                                <label class="btn btn-secondary" id="grade-sophomore">
+                                    <input type="radio" name="edit-grade" autocomplete="off" value="Sophomore"> Sophomore
                                 </label>
-                                <label class="btn btn-secondary" id="class-junior">
-                                    <input type="radio" name="edit-class" autocomplete="off" value="Junior"> Junior
+                                <label class="btn btn-secondary" id="grade-junior">
+                                    <input type="radio" name="edit-grade" autocomplete="off" value="Junior"> Junior
                                 </label>
-                                <label class="btn btn-secondary" id="class-senior">
-                                    <input type="radio" name="edit-class" autocomplete="off" value="Senior"> Senior
+                                <label class="btn btn-secondary" id="grade-senior">
+                                    <input type="radio" name="edit-grade" autocomplete="off" value="Senior"> Senior
                                 </label>
                             </div>
                         </div>
@@ -192,10 +192,10 @@
                             <label style="padding-left:0" for="gender" class="col-form-label col-md-12">Gender</label>
                             <div class="btn-group btn-group-toggle col-md-12" data-toggle="buttons">
                                 <label id="gender-male" class="col-md-3 offset-md-3 btn btn-secondary">
-                                    <input type="radio" name="gender" autocomplete="off" value="varsity" checked>Boy
+                                    <input type="radio" name="gender" autocomplete="off" value="Male" checked>Boy
                                 </label>
                                 <label id="gender-female" class="col-md-3 btn btn-secondary">
-                                    <input type="radio" name="gender" autocomplete="off" value="jv">Girl
+                                    <input type="radio" name="gender" autocomplete="off" value="Female">Girl
                                 </label>
                             </div>
                         </div>

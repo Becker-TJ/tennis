@@ -9,7 +9,7 @@
             <div class="col-md-10">
                 <div class="card">
                     <div id="tournament_id" style="display:none">{{$tournament->id}}</div>
-                    <div style="background-color:#0a011f;color:white" class="card-header">{{$tournament->name}}</div>
+                    <div class="card-header">{{$tournament->name}}</div>
 {{--                    <button class="btn btn-primary col-md-2 offset-md-5" onclick="location.href='/createtournament/{{$tournament->id}}'" type="button">Edit Tournament</button>--}}
 
                     <div class="row">
@@ -40,8 +40,8 @@
                                     <td>Participants:
                                         <?php
                                             $iteration = 1;
-                                            $lastIteration = count($attendees);
-                                            foreach($attendees as $attendee) {
+                                            $lastIteration = count($acceptedAttendees);
+                                            foreach($acceptedAttendees as $attendee) {
                                                 if(is_object($attendee->getSchool())) {
                                                     echo '<a href="' . '/school/' . $attendee->school_id . '">' . $attendee->getSchool()->name;
                                                         if($iteration !== $lastIteration) {
@@ -59,31 +59,78 @@
                         </div>
                     </div>
 
+                    @if($hostUser)
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary col-md-2 offset-md-4" data-toggle="modal" data-target="#editTournamentModal">Edit Tournament</button>
                         <button type="button" class="btn btn-primary col-md-2 offset-md-5" data-toggle="modal" data-target="#inviteTeamsModal">Invite Teams</button>
                     </div>
+                    @endif
 
+                    @if($userHasPendingTournamentInvite)
                     <div class="btn-group">
                         <button type="button" id="decline_tournament_invitation_button" class="btn btn-primary col-md-2 offset-md-4" data-toggle="modal">Decline Tournament Invitation</button>
                         <button type="button" id="accept_tournament_invitation_button" class="btn btn-primary col-md-2 offset-md-5" data-toggle="modal">Accept Tournament Invitation</button>
+                    </div>
+                    @endif
+
+                    <br>
+
+                    <div class="btn-group .btn-girls">
+                        <button id="girlsOneSingles" data-gender="Female" type="button" class="bracket-button btn btn-girls col-md-2 offset-md-2 selected-button">Girls 1 Singles</button>
+                        <button id="girlsTwoSingles" data-gender="Female" type="button" class="bracket-button btn btn-girls col-md-2 offset-md-5" data-toggle="modal">Girls 2 Singles</button>
+                        <button id="girlsOneDoubles" data-gender="Female" type="button" class="bracket-button btn btn-girls col-md-2 offset-md-5" data-toggle="modal">Girls 1 Doubles</button>
+                        <button id="girlsTwoDoubles" data-gender="Female" type="button" class="bracket-button btn btn-girls col-md-2 offset-md-5" data-toggle="modal">Girls 2 Doubles</button>
+                    </div>
+
+                    <div class="btn-group">
+                        <button id="boysOneSingles" data-gender="Male" type="button" class="bracket-button btn btn-boys col-md-2 offset-md-2" data-toggle="modal">Boys 1 Singles</button>
+                        <button id="boysTwoSingles" data-gender="Male" type="button" class="bracket-button btn btn-boys col-md-2 offset-md-5" data-toggle="modal">Boys 2 Singles</button>
+                        <button id="boysOneDoubles" data-gender="Male" type="button" class="bracket-button btn btn-boys col-md-2 offset-md-5" data-toggle="modal">Boys 1 Doubles</button>
+                        <button id="boysTwoDoubles" data-gender="Male" type="button" class="bracket-button btn btn-boys col-md-2 offset-md-5" data-toggle="modal">Boys 2 Doubles</button>
                     </div>
 
                     <br>
 
                     <div class="btn-group .btn-girls">
-                        <button id="girlsOneSingles" type="button" class="bracket-button btn btn-girls col-md-2 offset-md-2 selected-button">Girls 1 Singles</button>
-                        <button id="girlsTwoSingles" type="button" class="bracket-button btn btn-girls col-md-2 offset-md-5" data-toggle="modal">Girls 2 Singles</button>
-                        <button id="girlsOneDoubles" type="button" class="bracket-button btn btn-girls col-md-2 offset-md-5" data-toggle="modal">Girls 1 Doubles</button>
-                        <button id="girlsTwoDoubles" type="button" class="bracket-button btn btn-girls col-md-2 offset-md-5" data-toggle="modal">Girls 2 Doubles</button>
+                        <button id="showEditRosterTable" type="button" class="btn col-md-2 offset-md-4">Show/Edit Rosters</button>
+                        <select id="rosterSelect" name="rosterSelect" type="button" class="btn col-md-2 offset-md-6 form-control">
+
+                            @foreach($acceptedAttendees as $attendee)
+                                <option value="{{$attendee->school_id}}">{{$attendee->getSchool()->name}}</option>
+                            @endforeach
+
+                            Show/Edit Rosters</select>
+
                     </div>
 
-                    <div class="btn-group">
-                        <button id="boysOneSingles" type="button" class="bracket-button btn btn-boys col-md-2 offset-md-2" data-toggle="modal">Boys 1 Singles</button>
-                        <button id="boysTwoSingles" type="button" class="bracket-button btn btn-boys col-md-2 offset-md-5" data-toggle="modal">Boys 2 Singles</button>
-                        <button id="boysOneDoubles" type="button" class="bracket-button btn btn-boys col-md-2 offset-md-5" data-toggle="modal">Boys 1 Doubles</button>
-                        <button id="boysTwoDoubles" type="button" class="bracket-button btn btn-boys col-md-2 offset-md-5" data-toggle="modal">Boys 2 Doubles</button>
-                    </div>
+                    <br>
+
+
+
+                    <table id="editRosterTable" class="display table table-striped">
+                        <thead>
+                        <tr class="fa fa-sort-name player_row" align="center">
+                            <th scope="col">Seq.</th>
+                            <th scope="col">id</th>
+                            <th scope="col">Position</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Grade</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($girlsOneSinglesPlayers as $index => $player)
+                            <tr>
+                                <td class="table-cell">{{$player->position}}</td>
+                                <td class="table-cell">{{$player->id}}</td>
+                                <td class="position_name_td">teej</td>
+                                <td class="table-cell">{{$player->first_name. ' ' . $player->last_name}}</td>
+                                <td class="table-cell">{{$player->class}}</td>
+                                <td align="center" class="table-cell"><i class="material-icons" style="color:green">mode_edit</i><i class="material-icons" style="color:red">delete</i></td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
 
 
 
@@ -94,9 +141,10 @@
                         <tr class="fa fa-sort-name player_row" align="center">
                             <th scope="col">Seq.</th>
                             <th scope="col">id</th>
-                            <th scope="col">Position</th>
+                            <th scope="col">Reorder</th>
+                            <th scope="col">Seed</th>
                             <th scope="col">Name</th>
-                            <th scope="col">Class</th>
+                            <th scope="col">Grade</th>
                             <th scope="col">Actions</th>
                         </tr>
                         </thead>
@@ -105,6 +153,7 @@
                             <tr>
                                 <td class="table-cell">{{$player->position}}</td>
                                 <td class="table-cell">{{$player->id}}</td>
+                                <td class="table-cell reorder-cell"><img class="reorder-icon" src="{{URL::to('/')}}/images/reorder-icon.png"></td>
                                 <td class="position_name_td">teej</td>
                                 <td class="table-cell">{{$player->first_name. ' ' . $player->last_name}}</td>
                                 <td class="table-cell">{{$player->class}}</td>
@@ -255,33 +304,84 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
+                                    <div class="alert alert-success col-md-12" role="alert">
+                                        <p>Select the schools you wish to invite from the dropdown below.
+                                            <br>
+                                            Make sure to save any changes.</p>
+                                    </div>
                                     <form>
                                         <div class="form-group">
-                                            <label for="schools_to_invite" class="col-md-3 col-form-label text-md-right">Schools</label>
+                                            <label for="schools_to_invite" class="col-md-3 col-form-label text-md-right"></label>
                                             <div class="btn-group" class="col-md-12">
                                                 <select style="width:350px" class="select2 form-control" id="schools_to_invite" name="schools_to_invite">
                                                     <option value="" disabled selected>Select School</option>
                                                     @foreach($schools as $key => $school)
-                                                        <option value="{{ $school->id }}">
+                                                        <option value="{{ $school->id }}" data-conference="{{$school->conference}}">
                                                             {{ $school->name }}
                                                         </option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <div class="form-group row">
-                                                <label for="list_to_invite" class="col-md-4 col-form-label text-md-right">Invite List</label>
-                                                <div class="col-md-6">
-                                                    <ol id="list_to_invite"></ol>
-                                                </div>
-                                            </div>
-                                        </div>
+{{--                                        <div class="form-group">--}}
+{{--                                            <div class="form-group row">--}}
+{{--                                                <label for="list_to_invite" class="col-md-4 col-form-label text-md-right">Invite List</label>--}}
+{{--                                                <div class="col-md-6">--}}
+{{--                                                    <ol id="list_to_invite"></ol>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+
+                                        <table id="invitesTable" class="display table table-striped">
+                                            <thead>
+                                            <tr class="fa fa-sort-name player_row" align="center">
+                                                <th scope="col">Seq.</th>
+                                                <th scope="col">id</th>
+                                                <th scope="col">School Name</th>
+                                                <th scope="col">Invite Status</th>
+                                                <th scope="col">Class</th>
+                                                <th scope="col">Remove</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($acceptedAttendees as $attendee)
+                                                <tr class="accepted-invite">
+                                                    <td class="table-cell">{{$attendee->updated_at}}</td>
+                                                    <td class="table-cell">{{$attendee->school_id}}</td>
+                                                    <td class="position_name_td">{{$attendee->school_name}}</td>
+                                                    <td class="table-cell">{{ucfirst($attendee->invite_status)}}</td>
+                                                    <td class="table-cell">{{$attendee->conference}}</td>
+                                                    <td class="table-cell center-align"><span data-id="remove_school_button" aria-hidden="true">&#10060;</span></td>
+                                                </tr>
+                                            @endforeach
+                                            @foreach($pendingAttendees as $attendee)
+                                                <tr class="pending-invite">
+                                                    <td class="table-cell">{{$attendee->updated_at}}</td>
+                                                    <td class="table-cell">{{$attendee->school_id}}</td>
+                                                    <td class="position_name_td">{{$attendee->school_name}}</td>
+                                                    <td class="table-cell">{{ucfirst($attendee->invite_status)}}</td>
+                                                    <td class="table-cell">{{$attendee->conference}}</td>
+                                                    <td class="table-cell center-align"><span data-id="remove_school_button" aria-hidden="true">&#10060;</span></td>
+                                                </tr>
+                                            @endforeach
+                                            @foreach($declinedAttendees as $attendee)
+                                                <tr class="declined-invite">
+                                                    <td class="table-cell">{{$attendee->updated_at}}</td>
+                                                    <td class="table-cell">{{$attendee->school_id}}</td>
+                                                    <td class="position_name_td">{{$attendee->school_name}}</td>
+                                                    <td class="table-cell">{{ucfirst($attendee->invite_status)}}</td>
+                                                    <td class="table-cell">{{$attendee->conference}}</td>
+                                                    <td class="table-cell center-align"><span data-id="remove_school_button" aria-hidden="true">&#10060;</span></td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+
                                     </form>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary col-md-2" data-dismiss="modal">Close</button>
-                                    <button id="invite_schools_button" type="button" class="btn btn-primary col-md-2">Send Invites</button>
+                                    <button id="invite_schools_button" type="button" class="btn btn-primary col-md-2">Send / Save</button>
                                 </div>
                             </div>
                         </div>

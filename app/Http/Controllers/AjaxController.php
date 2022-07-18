@@ -65,13 +65,31 @@ class AjaxController extends Controller
     public function acceptInvite(Request $request) {
         $input = $request->all();
         $tournamentID = intval($input['tournament_id']);
-        $userSchoolID = intval($input['user_school_id']);
+        $userSchoolID = Auth::user()->school_id;
 
         $schoolAttendee = SchoolAttendee::all()->where('tournament_id', '=', $tournamentID)->where('school_id', '=', $userSchoolID)->first();
         $schoolAttendee->invite_status = 'accepted';
         $schoolAttendee->saveOrFail();
+
         return response()->json(['redirect_url'=> url('tournaments')]);
     }
+
+    public function removeSeededPlayer(Request $request) {
+        $input = $request->all();
+        $tournament_id = intval($input['tournament_id']);
+        $bracket = $input['bracket'];
+        $player_id = $input['player_id'];
+        $seed = $input['seed'];
+
+        $bracketPosition = BracketPosition::all()->where('tournament_id', '=', $tournament_id)->where('bracket', '=', $bracket)->first();
+        $bracketPosition->$seed = 0;
+
+        $bracketPosition->saveOrFail();
+
+        return response()->json(['success'=> 'removed player']);
+    }
+
+
 
     public function getPlayerDetails(Request $request) {
         $input = $request->all();
@@ -82,19 +100,102 @@ class AjaxController extends Controller
         ]);
     }
 
+    public function getRosterForTournament(Request $request) {
+        $input = $request->all();
+        $schoolID = intval($input['school_id']);
+        $gender = $input['gender'];
+        $tournament_id = $input['tournament_id'];
+
+        $brackets = ['girlsOneSingles', 'girlsTwoSingles', 'girlsOneDoubles', 'girlsTwoDoubles', 'boysOneSingles', 'boysTwoSingles', 'boysOneDoubles', 'boysTwoDoubles'];
+        $team_count = Tournament::find($tournament_id)->team_count;
+
+        $bracketPositions = BracketPosition::all()->where('tournament_id', '=', $tournament_id);
+        $players = Player::all();
+
+        $schoolPlayers = $players->where('school_id', '=', $schoolID)->where('gender', '=', $gender)->sortBy('position');
+
+        foreach($brackets as $bracket) {
+            $bracketPosition = $bracketPositions->where('bracket','=', $bracket)->first();
+            $playerIDs = [];
+
+            for($increment = 1; $increment < $team_count + 1; $increment++) {
+                $seed = $increment . '_seed';
+                $playerID = $bracketPosition->$seed;
+                $playerIDs[] = $playerID;
+            }
+
+            foreach($schoolPlayers as $player) {
+                $player->$bracket = false;
+
+                foreach($playerIDs as $ID) {
+                    if($player->id === $ID) {
+                        $player->$bracket = true;
+                        continue 2;
+                    }
+                }
+            }
+        }
+
+        return response()->json([
+           'schoolPlayers' => $schoolPlayers
+        ]);
+    }
+
+    public function saveTournamentSeeds(Request $request) {
+        $input = $request->all();
+        $playerSeeds = $input['playerSeeds'];
+        $tournament_id = $input['tournament_id'];
+        $bracket = $input['bracket'];
+        $bracketPosition = BracketPosition::all()->where('tournament_id', '=', $tournament_id)->where('bracket', '=', $bracket)->first();
+
+        $increment = 1;
+        foreach($playerSeeds as $seededPlayerID) {
+            $playerID = intval($seededPlayerID);
+            $seed = $increment . '_seed';
+
+            $bracketPosition->$seed = $playerID;
+            $increment++;
+        }
+        $bracketPosition->saveOrFail();
+
+        return response()->json(['success'=>'Saved Seeds']);
+    }
+
     public function inviteSchools(Request $request)
     {
         $input = $request->all();
-        $schoolInviteeIDs = $input['schoolInviteeIDs'];
-        $tournamentID = intval($input['tournament_id']);
+        $inviteeSchoolIDs = $input['inviteeSchoolIDs'];
+        $inviteStatuses = $input['inviteStatuses'];
+        $tournament_id = intval($input['tournament_id']);
 
-        foreach ($schoolInviteeIDs as $inviteeID) {
-            $inviteeID = intval($inviteeID);
-            $schoolAttendee = new SchoolAttendee;
-            $schoolAttendee->school_id = $inviteeID;
-            $schoolAttendee->tournament_id = $tournamentID;
-            $schoolAttendee->invite_accepted = 'pending';
-            $schoolAttendee->saveOrFail();
+        $attendees = SchoolAttendee::all()->where('tournament_id', '=', $tournament_id);
+        $updatedSchoolIDs = [];
+
+        foreach($inviteeSchoolIDs as $key => $ID) {
+            $school_id = intval($ID);
+            $invite_status = $inviteStatuses[$key];
+            if($invite_status === 'not sent') {
+                $invite_status = 'pending';
+            }
+
+            $attendee = $attendees->where('school_id', '=', $school_id)->first();
+            if($attendee === null) {
+                $attendee = new SchoolAttendee;
+                $attendee->school_id = $school_id;
+                $attendee->tournament_id = $tournament_id;
+            }
+            $attendee->invite_status = $invite_status;
+            $attendee->saveOrFail();
+            $updatedSchoolIDs[] = $school_id;
+        }
+
+        //deletes any removed rows from the Invite Teams Table
+        foreach($attendees as $attendee) {
+            if(in_array(intval($attendee->school_id), $updatedSchoolIDs)) {
+                continue;
+            } else {
+                $attendee->delete();
+            }
         }
 
         return response()->json(['success'=>'Invites sent.']);
@@ -200,6 +301,7 @@ class AjaxController extends Controller
         return response()->json(['success'=>'Saved Score.']);
     }
 
+
     public function getBracketData(Request $request)
     {
         $request = $request->all();
@@ -298,6 +400,7 @@ class AjaxController extends Controller
                         $bracketPositions->{$increment.'_seed'} = $player->first_name.' '.$player->last_name;
                         $bracketPositions->{$increment.'_seed_id'} = $player->id;
                         $bracketPositions->{$increment.'_seed_school'} = $player->getSchool()->name;
+                        $bracketPositions->{$increment.'_seed_conference'} = $player->getSchool()->conference;
                         break;
                     }
                 }
@@ -350,6 +453,7 @@ class AjaxController extends Controller
                         $bracketPositions->{$increment.'_seed'} = $playerOne->last_name.' / '.$playerTwo->last_name;
                         $bracketPositions->{$increment.'_seed_id'} = $team['id'];
                         $bracketPositions->{$increment.'_seed_school'} = $playerOne->getSchool()->name;
+                        $bracketPositions->{$increment.'_seed_conference'} = $playerOne->getSchool()->conference;
                         break;
                     }
                 }

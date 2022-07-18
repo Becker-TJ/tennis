@@ -73,13 +73,13 @@
 
                             <div class="btn-group btn-group-toggle col-md-6" data-toggle="buttons">
                                 <label for="boys" class="btn btn-secondary active">
-                                    <input class="form-control" type="radio" name="gender" id="boys" autocomplete="off" value="boys" checked> Boys
+                                    <input class="form-control" type="radio" name="gender" id="boys" autocomplete="off" value="Boys" checked> Boys
                                 </label>
                                 <label for="girls" class="btn btn-secondary">
-                                    <input class="form-control" type="radio" name="gender" id="girls" autocomplete="off" value="girls"> Girls
+                                    <input class="form-control" type="radio" name="gender" id="girls" autocomplete="off" value="Girls"> Girls
                                 </label>
                                 <label for="both" class="btn btn-secondary">
-                                    <input class="form-control" type="radio" name="gender" id="both" autocomplete="off" value="both"> Both
+                                    <input class="form-control" type="radio" name="gender" id="both" autocomplete="off" value="Both"> Both
                                 </label>
                             </div>
                         </div>
@@ -89,13 +89,13 @@
 
                             <div class="btn-group btn-group-toggle col-md-6" data-toggle="buttons">
                                 <label class="btn btn-secondary active">
-                                    <input type="radio" name="level" id="level" autocomplete="off" value="varsity" checked> Varsity
+                                    <input type="radio" name="level" id="level" autocomplete="off" value="Varsity" checked> Varsity
                                 </label>
                                 <label class="btn btn-secondary">
-                                    <input type="radio" name="level" id="level" autocomplete="off" value="jv"> JV
+                                    <input type="radio" name="level" id="level" autocomplete="off" value="JV"> JV
                                 </label>
                                 <label class="btn btn-secondary">
-                                    <input type="radio" name="level" id="level" autocomplete="off" value="junior high"> Junior High
+                                    <input type="radio" name="level" id="level" autocomplete="off" value="Junior High"> Junior High
                                 </label>
                             </div>
                         </div>
