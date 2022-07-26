@@ -61,6 +61,7 @@ Route::post('/getmsg', [AjaxController::class, 'index']);
 Route::post('/savePlayerPositions', [AjaxController::class, 'savePlayerPositions']);
 Route::post('/inviteSchools', [AjaxController::class, 'inviteSchools']);
 Route::post('/removeSeededPlayer', [AjaxController::class, 'removeSeededPlayer']);
+Route::post('/addNewSeededPlayer', [AjaxController::class, 'addNewSeededPlayer']);
 Route::post('/declineInvite', [AjaxController::class, 'declineInvite']);
 Route::post('/acceptInvite', [AjaxController::class, 'acceptInvite']);
 Route::post('/saveTournamentSeeds', [AjaxController::class, 'saveTournamentSeeds']);

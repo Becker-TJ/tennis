@@ -24,6 +24,7 @@ class CreateSinglesMatchesTable extends Migration
             $table->string('winner_bracket_position');
             $table->string('loser_bracket_position');
             $table->string('score_input');
+            $table->unsignedInteger('court')->default(0);
         });
     }
 

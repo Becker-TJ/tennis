@@ -51,7 +51,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="team_count" class="col-md-4 col-form-label text-md-right">Number of Teams</label>
+                            <label for="team_count" class="col-md-4 col-form-label text-md-right">Number Of Teams</label>
                             <div class="col-md-6">
                                 <select class="form-control" id="team_count" name="team_count">
                                     <?php for($x = 4; $x <= 16; $x++) {?>
@@ -65,6 +65,13 @@
                                         <?php
                                     }?>
                                 </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="courts" class="col-md-4 col-form-label text-md-right">Number Of Courts At Venue</label>
+                            <div class="col-md-6">
+                                <input class="form-control" type="number" id="quantity" name="courts" min="1" max="50">
                             </div>
                         </div>
 

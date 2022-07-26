@@ -26,6 +26,7 @@ class CreateTournamentsTable extends Migration
             $table->date('date');
             $table->time('time', 0);
             $table->string('privacy_setting');
+            $table->unsignedInteger('courts')->default(0);
         });
     }
 

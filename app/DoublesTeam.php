@@ -2,8 +2,10 @@
 
 namespace App;
 
+
 use DB;
 use Illuminate\Database\Eloquent\Model;
+use App\Player;
 
 class DoublesTeam extends Model
 {
@@ -66,5 +68,12 @@ class DoublesTeam extends Model
         } else {
             return false;
         }
+    }
+
+    public function getPlayerDetails() {
+        $playerOne = Player::find($this->player_1);
+        $playerTwo = Player::find($this->player_2);
+
+        return [$playerOne, $playerTwo];
     }
 }

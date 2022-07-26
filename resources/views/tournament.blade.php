@@ -459,7 +459,9 @@
                 <td></td>
                 <td></td>
                 <td id="first-consolation-round-one-top">First Consolation Round One Top</td>
-                <td class="give-left-border give-right-border"></td>
+                <td class="give-left-border give-right-border">
+                    <select id="first-first-round-court-select"></select>
+                </td>
                 <td id="first-winners-round-one-top">First Winners Round One Top</td>
                 <td></td>
                 <td></td>
@@ -485,9 +487,9 @@
             <tr>
                 <td></td>
                 <td id="first-consolation-round-two-top">First Consolation Round Two Top</td>
-                <td class="give-left-border"></td>
+                <td class="give-left-border"><select id="first-consolation-round-one-court-select"></select></td>
                 <td></td>
-                <td class="give-right-border"></td>
+                <td class="give-right-border"><select id="first-winners-round-one-court-select"></select></td>
                 <td id="first-winners-round-two-top">First Winners Round Two Top</td>
                 <td></td>
             </tr>
@@ -522,7 +524,9 @@
                 <td></td>
                 <td class="give-left-border"></td>
                 <td class="give-top-border"><input hidden class="score-input" type="text" id="first-consolation-round-one-bottom-score-input"></td>
-                <td class="give-left-border give-right-border"></td>
+                <td class="give-left-border give-right-border">
+                    <select id="second-first-round-court-select"></select>
+                </td>
                 <td class="give-top-border"><input hidden class="score-input" type="text" id="first-winners-round-one-bottom-score-input"></td>
                 <td class="give-right-border"></td>
                 <td></td>
@@ -547,11 +551,13 @@
             </tr>
             <tr>
                 <td id="consolation-champion">Consolation Champion</td>
-                <td class="give-left-border"></td>
+                <td class="give-left-border"><select id="first-consolation-round-two-court-select"></select></td>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="give-right-border"></td>
+                <td class="give-right-border">
+                    <select id="first-winners-round-two-court-select"></select>
+                </td>
                 <td id="champion">Champion</td>
             </tr>
             <tr>
@@ -585,7 +591,9 @@
                 <td></td>
                 <td class="give-left-border"></td>
                 <td id="second-consolation-round-one-top">second consolation round one top</td>
-                <td class="give-left-border give-right-border"></td>
+                <td class="give-left-border give-right-border">
+                    <select id="third-first-round-court-select"></select>
+                </td>
                 <td id="second-winners-round-one-top">second winners round one top</td>
                 <td class="give-right-border"></td>
                 <td></td>
@@ -611,9 +619,11 @@
             <tr>
                 <td></td>
                 <td id="first-consolation-round-two-bottom" class="give-left-border">First Consolation Round Two Bottom</td>
-                <td class="give-left-border"></td>
+                <td class="give-left-border"><select id="second-consolation-round-one-court-select"></select></td>
                 <td></td>
-                <td class="give-right-border"></td>
+                <td class="give-right-border">
+                    <select id="second-winners-round-one-court-select"></select>
+                </td>
                 <td id="first-winners-round-two-bottom" class="give-right-border">First Winners Round Two Bottom</td>
                 <td></td>
             </tr>
@@ -648,7 +658,9 @@
                 <td></td>
                 <td></td>
                 <td class="give-top-border"><input hidden class="score-input" type="text" id="second-consolation-round-one-bottom-score-input"></td>
-                <td class="give-left-border give-right-border"></td>
+                <td class="give-left-border give-right-border">
+                    <select id="fourth-first-round-court-select"></select>
+                </td>
                 <td class="give-top-border"><input hidden class="score-input" type="text" id="second-winners-round-one-bottom-score-input"></td>
                 <td></td>
                 <td></td>
@@ -710,20 +722,24 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td class="give-top-border give-left-border">School Name</td>
+                    <td class="give-top-border give-left-border"></td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="give-top-border give-right-border">School Name</td>
+                    <td class="give-top-border give-right-border"></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td id="seventh-place">Seventh Place</td>
-                    <td class="give-left-border"></td>
+                    <td class="give-left-border">
+                        <select id="seventh-place-court-select"></select>
+                    </td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="give-right-border"></td>
+                    <td class="give-right-border">
+                        <select id="third-place-court-select"></select>
+                    </td>
                     <td id="third-place">Third Place</td>
                 </tr>
                 <tr>
@@ -746,11 +762,11 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td class="give-top-border">School Name</td>
+                    <td class="give-top-border"></td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="give-top-border">School Name</td>
+                    <td class="give-top-border"></td>
                     <td></td>
                 </tr>
             </table>

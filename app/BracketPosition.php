@@ -83,9 +83,17 @@ class BracketPosition extends Model
         'first-consolation-round-one-bottom' => 'first-consolation-lower-bracket-round-one-top',
         'second-consolation-round-one-top' => 'first-consolation-lower-bracket-round-one-bottom',
         'second-consolation-round-one-bottom' => 'first-consolation-lower-bracket-round-one-bottom',
+        'first-consolation-round-two-top' => 'skip',
+        'first-consolation-round-two-bottom' => 'skip',
         'first-winners-round-one-top' => 'first-winners-lower-bracket-round-one-top',
         'first-winners-round-one-bottom' => 'first-winners-lower-bracket-round-one-top',
         'second-winners-round-one-top' => 'first-winners-lower-bracket-round-one-bottom',
-        'second-winners-round-one-bottom' => 'first-winners-lower-bracket-round-one-bottom'
+        'second-winners-round-one-bottom' => 'first-winners-lower-bracket-round-one-bottom',
+        'first-winners-round-two-top' => 'skip',
+        'first-winners-round-two-bottom' => 'skip',
+        'first-winners-lower-bracket-round-one-top' => 'skip',
+        'first-winners-lower-bracket-round-one-bottom' => 'skip',
+        'first-consolation-lower-bracket-round-one-top' => 'skip',
+        'first-consolation-lower-bracket-round-one-bottom' => 'skip'
     ];
 }

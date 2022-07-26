@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\BracketPosition;
+use App\DoublesMatch;
 use App\Player;
 use App\School;
 use App\SchoolAttendee;
+use App\SinglesMatch;
 use App\Tournament;
 use Auth;
 use DemeterChain\B;
@@ -227,45 +229,12 @@ class TournamentController extends Controller
 
         $attendeeSchoolIDs = [];
 
-
         $girlsOneSinglesPlayers = $oneSinglesPlayers
             ->where('gender', '=', 'Female')
             ->whereIn('school_id', $attendeeSchoolIDs)
             ->sortBy('girls_one_singles_rank');
-//
-//        if($bracketPositions == null) {
-//            $bracketPositions = new BracketPosition();
-//            $bracketPositions->tournament_id = $tournament->id;
-//            $bracketPositions->bracket = 'girlsOneSingles';
-//            $increment = 1;
-//            foreach($girlsOneSinglesPlayers as $player) {
-//                $seed = $increment . '_seed';
-//                $bracketPositions->$seed = $player->id;
-//                $increment++;
-//            }
-//            $bracketPositions->saveOrFail();
-//        } else {
-//            $bracketPositions = BracketPosition::all()->where('tournament_id', '=', $tournament->id)->where('bracket','=', 'girlsOneSingles')->first();
-//        }
-//        for ($increment = 1; $increment < (count($girlsOneSinglesPlayers) + 1); $increment++) {
-//            foreach($girlsOneSinglesPlayers as $player) {
-//                if($player->id == $bracketPositions->{$increment . '_seed'}) {
-//                    $bracketPositions->{$increment . '_seed_name'} = $player->first_name . ' ' . $player->last_name;
-//                    $bracketPositions->{$increment . '_seed_school'} = $player->getSchool()->name;
-//                    break;
-//                }
-//            }
-//        }
-//        $bracketPositionTitles = $bracketPositions->getFillable();
-//        array_shift($bracketPositionTitles);
 
-//        foreach($bracketPositionTitles as $key => $title) {
-//            if($bracketPositions->$title != 0) {
-//                $player = $girlsOneSinglesPlayers->find($bracketPositions->$title);
-//                $playerName = $player->first_name . ' ' . $player->last_name;
-//                $bracketPositions->{$title . '_name'} = $playerName;
-//            }
-//        }
+
 
         return view('tournament', [
             'tournament' => $tournament,
@@ -278,7 +247,6 @@ class TournamentController extends Controller
             'girlsOneSinglesPlayers' => $girlsOneSinglesPlayers,
             'hostUser' => $hostUser,
             'userHasPendingTournamentInvite' => $userHasPendingTournamentInvite,
-            //            'bracketPositions' => $bracketPositions
         ]);
     }
 
@@ -304,6 +272,7 @@ class TournamentController extends Controller
 
         return view('createtournament');
     }
+
 
     public function create()
     {

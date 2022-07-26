@@ -71,7 +71,7 @@
         }
 
 
-        .edit-pen:hover, .delete-trash-can:hover {
+        .edit-pen:hover, .delete-trash-can:hover, .add-player-to-tournament-action:hover, .remove-seeded-player:hover {
             cursor: pointer;
             transform: scale(1.3);
         }
@@ -81,9 +81,14 @@
             text-align:center;
         }
 
-        .reorder-icon {
+        .reorder-icon, .add-player-to-tournament-action, .remove-seeded-player {
             width:25px;
             height:25px;
+        }
+
+
+        .reorder-icon:hover {
+            cursor:grab;
         }
 
         .btn-boys {
@@ -98,8 +103,8 @@
             background-color:#e67073;
         }
 
-        .advanceable {
-
+        .advanceable:hover {
+            cursor:pointer;
         }
 
         .button-crew {
