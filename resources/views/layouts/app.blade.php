@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{{asset('images/tennis-ball.png')}}">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -17,16 +18,19 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
+{{--    <link href="{{ asset('css/navbar.css') }}" rel="stylesheet">--}}
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet"
+    <link id="bootstrap-stylesheet" rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous"
     >
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> {{--for table icons, edit pen and trash can--}}
-    <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet"> {{--for table sorting--}}
+    <link href="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" rel="stylesheet"> {{--for table sorting--}}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" /> {{--for sorting dropdowns--}}
     <link href="https://cdn.datatables.net/rowreorder/1.2.6/css/rowReorder.dataTables.min.css" rel="stylesheet"> {{--for styling dragging table rows --}}
+
     <style>
         th {
             background-color:#32383e;
@@ -40,11 +44,22 @@
         #roster_button {
             float: right !important;
         }
+
         .card-header {
             font-weight:bold;
             font-size:24px;
             text-align:center;
+            background-color: #37c0fb;
+            border:none;
         }
+
+        .card {
+            border: 4px solid #333;
+            border-radius:20px;
+            overflow:hidden;
+        }
+
+
 
 
         tr.border_bottom td {
@@ -192,9 +207,43 @@
             width:100%;
         }
 
+        #permanent-navbar, .dropdown-item, .dropdown-menu{
+            cursor: default;
+            background-color: #333;
+            padding: 0;
+        }
+
+        #permanent-navbar a{
+            color:white;
+            border:none;
+        }
+
+        #permanent-navbar a:hover{
+            transform: scale(1.2);
+        }
+
+        .navbar-brand {
+            padding: 10px;
+        }
+
+
+        #blue-line {
+            content: '';
+            display: block;
+            width: 100%;
+            height: .25em;
+            background-color: #37c0fb;
+            border:none;
+            padding:0;
+        }
+
+        .navbar-toggler {
+            background-color:#37c0fb
+        }
 
 
     </style>
+    <link href="{{ asset('css/navbar.css') }}" rel="stylesheet">
 
 </head>
 <body>
@@ -206,8 +255,8 @@
     </div>
 </body>
 <script
-    src="https://code.jquery.com/jquery-3.4.1.js"
-    integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
     crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

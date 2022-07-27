@@ -774,3 +774,6 @@
     </div>
 
 @endsection
+@section('javascript')
+    <script type="text/javascript" src="{{ URL::asset('js/tournament.js') }}"></script>
+@endsection
