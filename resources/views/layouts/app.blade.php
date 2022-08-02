@@ -25,19 +25,29 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous"
     >
-
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> {{--for table icons, edit pen and trash can--}}
-    <link href="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" rel="stylesheet"> {{--for table sorting--}}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" /> {{--for sorting dropdowns--}}
     <link href="https://cdn.datatables.net/rowreorder/1.2.6/css/rowReorder.dataTables.min.css" rel="stylesheet"> {{--for styling dragging table rows --}}
 
     <style>
+
+
         th {
-            background-color:#32383e;
-            position:sticky;top:0;
-            border-top:3px solid lightblue;
+            background-color:#333;
             color:white;
+            font-size:20px;
         }
+
+        #tournament-headings, #tournament-headings-second-column {
+            font-size:20px;
+        }
+
+        .tournament-sub-title {
+            font-size: 20px;
+            font-weight:bold;
+            color: #333;
+        }
+
         .dataTables_filter {
             float: left !important;
         }
@@ -47,10 +57,10 @@
 
         .card-header {
             font-weight:bold;
-            font-size:24px;
+            font-size:32px;
             text-align:center;
             background-color: #37c0fb;
-            border:none;
+            border-bottom: 4px solid #333;
         }
 
         .card {
@@ -59,30 +69,34 @@
             overflow:hidden;
         }
 
+        #allSchoolsTable tr:first-child, #playerDisplayTable tr:first-child {
+            text-align: left;
+        }
 
 
 
         tr.border_bottom td {
-            border-bottom: 2px solid black;
+            border-bottom: 4px solid #333;
         }
         tr.position_highlight td{
-            background-color:lightblue;
+            background-color:#37c0fb;
         }
         .btn-group button {
-            border: 1px solid black;
+            /*border: 1px solid black;*/
             padding: 10px 24px;
             cursor: pointer;
             float: left;
         }
 
-        .btn-group button:hover {
-            border: 1px solid black;
-            background-color:#AAAAAA;
-            color:white !important;
-        }
+        /*.btn-group button:hover {*/
+        /*    border: 1px solid black;*/
+        /*    background-color:#AAAAAA;*/
+        /*    color:white !important;*/
+        /*}*/
 
-        tr {
-
+        .position-title-td-highlight {
+            font-size:20px;
+            font-weight:bold;
         }
 
 
@@ -150,8 +164,9 @@
             border-right: none; /* Prevent double borders */
         }
 
-        .bracket-button {
-
+        select[id*='court-select'] {
+            font-style:italic;
+            text-align:center;
         }
 
         /* Clear floats (clearfix hack) */
@@ -173,9 +188,12 @@
             text-align:left;
         }
 
-        .bracket-button {
-
+        #bracket {
+            font-weight:bold;
+            font-size:18px !important;
         }
+
+
 
         /* Add a background color on hover */
         /*.btn-group button:hover {*/
@@ -211,6 +229,16 @@
             cursor: default;
             background-color: #333;
             padding: 0;
+            text-align:left;
+        }
+
+        .dropdown-item:hover {
+            background-color:#333 !important;
+            cursor:pointer;
+        }
+
+        .dropdown-item {
+            text-align:center;
         }
 
         #permanent-navbar a{
@@ -222,8 +250,24 @@
             transform: scale(1.2);
         }
 
+        #playerDisplayTable, #seedsTable {
+            width:100% !important;
+        }
+
+
+
         .navbar-brand {
             padding: 10px;
+        }
+
+        #tournamentsTable_filter {
+            font-size:20px;
+        }
+
+        input[type=search] {
+            border-radius:10px;
+            margin-left:10px;
+            text-align:center;
         }
 
 
@@ -242,6 +286,34 @@
         }
 
 
+        #rosterSelect {
+            padding-left:20px;
+        }
+
+        .bn3637 {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.7rem 2rem;
+            font-family: "Poppins", sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+            text-align: center;
+            text-decoration: none;
+            color: #000;
+            backface-visibility: hidden;
+            border: 4px solid black;
+            border-radius: 1rem;
+            margin-right:20px;
+
+        }
+        .bn3637:hover {
+            transition: transform 0.2s cubic-bezier(0.235, 0, 0.05, 0.95);
+            transform: perspective(1px) scale3d(1.044, 1.044, 1) translateZ(0) !important;
+            background-color:#000;
+        }
+
+
     </style>
     <link href="{{ asset('css/navbar.css') }}" rel="stylesheet">
 
@@ -249,7 +321,7 @@
 <body>
     <div id="app">
         @include('include/navbar')
-        <main class="py-4">
+        <main class="">
             @yield('content')
         </main>
     </div>

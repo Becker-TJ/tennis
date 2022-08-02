@@ -262,6 +262,23 @@ class AjaxController extends Controller
             $previousBracket = $bracket;
         }
 
+
+        foreach($schoolPlayers as $player) {
+            $player->real_player = true;
+            if($player->in_tournament != true) {
+                if(array_key_exists($player->id, $doublesPlayersToUpdateInSchoolPlayersList)) {
+                    $playerBracket = $doublesPlayersToUpdateInSchoolPlayersList[$player->id];
+                    $player->$playerBracket = true;
+                    $player->in_tournament = true;
+                    $player->bracket_name = $bracketsPrettyPrintAssociations[$playerBracket];
+                    $correctPlayerOrder[] = $player;
+                } else {
+                    $player->bracket_name = "-";
+                    $playersNotInTournament[] = $player;
+                }
+            }
+        }
+
         if(!$foundAPlayerInPreviousBracket && $bracketsPrettyPrintAssociations[$previousBracket] === "Two Doubles") {
             $newPlayer = new Player;
             $newPlayer->in_tournament = false;
@@ -282,24 +299,6 @@ class AjaxController extends Controller
             $newPlayer->real_player = false;
             $newPlayer->bracket_name = $bracketsPrettyPrintAssociations[$previousBracket];
             $correctPlayerOrder[] = $newPlayer;
-        }
-
-
-
-        foreach($schoolPlayers as $player) {
-            $player->real_player = true;
-            if($player->in_tournament != true) {
-                if(array_key_exists($player->id, $doublesPlayersToUpdateInSchoolPlayersList)) {
-                    $playerBracket = $doublesPlayersToUpdateInSchoolPlayersList[$player->id];
-                    $player->$playerBracket = true;
-                    $player->in_tournament = true;
-                    $player->bracket_name = $bracketsPrettyPrintAssociations[$playerBracket];
-                    $correctPlayerOrder[] = $player;
-                } else {
-                    $player->bracket_name = "-";
-                    $playersNotInTournament[] = $player;
-                }
-            }
         }
 
         $correctPlayerOrder = array_merge($correctPlayerOrder, $playersNotInTournament);
@@ -400,7 +399,52 @@ class AjaxController extends Controller
         $match->score = $score;
         $match->saveOrFail();
 
-        return response()->json(['success'=>'Saved Score.']);
+        return response()->json([
+            'matchID' => $match->id,
+            'scoreInput' => $scoreInput
+        ]);
+    }
+
+
+    public function saveBasicMatch(Request $request) {
+        $scoreData = $request->all();
+        $scoreInput = $request['score_input'];
+
+        $tournamentID = intval($scoreData['tournament_id']);
+        $bracket = $scoreData['bracket'];
+
+        $singles = false;
+
+        if (strpos($bracket, 'Singles') !== false) {
+            $singles = true;
+        }
+
+        if ($singles) {
+            $match = SinglesMatch::all()
+                ->where('tournament_id', '=', $tournamentID)
+                ->where('score_input', '=', $scoreInput)
+                ->where('bracket', '=', $bracket)
+                ->first();
+            if ($match == null) {
+                $match = new SinglesMatch;
+            }
+        } else {
+            $match = DoublesMatch::all()
+                ->where('tournament_id', '=', $tournamentID)
+                ->where('score_input', '=', $scoreInput)
+                ->where('bracket', '=', $bracket)
+                ->first();
+            if ($match == null) {
+                $match = new DoublesMatch;
+            }
+        }
+
+        $match->bracket = $bracket;
+        $match->tournament_id = $tournamentID;
+        $match->score_input = $scoreInput;
+        $match->saveOrFail();
+
+        return response()->json(['success'=>'Saved Match.']);
     }
 
     public function saveMatch(Request $request)
@@ -470,6 +514,48 @@ class AjaxController extends Controller
         return response()->json(['success'=>'Saved Score.']);
     }
 
+    public function saveCourtSelection(Request $request) {
+        $request = $request->all();
+        $tournamentID = intval($request['tournament_id']);
+        $matchID = intval($request['matchID']);
+        $bracket = $request['bracket'];
+        $court = intval($request['court']);
+        $scoreInput = $request['scoreInput'];
+        if(strpos($bracket, 'Singles')) {
+            $singles = true;
+        } else {
+            $singles = false;
+        }
+
+        if($singles) {
+            $match = SinglesMatch::find($matchID);
+            if($match === null) {
+                $match = SinglesMatch::all()->where('bracket', '=', $bracket)->where('score_input', '=', $scoreInput)->first();
+                if($match === null) {
+                    $match = new SinglesMatch;
+                    $match->score_input = $scoreInput;
+                    $match->tournament_id = $tournamentID;
+                    $match->bracket = $bracket;
+                }
+            }
+        } else {
+            $match = DoublesMatch::find($matchID);
+            if($match === null) {
+                $match = DoublesMatch::all()->where('bracket', '=', $bracket)->where('score_input', '=', $scoreInput)->first();
+                if($match === null) {
+                    $match = new DoublesMatch;
+                    $match->score_input = $scoreInput;
+                    $match->tournament_id = $tournamentID;
+                    $match->bracket = $bracket;
+                }
+            }
+        }
+
+        $match->court = $court;
+        $match->saveOrFail();
+
+        return response()->json(['success'=>'Saved Court Assignment.']);
+    }
 
     public function getBracketData(Request $request)
     {
@@ -478,6 +564,20 @@ class AjaxController extends Controller
         $tournament = Tournament::find($tournament_id);
         $attendees = SchoolAttendee::all()->where('tournament_id', '=', $tournament_id);
         $singles = false;
+        $allSinglesMatches = SinglesMatch::all()->where('tournament_id', '=', $tournament_id);
+        $allDoublesMatches = DoublesMatch::all()->where('tournament_id', '=', $tournament_id);
+
+        $courtsInUse = [];
+        foreach($allSinglesMatches as $match) {
+            if($match->court != 0) {
+                $courtsInUse[] = $match->court;
+            }
+        }
+        foreach($allDoublesMatches as $match) {
+            if($match->court != 0) {
+                $courtsInUse[] = $match->court;
+            }
+        }
 
         $requestedBracket = $request['requestedBracket'];
         switch ($requestedBracket) {
@@ -575,12 +675,14 @@ class AjaxController extends Controller
                 }
             }
 
-            $matches = SinglesMatch::all()->where('tournament_id', '=', $tournament_id);
+            $matches = $allSinglesMatches->where('bracket', '=', $requestedBracket);
 
             return response()->json([
                 'players' => $singlesPlayers,
                 'bracketPositions' => $bracketPositions,
                 'matches' => $matches,
+                'courtCount' => $tournament->courts,
+                'courtsInUse' => $courtsInUse
             ]);
 
         } else {
@@ -619,12 +721,14 @@ class AjaxController extends Controller
                 }
             }
 
-            $matches = DoublesMatch::all()->where('tournament_id', '=', $tournament_id);
+            $matches = $allDoublesMatches->where('bracket', '=', $requestedBracket);
 
             return response()->json([
                 'doublesTeams' => $doublesTeams,
                 'bracketPositions' => $bracketPositions,
                 'matches' => $matches,
+                'courtCount' => $tournament->courts,
+                'courtsInUse' => $courtsInUse
             ]);
         }
     }

@@ -1,7 +1,4 @@
 <!DOCTYPE HTML>
-@extends('layouts.app')
-
-@section('content')
 <!--
 	Arcana by HTML5 UP
 	html5up.net | @ajlkn
@@ -11,23 +8,25 @@
 	<head>
 		<title>okhs.tennis</title>
         <script src="https://kit.fontawesome.com/a6b4f8b08f.js" crossorigin="anonymous"></script>
+        <link rel="icon" href="{{asset('images/tennis-ball.png')}}">
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="{{asset('css/main.css')}}" />
 	</head>
 	<body class="is-preload">
 		<div id="page-wrapper">
-
 			<!-- Header -->
-{{--				<div id="header">--}}
+				<div id="header">
 
-{{--					<!-- Logo -->--}}
+					<!-- Logo -->
 
 
-{{--					<!-- Nav -->--}}
-{{--						<nav id="nav">--}}
-{{--							<ul>--}}
-{{--								<li class="current"><a href="index.html">Home</a></li>--}}
+					<!-- Nav -->
+						<nav id="nav">
+							<ul>
+								<li class="current"><a class="navbar-brand" href="{{ url('/') }}">
+                                        {{ config('home', 'okhs.tennis') }}
+                                    </a></li>
 {{--								<li>--}}
 {{--									<a href="#">Dropdown</a>--}}
 {{--									<ul>--}}
@@ -47,14 +46,57 @@
 {{--										<li><a href="#">Veroeros feugiat</a></li>--}}
 {{--									</ul>--}}
 {{--								</li>--}}
-{{--								<li><a href="left-sidebar.html">Left Sidebar</a></li>--}}
-{{--								<li><a href="right-sidebar.html">Right Sidebar</a></li>--}}
-{{--								<li><a href="two-sidebar.html">Two Sidebar</a></li>--}}
-{{--								<li><a href="no-sidebar.html">No Sidebar</a></li>--}}
-{{--							</ul>--}}
-{{--						</nav>--}}
 
-{{--				</div>--}}
+								<li><a class="navbar-brand" href="{{ url('/createtournament') }}">
+                                        {{ config('createtournament', 'Create Tournament') }}
+                                    </a></li>
+								<li><a class="navbar-brand" href="{{ url('/tournaments') }}">
+                                        {{ config('tournaments', 'View Tournaments') }}
+                                    </a></li>
+								<li><a class="navbar-brand" href="{{ url('/players') }}">
+                                        {{ config('players', 'Player Ranks') }}
+                                    </a></li>
+                                <li><a class="navbar-brand" href="{{ url('/schools') }}">
+                                        {{ config('schools', 'View Schools') }}
+                                    </a></li>
+                                <li><a class="navbar-brand" href="{{ url('/school/1') }}">
+                                        {{ config('school/1', 'school/1') }}
+                                    </a></li>
+                                <li><a class="navbar-brand" href="{{ url('/tournament/51') }}">
+                                        {{ config('tournament/51', 'tournament/51') }}
+                                    </a></li>
+                                <li><a class="navbar-brand" href="{{ url('/addschool') }}">
+                                        {{ config('addschool', 'addschool') }}
+                                    </a></li>
+
+                                @guest
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    </li>
+                                    @if (Route::has('register'))
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                        </li>
+                                    @endif
+                                @else
+                                    <li class="nav-item dropdown">
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                               onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                                {{ __('Logout') }}
+                                            </a>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                @csrf
+                                            </form>
+                                        </div>
+                                    </li>
+                                @endguest
+							</ul>
+
+						</nav>
+
+				</div>
 
 			<!-- Banner -->
 {{--				<section id="banner">--}}
@@ -68,6 +110,10 @@
                 <p id="banner-text">Oklahoma High School Tennis</p>
 
             </section>
+            <section>
+
+                </section>
+
 
 			<!-- Highlights -->
 				<section class="wrapper style1">
@@ -251,7 +297,7 @@
 			<script src="{{asset('js/browser.min.js')}}"></script>
 			<script src="{{asset('js/breakpoints.min.js')}}"></script>
 			<script src="{{asset('js/util.js')}}"></script>
+        <script src="{{asset('js/main.js')}}"></script>
 
 	</body>
-@endsection
 </html>

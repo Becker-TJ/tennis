@@ -18,11 +18,11 @@ class CreateSinglesMatchesTable extends Migration
             $table->timestamps();
             $table->unsignedInteger('tournament_id');
             $table->string('bracket');
-            $table->unsignedInteger('winner');
-            $table->unsignedInteger('loser');
+            $table->unsignedInteger('winner')->default(0);
+            $table->unsignedInteger('loser')->default(0);
             $table->string('score')->nullable();
-            $table->string('winner_bracket_position');
-            $table->string('loser_bracket_position');
+            $table->string('winner_bracket_position')->default("");
+            $table->string('loser_bracket_position')->default("");
             $table->string('score_input');
             $table->unsignedInteger('court')->default(0);
         });

@@ -1,7 +1,5 @@
 $(document).ready( function () {
 
-
-
     var schoolTable = $('#schoolTable').DataTable( {
         paging:false,
         searching:false,
@@ -17,21 +15,43 @@ $(document).ready( function () {
             { targets: [2,3,4,5,6], orderable: false },
             {targets: [2], width: "5%" },
         ]
-        //this will be useful for adding a button in the same line as the search bar for creating tournaments etc
-        // "initComplete": function( settings, json ) {
-        //     $('#myTable_filter').html("<div id='myTable_filter' class='dataTables_filter'><div><label>Search:<input type='search' class='' placeholder='' aria-controls='myTable'></label><button id='roster_button' type='submit' class='btn btn-primary'>Create</button></div></div>");
-        // },
+
     } );
 
+    var varsityOrder = [
+        '1 Singles',
+        '2 Singles',
+        '1 Doubles',
+        '1 Doubles',
+        '2 Doubles',
+        '2 Doubles',
+    ];
 
+    var allSchoolsTable = $('#allSchoolsTable').DataTable( {
+        paging:false,
+        searching:false,
+        rowReorder: {
+            selector: '.reorder-cell',
+            snapX:true,
+        },
+        bInfo:false,
+        "lengthChange": false,
 
+        'columnDefs': [
+            { targets: [0,1,2], orderable: true },
+            { targets: [2], "className": "center-align"}
+        ]
 
+    } );
 
-
-
-
-
-
+    var varsityOrder = [
+        '1 Singles',
+        '2 Singles',
+        '1 Doubles',
+        '1 Doubles',
+        '2 Doubles',
+        '2 Doubles',
+    ];
 
     //this resets the order of the far left column for a school roster after a click and drag table row event(1 singles, 2 singles, etc)
     function displayPositionNamesInCorrectOrder() {
@@ -119,17 +139,6 @@ $(document).ready( function () {
     });
 
 
-
-
-
-
-
-
-
-
-
-
-
     $("#not_listed").change(function() {
         if (this.checked) {
             $(".toggle_show").removeAttr('disabled').attr('required', true);
@@ -142,237 +151,21 @@ $(document).ready( function () {
 
 
 
-
-
-
-    $(".score-input").keydown(function(e) {
-        $inputString = $(this).val();
-        var checkScoreValidity = false;
-        var tournament_id = $('#tournament_id').html();
-        var scoreInput = $(this).attr('id');
-        var validScoresAfterOneThroughFour = [6];
-        var validScoresAfterFive = [7];
-        var validScoresAfterSix = [0,1,2,3,4,7];
-        var validScoresAfterSeven = [5,6];
-
-        if (e.which === 48 || e.which === 96) {
-            var numberPressed = 0;
-        } else if (e.which === 49 || e.which === 97) {
-            var numberPressed = 1;
-        } else if (e.which === 50 || e.which === 98) {
-            var numberPressed = 2;
-        } else if (e.which === 51 || e.which === 99) {
-            var numberPressed = 3;
-        } else if (e.which === 52 || e.which === 100) {
-            var numberPressed = 4;
-        } else if (e.which === 53 || e.which === 101) {
-            var numberPressed = 5;
-        } else if (e.which === 54 || e.which === 102) {
-            var numberPressed = 6;
-        } else if (e.which === 55 || e.which === 103) {
-            var numberPressed = 7;
-        } else if ((e.which === 56 || e.which === 104) && $inputString.length > 7) {
-            var numberPressed = 8;
-        } else if ((e.which === 57 || e.which === 105) && $inputString.length > 7) {
-            var numberPressed = 9;
-        } else if (e.which === 8 || e.which === 46) {
-            $(this).val('');
-            $(this).removeClass('invalid-score');
-            $(this).removeClass('match-complete');
-            return false;
-        } else {
-            return false;
-        }
-
-        if($(this).hasClass('match-complete') || $(this).hasClass('invalid-score')) {
-            return false;
-        }
-
-        var firstScore = parseInt($inputString.charAt(0));
-        var secondScore = parseInt($inputString.charAt(2));
-        var thirdScore = parseInt($inputString.charAt(5));
-        var fourthScore = parseInt($inputString.charAt(7));
-
-        if($inputString.length === 0) {
-            $(this).val(numberPressed + '-');
-        }
-
-        else if ($inputString.length === 2) {
-            if(firstScore === 7) {
-                if(validScoresAfterSeven.includes(numberPressed)) {
-                    $(this).val($inputString + numberPressed);
-                }
-            }
-            else if(firstScore === 6) {
-                if(validScoresAfterSix.includes(numberPressed)) {
-                    $(this).val($inputString + numberPressed);
-                }
-            } else if(firstScore === 5) {
-                if(validScoresAfterFive.includes(numberPressed)) {
-                    $(this).val($inputString + numberPressed);
-                }
-            } else if(firstScore < 5) {
-                if(validScoresAfterOneThroughFour.includes(numberPressed)) {
-                    $(this).val($inputString + numberPressed);
-                }
-            }
-        }
-
-
-        else if ($inputString.length === 3) {
-            $(this).val($inputString + ', ' + numberPressed + '-');
-        }
-
-
-        else if ($inputString.length === 7) {
-            if(thirdScore === 7) {
-                if(validScoresAfterSeven.includes(numberPressed)) {
-                    $(this).val($inputString + numberPressed);
-                    checkScoreValidity = true;
-                }
-            }
-            else if(thirdScore === 6) {
-                if(validScoresAfterSix.includes(numberPressed)) {
-                    $(this).val($inputString + numberPressed);
-                    checkScoreValidity = true;
-                }
-            } else if(thirdScore === 5) {
-                if(validScoresAfterFive.includes(numberPressed)) {
-                    $(this).val($inputString + numberPressed);
-                    checkScoreValidity = true;
-                }
-            } else if(thirdScore < 5) {
-                if(validScoresAfterOneThroughFour.includes(numberPressed)) {
-                    $(this).val($inputString + numberPressed);
-                    checkScoreValidity = true;
-                }
-            }
-        }
-
-
-        else if ($inputString.length === 8) {
-            if(numberPressed === 0) {
-                return false;
-            }
-            $(this).val($inputString + ', (' + numberPressed);
-        }
-
-        else if ($inputString.length === 12) {
-            $(this).val($inputString + numberPressed + '-');
-        }
-
-        else if ($inputString.length === 14) {
-            $(this).val($inputString + numberPressed);
-            checkScoreValidity = true;
-        }
-
-        else if ($inputString.length === 15) {
-            $(this).val($inputString + numberPressed);
-            checkScoreValidity = true;
-        }
-
-
-        if(checkScoreValidity) {
-            $score = $inputString + numberPressed;
-
-            if(isScoreValid($score) === 'third set needed' || isScoreValid($score) === 'needs to finish score') {
-                return false;
-            }
-
-            if(isScoreValid($score)) {
-                if($score.length > 8) {
-                    $score += ')';
-                }
-                $(this).addClass('match-complete');
-
-                $bracket = $('.selected-button').attr('id');
-                $scoreInput = $(this).attr('id');
-
-                saveScore($bracket, tournament_id, $score, $scoreInput);
-
-                $(this).val($score);
-            } else {
-                if($score.length > 8) {
-                    $score += ')';
-                }
-                $(this).val($score);
-                $(this).addClass('invalid-score');
-            }
-        }
-
-        return false;
-
-    });
-
-    function isScoreValid(string) {
-        $setsWon = 0;
-        $firstScore = parseInt(string.charAt(0));
-        $secondScore = parseInt(string.charAt(2));
-        $thirdScore = parseInt(string.charAt(5));
-        $fourthScore = parseInt(string.charAt(7));
-        if(string.length > 8){
-            $fifthScore = parseInt(string.substring(11,13));
-            if(string.length === 15) {
-                $sixthScore = parseInt(string.charAt(14));
-            } else if (string.length === 16) {
-                $sixthScore = parseInt(string.substring(14,16));
-            }
-
-            if($sixthScore + 2 > $fifthScore) {
-                return false;
-            }
-
-            if(($fifthScore > 10) && ($sixthScore != ($fifthScore - 2))) {
-                if($sixthScore.toString().length > 1) {
-                    return false;
-                }
-                return 'needs to finish score';
-            }
-
-            if($fifthScore > $sixthScore) {
-                $setsWon++;
-            }
-        }
-
-        if($firstScore > $secondScore) {
-            $setsWon++;
-        }
-        if($thirdScore > $fourthScore) {
-            $setsWon++;
-        }
-
-        if($setsWon === 2) {
-            return true;
-
-        } else if ($setsWon === 1) {
-            return 'third set needed';
-        }
-
-        return false;
-
-    }
-
     //this is assigning settings for the sortable tables
-    $('#myTable').DataTable( {
+    $('#playerDisplayTable').DataTable( {
         paging:false,
         "lengthChange": false,
-        scrollX:true,
         'columns': [
             { data: 'name' }, /* index = 0 */
             { data: 'address' }, /* index = 1 */
             { data: 'team_count' }, /* index = 2 */
             { data: 'level' }, /* index = 3 */
-            { data: 'actions' } /* index = 4 */
         ],
         'columnDefs': [ {
-            'targets': [4], /* column index */
             'orderable': false, /* true or false */
-        }],
 
-        //this will be useful for adding a button in the same line as the search bar for creating tournaments etc
-        // "initComplete": function( settings, json ) {
-        //     $('#myTable_filter').html("<div id='myTable_filter' class='dataTables_filter'><div><label>Search:<input type='search' class='' placeholder='' aria-controls='myTable'></label><button id='roster_button' type='submit' class='btn btn-primary'>Create</button></div></div>");
-        // },
+        },{ targets: [3], "className": "center-align"}],
+
     } );
 
     $('#tournamentsTable').DataTable( {
@@ -382,25 +175,16 @@ $(document).ready( function () {
             { data: 'name' }, /* index = 0 */
             { data: 'location_name' }, /* index = 1 */
             { data: 'date' }, /* index = 2 */
-            { data: 'gender' }, /* index = 3 */
+            { data: 'level' }, /* index = 3 */
+            { data: 'gender' }, /* index = 4 */
             { data: 'team_count' }, /* index = 5 */
-            { data: 'level' }, /* index = 6 */
-            { data: 'actions' } /* index = 7 */
+
         ],
         'order': [],
-        'columnDefs': [ {
-            'targets':[6],
-            'orderable': false
-        }]
+
 
 
     } );
-
-
-
-
-
-
 
 
     $('.edit-pen').click(function(e) {
@@ -475,10 +259,8 @@ $(document).ready( function () {
                     { targets: [2,3,4,5,6], orderable: false },
                     {targets: [2], width: "5%" },
                 ]
-                //this will be useful for adding a button in the same line as the search bar for creating tournaments etc
-                // "initComplete": function( settings, json ) {
-                //     $('#myTable_filter').html("<div id='myTable_filter' class='dataTables_filter'><div><label>Search:<input type='search' class='' placeholder='' aria-controls='myTable'></label><button id='roster_button' type='submit' class='btn btn-primary'>Create</button></div></div>");
-                // },
+
+
 
             } );
 

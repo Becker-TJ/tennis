@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    <br>
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -16,10 +17,9 @@
                                     <th scope="col">Name</th>
                                     <th scope="col">Location</th>
                                     <th scope="col">Date</th>
+                                    <th scope="col">Level</th>
                                     <th scope="col">Gender</th>
                                     <th scope="col">Teams</th>
-                                    <th scope="col">Level</th>
-                                    <th scope="col">Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -41,10 +41,10 @@
                                     </td>
                                     <td class="table-cell">{{$tournament->location_name}}</td>
                                     <td class="table-cell">{{$tournament->date}}</td>
+                                    <td align="center" class="table-cell">{{$tournament->level}}</td>
                                     <td class="table-cell">{{$tournament->gender}}</td>
                                     <td align="center" class="table-cell">{{count($schoolAttendees->where('tournament_id', '=', $tournament->id)) . '/' . $tournament->team_count}}</td>
-                                    <td align="center" class="table-cell">{{$tournament->level}}</td>
-                                    <td align="center" class="table-cell"><i class="material-icons" style="color:green">mode_edit</i><i class="material-icons" style="color:red">delete</i></td>
+
                                 </tr>
                                 @endforeach
                                 </tbody>

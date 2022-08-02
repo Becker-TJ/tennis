@@ -6,14 +6,233 @@ $(document).ready( function () {
         width: 'resolve' // need to override the changed default
     });
 
-    var varsityOrder = [
-        '1 Singles',
-        '2 Singles',
-        '1 Doubles',
-        '1 Doubles',
-        '2 Doubles',
-        '2 Doubles',
-    ];
+    $courtSelectMatchScoreInputAssociations = {
+        'first-winners-round-one-top-score-input': 'first-first-round-court-select',
+        'first-winners-round-one-bottom-score-input': 'second-first-round-court-select',
+        'second-winners-round-one-top-score-input': 'third-first-round-court-select',
+        'second-winners-round-one-bottom-score-input': 'fourth-first-round-court-select',
+        'first-winners-round-two-top-score-input': 'first-winners-round-one-court-select',
+        'first-winners-round-two-bottom-score-input': 'second-winners-round-one-court-select',
+        'champion-score-input': 'first-winners-round-two-court-select',
+        'first-consolation-round-two-top-score-input': 'first-consolation-round-one-court-select',
+        'first-consolation-round-two-bottom-score-input': 'second-consolation-round-one-court-select',
+        'consolation-champion-score-input': 'first-consolation-round-two-court-select',
+        'third-place-score-input': 'third-place-court-select',
+        'seventh-place-score-input': 'seventh-place-court-select',
+    };
+
+    function getObjKey(obj, value) {
+        return Object.keys(obj).find(key => obj[key] === value);
+    }
+
+    $(".score-input").keydown(function(e) {
+        $inputString = $(this).val();
+        var checkScoreValidity = false;
+        var tournament_id = $('#tournament_id').html();
+        var scoreInput = $(this).attr('id');
+        var validScoresAfterOneThroughFour = [6];
+        var validScoresAfterFive = [7];
+        var validScoresAfterSix = [0,1,2,3,4,7];
+        var validScoresAfterSeven = [5,6];
+
+        if (e.which === 48 || e.which === 96) {
+            var numberPressed = 0;
+        } else if (e.which === 49 || e.which === 97) {
+            var numberPressed = 1;
+        } else if (e.which === 50 || e.which === 98) {
+            var numberPressed = 2;
+        } else if (e.which === 51 || e.which === 99) {
+            var numberPressed = 3;
+        } else if (e.which === 52 || e.which === 100) {
+            var numberPressed = 4;
+        } else if (e.which === 53 || e.which === 101) {
+            var numberPressed = 5;
+        } else if (e.which === 54 || e.which === 102) {
+            var numberPressed = 6;
+        } else if (e.which === 55 || e.which === 103) {
+            var numberPressed = 7;
+        } else if ((e.which === 56 || e.which === 104) && $inputString.length > 7) {
+            var numberPressed = 8;
+        } else if ((e.which === 57 || e.which === 105) && $inputString.length > 7) {
+            var numberPressed = 9;
+        } else if (e.which === 8 || e.which === 46) {
+            $(this).val('');
+            $(this).removeClass('invalid-score');
+            $(this).removeClass('match-complete');
+            return false;
+        } else {
+            return false;
+        }
+
+        if($(this).hasClass('match-complete') || $(this).hasClass('invalid-score')) {
+            // return false;
+        }
+
+        var firstScore = parseInt($inputString.charAt(0));
+        var secondScore = parseInt($inputString.charAt(2));
+        var thirdScore = parseInt($inputString.charAt(5));
+        var fourthScore = parseInt($inputString.charAt(7));
+
+        if($inputString.length === 0) {
+            $(this).val(numberPressed + '-');
+        }
+
+        else if ($inputString.length === 2) {
+            if(firstScore === 7) {
+                if(validScoresAfterSeven.includes(numberPressed)) {
+                    $(this).val($inputString + numberPressed);
+                }
+            }
+            else if(firstScore === 6) {
+                if(validScoresAfterSix.includes(numberPressed)) {
+                    $(this).val($inputString + numberPressed);
+                }
+            } else if(firstScore === 5) {
+                if(validScoresAfterFive.includes(numberPressed)) {
+                    $(this).val($inputString + numberPressed);
+                }
+            } else if(firstScore < 5) {
+                if(validScoresAfterOneThroughFour.includes(numberPressed)) {
+                    $(this).val($inputString + numberPressed);
+                }
+            }
+        }
+
+
+        else if ($inputString.length === 3) {
+            $(this).val($inputString + ', ' + numberPressed + '-');
+        }
+
+
+        else if ($inputString.length === 7) {
+            if(thirdScore === 7) {
+                if(validScoresAfterSeven.includes(numberPressed)) {
+                    $(this).val($inputString + numberPressed);
+                    checkScoreValidity = true;
+                }
+            }
+            else if(thirdScore === 6) {
+                if(validScoresAfterSix.includes(numberPressed)) {
+                    $(this).val($inputString + numberPressed);
+                    checkScoreValidity = true;
+                }
+            } else if(thirdScore === 5) {
+                if(validScoresAfterFive.includes(numberPressed)) {
+                    $(this).val($inputString + numberPressed);
+                    checkScoreValidity = true;
+                }
+            } else if(thirdScore < 5) {
+                if(validScoresAfterOneThroughFour.includes(numberPressed)) {
+                    $(this).val($inputString + numberPressed);
+                    checkScoreValidity = true;
+                }
+            }
+        }
+
+
+        else if ($inputString.length === 8) {
+            if(numberPressed === 0) {
+                return false;
+            }
+            $(this).val($inputString + ', (' + numberPressed);
+        }
+
+        else if ($inputString.length === 12) {
+            $(this).val($inputString + numberPressed + '-');
+        }
+
+        else if ($inputString.length === 14) {
+            $(this).val($inputString + numberPressed);
+            checkScoreValidity = true;
+        }
+
+        else if ($inputString.length === 15) {
+            $(this).val($inputString + numberPressed);
+            checkScoreValidity = true;
+        }
+
+
+        if(checkScoreValidity) {
+            $score = $inputString + numberPressed;
+
+            if(isScoreValid($score) === 'third set needed' || isScoreValid($score) === 'needs to finish score') {
+                return false;
+            }
+
+            if(isScoreValid($score)) {
+                if($score.length > 8) {
+                    $score += ')';
+                }
+                $(this).addClass('match-complete');
+
+                $bracket = $('.selected-button').attr('id');
+                $scoreInput = $(this).attr('id');
+
+                saveScore($bracket, tournament_id, $score, $scoreInput);
+
+                $(this).val($score);
+            } else {
+                if($score.length > 8) {
+                    $score += ')';
+                }
+                $(this).val($score);
+                $(this).addClass('invalid-score');
+            }
+        }
+
+        return false;
+
+    });
+
+
+    function isScoreValid(string) {
+        $setsWon = 0;
+        $firstScore = parseInt(string.charAt(0));
+        $secondScore = parseInt(string.charAt(2));
+        $thirdScore = parseInt(string.charAt(5));
+        $fourthScore = parseInt(string.charAt(7));
+        if(string.length > 8){
+            $fifthScore = parseInt(string.substring(11,13));
+            if(string.length === 15) {
+                $sixthScore = parseInt(string.charAt(14));
+            } else if (string.length === 16) {
+                $sixthScore = parseInt(string.substring(14,16));
+            }
+
+            if($sixthScore + 2 > $fifthScore) {
+                return false;
+            }
+
+            if(($fifthScore > 10) && ($sixthScore != ($fifthScore - 2))) {
+                if($sixthScore.toString().length > 1) {
+                    return false;
+                }
+                return 'needs to finish score';
+            }
+
+            if($fifthScore > $sixthScore) {
+                $setsWon++;
+            }
+        }
+
+        if($firstScore > $secondScore) {
+            $setsWon++;
+        }
+        if($thirdScore > $fourthScore) {
+            $setsWon++;
+        }
+
+        if($setsWon === 2) {
+            return true;
+
+        } else if ($setsWon === 1) {
+            return 'third set needed';
+        }
+
+        return false;
+
+    }
+
 
     var seedsTable = $('#seedsTable').DataTable( {
         paging:false,
@@ -288,6 +507,8 @@ $(document).ready( function () {
                 //     $('#' + seedNumber + '-seed-school').html(data.seeds[seedNumber].school_name);
                 // }
 
+                $('select[id*="court-select"]').hide();
+
                 $bracketPositions = data.bracketPositions;
                 $nonAdvanceablePositions = ['champion', 'consolation-champion', 'third-place', 'seventh-place'];
 
@@ -324,7 +545,7 @@ $(document).ready( function () {
                             }
 
                             $('#' + $positionWithDashes).html($name);
-                            if(!$nonAdvanceablePositions.includes($positionWithDashes)) {
+                            if(!$nonAdvanceablePositions.includes($positionWithDashes) && $name != "") {
                                 $('#' + $positionWithDashes).addClass('advanceable');
                             }
                         }
@@ -367,26 +588,140 @@ $(document).ready( function () {
                 }
 
                 $matches = data.matches;
+                $courtCount = data.courtCount;
+
+                $('.winner').removeClass('winner');
+                $('input[id*="score-input"]').attr('hidden', true);
+
+                $courtsInUse = data.courtsInUse;
+                $firstRoundCourtSelects = $('select[id*=first-round-court-select]');
+                $firstRoundCourtSelects.show();
+
+
+                $firstRoundCourtSelects.each(function() {
+                    $(this).find('option').remove().end();
+
+                    for (let increment = 0; increment <= $courtCount; increment++) {
+                        if(increment === 0) {
+                            $selected = 'selected ';
+                        } else {
+                            $selected = '';
+                        }
+
+                        if($courtsInUse.includes(increment) && increment != 0) {
+                            $courtAvailability = 'disabled';
+                        } else {
+                            $courtAvailability = '';
+                        }
+
+                        if(increment === 0) {
+                            $titleOfOption = 'Waiting For Court';
+                        } else {
+                            $titleOfOption = "Court " + increment;
+                        }
+
+                        $(this).attr('data-match', 0);
+                        $(this).append('<option ' + $selected + $courtAvailability + ' value="' + increment + '">' + $titleOfOption + '</option>');
+                    }
+                })
+
+
+                if(!Array.isArray($matches) && Object.keys($matches).length === 1) {
+                    $matchObject = $matches[Object.keys($matches)[0]];
+                    $matches = [];
+                    $matches.push($matchObject);
+                } else {
+                    if(!Array.isArray($matches)) {
+                        $setOfMatches = [];
+                        for (const [key, value] of Object.entries($matches)) {
+                            $setOfMatches.push($matches[key]);
+                        }
+                        $matches = $setOfMatches;
+                    }
+                }
+
                 $matches.forEach(function($match, $index) {
                     $winnerPosition = $match.score_input.slice(0, -12);
                     $winnerPositions = ['champion', 'consolation-champion', 'third-place', 'seventh-place'];
-                    $('#' + $match.loser_bracket_position).removeClass('winner');
-                    $('#' + $match.loser_bracket_position + '-school').removeClass('winner');
-                    $('#' + $match.winner_bracket_position).addClass('winner');
-                    $('#' + $match.winner_bracket_position + '-school').addClass('winner');
-                    $('#' + $match.score_input).removeAttr('hidden').val($match.score);
-                    if($match.score !== null) {
-                        $('#' + $match.score_input).addClass('match-complete');
+                    if($match.loser_bracket_position != "") {
+                        $('#' + $match.loser_bracket_position).removeClass('winner');
+                        $('#' + $match.loser_bracket_position + '-school').removeClass('winner');
+                        $('#' + $match.winner_bracket_position).addClass('winner');
+                        $('#' + $match.winner_bracket_position + '-school').addClass('winner');
+
+                        $('#' + $match.score_input).removeAttr('hidden').val($match.score);
+                        if($match.score !== null) {
+                            $('#' + $match.score_input).addClass('match-complete');
+                        }
+                        if($winnerPositions.includes($winnerPosition)) {
+                            $('#' + $winnerPosition).addClass('winner');
+                        }
                     }
-                    if($winnerPositions.includes($winnerPosition)) {
-                        $('#' + $winnerPosition).addClass('winner');
+
+                    $courtSelect= $('#' + $courtSelectMatchScoreInputAssociations[$match.score_input]);
+                    $courtSelect.show();
+                    $courtSelect.attr('data-match', $match.id);
+
+                    $courtSelect.find('option').remove().end();
+                    for (let increment = 0; increment <= $courtCount; increment++) {
+
+                        if($match.court === increment) {
+                            $selected = 'selected ';
+                        } else {
+                            $selected = '';
+                        }
+
+                        if($courtsInUse.includes(increment) && $match.court != increment && increment != 0) {
+                            $courtAvailability = 'disabled';
+                        } else {
+                            $courtAvailability = '';
+                        }
+
+                        if(increment === 0) {
+                            if($match.score != null) {
+                                $titleOfOption = 'Match Finished';
+                            } else {
+                                $titleOfOption = 'Waiting For Court';
+                            }
+                        } else {
+                            $titleOfOption = "Court " + increment;
+                        }
+
+                        $courtSelect.append('<option ' + $selected + $courtAvailability + ' value="' + increment + '">' + $titleOfOption + '</option>');
                     }
+
+
                 });
 
             }
         });
 
         activateRemoveSeededPlayerButtons();
+    }
+
+    $courtSelects = $('select[id*="court-select"]');
+    $courtSelects.change(function(e) {
+        e.preventDefault();
+        var matchID = $(this).attr('data-match');
+        var court = $(this).val();
+        var courtSelect = $(this).attr('id');
+        var scoreInput = getObjKey($courtSelectMatchScoreInputAssociations, courtSelect);
+
+        saveCourtSelection(matchID, court, scoreInput);
+    });
+
+    function saveCourtSelection(matchID, court, scoreInput = "") {
+        var tournament_id = $('#tournament_id').html();
+        var bracket = $('.selected-button').attr('id');
+        $.ajax({
+            type:'POST',
+            async:false,
+            url:'/saveCourtSelection',
+            data:{tournament_id:tournament_id, bracket:bracket, court:court, matchID:matchID, scoreInput:scoreInput},
+            success:function(data){
+                fillBracketData();
+            }
+        });
     }
 
     function activateRemoveSeededPlayerButtons() {
@@ -700,27 +1035,15 @@ $(document).ready( function () {
         $winningPath = winningPathAssociations[$winningPlayerBracketPosition];
         $losingPath = losingPathAssociations[$losingPlayerBracketPosition];
 
-        // $('#' + $winningPlayerBracketPosition).removeClass('winner');
-        // $('#' + $losingPlayerBracketPosition).removeClass('winner');
-        // $('#' + $winningPlayerBracketPosition + '-school').removeClass('winner');
-        // $('#' + $losingPlayerBracketPosition + '-school').removeClass('winner');
-        //
-        // $('#' + $winningPath).html($winningSchoolName);
-        // $('#' + $winningPath).addClass('advanceable');
-        // $('#' + $winningPath).attr('data-id', $winningPlayerID);
-        // $('#' + $winningPath + '-score-input').removeAttr('hidden');
-        // $('#' + $winningPath + '-score-input').html('');
-        // $('#' + $winningPath + '-score-input').attr('data-winner', $winningPlayerID);
-        // $('#' + $winningPath + '-score-input').attr('data-loser', $losingPlayerID);
-        //
-        // $('#' + $losingPath).html($losingSchoolName);
-        // $('#' + $losingPath).addClass('advanceable');
-        // $('#' + $losingPath).attr('data-id', $losingPlayerID);
-
         $bracket = $('.selected-button').attr('id');
         $tournament_id = $('#tournament_id').html();
 
         saveMatch($bracket, $winningPlayerID, $losingPlayerID, $winningPlayerBracketPosition, $losingPlayerBracketPosition, '', $tournament_id);
+
+        $scoreInputWinner = winningPathAssociations[$winningPath] + "-score-input";
+        $scoreInputLoser = winningPathAssociations[$losingPath] + "-score-input";
+        saveBasicMatch($tournament_id, $bracket, $scoreInputWinner);
+        saveBasicMatch($tournament_id, $bracket, $scoreInputLoser);
 
         fillBracketData();
 
@@ -749,11 +1072,29 @@ $(document).ready( function () {
             },
             success:function(data){
                 console.log('Saved score successfully');
+                saveCourtSelection(data.matchID, 0);
             }
         });
     }
 
-    function saveMatch(bracket, winner, loser, winnerBracketPosition, loserBracketPosition, score, tournament_id) {
+    function saveBasicMatch(tournament_id, bracket, score_input) {
+        $.ajax({
+            type:'POST',
+            url:'/saveBasicMatch',
+            async:false,
+            data:{
+                bracket:bracket,
+                tournament_id:tournament_id,
+                score_input:score_input
+            },
+            success:function(data){
+                console.log('Saved match successfully');
+            }
+        });
+    }
+
+
+    function saveMatch(bracket, winner, loser, winnerBracketPosition, loserBracketPosition, score, tournament_id, score_input = "") {
         $.ajax({
             type:'POST',
             url:'/saveMatch',
@@ -766,6 +1107,7 @@ $(document).ready( function () {
                 tournament_id:tournament_id,
                 winnerBracketPosition:winnerBracketPosition,
                 loserBracketPosition:loserBracketPosition,
+                score_input:score_input
             },
             success:function(data){
                 console.log('Saved match successfully');

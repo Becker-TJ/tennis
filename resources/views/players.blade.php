@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    <br>
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -70,14 +71,13 @@
 
                         </form>
 
-                        <table id="myTable" class="table table-striped">
+                        <table id="playerDisplayTable" class="table table-striped">
                             <thead>
                             <tr class="fa fa-sort-name" align="center">
                                 <th scope="col">Rank</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">School</th>
                                 <th scope="col">Class</th>
-                                <th scope="col">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -87,7 +87,6 @@
                                     <td class="table-cell">{{$player->first_name . ' ' . $player->last_name}}</td>
                                     <td class="table-cell">{{$player->name}}</td>
                                     <td align="center" class="table-cell">{{$player->conference}}</td>
-                                    <td align="center" class="table-cell"><i class="material-icons" style="color:green">mode_edit</i><i class="material-icons" style="color:red">delete</i></td>
                                 </tr>
                             @endforeach
                             </tbody>

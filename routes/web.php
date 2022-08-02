@@ -59,6 +59,7 @@ Route::get('/message', function () {
 Route::post('/getmsg', [AjaxController::class, 'index']);
 
 Route::post('/savePlayerPositions', [AjaxController::class, 'savePlayerPositions']);
+Route::post('/saveCourtSelection', [AjaxController::class, 'saveCourtSelection']);
 Route::post('/inviteSchools', [AjaxController::class, 'inviteSchools']);
 Route::post('/removeSeededPlayer', [AjaxController::class, 'removeSeededPlayer']);
 Route::post('/addNewSeededPlayer', [AjaxController::class, 'addNewSeededPlayer']);
@@ -70,6 +71,7 @@ Route::post('/getBracketData', [AjaxController::class, 'getBracketData']);
 Route::post('/getRosterForTournament', [AjaxController::class, 'getRosterForTournament']);
 Route::post('/saveScore', [AjaxController::class, 'saveScore']);
 Route::post('/saveMatch', [AjaxController::class, 'saveMatch']);
+Route::post('/saveBasicMatch', [AjaxController::class, 'saveBasicMatch']);
 
 //Route::get('/posts/{post}', function ($post) {
 //    $posts = [

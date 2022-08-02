@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    <br>
 
     <div class="container-fluid">
 
@@ -14,30 +15,30 @@
 
                     <div class="row">
                         <div class="col-lg-6">
-                            <table id="example" class="table table-striped" style="width:100%">
+                            <table id="tournament-headings" class="table" style="width:100%">
                                 <tbody>
                                 <tr>
-                                    <td>{{date('m-d-Y', strtotime($tournament->date))}} ({{date('g:ia', strtotime($tournament->time))}} Start)</td>
+                                    <td><span class="tournament-sub-title">Date: </span>{{date('m-d-Y', strtotime($tournament->date))}} ({{date('g:ia', strtotime($tournament->time))}} Start)</td>
 
                                 </tr>
                                 <tr>
-                                    <td>Location: {{$tournament->location_name}}</td>
+                                    <td><span class="tournament-sub-title">Location: </span>{{$tournament->location_name}}</td>
 
                                 </tr>
                                 <tr>
-                                    <td>Address: {{$tournament->address}}</td>
+                                    <td><span class="tournament-sub-title">Address: </span>{{$tournament->address}}</td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="col-lg-6">
-                            <table id="example" class="table table-striped" style="width:100%">
+                            <table id="tournament-headings-second-column" class="table" style="width:100%">
                                 <tbody>
                                 <tr>
-                                    <td>Host: <a href="/school/{{$tournament->host_id}}">{{$tournament->getHost()->name}}</a></td>
+                                    <td><span class="tournament-sub-title">Host: </span><a href="/school/{{$tournament->host_id}}">{{$tournament->getHost()->name}}</a></td>
                                 </tr>
                                 <tr>
-                                    <td>Participants:
+                                    <td><span class="tournament-sub-title">Participants: </span>
                                         <?php
                                             $iteration = 1;
                                             $lastIteration = count($acceptedAttendees);
@@ -92,8 +93,8 @@
                     <br>
 
                     <div class="btn-group .btn-girls">
-                        <button id="showEditRosterTable" type="button" class="btn col-md-2 offset-md-4">Show/Edit Rosters</button>
-                        <select id="rosterSelect" name="rosterSelect" type="button" class="btn col-md-2 offset-md-6 form-control">
+                        <button id="showEditRosterTable" type="button" class="col-md-1 offset-md-4 bn3637">Show Rosters</button>
+                         <select id="rosterSelect" name="rosterSelect" type="button" class="btn col-md-2 offset-md-7 form-control">
 
                             @foreach($acceptedAttendees as $attendee)
                                 <option value="{{$attendee->school_id}}">{{$attendee->getSchool()->name}}</option>
@@ -412,19 +413,19 @@
             }
 
             .give-top-border {
-                border-top: 2px solid black;
+                border-top: 4px solid #333;
             }
 
             .give-bottom-border {
-                border-bottom: 2px solid black;
+                border-bottom: 4px solid #333;
             }
 
             .give-right-border {
-                border-right: 2px solid black;
+                border-right: 4px solid #333;
             }
 
             .give-left-border {
-                border-left: 2px solid black;
+                border-left: 4px solid #333;
             }
         </style>
         <table id="bracket">
@@ -460,7 +461,8 @@
                 <td></td>
                 <td id="first-consolation-round-one-top">First Consolation Round One Top</td>
                 <td class="give-left-border give-right-border">
-                    <select id="first-first-round-court-select"></select>
+                    <select id="first-first-round-court-select">
+                    </select>
                 </td>
                 <td id="first-winners-round-one-top">First Winners Round One Top</td>
                 <td></td>

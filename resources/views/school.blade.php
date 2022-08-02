@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    <br>
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -34,7 +35,7 @@
                                     <td class="table-cell">{{$player->position}}</td>
                                     <td class="table-cell">{{$player->id}}</td>
                                     <td class="table-cell reorder-cell"><img class="reorder-icon" src="{{URL::to('/')}}/images/reorder-icon.png"></td>
-                                    <td class="position_name_td">{{$positionNamesOrder[$increment++]}}</td>
+                                    <td class="position_name_td position-title-td-highlight">{{$positionNamesOrder[$increment++]}}</td>
                                     <td class="table-cell">{{$player->first_name. ' ' . $player->last_name}}</td>
                                     <td class="table-cell">{{$player->grade}}</td>
                                     <td align="center" class="table-cell">

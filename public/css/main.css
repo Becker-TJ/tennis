@@ -2551,6 +2551,7 @@ input, select, textarea {
 			}
 
 	#nav {
+        text-align:center;
 		cursor: default;
 		background-color: #333;
 		background-image: -moz-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.3)), url("images/bg01.png");
@@ -2684,9 +2685,14 @@ input, select, textarea {
         font-size:57px;
         line-height: 52px;
         color:white;
+        float:left;
 
 
 
+    }
+    #home-page-buttons {
+        float:left;
+        clear:both;
     }
 
 
