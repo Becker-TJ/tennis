@@ -59,15 +59,6 @@
                                 <li><a class="navbar-brand" href="{{ url('/schools') }}">
                                         {{ config('schools', 'View Schools') }}
                                     </a></li>
-                                <li><a class="navbar-brand" href="{{ url('/school/1') }}">
-                                        {{ config('school/1', 'school/1') }}
-                                    </a></li>
-                                <li><a class="navbar-brand" href="{{ url('/tournament/51') }}">
-                                        {{ config('tournament/51', 'tournament/51') }}
-                                    </a></li>
-                                <li><a class="navbar-brand" href="{{ url('/addschool') }}">
-                                        {{ config('addschool', 'addschool') }}
-                                    </a></li>
 
                                 @guest
                                     <li class="nav-item">

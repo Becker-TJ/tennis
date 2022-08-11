@@ -38,27 +38,17 @@
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
                 <a class="navbar-brand" href="{{ url('/createtournament') }}">
-                    {{ config('createtournament', 'createtournament') }}
+                    {{ config('createtournament', 'Create Tournament') }}
                 </a>
                 <a class="navbar-brand" href="{{ url('/tournaments') }}">
-                    {{ config('tournaments', 'tournaments') }}
-                </a>
-                <a class="navbar-brand" href="{{ url('/addschool') }}">
-                    {{ config('addschool', 'addschool') }}
+                    {{ config('tournaments', 'View Tournaments') }}
                 </a>
                 <a class="navbar-brand" href="{{ url('/players') }}">
-                    {{ config('players', 'players') }}
+                    {{ config('players', 'Player Ranks') }}
                 </a>
                 <a class="navbar-brand" href="{{ url('/schools') }}">
-                    {{ config('schools', 'schools') }}
+                    {{ config('schools', 'View Schools') }}
                 </a>
-                <a class="navbar-brand" href="{{ url('/school/1') }}">
-                    {{ config('school/1', 'school/1') }}
-                </a>
-                <a class="navbar-brand" href="{{ url('/tournament/51') }}">
-                    {{ config('tournament/51', 'tournament/51') }}
-                </a>
-
             </ul>
 
             <!-- Right Side Of Navbar -->
