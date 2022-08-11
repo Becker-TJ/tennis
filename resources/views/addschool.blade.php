@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'Add School')
 @section('content')
     <br>
     <div class="container">

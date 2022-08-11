@@ -12,6 +12,13 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="{{asset('css/main.css')}}" />
+        <meta name="theme-color" content="#333" />
+        <!-- Chrome, Firefox OS and Opera -->
+        <meta name="theme-color" content="#333">
+        <!-- Windows Phone -->
+        <meta name="msapplication-navbutton-color" content="#333">
+        <!-- iOS Safari -->
+        <meta name="apple-mobile-web-app-status-bar-style" content="#333">
 	</head>
 	<body class="is-preload">
 		<div id="page-wrapper">
