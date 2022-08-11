@@ -52,6 +52,7 @@ Route::post('/players', [PlayerController::class, 'showFilteredPlayers']);
 Route::get('schools', [SchoolController::class, 'showSchools']);
 Route::get('/school/{school}', [SchoolController::class, 'showSchool'])->name('school');
 Route::post('addnewplayer', [PlayerController::class, 'create']);
+Route::post('/school/addnewplayer', [PlayerController::class, 'create']);
 
 Route::get('/message', function () {
     return view('message');
