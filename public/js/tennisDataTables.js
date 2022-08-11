@@ -29,7 +29,7 @@ $(document).ready( function () {
 
     var allSchoolsTable = $('#allSchoolsTable').DataTable( {
         paging:false,
-        searching:false,
+        searching:true,
         rowReorder: {
             selector: '.reorder-cell',
             snapX:true,

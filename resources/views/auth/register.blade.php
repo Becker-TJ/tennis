@@ -9,7 +9,7 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form id="register-form" method="POST" action="{{ route('register') }}">
                         @csrf
 
                         <div class="form-group row">
@@ -41,7 +41,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Your Password') }}</label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
@@ -55,12 +55,20 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Your Password') }}</label>
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
+
+{{--                        <div class="form-group row">--}}
+{{--                            <label for="coach-passcode" class="col-md-4 col-form-label text-md-right">{{ __('New Coach Passcode') }}</label>--}}
+
+{{--                            <div class="col-md-6">--}}
+{{--                                <input id="coach-passcode" type="password" class="form-control" name="new_coach_passcode" required>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
@@ -75,4 +83,6 @@
         </div>
     </div>
 </div>
+    <script src="{{asset('js/jquery.min.js')}}"></script>
+    <script src="{{asset('js/register.js')}}"></script>
 @endsection

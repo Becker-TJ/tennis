@@ -372,6 +372,20 @@ class AjaxController extends Controller
         return response()->json(['success'=>'Saved Seeds']);
     }
 
+    public function compareCoachPasscode(Request $request) {
+        $input = $request->all();
+        $enteredPasscode = $input['enteredPasscode'];
+        if($enteredPasscode === "Kick Serve") {
+            return response()->json([
+                'passcodeMatch' => true
+            ]);
+        } else {
+            return response()->json([
+                'passcodeMatch' => false
+            ]);
+        }
+    }
+
     public function inviteSchools(Request $request)
     {
         $input = $request->all();

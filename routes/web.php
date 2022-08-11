@@ -51,7 +51,7 @@ Route::post('/players', [PlayerController::class, 'showFilteredPlayers']);
 
 Route::get('schools', [SchoolController::class, 'showSchools']);
 Route::get('/school/{school}', [SchoolController::class, 'showSchool'])->name('school');
-Route::post('/school/addnewplayer', [PlayerController::class, 'create']);
+Route::post('addnewplayer', [PlayerController::class, 'create']);
 
 Route::get('/message', function () {
     return view('message');
@@ -73,6 +73,7 @@ Route::post('/getRosterForTournament', [AjaxController::class, 'getRosterForTour
 Route::post('/saveScore', [AjaxController::class, 'saveScore']);
 Route::post('/saveMatch', [AjaxController::class, 'saveMatch']);
 Route::post('/saveBasicMatch', [AjaxController::class, 'saveBasicMatch']);
+Route::post('/compareCoachPasscode', [AjaxController::class, 'compareCoachPasscode']);
 
 //Route::get('/posts/{post}', function ($post) {
 //    $posts = [

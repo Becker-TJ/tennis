@@ -54,7 +54,7 @@
                                         {{ config('tournaments', 'View Tournaments') }}
                                     </a></li>
 								<li><a class="navbar-brand" href="{{ url('/players') }}">
-                                        {{ config('players', 'Player Ranks') }}
+                                        {{ config('players', 'Player Rankings') }}
                                     </a></li>
                                 <li><a class="navbar-brand" href="{{ url('/schools') }}">
                                         {{ config('schools', 'View Schools') }}

@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Player Rankings')
 
 @section('content')
     <br>
