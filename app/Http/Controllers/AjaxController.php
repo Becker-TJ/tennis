@@ -120,6 +120,44 @@ class AjaxController extends Controller
 
     }
 
+    public function addNewSeededDoublesTeam(Request $request) {
+        $input = $request->all();
+        $tournament_id = intval($input['tournament_id']);
+        $bracket = $input['bracket'];
+        $player_one_id = intval($input['player_one_id']);
+        $player_two_id = intval($input['player_two_id']);
+
+        $doublesTeamClass = new DoublesTeam;
+        $doublesTeam = $doublesTeamClass->findDoublesTeam($player_one_id, $player_two_id);
+
+        if(!$doublesTeam) {
+            $doublesTeam = new DoublesTeam;
+            $doublesTeam->player_1 = $player_one_id;
+            $doublesTeam->player_2 = $player_two_id;
+            $doublesTeam->saveOrFail();
+        }
+
+
+        $bracketPosition = BracketPosition::all()->where('tournament_id', '=', $tournament_id)->where('bracket', '=', $bracket)->first();
+        $tournament = Tournament::find($tournament_id);
+        $numberOfTeams = $tournament->team_count;
+
+        $addedTeam = false;
+        for ($x = 1; $x <= $numberOfTeams; $x++) {
+            $seed = $x . '_seed';
+            if ($bracketPosition->$seed === 0) {
+                $bracketPosition->$seed = $doublesTeam->id;
+                $bracketPosition->saveOrFail();
+                $addedTeam = true;
+                break;
+            }
+        }
+        if(!$addedTeam) {
+            return response()->json(['success' => 'already full']);
+        } else {
+            return response()->json(['success'=> 'added team']);
+        }
+    }
 
 
     public function getPlayerDetails(Request $request) {
@@ -253,7 +291,10 @@ class AjaxController extends Controller
                         if($player->school_id === $schoolID) {
                             if(!in_array($player->id, $doublesPlayersToUpdateInSchoolPlayersList)) {
                                 $foundAPlayerInPreviousBracket = true;
-                                $doublesPlayersToUpdateInSchoolPlayersList[$player->id] = $bracket;
+                                $doublesPlayerInfo = [];
+                                $doublesPlayerInfo['bracket'] = $bracket;
+                                $doublesPlayerInfo['doublesTeamID'] = $doublesTeam->id;
+                                $doublesPlayersToUpdateInSchoolPlayersList[$player->id] = $doublesPlayerInfo;
                             }
                         }
                     }
@@ -267,13 +308,15 @@ class AjaxController extends Controller
             $player->real_player = true;
             if($player->in_tournament != true) {
                 if(array_key_exists($player->id, $doublesPlayersToUpdateInSchoolPlayersList)) {
-                    $playerBracket = $doublesPlayersToUpdateInSchoolPlayersList[$player->id];
+                    $playerBracket = $doublesPlayersToUpdateInSchoolPlayersList[$player->id]['bracket'];
                     $player->$playerBracket = true;
                     $player->in_tournament = true;
+                    $player->doubles_team_id = $doublesPlayersToUpdateInSchoolPlayersList[$player->id]['doublesTeamID'];
                     $player->bracket_name = $bracketsPrettyPrintAssociations[$playerBracket];
                     $correctPlayerOrder[] = $player;
                 } else {
                     $player->bracket_name = "-";
+                    $player->doubles_team_id = false;
                     $playersNotInTournament[] = $player;
                 }
             }
@@ -689,7 +732,7 @@ class AjaxController extends Controller
 
             $doublesTeams = $tournament->getDoublesSortedByTournamentSeed($requestedBracket);
 
-            for ($increment = 1; $increment < (count($doublesTeams) + 1); $increment++) {
+            for ($increment = 1; $increment <= (count($doublesTeams) + 1); $increment++) {
                 foreach ($doublesTeams as $team) {
                     if($team)
 
@@ -710,9 +753,14 @@ class AjaxController extends Controller
                 }
             }
 
-            foreach ($bracketPositionTitles as $key => $title) {
-                if ($key != 0 && $bracketPositions->$title != 0) {
-                    $team = $doublesTeams[$bracketPositions->$title];
+            foreach ($bracketPositionTitles as $title) {
+                if ($bracketPositions->$title != 0) {
+                    foreach($doublesTeams as $doublesTeam) {
+                        if($doublesTeam['id'] === $bracketPositions->$title) {
+                            $team = $doublesTeam;
+                            break;
+                        }
+                    }
                     $playerOne = $team[0];
                     $playerTwo = $team[1];
                     $playersNamesCombined = $playerOne->last_name.' / '.$playerTwo->last_name;

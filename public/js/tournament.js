@@ -250,16 +250,17 @@ $(document).ready( function () {
             { data: 'id' }, /* index = 1 */
             { data: 'reorder'},/* index = 2 */
             { data: 'position' }, /* index = 3 */
-            { data: 'name' }, /* index = 4 */
-            { data: 'conference' }, /* index = 5 */
-            { data: 'actions' }, /* index = 6 */
+            { data: 'school' }, /* index = 4 */
+            { data: 'name' }, /* index = 5 */
+            { data: 'conference' }, /* index = 6 */
+            { data: 'actions' }, /* index = 7 */
         ],
 
         'columnDefs': [
             { targets: [0,1], visible: false },
             { targets: [2], orderable: false, className:'reorder-cell'},
-            { targets: [3,5,6], orderable: false, 'className': 'center-align' },
-            { targets: [4], orderable:false}
+            { targets: [3,6,7], orderable: false, 'className': 'center-align' },
+            { targets: [4,5], orderable:false}
         ]
         //this will be useful for adding a button in the same line as the search bar for creating tournaments etc
         // "initComplete": function( settings, json ) {
@@ -384,6 +385,14 @@ $(document).ready( function () {
         var gender = $('.selected-button').attr('data-gender');
         var bracket = $('.selected-button').attr('id');
         var school_id = $('#rosterSelect').find(':selected').val();
+        var firstDoublesPlayerName = $('#selectingDoublesPartner').attr('data-player-name');
+        var firstDoublesPlayerID = $('#selectingDoublesPartner').attr('data-player-id');
+
+        if($('#selectingDoublesPartner').attr('data-value') === "false") {
+            var selectingDoublesPartner = false;
+        } else {
+            var selectingDoublesPartner = true;
+        }
 
         $.ajax({
             type:'POST',
@@ -429,8 +438,10 @@ $(document).ready( function () {
 
                     if($position === true || $inTournament || !$realPlayer || $fullTournament) {
                         $actions = "";
-                    } else if ($realPlayer && !$fullTournament){
-                        $actions = '<img class="add-player-to-tournament-action" data-id="add-player-to-tournament-action" src="/images/plus-sign.jpg">'
+                    } else if ($realPlayer && !$fullTournament && !selectingDoublesPartner){
+                        $actions = '<img class="add-player-to-tournament-action" data-id="add-player-to-tournament-action" src="/images/plus-sign.jpg">';
+                    } else if ($realPlayer && !$fullTournament && selectingDoublesPartner && ($id != firstDoublesPlayerID)) {
+                        $actions = '<button class="pairDoublesPartnersButton">Pair with ' + firstDoublesPlayerName + '</button>';
                     }
 
 
@@ -447,25 +458,69 @@ $(document).ready( function () {
                         $(row).addClass('highlight-player');
                     }
 
-                    if(($position === false || $position == null) && $inTournament) {
-                        $(row).addClass('pending-invite');
+                    // if(($position === false || $position == null) && $inTournament) {
+                    //     $(row).addClass('pending-invite');
+                    // }
+                    $showRosterCurrentlyEnabled = $("#showEditRosterTable").hasClass('show-roster-enabled');
+                    if($showRosterCurrentlyEnabled) {
+                        $('#seedsTable').DataTable().rows(function (idx, data, node) {
+                            if(Number.isInteger($player.doubles_team_id)) {
+                                if(data.id === $player.doubles_team_id && data.id !== 0){
+                                    $(node).addClass('highlight-player');
+                                }
+                            } else {
+                                if(data.id === $player.id && data.id !== 0){
+                                    $(node).addClass('highlight-player');
+                                }
+                            }
+                        });
                     }
 
-                    $('#seedsTable').DataTable().rows(function (idx, data, node) {
-                        if(data.id === $player.id && data.id != 0){
-                            $(node).addClass('highlight-player');
-                        }
-                    });
                     $increment++;
                 }
             }
         });
         activateAddPlayerToTournamentActions();
+        activatePairDoublesPartnerActions();
     }
+
+    function activatePairDoublesPartnerActions() {
+        $('.pairDoublesPartnersButton').click(function(e) {
+            e.preventDefault();
+
+            $selectingDoublesPartner = $('#selectingDoublesPartner');
+            $selectingDoublesPartner.attr('data-value', false);
+
+            var currentRow = $(this).closest('tr');
+            var data = $('#editRosterTable').DataTable().row(currentRow).data();
+
+            var tournament_id = $('#tournament_id').html();
+            var bracket = $('.selected-button').attr('id');
+            var player_one_id = $selectingDoublesPartner.attr('data-player-id');
+            var player_two_id = data.id;
+
+            $.ajax({
+                type:'POST',
+                async:false,
+                url:'/addNewSeededDoublesTeam',
+                data:{tournament_id:tournament_id, bracket:bracket, player_one_id:player_one_id, player_two_id:player_two_id},
+                success:function(data){
+                    fillBracketData();
+                    fillRosterTable();
+                    $selectingDoublesPartner.attr('data-value', 'false');
+                    $selectingDoublesPartner.attr('data-player-id', '0');
+                    $selectingDoublesPartner.attr('data-player-name', 'empty');
+                }
+            });
+        });
+    }
+
 
     function activateAddPlayerToTournamentActions() {
         $('[data-id=add-player-to-tournament-action]').click(function(e) {
             e.preventDefault();
+
+            $selectingDoublesPartner = $('#selectingDoublesPartner').attr('data-value')
 
             var currentRow = $(this).closest('tr');
             var data = $('#editRosterTable').DataTable().row(currentRow).data();
@@ -473,6 +528,16 @@ $(document).ready( function () {
             var tournament_id = $('#tournament_id').html();
             var bracket = $('.selected-button').attr('id');
             var player_id = data.id;
+            var player_name = data.name;
+
+            if(bracket.includes('Doubles')) {
+                $('#selectingDoublesPartner').attr('data-player-id', player_id);
+                $('#selectingDoublesPartner').attr('data-value', true);
+                $('#selectingDoublesPartner').attr('data-player-name', player_name);
+                fillRosterTable();
+                return;
+            }
+
 
             $.ajax({
                 type:'POST',
@@ -487,9 +552,10 @@ $(document).ready( function () {
 
         });
     }
-
     fillBracketData();
     fillRosterTable();
+
+    $('#editRosterTable').hide();
     function fillBracketData() {
         var tournament_id = $('#tournament_id').html();
         var requestedBracket = $('.selected-button').attr('id');
@@ -517,7 +583,6 @@ $(document).ready( function () {
 
                 $increment = 0;
                 $reorder = '<img class="reorder-icon" src="/images/reorder-icon.png">'
-                $actions = '<img class="remove-seeded-player" data-id="remove-seeded-player" src="/images/x-icon.png"</img>';
 
                 for (const [$position, $value] of Object.entries($bracketPositions)) {
                     if(!($position == 'tournament_id' || $position == 'bracket' || $position == 'id' || $position == 'created_at' || $position == 'updated_at')) {
@@ -538,10 +603,11 @@ $(document).ready( function () {
                             if($value === 0) {
                                 $name = "";
                             } else if (!$isASeed){
-                                $bracketPositionTitle = $position + '_school';
-                                $name = $bracketPositions[$bracketPositionTitle];
+                                // $bracketPositionTitle = $position + '_school';
+                                $name = $bracketPositions[$position];
                             } else {
                                 $name = $value;
+                                $schoolName = $bracketPositions[$position + '_school'];
                             }
 
                             $('#' + $positionWithDashes).html($name);
@@ -555,12 +621,13 @@ $(document).ready( function () {
                         }
 
 
-                        if($value === "-") {
+                        if($value === "- / -") {
                             $seedsDataTable.row.add({
                                 'seq': $increment,
                                 'id': 0,
                                 'reorder': $reorder,
                                 'position': $positionWithDashes,
+                                'school': "-",
                                 'name': "-",
                                 'conference': "-",
                                 'actions': "-",
@@ -573,12 +640,19 @@ $(document).ready( function () {
                         $positionConference = $position + '_conference';
                         $positionID = $position + '_id';
 
+                        if($value === "-") {
+                            $actions = "-"
+                        } else {
+                            $actions = '<img class="remove-seeded-player" data-id="remove-seeded-player" src="/images/x-icon.png"</img>';
+                        }
+
                         if($isASeed) {
                             $seedsDataTable.row.add({
                                 'seq': $increment,
                                 'id': $bracketPositions[$positionID],
                                 'reorder': $reorder,
                                 'position': $positionWithDashes,
+                                'school': $schoolName,
                                 'name': $value,
                                 'conference': $bracketPositions[$positionConference],
                                 'actions': $actions,
@@ -1046,6 +1120,7 @@ $(document).ready( function () {
         saveBasicMatch($tournament_id, $bracket, $scoreInputLoser);
 
         fillBracketData();
+        fillRosterTable();
 
         // $($selectorStringForID).addClass('winner');
         // $('#' + $($selectorStringForID).attr('id') + '-school').addClass('winner');

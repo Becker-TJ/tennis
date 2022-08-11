@@ -61,6 +61,8 @@ class Tournament extends Model
                 $playerDetails['id'] = 0;
             }
 
+            //playerdetails[id] mayyyy be breaking something - for later
+
             $doublesTeams[] = $playerDetails;
         }
 

@@ -10,6 +10,7 @@
             <div class="col-md-10">
                 <div class="card">
                     <div id="tournament_id" style="display:none">{{$tournament->id}}</div>
+                    <div id="selectingDoublesPartner" data-player-name="empty" data-player-id="0" data-value="false" style="display:none"></div>
                     <div class="card-header">{{$tournament->name}}</div>
 {{--                    <button class="btn btn-primary col-md-2 offset-md-5" onclick="location.href='/createtournament/{{$tournament->id}}'" type="button">Edit Tournament</button>--}}
 
@@ -135,7 +136,6 @@
 
 
 
-                    <br>
 
                     <table id="seedsTable" class="display table table-striped">
                         <thead>
@@ -144,23 +144,25 @@
                             <th scope="col">id</th>
                             <th scope="col">Reorder</th>
                             <th scope="col">Seed</th>
+                            <th scope="col">School</th>
                             <th scope="col">Name</th>
-                            <th scope="col">Grade</th>
+                            <th scope="col">Class</th>
                             <th scope="col">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($girlsOneSinglesPlayers as $index => $player)
-                            <tr>
-                                <td class="table-cell">{{$player->position}}</td>
-                                <td class="table-cell">{{$player->id}}</td>
-                                <td class="table-cell reorder-cell"><img class="reorder-icon" src="{{URL::to('/')}}/images/reorder-icon.png"></td>
-                                <td class="position_name_td">teej</td>
-                                <td class="table-cell">{{$player->first_name. ' ' . $player->last_name}}</td>
-                                <td class="table-cell">{{$player->class}}</td>
-                                <td align="center" class="table-cell"><i class="material-icons" style="color:green">mode_edit</i><i class="material-icons" style="color:red">delete</i></td>
-                            </tr>
-                        @endforeach
+
+                        <tr>
+                            <td class="table-cell"></td>
+                            <td class="table-cell"></td>
+                            <td class="table-cell reorder-cell"></td>
+                            <td class="position_name_td"></td>
+                            <td class="table-cell"></td>
+                            <td class="table-cell"></td>
+                            <td class="table-cell"></td>
+                            <td align="center" class="table-cell"></td>
+                        </tr>
+
                         </tbody>
                     </table>
 
