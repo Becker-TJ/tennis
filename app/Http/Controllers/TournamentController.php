@@ -290,7 +290,7 @@ class TournamentController extends Controller
         $tournament['level'] = $data['level'];
         $tournament['privacy_setting'] = $data['privacy_setting'];
 
-        $tournament['host_id'] = 80;
+        $tournament['host_id'] = Auth::user()->school_id;
 
         $tournament->saveOrFail();
 

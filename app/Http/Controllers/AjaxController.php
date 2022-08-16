@@ -722,6 +722,11 @@ class AjaxController extends Controller
             }
 
             foreach ($bracketPositionTitles as $key => $title) {
+                if($bracketPositions->$title === 0) {
+                    $bracketPositions->$title = '-';
+                    continue;
+                }
+
                 if ($bracketPositions->$title != 0) {
                     $player = $singlesPlayers->find($bracketPositions->$title);
                     $playerName = $player->first_name.' '.$player->last_name;
