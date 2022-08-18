@@ -144,8 +144,8 @@
                             <th scope="col">id</th>
                             <th scope="col">Reorder</th>
                             <th scope="col">Seed</th>
-                            <th scope="col">School</th>
-                            <th scope="col">Name</th>
+                            <th class="left-align" scope="col">School</th>
+                            <th class="left-align" scope="col">Player</th>
                             <th scope="col">Class</th>
                             <th scope="col">Actions</th>
                         </tr>

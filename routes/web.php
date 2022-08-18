@@ -43,7 +43,7 @@ Route::post('/createtournament/{tournament}', [TournamentController::class, 'edi
 Route::get('/tournaments', [TournamentController::class, 'showTournaments'])->name('tournaments');
 Route::get('/tournament/{tournament}', [TournamentController::class, 'showTournament'])->name('tournament');
 
-Route::get('/addschool', [SchoolController::class, 'showAddSchool']);
+Route::get('/addschool', [SchoolController::class, 'showAddSchool'])->middleware(['auth', 'check.is.school.assigned']);
 Route::post('/addschool', [SchoolController::class, 'createOrTie']);
 
 Route::get('/players', [PlayerController::class, 'showAllPlayers']);

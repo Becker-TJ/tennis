@@ -507,7 +507,6 @@ class AjaxController extends Controller
     public function saveMatch(Request $request)
     {
         $scoreData = $request->all();
-
         $tournamentID = intval($scoreData['tournament_id']);
         $bracket = $scoreData['bracket'];
         $bracketPositions = BracketPosition::all()->where('tournament_id', '=', $tournamentID)->where('bracket', '=', $bracket)->first();
@@ -703,19 +702,26 @@ class AjaxController extends Controller
             }
 
             for ($increment = 1; $increment <= $tournament->team_count; $increment++) {
-                if($bracketPositions->{$increment.'_seed'} === 0) {
-                    $bracketPositions->{$increment.'_seed'} = "-";
-                    $bracketPositions->{$increment.'_seed_id'} = 0;
-                    $bracketPositions->{$increment.'_seed_school'} = "-";
-                    $bracketPositions->{$increment.'_seed_conference'} = "-";
+                if(is_null($bracketPositions->{$increment . '_seed'})) {
+                    $bracketPositions->{$increment .'_seed'} = "-";
+                    $bracketPositions->{$increment .'_seed_id'} = 0;
+                    $bracketPositions->{$increment .'_seed_school'} = "-";
+                    $bracketPositions->{$increment .'_seed_conference'} = "-";
+                }
+
+                if($bracketPositions->{$increment .'_seed'} === 0) {
+                    $bracketPositions->{$increment .'_seed'} = "BYE";
+                    $bracketPositions->{$increment .'_seed_id'} = "0";
+                    $bracketPositions->{$increment .'_seed_school'} = "BYE";
+                    $bracketPositions->{$increment .'_seed_conference'} = "BYE";
                 }
 
                 foreach ($singlesPlayers as $player) {
                     if ($player->id == $bracketPositions->{$increment.'_seed'}) {
-                        $bracketPositions->{$increment.'_seed'} = $player->first_name.' '.$player->last_name;
-                        $bracketPositions->{$increment.'_seed_id'} = $player->id;
-                        $bracketPositions->{$increment.'_seed_school'} = $player->getSchool()->name;
-                        $bracketPositions->{$increment.'_seed_conference'} = $player->getSchool()->conference;
+                        $bracketPositions->{$increment .'_seed'} = $player->first_name.' '.$player->last_name;
+                        $bracketPositions->{$increment .'_seed_id'} = $player->id;
+                        $bracketPositions->{$increment .'_seed_school'} = $player->getSchool()->name;
+                        $bracketPositions->{$increment .'_seed_conference'} = $player->getSchool()->conference;
                         break;
                     }
                 }
@@ -723,7 +729,10 @@ class AjaxController extends Controller
 
             foreach ($bracketPositionTitles as $key => $title) {
                 if($bracketPositions->$title === 0) {
-                    $bracketPositions->$title = '-';
+                    $bracketPositions->$title = 'BYE';
+                    $bracketPositions->{$title .'_id'} = "0";
+                    $bracketPositions->{$title .'_school'} = "BYE";
+                    $bracketPositions->{$title .'_conference'} = "BYE";
                     continue;
                 }
 
@@ -731,7 +740,7 @@ class AjaxController extends Controller
                     $player = $singlesPlayers->find($bracketPositions->$title);
                     $playerName = $player->first_name.' '.$player->last_name;
                     $schoolName = $player->getSchool()->name;
-                    $bracketPositions->{$title} = $playerName;
+                    $bracketPositions->{$title} = $schoolName;
                     $bracketPositions->{$title.'_id'} = $player->id;
                     $bracketPositions->{$title.'_school'} = $schoolName;
                 }
@@ -751,18 +760,36 @@ class AjaxController extends Controller
 
             $doublesTeams = $tournament->getDoublesSortedByTournamentSeed($requestedBracket);
 
-            for ($increment = 1; $increment <= (count($doublesTeams) + 1); $increment++) {
+            for ($increment = 1; $increment <= (count($doublesTeams)); $increment++) {
                 foreach ($doublesTeams as $team) {
-                    if($team)
-
                     $playerOne = $team[0];
                     $playerTwo = $team[1];
                     if ($team['id'] === $bracketPositions->{$increment.'_seed'}) {
+                        if($team['id'] === 0) {
+                            $bracketPositions->{$increment.'_seed'} = "BYE";
+                            $bracketPositions->{$increment.'_seed_id'} = 0;
+                            $bracketPositions->{$increment.'_seed_school'} = "BYE";
+                            $bracketPositions->{$increment.'_seed_conference'} = "BYE";
+                            break;
+                        }
                         $bracketPositions->{$increment.'_seed'} = $playerOne->last_name.' / '.$playerTwo->last_name;
                         $bracketPositions->{$increment.'_seed_id'} = $team['id'];
+
+                        if($playerOne->getSchool()->name === $playerTwo->getSchool()->name) {
+                            $schoolName = $playerOne->getSchool()->name;
+                            $conference = $playerOne->getSchool()->conference;
+                        } else {
+                            $schoolName = $playerOne->getSchool()->name . ' / ' . $playerTwo->getSchool()->name;
+                            if($playerOne->getSchool()->conference === $playerTwo->getSchool()->conference) {
+                                $conference = $playerOne->getSchool()->conference;
+                            } else {
+                                $conference = $playerOne->getSchool()->conference . ' / ' . $playerTwo->getSchool()->conference;
+                            }
+                        }
+
                         if($playerOne->id != 0) {
-                            $bracketPositions->{$increment.'_seed_school'} = $playerOne->getSchool()->name;
-                            $bracketPositions->{$increment.'_seed_conference'} = $playerOne->getSchool()->conference;
+                            $bracketPositions->{$increment.'_seed_school'} = $schoolName;
+                            $bracketPositions->{$increment.'_seed_conference'} = $conference;
                         } else {
                             $bracketPositions->{$increment.'_seed_school'} = $playerOne->school;
                             $bracketPositions->{$increment.'_seed_conference'} = $playerOne->conference;
@@ -773,6 +800,7 @@ class AjaxController extends Controller
             }
 
             foreach ($bracketPositionTitles as $title) {
+
                 if ($bracketPositions->$title != 0) {
                     foreach($doublesTeams as $doublesTeam) {
                         if($doublesTeam['id'] === $bracketPositions->$title) {
@@ -783,8 +811,16 @@ class AjaxController extends Controller
                     $playerOne = $team[0];
                     $playerTwo = $team[1];
                     $playersNamesCombined = $playerOne->last_name.' / '.$playerTwo->last_name;
-                    $bracketPositions->{$title} = $playersNamesCombined;
+                    if($playerOne->getSchool()->name === $playerTwo->getSchool()->name) {
+                        $schoolName = $playerOne->getSchool()->name;
+                    } else {
+                        $schoolName = $playerOne->getSchool()->name . ' / ' . $playerTwo->getSchool()->name;
+                    }
+                    $bracketPositions->{$title} = $schoolName;
                     $bracketPositions->{$title.'_id'} = $team['id'];
+                } else if ($bracketPositions->$title === 0) {
+                    $bracketPositions->$title = "BYE";
+                    $bracketPositions->{$title.'_id'} = 0;
                 }
             }
 

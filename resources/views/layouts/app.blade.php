@@ -63,6 +63,11 @@
             float: right !important;
         }
 
+        .italicize {
+            font-style:italic;
+            font-weight:normal;
+        }
+
         .card-header {
             font-weight:bold;
             font-size:32px;

@@ -310,9 +310,9 @@ class TournamentController extends Controller
             array_shift($bracketPositions);
             array_shift($bracketPositions);
 
-            foreach($bracketPositions as $position) {
-                $bracketPosition->$position = 0;
-            }
+//            foreach($bracketPositions as $position) {
+//                $bracketPosition->$position = 0;
+//            }
 
             $bracketPosition->saveOrFail();
 

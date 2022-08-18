@@ -90,9 +90,7 @@ class SchoolController extends Controller
         $this->tieUserToExistingSchool($lastInsertedId);
 
         $user = Auth::user();
-        $schoolID = intval($user->school_id);
-        $userSchool = School::find($schoolID);
-        return $this->showSchool($userSchool);
+        return redirect()->action([\App\Http\Controllers\SchoolController::class, 'showSchool'], ['school' => $user->school_id]);
     }
 
     public function tieUserToExistingSchool($id = false)
@@ -106,9 +104,6 @@ class SchoolController extends Controller
         }
 
         $user->saveOrFail();
-
-        $schoolID = intval($user->school_id);
-        $userSchool = School::find($schoolID);
-        return $this->showSchool($userSchool);
+        return redirect()->action([\App\Http\Controllers\SchoolController::class, 'showSchool'], ['school' => $user->school_id]);
     }
 }

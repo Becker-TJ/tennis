@@ -260,7 +260,7 @@ $(document).ready( function () {
             { targets: [0,1], visible: false },
             { targets: [2], orderable: false, className:'reorder-cell'},
             { targets: [3,6,7], orderable: false, 'className': 'center-align' },
-            { targets: [4,5], orderable:false}
+            { targets: [4,5], orderable:false, "width": "30%"}
         ]
         //this will be useful for adding a button in the same line as the search bar for creating tournaments etc
         // "initComplete": function( settings, json ) {
@@ -440,8 +440,13 @@ $(document).ready( function () {
                         $actions = "";
                     } else if ($realPlayer && !$fullTournament && !selectingDoublesPartner){
                         $actions = '<img class="add-player-to-tournament-action" data-id="add-player-to-tournament-action" src="/images/plus-sign.jpg">';
-                    } else if ($realPlayer && !$fullTournament && selectingDoublesPartner && ($id != firstDoublesPlayerID)) {
-                        $actions = '<button class="pairDoublesPartnersButton">Pair with ' + firstDoublesPlayerName + '</button>';
+                    } else if ($realPlayer && !$fullTournament && selectingDoublesPartner) {
+                        if($id != firstDoublesPlayerID) {
+                            $actions = '<button class="pairDoublesPartnersButton">Pair with ' + firstDoublesPlayerName + '</button>';
+                        } else {
+                            $actions = "";
+                        }
+
                     }
 
 
@@ -575,6 +580,12 @@ $(document).ready( function () {
 
                 $('select[id*="court-select"]').hide();
 
+                $matches = data.matches;
+                if($matches.length === 0) {
+                    $('#seedsTable').DataTable().columns([2,7]).visible(true);
+                }
+                $courtCount = data.courtCount;
+
                 $bracketPositions = data.bracketPositions;
                 $nonAdvanceablePositions = ['champion', 'consolation-champion', 'third-place', 'seventh-place'];
 
@@ -582,7 +593,13 @@ $(document).ready( function () {
                 $seedsDataTable.clear();
 
                 $increment = 0;
-                $reorder = '<img class="reorder-icon" src="/images/reorder-icon.png">'
+                if($matches.length > 0) {
+                    $reorder = "<span class='italicize'>Tournament in progress</span>";
+                } else {
+                    $reorder = '<img class="reorder-icon" src="/images/reorder-icon.png">';
+                }
+
+
 
                 for (const [$position, $value] of Object.entries($bracketPositions)) {
                     if(!($position == 'tournament_id' || $position == 'bracket' || $position == 'id' || $position == 'created_at' || $position == 'updated_at')) {
@@ -592,7 +609,12 @@ $(document).ready( function () {
 
                         if($position.indexOf('school') !== -1) {
                             //does include the substring school
-                            $('#' + $positionWithDashes).html($value);
+                            if($value === 'BYE') {
+                                $('#' + $positionWithDashes).html('-');
+                            } else {
+                                $('#' + $positionWithDashes).html($value);
+                            }
+
                         } else if ($position.indexOf('id') !== -1){
                             //does include the substring id;
                             $positionCorrected = $positionWithDashes.slice(0, -3);
@@ -640,8 +662,8 @@ $(document).ready( function () {
                         $positionConference = $position + '_conference';
                         $positionID = $position + '_id';
 
-                        if($value === "-") {
-                            $actions = "-"
+                        if($value === "-" || $value === "BYE" || ($matches.length > 0)) {
+                            $actions = ""
                         } else {
                             $actions = '<img class="remove-seeded-player" data-id="remove-seeded-player" src="/images/x-icon.png"</img>';
                         }
@@ -660,9 +682,6 @@ $(document).ready( function () {
                         }
                     }
                 }
-
-                $matches = data.matches;
-                $courtCount = data.courtCount;
 
                 $('.winner').removeClass('winner');
                 $('input[id*="score-input"]').attr('hidden', true);
@@ -767,8 +786,23 @@ $(document).ready( function () {
 
                 });
 
+                if($matches.length > 0) {
+                    $('#seedsTable').DataTable().columns([2,7]).visible(false);
+                }
+
+
             }
         });
+
+        $('.italicize').removeClass('italicize');
+
+        var byes = $("td:contains('BYE')");
+        byes.each(function() {
+            $(this).addClass('italicize');
+        });
+
+
+
 
         activateRemoveSeededPlayerButtons();
     }

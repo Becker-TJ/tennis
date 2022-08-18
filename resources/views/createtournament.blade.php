@@ -56,16 +56,7 @@
                             <label for="team_count" class="col-md-4 col-form-label text-md-right">Number Of Teams</label>
                             <div class="col-md-6">
                                 <select class="form-control" id="team_count" name="team_count">
-                                    <?php for($x = 4; $x <= 16; $x++) {?>
-                                        <option
-                                            <?php if($x == 4) {
-                                                echo "selected='selected'";
-                                            }?>
-                                        >
-                                            <?php echo $x;?>
-                                        </option>
-                                        <?php
-                                    }?>
+                                    <option selected="selected">8</option>
                                 </select>
                             </div>
                         </div>
