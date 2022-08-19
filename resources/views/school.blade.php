@@ -3,7 +3,7 @@
 
 @section('content')
     <br>
-    <div id="playerForStatsModal" data-player-id="0" style="display:none"></div>
+    <div id="playerForStatsModal" data-player-table="schoolTable" data-player-id="0" style="display:none"></div>
 
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -58,7 +58,7 @@
                                 <th scope="col">Reorder</th>
                                 <th scope="col">Position</th>
                                 <th scope="col">Name</th>
-                                <th scope="col">Class</th>
+                                <th scope="col">Grade</th>
                                 <th scope="col">Actions</th>
                             </tr>
                             </thead>
@@ -70,7 +70,7 @@
                                     <td class="table-cell reorder-cell"><img class="reorder-icon" src="{{URL::to('/')}}/images/reorder-icon.png"></td>
                                     <td class="position_name_td">{{$positionNamesOrder[$increment++]}}</td>
                                     <td class="table-cell"><a class="player playerModalToggle">{{$player->first_name. ' ' . $player->last_name}}</a></td>
-                                    <td class="table-cell">{{$player->class}}</td>
+                                    <td class="table-cell">{{$player->grade}}</td>
                                     <td align="center" class="table-cell">
                                         <i class="material-icons edit-pen" data-toggle="modal" data-target="#editPlayerModal" style="color:green">mode_edit</i>
                                         <i class="material-icons delete-trash-can" style="color:red">delete</i>

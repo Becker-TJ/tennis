@@ -12,8 +12,30 @@ $(document).ready( function () {
 
         'columnDefs': [
             { targets: [0,1], visible: false },
-            { targets: [2,3,4,5,6], orderable: false },
-            {targets: [2], width: "5%" },
+            { targets: [2,3,4,5,6], orderable: false, "className": "center-align"},
+            // {targets: [2], width: "5%" },
+            // {targets: [6], width: "5%" },
+            // {targets: [3], width: "15%" },
+        ]
+
+    } );
+
+    var girlsSchoolTable = $('#girlsSchoolTable').DataTable( {
+        paging:false,
+        searching:false,
+        rowReorder: {
+            selector: '.reorder-cell',
+            snapX:true,
+        },
+        bInfo:false,
+        "lengthChange": false,
+
+        'columnDefs': [
+            { targets: [0,1], visible: false },
+            { targets: [2,3,4,5,6], orderable: false, "className": "center-align"},
+            // {targets: [2], width: "5%" },
+            // {targets: [6], width: "5%" },
+            // {targets: [3], width: "15%" },
         ]
 
     } );
@@ -46,7 +68,9 @@ $(document).ready( function () {
         e.preventDefault();
 
         var currentRow = $(this).closest('tr');
-        var data = $('#girlsSchoolTable').DataTable().row(currentRow).data();
+        var tableGender = $('#playerForStatsModal').attr('data-player-table');
+
+        var data = $('#' + tableGender).DataTable().row(currentRow).data();
         var playerID = data[1];
         var playerName = data[4];
         $('#playerStatsModalTitle').html('Match History - ' + playerName);
@@ -307,6 +331,8 @@ $(document).ready( function () {
         $('#girls-roster').removeClass('selected-roster-button');
         $('#boys-roster').addClass('selected-roster-button');
 
+        $('#playerForStatsModal').attr('data-player-table', 'schoolTable');
+
         $('#girlsSchoolTable').attr('hidden', true);
         $('#schoolTable').removeAttr('hidden');
     });
@@ -316,6 +342,8 @@ $(document).ready( function () {
 
         $('#boys-roster').removeClass('selected-roster-button');
         $('#girls-roster').addClass('selected-roster-button');
+
+        $('#playerForStatsModal').attr('data-player-table', 'girlsSchoolTable');
 
         $('#schoolTable').attr('hidden', true);
         $('#girlsSchoolTable').removeAttr('hidden');

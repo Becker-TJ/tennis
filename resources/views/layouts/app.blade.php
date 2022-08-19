@@ -245,7 +245,7 @@
             border-width:3px;
         }
 
-        #invitesTable, #playerStatsTable {
+        #invitesTable, #playerStatsTable, #girlsSchoolTable, #schoolTable {
             width:100% !important;
         }
 
