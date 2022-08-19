@@ -6,8 +6,10 @@ use App\DoublesTeam;
 use App\Player;
 use App\School;
 use DB;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Routing\Controller;
 
 class
 PlayerController extends Controller
@@ -105,6 +107,19 @@ PlayerController extends Controller
         $player['position'] = $newPosition;
 
         return $player->saveOrFail();
+    }
+
+    public function editPlayer() {
+        $data = $_POST;
+        $playerID = $data['edit_player_id'];
+        $player = Player::find($playerID);
+        $player->first_name = $data['edit_player_first_name'];
+        $player->last_name = $data['edit_player_last_name'];
+        $player->grade = $data['edit_grade'];
+        $player->gender = $data['edit_gender'];
+        $player->saveOrFail();
+
+        return redirect()->action([\App\Http\Controllers\SchoolController::class, 'showSchool'], ['school' => intval($data['school_id'])]);
     }
 
     public function create()

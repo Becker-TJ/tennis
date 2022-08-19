@@ -50,6 +50,13 @@
             font-size:20px;
         }
 
+        .player:hover {
+            cursor:pointer !important;
+            text-decoration:none !important;
+            color:blue !important;
+            font-weight:bold !important;
+        }
+
         .tournament-sub-title {
             font-size: 20px;
             font-weight:bold;
@@ -66,6 +73,10 @@
         .italicize {
             font-style:italic;
             font-weight:normal;
+        }
+
+        .completed-tournament {
+            background-color:lightgray;
         }
 
         .card-header {
@@ -234,8 +245,8 @@
             border-width:3px;
         }
 
-        #invitesTable {
-            width:100%;
+        #invitesTable, #playerStatsTable {
+            width:100% !important;
         }
 
         #permanent-navbar, .dropdown-item, .dropdown-menu{

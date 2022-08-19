@@ -152,34 +152,48 @@ class TournamentController extends Controller
 
     public function showTournaments()
     {
-        $tournaments = Tournament::all()->sortBy('date');
+        $tournaments = Tournament::all()->sortByDesc('date');
         $schoolAttendees = SchoolAttendee::all();
 
-        $invitations = $schoolAttendees->where('school_id', '=', 80);
-        $pendingInvitations = $invitations->where('invite_status', '=', 'pending');
-        $acceptedInvitations = $invitations->where('invite_status', '=', 'accepted');
+        if(Auth::check()) {
+            $invitations = $schoolAttendees->where('school_id', '=', Auth::user()->school_id);
+            $pendingInvitations = $invitations->where('invite_status', '=', 'pending');
+            $acceptedInvitations = $invitations->where('invite_status', '=', 'accepted');
 
-        foreach ($pendingInvitations as $invitation) {
-            foreach ($tournaments as $key => $tournament) {
-                if ($tournament->id == $invitation->tournament_id) {
-                    $tournament->pendingInvite = true;
-                    $moveTournament = $tournament;
-                    $tournaments->forget($key);
-                    $tournaments->prepend($moveTournament);
+            foreach ($pendingInvitations as $invitation) {
+                foreach ($tournaments as $key => $tournament) {
+                    if ($tournament->id == $invitation->tournament_id) {
+                        $tournament->pendingInvite = true;
+                        $moveTournament = $tournament;
+                        $tournaments->forget($key);
+                        $tournaments->prepend($moveTournament);
+                    }
+                }
+            }
+            foreach ($acceptedInvitations as $invitation) {
+                foreach ($tournaments as $key => $tournament) {
+                    if ($tournament->id == $invitation->tournament_id) {
+                        $tournament->acceptedInvite = true;
+                        $moveTournament = $tournament;
+                        $tournaments->forget($key);
+                        $tournaments->prepend($moveTournament);
+                    }
                 }
             }
         }
 
-        foreach ($acceptedInvitations as $invitation) {
-            foreach ($tournaments as $key => $tournament) {
-                if ($tournament->id == $invitation->tournament_id) {
-                    $tournament->acceptedInvite = true;
-                    $moveTournament = $tournament;
-                    $tournaments->forget($key);
-                    $tournaments->prepend($moveTournament);
-                }
+        foreach($tournaments as $tournament) {
+            $tournament->completed = false;
+
+            $tournamentDate = strtotime(date('Y-m-d', strtotime($tournament->date)));
+            $currentDate = strtotime(date('Y-m-d'));
+
+            if($tournamentDate < $currentDate) {
+                $tournament->completed = true;
             }
+            $tournament->date = date("m-d-Y", strtotime($tournament->date));
         }
+
 
         return view('tournaments', [
             'tournaments' => $tournaments,

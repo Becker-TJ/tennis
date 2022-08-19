@@ -613,6 +613,81 @@ class AjaxController extends Controller
         return response()->json(['success'=>'Saved Court Assignment.']);
     }
 
+    public function getPlayerStats(Request $request) {
+        $request = $request->all();
+        $player = Player::find(intval($request['playerID']));
+        $singlesMatches = SinglesMatch::select("*")->where('winner', '=', $player->id)->orWhere('loser', '=', $player->id)->get()->sortBy('date')->sortBy('bracket');
+        $doublesTeams = DoublesTeam::select("*")->where('player_1', '=', $player->id)->orWhere('player_2', '=', $player->id)->get();
+        $doublesMatches = collect([]);
+
+        $bracketsPrettyPrintAssociations = [
+            'girlsOneSingles' => 'One Singles',
+            'girlsTwoSingles' => 'Two Singles',
+            'girlsOneDoubles' => 'One Doubles',
+            'girlsTwoDoubles' => 'Two Doubles',
+            'boysOneSingles' => 'One Singles',
+            'boysTwoSingles' => 'Two Singles',
+            'boysOneDoubles' => 'One Doubles',
+            'boysTwoDoubles' => 'Two Doubles'
+        ];
+
+        foreach($doublesTeams as $doublesTeam) {
+
+            $player_1 = Player::find($doublesTeam->player_1);
+            $player_2 = Player::find($doublesTeam->player_2);
+
+            $doublesTeamPlayerNames = $player_1->last_name . ' / ' . $player_2->last_name;
+
+            $doublesMatchesForSpecificTeam = DoublesMatch::select("*")->where('winner', '=', $doublesTeam->id)->orWhere('loser', '=', $doublesTeam->id)->get()->sortBy('date')->sortBy('bracket');
+            foreach($doublesMatchesForSpecificTeam as $match) {
+                $match->home_team = $doublesTeamPlayerNames;
+                if($match->winner === $doublesTeam->id) {
+                    $opponentID = $match->loser;
+                    $match->winOrLoss = "W";
+                } else {
+                    $opponentID = $match->winner;
+                    $match->winOrLoss = "L";
+                }
+
+                $opponentDoublesTeam = DoublesTeam::find($opponentID);
+                $opponent_1 = Player::find($opponentDoublesTeam->player_1);
+                $opponent_2 = Player::find($opponentDoublesTeam->player_2);
+                $match->opponent = $opponent_1->last_name . ' / ' . $opponent_2->last_name;
+                if($opponent_1->getSchool()->name === $opponent_2->getSchool()->name) {
+                    $opponentSchoolName = $opponent_1->getSchool()->name;
+                } else {
+                    $opponentSchoolName = $opponent_1->getSchool()->name . ' / ' . $opponent_2->getSchool()->name;
+                }
+                $match->opponent_school = $opponentSchoolName;
+                $match->bracket = $bracketsPrettyPrintAssociations[$match->bracket];
+            }
+            $doublesMatches = $doublesMatches->merge($doublesMatchesForSpecificTeam);
+        }
+
+
+
+        foreach($singlesMatches as $match) {
+            if($match->winner === $player->id) {
+                $opponentID = $match->loser;
+                $match->winOrLoss = "W";
+            } else {
+                $opponentID = $match->winner;
+                $match->winOrLoss = "L";
+            }
+
+            $opponent = Player::find($opponentID);
+            $match->opponent = $opponent->first_name . ' ' . $opponent->last_name;
+            $match->opponent_school = $opponent->getSchool()->name;
+            $match->bracket = $bracketsPrettyPrintAssociations[$match->bracket];
+            $match->home_team = $player->first_name . ' ' . $player->last_name;
+        }
+
+
+        $matches = $singlesMatches->merge($doublesMatches);
+
+        return $matches;
+    }
+
     public function getBracketData(Request $request)
     {
         $request = $request->all();

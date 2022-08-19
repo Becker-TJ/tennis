@@ -18,6 +18,72 @@ $(document).ready( function () {
 
     } );
 
+    var playerStatsTable = $('#playerStatsTable').DataTable( {
+        paging:false,
+        searching:true,
+        bInfo:false,
+        "lengthChange": false,
+
+        'columnDefs': [
+            { targets: [0,1], visible: false },
+            { targets: [2,3,4,5,6,7], orderable: true, "className": "center-align"},
+        ],
+
+        'columns': [
+            { data: 'seq' }, /* index = 0 */
+            { data: 'id' }, /* index = 1 */
+            { data: 'bracket'}, /*index = 2 */
+            { data: 'home_team'}, /*index = 3*/
+            { data: 'opponent_name' }, /* index = 4 */
+            { data: 'opponent_school'},/* index = 5 */
+            { data: 'score' }, /* index = 6 */
+            { data: 'win/loss' }, /* index = 7 */
+        ],
+
+    } );
+
+    $('.playerModalToggle').click(function(e) {
+        e.preventDefault();
+
+        var currentRow = $(this).closest('tr');
+        var data = $('#girlsSchoolTable').DataTable().row(currentRow).data();
+        var playerID = data[1];
+        var playerName = data[4];
+        $('#playerStatsModalTitle').html('Match History - ' + playerName);
+        $('#playerForStatsModal').attr('data-player-id', playerID);
+        $('#playerStatsModal').modal('toggle');
+        $('#playerStatsTable').DataTable().columns([3]).visible(true);
+    });
+
+    $('#playerStatsModal').on('shown.bs.modal', function (e) {
+        var playerID = $('#playerForStatsModal').attr('data-player-id');
+        $playerStatsTable = $("#playerStatsTable").DataTable();
+        $playerStatsTable.clear().draw();
+        $increment = 1;
+        $.ajax({
+            type:'POST',
+            url:'/getPlayerStats',
+            data:{playerID:playerID},
+            success:function(matches){
+
+                matches.forEach(function($match, $index) {
+                    var row = $playerStatsTable.row.add({
+                        'seq': $increment,
+                        'id': $increment,
+                        'bracket': $match.bracket,
+                        'home_team': $match.home_team,
+                        'opponent_school': $match.opponent_school,
+                        'opponent_name': $match.opponent,
+                        'score': $match.score,
+                        'win/loss': $match.winOrLoss
+                    }).draw().node();
+                    $increment++;
+                });
+
+            }
+        });
+    });
+
     var varsityOrder = [
         '1 Singles',
         '2 Singles',
@@ -170,6 +236,8 @@ $(document).ready( function () {
 
     $('#tournamentsTable').DataTable( {
         paging:false,
+        searching:true,
+        bInfo:false,
         "lengthChange": false,
         'columns': [
             { data: 'name' }, /* index = 0 */
@@ -196,16 +264,24 @@ $(document).ready( function () {
             $tableIDString = '#girlsSchoolTable';
         }
 
-        $('#class-freshman').removeClass('active');
-        $('#class-sophomore').removeClass('active');
-        $('#class-junior').removeClass('active');
-        $('#class-senior').removeClass('active');
-        $('#gender-male').removeClass('active');
-        $('#gender-female').removeClass('active');
+        $('#edit_grade_freshman').removeClass('active');
+        $('#edit_grade_sophomore').removeClass('active');
+        $('#edit_grade_junior').removeClass('active');
+        $('#edit_grade_senior').removeClass('active');
+        $('#edit_gender_male').removeClass('active');
+        $('#edit_gender_female').removeClass('active');
+
+        $('#edit_grade_freshman_input').removeAttr('checked');
+        $('#edit_grade_sophomore_input').removeAttr('checked');
+        $('#edit_grade_junior_input').removeAttr('checked');
+        $('#edit_grade_senior_input').removeAttr('checked');
+        $('#edit_gender_male_input').removeAttr('checked');
+        $('#edit_gender_female_input').removeAttr('checked');
 
         var currentRow = $(this).closest('tr');
         var data = $($tableIDString).DataTable().row(currentRow).data();
         var playerID = data[1];
+        $('#edit_player_id').val(playerID);
 
         $.ajax({
             type:'POST',
@@ -216,8 +292,10 @@ $(document).ready( function () {
                 console.log(data.player.gender.toLowerCase());
                 $('#edit_player_first_name').val(data.player.first_name);
                 $('#edit_player_last_name').val(data.player.last_name);
-                $('#class-' + data.player.class.toLowerCase()).addClass('active');
-                $('#gender-' + data.player.gender.toLowerCase()).addClass('active');
+                $('#edit_grade_' + data.player.grade.toLowerCase()).addClass('active');
+                $('#edit_grade_' + data.player.grade.toLowerCase() + '_input').attr('checked', 'checked')
+                $('#edit_gender_' + data.player.gender.toLowerCase()).addClass('active');
+                $('#edit_gender_' + data.player.gender.toLowerCase() + '_input').attr('checked', 'checked');
             }
         });
 

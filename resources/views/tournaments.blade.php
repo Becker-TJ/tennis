@@ -12,7 +12,7 @@
                             <div class="alert alert-success col-md-12" role="alert">
                                 <p style="text-align:center">You can sort tournaments by clicking column headings.  Shift + click a second or even third column heading to further refine your search. For example, if you wanted to see all Varsity tournaments sorted by date, you could click "Level" then shift + click "Date". </p>
                             </div>
-                            <table id="tournamentsTable" class="table table-striped">
+                            <table id="tournamentsTable" class="table">
                                 <thead>
                                 <tr class="fa fa-sort-name" align="center">
                                     <th scope="col">Name</th>
@@ -32,6 +32,9 @@
                                         }
                                         if($tournament->pendingInvite) {
                                             echo 'class="pending-invite"';
+                                        }
+                                        if($tournament->completed) {
+                                            echo 'class="completed-tournament"';
                                         }
                                     ?>
                                 >
