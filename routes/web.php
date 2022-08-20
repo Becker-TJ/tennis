@@ -77,6 +77,7 @@ Route::post('/saveScore', [AjaxController::class, 'saveScore']);
 Route::post('/saveMatch', [AjaxController::class, 'saveMatch']);
 Route::post('/saveBasicMatch', [AjaxController::class, 'saveBasicMatch']);
 Route::post('/compareCoachPasscode', [AjaxController::class, 'compareCoachPasscode']);
+Route::post('/checkIfCoach', [AjaxController::class, 'checkIfCoach']);
 
 //Route::get('/posts/{post}', function ($post) {
 //    $posts = [

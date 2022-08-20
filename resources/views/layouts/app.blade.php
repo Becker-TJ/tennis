@@ -124,9 +124,9 @@
         }
 
 
-        .edit-pen:hover, .delete-trash-can:hover, .add-player-to-tournament-action:hover, .remove-seeded-player:hover {
-            cursor: pointer;
-            transform: scale(1.3);
+        .edit-pen:hover, .delete-trash-can:hover, .add-player-to-tournament-action:hover, .remove-seeded-player:hover, [data-id="remove-school-button"] {
+            cursor: pointer !important;
+            transform: scale(1.3) !important;
         }
 
         .reorder-cell {

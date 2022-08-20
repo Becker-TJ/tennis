@@ -392,6 +392,7 @@ class AjaxController extends Controller
         $inviteeSchoolIDs = $input['inviteeSchoolIDs'];
         $inviteStatuses = $input['inviteStatuses'];
         $tournament_id = intval($input['tournament_id']);
+        $tournament = Tournament::find($tournament_id);
 
         $attendees = SchoolAttendee::all()->where('tournament_id', '=', $tournament_id);
         $updatedSchoolIDs = [];
@@ -415,13 +416,20 @@ class AjaxController extends Controller
         }
 
         //deletes any removed rows from the Invite Teams Table
+        $schoolRemoved = false;
         foreach($attendees as $attendee) {
             if(in_array(intval($attendee->school_id), $updatedSchoolIDs)) {
                 continue;
             } else {
                 $attendee->delete();
+                $schoolRemoved = true;
             }
         }
+        if($schoolRemoved) {
+            $tournament->updateBracketPositionsWithAllAttendees();
+        }
+
+
 
         return response()->json(['success'=>'Invites sent.']);
     }
@@ -611,6 +619,19 @@ class AjaxController extends Controller
         $match->saveOrFail();
 
         return response()->json(['success'=>'Saved Court Assignment.']);
+    }
+
+    public function checkIfCoach(Request $request) {
+        $schoolID = intval($request['school_id']);
+        if(Auth::check() && (Auth::user()->school_id === $schoolID)) {
+            $isCoach = true;
+        } else {
+            $isCoach = false;
+        }
+
+        return response()->json([
+            'isCoach' => $isCoach
+        ]);
     }
 
     public function getPlayerStats(Request $request) {

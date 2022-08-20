@@ -4,6 +4,7 @@
 @section('content')
     <br>
     <div id="playerForStatsModal" data-player-table="schoolTable" data-player-id="0" style="display:none"></div>
+    <div id="coach" data-coach="{{$isCoach ? 'true' : 'false'}}" style="display:none"></div>
 
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -11,7 +12,9 @@
                 <div class="card">
                     <div class="card-header">Roster for {{$school->name}}</div>
                     <div class="card-body">
+                        @if ($isCoach)
                         <button type="button" class="btn btn-primary col-md-2 offset-md-5" data-toggle="modal" data-target="#addNewPlayerModal">Add New Player</button>
+                        @endif
                         <hr>
                         <div id="button-crew">
                             <button type="button" id="boys-roster" class="selected-roster-button btn btn-primary col-md-2 offset-md-4">Boys</button>
@@ -50,7 +53,7 @@
                             </tbody>
                         </table>
 
-                        <table hidden id="girlsSchoolTable" class="display table table-striped">
+                        <table id="girlsSchoolTable" class="display table table-striped">
                             <thead>
                             <tr class="fa fa-sort-name player_row" align="center">
                                 <th scope="col">Seq.</th>
@@ -68,7 +71,7 @@
                                     <td class="table-cell">{{$player->position}}</td>
                                     <td class="table-cell">{{$player->id}}</td>
                                     <td class="table-cell reorder-cell"><img class="reorder-icon" src="{{URL::to('/')}}/images/reorder-icon.png"></td>
-                                    <td class="position_name_td">{{$positionNamesOrder[$increment++]}}</td>
+                                    <td class="position_name_td position-title-td-highlight">{{$positionNamesOrder[$increment++]}}</td>
                                     <td class="table-cell"><a class="player playerModalToggle">{{$player->first_name. ' ' . $player->last_name}}</a></td>
                                     <td class="table-cell">{{$player->grade}}</td>
                                     <td align="center" class="table-cell">
@@ -79,7 +82,6 @@
                             @endforeach
                             </tbody>
                         </table>
-
                     </div>
                 </div>
             </div>
@@ -263,6 +265,9 @@
 
 
 
-    <script type="text/javascript" src="{{ URL::asset('js/school.js') }}"></script>
 
+
+@endsection
+@section('javascript')
+    <script type="text/javascript" src="{{ URL::asset('js/school.js') }}"></script>
 @endsection

@@ -68,7 +68,7 @@
                     </div>
                     @endif
 
-                    @if($userHasPendingTournamentInvite)
+                    @if($userInviteStatus === 'pending')
                     <div class="btn-group">
                         <button type="button" id="decline_tournament_invitation_button" class="btn btn-primary col-md-2 offset-md-4" data-toggle="modal">Decline Tournament Invitation</button>
                         <button type="button" id="accept_tournament_invitation_button" class="btn btn-primary col-md-2 offset-md-5" data-toggle="modal">Accept Tournament Invitation</button>
@@ -354,7 +354,7 @@
                                                     <td class="position_name_td">{{$attendee->school_name}}</td>
                                                     <td class="table-cell">{{ucfirst($attendee->invite_status)}}</td>
                                                     <td class="table-cell">{{$attendee->conference}}</td>
-                                                    <td class="table-cell center-align"><span data-id="remove_school_button" aria-hidden="true">&#10060;</span></td>
+                                                    <td class="table-cell center-align"><span data-id="remove-school-button" aria-hidden="true">&#10060;</span></td>
                                                 </tr>
                                             @endforeach
                                             @foreach($pendingAttendees as $attendee)
@@ -364,7 +364,7 @@
                                                     <td class="position_name_td">{{$attendee->school_name}}</td>
                                                     <td class="table-cell">{{ucfirst($attendee->invite_status)}}</td>
                                                     <td class="table-cell">{{$attendee->conference}}</td>
-                                                    <td class="table-cell center-align"><span data-id="remove_school_button" aria-hidden="true">&#10060;</span></td>
+                                                    <td class="table-cell center-align"><span data-id="remove-school-button" aria-hidden="true">&#10060;</span></td>
                                                 </tr>
                                             @endforeach
                                             @foreach($declinedAttendees as $attendee)
@@ -374,7 +374,7 @@
                                                     <td class="position_name_td">{{$attendee->school_name}}</td>
                                                     <td class="table-cell">{{ucfirst($attendee->invite_status)}}</td>
                                                     <td class="table-cell">{{$attendee->conference}}</td>
-                                                    <td class="table-cell center-align"><span data-id="remove_school_button" aria-hidden="true">&#10060;</span></td>
+                                                    <td class="table-cell center-align"><span data-id="remove-school-button" aria-hidden="true">&#10060;</span></td>
                                                 </tr>
                                             @endforeach
                                             </tbody>

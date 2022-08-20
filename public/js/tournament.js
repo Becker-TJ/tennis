@@ -520,6 +520,13 @@ $(document).ready( function () {
         });
     }
 
+    //this helps ensure the dropdown in the invite teams modal works
+    $('#mySelect2').select2({
+        dropdownParent: $('#schools_to_invite').select2({
+            dropdownParent: $('#inviteTeamsModal')
+        })
+    });
+
 
     function activateAddPlayerToTournamentActions() {
         $('[data-id=add-player-to-tournament-action]').click(function(e) {
@@ -1007,6 +1014,8 @@ $(document).ready( function () {
                     }
                 });
                 alert('Invites Sent and Changes Saved.')
+                fillBracketData();
+                fillRosterTable();
             }
         });
     });

@@ -206,6 +206,7 @@ class TournamentController extends Controller
         $user = Auth::user();
         $hostUser = false;
         $userHasPendingTournamentInvite = false;
+        $userInviteStatus = false;
 
         if($user != null) {
             if($tournament->host_id === $user->school_id) {
@@ -214,6 +215,7 @@ class TournamentController extends Controller
             $schoolAttendee = SchoolAttendee::all()->where('tournament_id', '=', $tournament->id)->where('school_id', '=', $user->school_id)->first();
             if($schoolAttendee != null) {
                 $userHasPendingTournamentInvite = true;
+                $userInviteStatus = $schoolAttendee->invite_status;
             }
         }
 
@@ -261,6 +263,7 @@ class TournamentController extends Controller
             'girlsOneSinglesPlayers' => $girlsOneSinglesPlayers,
             'hostUser' => $hostUser,
             'userHasPendingTournamentInvite' => $userHasPendingTournamentInvite,
+            'userInviteStatus' => $userInviteStatus
         ]);
     }
 
