@@ -1,6 +1,7 @@
 $(document).ready( function () {
 
 
+
     var allSchoolsTable = $('#allSchoolsTable').DataTable( {
         paging:false,
         searching:true,
@@ -69,10 +70,37 @@ $(document).ready( function () {
             { data: 'team_count' }, /* index = 5 */
 
         ],
-        'order': [],
+        'order': [
+            [2, 'desc']
+        ],
 
 
 
+    } );
+
+
+    function displaySortIcons() {
+        var headersWithSortingClass = $('th.sorting');
+        headersWithSortingClass.each(function() {
+            $(this).append('<img class="sort-icon" src="/images/sort_both.png">');
+        })
+
+        var headersWithSortingAscClass = $('th.sorting_asc');
+        headersWithSortingAscClass.each(function() {
+            $(this).append('<img class="sort-icon" src="/images/sort_asc.png">');
+        })
+
+        var headersWithSortingDescClass = $('th.sorting_desc');
+        headersWithSortingDescClass.each(function() {
+            $(this).append('<img class="sort-icon" src="/images/sort_desc.png">');
+        })
+    }
+
+    displaySortIcons();
+
+    $('#tournamentsTable, #playerDisplayTable').on('order.dt', function () {
+        $('.sort-icon').remove();
+        displaySortIcons();
     } );
 
 

@@ -10,6 +10,7 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Collection;
 
 class
 PlayerController extends Controller
@@ -17,21 +18,45 @@ PlayerController extends Controller
     public function showFilteredPlayers()
     {
         $data = $_POST;
-
-        if ($data['conference_setting'] == 'all_classes') {
-            $players = DB::table('players')->join('schools', 'players.school_id', 'schools.id')
-                ->where('players.gender', $data['gender'])
-                ->where('players.'.$data['bracket_rank'], '>', 0)
-                ->orderBy('players.'.$data['bracket_rank'], 'asc')
-                ->get();
+        if(str_contains($data['bracket_rank'], 'singles')) {
+            $singles = true;
         } else {
-            $players = DB::table('players')->join('schools', 'players.school_id', 'schools.id')
-                ->where('schools.conference', $data['conference_setting'])
-                ->where('players.gender', $data['gender'])
-                ->where('players.'.$data['bracket_rank'], '>', 0)
-                ->orderBy('players.'.$data['bracket_rank'], 'asc')
-                ->get();
+            $singles = false;
         }
+
+        if($singles) {
+            if ($data['conference_setting'] == 'all_classes') {
+                $players = DB::table('players')->join('schools', 'players.school_id', 'schools.id')
+                    ->where('players.gender', $data['gender'])
+                    ->where('players.'.$data['bracket_rank'], '>', 0)
+                    ->orderBy('players.'.$data['bracket_rank'], 'asc')
+                    ->get();
+            } else {
+                $players = DB::table('players')->join('schools', 'players.school_id', 'schools.id')
+                    ->where('schools.conference', $data['conference_setting'])
+                    ->where('players.gender', $data['gender'])
+                    ->where('players.'.$data['bracket_rank'], '>', 0)
+                    ->orderBy('players.'.$data['bracket_rank'], 'asc')
+                    ->get();
+            }
+        } else {
+            $players = Collection::make([]);
+            $doublesTeams = DoublesTeam::all()->sortBy($data['bracket_rank']);
+            foreach($doublesTeams as $team) {
+                $squad = $team->getPlayerDetails();
+                $playerOne = $squad[0];
+                $playerTwo = $squad[1];
+                $school = $playerOne->getSchool();
+                $teamDetails = new Player;
+                $teamDetails->first_name = $playerOne->last_name . ' / ';
+                $teamDetails->last_name = $playerTwo->last_name;
+                $teamDetails->conference = $school->conference;
+                $teamDetails->name = $school->name;
+                $teamDetails->{$data['bracket_rank']} = $team->{$data['bracket_rank']};
+                $players[] = $teamDetails;
+            }
+        }
+
 
         $radioButtonSettings = [
             'conference_setting' => $data['conference_setting'],
@@ -63,6 +88,7 @@ PlayerController extends Controller
             $cleanNamesForTableTitle[$radioButtonSettings['bracket_rank']];
 
         return view('players', [
+            'bracket_rank' => $data['bracket_rank'],
             'players' => $players,
             'radioButtonSettings' => $radioButtonSettings,
             'tableTitle' => $tableTitle,

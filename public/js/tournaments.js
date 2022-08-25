@@ -6,7 +6,6 @@ if (document.documentElement.clientWidth < 481) {
 
 $(document).ready( function () {
 
-
 });
 
 

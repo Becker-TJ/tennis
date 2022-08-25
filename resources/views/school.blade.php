@@ -10,7 +10,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Roster for {{$school->name}}</div>
+                    <div class="card-header">{{$school->name}}</div>
                     <div class="card-body">
                         @if ($isCoach)
                         <button type="button" class="button-in-row btn btn-primary col-md-2 offset-md-5" data-toggle="modal" data-target="#addNewPlayerModal">Add New Player</button>

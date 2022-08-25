@@ -33,8 +33,10 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous"
     >
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> {{--for table icons, edit pen and trash can--}}
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" /> {{--for sorting dropdowns--}}
+{{--    <link href="/bower_components/font-awesome/css/font-awesome.css"  rel="stylesheet">--}}
+{{--    <link href="/bower_components/datatables.net-plugins/integration/font-awesome/dataTables.fontAwesome.css"  rel="stylesheet">--}}
+
+
     <link href="https://cdn.datatables.net/rowreorder/1.2.6/css/rowReorder.dataTables.min.css" rel="stylesheet"> {{--for styling dragging table rows --}}
 
     <style>
@@ -44,7 +46,14 @@
             background-color:#333;
             color:white;
             font-size:20px;
+            position:relative;
         }
+
+        .sort-icon {
+            position:absolute;
+            filter: invert(77%) sepia(94%) saturate(400%) hue-rotate(91deg) brightness(225%) contrast(75%);
+        }
+
 
         #tournament-headings, #tournament-headings-second-column {
             font-size:20px;
@@ -293,6 +302,9 @@
             border:none;
         }
 
+
+
+
         .score-input {
             text-align:center;
             width:inherit;
@@ -352,13 +364,12 @@
         }
 
         #permanent-navbar a:hover{
-            transform: scale(1.2);
+            color:#00ffbf;
         }
 
         #playerDisplayTable, #seedsTable, #editRosterTable {
             width:100% !important;
         }
-
 
 
         .navbar-brand {
@@ -426,4 +437,5 @@
 <script src="https://cdn.datatables.net/rowreorder/1.2.6/js/dataTables.rowReorder.min.js"></script>
 <script src="{{asset('js/tennisDataTables.js')}}" type="text/javascript"></script>
 @yield('javascript')
+
 </html>

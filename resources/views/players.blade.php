@@ -87,7 +87,7 @@
                             <tbody>
                             @foreach($players as $player)
                                 <tr>
-                                    <td class="table-cell">{{$player->boys_one_singles_rank}}</td>
+                                    <td class="table-cell">{{$player->$bracket_rank}}</td>
                                     <td class="table-cell">{{$player->first_name . ' ' . $player->last_name}}</td>
                                     <td class="table-cell">{{$player->name}}</td>
                                     <td align="center" class="table-cell">{{$player->conference}}</td>
