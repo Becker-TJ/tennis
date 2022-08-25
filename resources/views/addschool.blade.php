@@ -17,7 +17,7 @@
                                     Otherwise, check "School Not Listed" and add it.</p>
                             </div>
 
-                            <div class="form-group row">
+                            <div id="existing_schools" class="form-group row">
                                 <label for="school_id_to_tie" class="col-md-4 col-form-label text-md-right">Existing Schools</label>
                                 <div class="col-md-6">
                                     <select class="select2 form-control" id="school_id_to_tie" name="school_id_to_tie">
@@ -41,38 +41,39 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <label for="school_name" class="col-md-4 col-form-label text-md-right">School Name</label>
-                                <div class="col-md-6">
-                                    <input disabled id="school_name" type="text" class="form-control toggle_show" name="school_name" required autofocus autocomplete="off">
+
+                            <div hidden id="toggle_school_not_listed_section">
+                                <div class="form-group row">
+                                    <label for="school_name" class="col-md-4 col-form-label text-md-right">School Name</label>
+                                    <div class="col-md-6">
+                                        <input disabled id="school_name" type="text" class="form-control toggle_input" name="school_name" required autofocus autocomplete="off">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="school_address" class="col-md-4 col-form-label text-md-right">School Address</label>
+                                    <div class="col-md-6">
+                                        <input disabled id="school_address" type="text" class="form-control toggle_input" name="school_address" required autocomplete="off">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="school_class" class="col-md-4 col-form-label text-md-right">Class</label>
+                                    <div class="col-md-6">
+                                        <select disabled class="form-control toggle_input" id="school_class" name="school_class">
+                                            <option></option>
+                                            <option>4A</option>
+                                            <option>5A</option>
+                                            <option>6A</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <label for="school_address" class="col-md-4 col-form-label text-md-right">School Address</label>
-                                <div class="col-md-6">
-                                    <input disabled id="school_address" type="text" class="form-control toggle_show" name="school_address" required autocomplete="off">
-                                </div>
-                            </div>
 
-                            <div class="form-group row">
-                                <label for="school_class" class="col-md-4 col-form-label text-md-right">Class</label>
-                                <div class="col-md-6">
-                                    <select disabled class="form-control toggle_show" id="school_class" name="school_class">
-                                        <option></option>
-                                        <option>2A</option>
-                                        <option>3A</option>
-                                        <option>4A</option>
-                                        <option>5A</option>
-                                        <option>6A</option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <div class="form-group row mb-0">
+                            <div hidden id="confirm_school_button" class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
-                                    <button id="switch_button_name" type="submit" class="btn btn-primary col-md-6 offset-md-3">Tie Existing School</button>
+                                    <button id="switch_button_name" type="submit" class="btn btn-primary col-md-6 offset-md-3"></button>
                                 </div>
                             </div>
                         </form>

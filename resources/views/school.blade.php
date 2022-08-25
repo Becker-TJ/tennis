@@ -13,12 +13,12 @@
                     <div class="card-header">Roster for {{$school->name}}</div>
                     <div class="card-body">
                         @if ($isCoach)
-                        <button type="button" class="btn btn-primary col-md-2 offset-md-5" data-toggle="modal" data-target="#addNewPlayerModal">Add New Player</button>
+                        <button type="button" class="button-in-row btn btn-primary col-md-2 offset-md-5" data-toggle="modal" data-target="#addNewPlayerModal">Add New Player</button>
                         @endif
                         <hr>
-                        <div id="button-crew">
-                            <button type="button" id="boys-roster" class="selected-roster-button btn btn-primary col-md-2 offset-md-4">Boys</button>
-                            <button type="button" id="girls-roster" class="btn btn-primary col-md-2">Girls</button>
+                        <div class="col-md-12" id="button-crew">
+                            <button type="button" id="boys-roster" class="btn-boys button-in-row selected-roster-button btn btn-primary col-md-2 offset-md-4">Boys</button>
+                            <button type="button" id="girls-roster" class="btn-girls button-in-row btn btn-primary col-md-2">Girls</button>
                         </div>
                         <hr>
 

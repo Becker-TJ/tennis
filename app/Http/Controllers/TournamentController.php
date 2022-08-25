@@ -206,7 +206,7 @@ class TournamentController extends Controller
         $user = Auth::user();
         $hostUser = false;
         $userHasPendingTournamentInvite = false;
-        $userInviteStatus = false;
+        $userInviteStatus = 'No Invite';
 
         if($user != null) {
             if($tournament->host_id === $user->school_id) {
@@ -263,16 +263,25 @@ class TournamentController extends Controller
             'girlsOneSinglesPlayers' => $girlsOneSinglesPlayers,
             'hostUser' => $hostUser,
             'userHasPendingTournamentInvite' => $userHasPendingTournamentInvite,
-            'userInviteStatus' => $userInviteStatus
+            'userInviteStatus' => $userInviteStatus,
+            'user' => $user
         ]);
     }
 
     public function edit(Request $request)
     {
         $data = $_POST;
-        $tournamentID = substr($request->session('attributes')->previousUrl(), 31);
+        $tournamentID = $data['tournament_id'];
 
         $tournament = Tournament::find($tournamentID);
+
+        if(
+            $tournament['team_count'] != $data['team_count'] ||
+            $tournament['gender'] != ucwords($data['gender']) ||
+            $tournament['level'] != ucwords($data['level'])
+        ) {
+            $updateBrackets = true;
+        }
 
         $tournament['name'] = $data['tournament_name'];
         $tournament['location_name'] = $data['location_name'];
@@ -280,14 +289,18 @@ class TournamentController extends Controller
         $tournament['date'] = $data['date'];
         $tournament['time'] = $data['time'];
         $tournament['team_count'] = $data['team_count'];
-        $tournament['gender'] = $data['gender'];
-        $tournament['level'] = $data['level'];
-        $tournament['privacy_setting'] = $data['privacy_setting'];
-//        $tournament['host_id'] = 5;
+        $tournament['gender'] = ucwords($data['gender']);
+        $tournament['level'] = ucwords($data['level']);
+        $tournament['privacy_setting'] = ucwords($data['privacy_setting']);
+
+        if($updateBrackets) {
+            $tournament->updateBracketPositionsWithAllAttendees();
+        }
+
 
         $tournament->saveOrFail();
 
-        return view('createtournament');
+        return redirect()->route('tournament', ['tournament' => $tournament->id]);
     }
 
 
@@ -303,9 +316,9 @@ class TournamentController extends Controller
         $tournament['date'] = $data['date'];
         $tournament['time'] = $data['time'];
         $tournament['team_count'] = $data['team_count'];
-        $tournament['gender'] = $data['gender'];
-        $tournament['level'] = $data['level'];
-        $tournament['privacy_setting'] = $data['privacy_setting'];
+        $tournament['gender'] = ucwords($data['gender']);
+        $tournament['level'] = ucwords($data['level']);
+        $tournament['privacy_setting'] = ucwords($data['privacy_setting']);
 
         $tournament['host_id'] = Auth::user()->school_id;
 
@@ -317,23 +330,7 @@ class TournamentController extends Controller
         $schoolAttendee->invite_status = 'accepted';
         $schoolAttendee->saveOrFail();
 
-        $brackets = ['girlsOneSingles', 'girlsTwoSingles', 'girlsOneDoubles', 'girlsTwoDoubles', 'boysOneSingles', 'boysTwoSingles', 'boysOneDoubles', 'boysTwoDoubles'];
-        foreach($brackets as $bracket) {
-            $bracketPosition = new BracketPosition;
-            $bracketPosition->{'tournament_id'} = $tournament->id;
-            $bracketPosition->{'bracket'} = $bracket;
-
-            $bracketPositions = $bracketPosition->getFillable();
-            array_shift($bracketPositions);
-            array_shift($bracketPositions);
-
-//            foreach($bracketPositions as $position) {
-//                $bracketPosition->$position = 0;
-//            }
-
-            $bracketPosition->saveOrFail();
-
-        }
+        $tournament->updateBracketPositionsWithAllAttendees();
 
         return redirect()->route('tournament', ['tournament' => $tournament->id]);
     }

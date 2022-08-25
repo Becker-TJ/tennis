@@ -5,7 +5,7 @@
     <br>
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-10">
                 <div class="card">
                     <div class="card-header">Tournaments</div>
                         <div class="card-body">
@@ -47,8 +47,18 @@
                                     <td class="table-cell">{{$tournament->date}}</td>
                                     <td align="center" class="table-cell">{{$tournament->level}}</td>
                                     <td class="table-cell">{{$tournament->gender}}</td>
-                                    <td align="center" class="table-cell">{{count($schoolAttendees->where('tournament_id', '=', $tournament->id)) . '/' . $tournament->team_count}}</td>
-
+                                    <td align="center" class="table-cell">
+                                        @if($tournament->privacy_setting === "Public")
+                                            @if(count($schoolAttendees->where('tournament_id', '=', $tournament->id)) === $tournament->team_count)
+                                                {{'Full'}}
+                                            @else
+                                                {{count($schoolAttendees->where('tournament_id', '=', $tournament->id)) . '/' . $tournament->team_count}}
+                                            @endif
+                                        @endif
+                                        @if($tournament->privacy_setting === "Private")
+                                            {{'Private'}}
+                                        @endif
+                                    </td>
                                 </tr>
                                 @endforeach
                                 </tbody>

@@ -83,7 +83,7 @@
             font-weight:bold;
             font-size:32px;
             text-align:center;
-            background-color: #37c0fb;
+            background-color: #00ffbf;
             border-bottom: 4px solid #333;
         }
 
@@ -103,7 +103,7 @@
             border-bottom: 4px solid #333;
         }
         tr.position_highlight td{
-            background-color:#37c0fb;
+            background-color:#00ffbf;
         }
         .btn-group button {
             /*border: 1px solid black;*/
@@ -112,11 +112,6 @@
             float: left;
         }
 
-        /*.btn-group button:hover {*/
-        /*    border: 1px solid black;*/
-        /*    background-color:#AAAAAA;*/
-        /*    color:white !important;*/
-        /*}*/
 
         .position-title-td-highlight {
             font-size:20px;
@@ -144,17 +139,17 @@
             cursor:grab;
         }
 
-        .btn-boys {
-            background-color:#84CDD2;
-        }
-
         .btn-girls {
-            background-color:#CDB6B5;
+            background-color:lightpink !important;
+            border:4px solid black;
+            border-radius:15px;
         }
 
         .invalid-score {
             background-color:#e67073;
         }
+
+
 
         .advanceable:hover {
             cursor:pointer;
@@ -165,15 +160,15 @@
         }
 
         .winner {
-            background-color:#abffc0;
+            background-color:#00ffbf;
         }
 
         .match-complete {
-            background-color:#abffc0;
+            background-color:#00ffbf;
         }
 
         .accepted-invite, .highlight-player {
-            background-color:#abffc0 !important;
+            background-color:#00ffbf !important;
         }
 
         .pending-invite {
@@ -184,8 +179,89 @@
             background-color:#ff9999 !important;
         }
 
+        .btn-boys {
+            background-color:skyblue !important;
+            border-right:4px solid black;;
+            border-left:4px solid black;
+            border-bottom:4px solid black;
+            border-top:4px solid black !important;
+            border-radius:15px;
+        }
+
+        .last-button-in-row:hover {
+            border-left:none !important;
+        }
+
+        .button-in-row {
+            border-right:4px solid black !important;
+            border-left:4px solid black !important;
+            border-bottom:4px solid black !important;
+            border-top:4px solid black !important;
+            border-radius:15px;
+            background-color: #00ffbf;
+            color:black;
+            font-weight:bold;
+        }
+
+        .format-label {
+            font-weight:bold;
+            font-style:italic;
+            font-size:18px;
+        }
+
+        .first-button-in-row {
+            border-right:none !important;
+        }
+
+        .last-button-in-row {
+            border-left:none !important;
+        }
+
+        .submit-button {
+            background-color:#7DF9FF !important;
+        }
+
+        .submit-button:hover {
+            background-color: darkturquoise !important;
+            border: 4px solid black !important;
+        }
+
+        .button-in-row:hover {
+            background-color:mediumspringgreen;
+            border-left:4px solid black;
+            border-bottom:4px solid black;
+            border-right:4px solid black;
+            border-top:4px solid black !important;
+            color:black;
+            cursor:pointer;
+        }
+
         .btn-group button:not(:last-child) {
             border-right: none; /* Prevent double borders */
+            border-top:none;
+        }
+
+        .btn-group button {
+            border-top:none;
+            font-weight:bold;
+        }
+
+        .btn-girls:hover {
+            background-color:lightcoral !important;
+        }
+
+        .btn-boys:hover {
+            background-color:dodgerblue !important;
+        }
+
+        .btn-boys.selected-button:hover {
+            background-color:#333 !important;
+            color:white !important;
+        }
+
+        .btn-girls.selected-button:hover {
+            background-color:#333 !important;
+            color:white !important;
         }
 
         select[id*='court-select'] {
@@ -212,38 +288,25 @@
             text-align:left;
         }
 
+
         #bracket {
             font-weight:bold;
             font-size:18px !important;
         }
 
-
-
-        /* Add a background color on hover */
-        /*.btn-group button:hover {*/
-        /*    background-color: #000000;*/
-        /*}*/
-
-        .selected-button, .show-roster-enabled {
-            background-color:#28474B !important;
-            color:white;
+        #rosterSelect {
+            border:4px solid black !important;
+            border-radius:15px;
+            height:52px;
+            background-color:#00ffbf;
+            font-weight:bold;
+            padding-left:20px;
         }
 
-        #boys-roster {
-            margin-right: 30px;
-            background-color:dodgerblue;
-        }
-        #girls-roster {
-            margin-left: 30px;
-            background-color:lightpink;
-            color:black;
-        }
 
-        .selected-roster-button {
-            transform: scale(1.2);
-            border-color:black;
-            border-width:3px;
-        }
+
+
+
 
         #invitesTable, #playerStatsTable, #girlsSchoolTable, #schoolTable {
             width:100% !important;
@@ -274,7 +337,7 @@
             transform: scale(1.2);
         }
 
-        #playerDisplayTable, #seedsTable {
+        #playerDisplayTable, #seedsTable, #editRosterTable {
             width:100% !important;
         }
 
@@ -300,42 +363,26 @@
             display: block;
             width: 100%;
             height: .25em;
-            background-color: #37c0fb;
+            background-color: #00ffbf;
             border:none;
             padding:0;
         }
 
         .navbar-toggler {
-            background-color:#37c0fb
+            background-color:#00ffbf;
         }
 
 
-        #rosterSelect {
-            padding-left:20px;
+        #rosterSelect:hover {
+            background-color:mediumspringgreen;
         }
 
-        .bn3637 {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.7rem 2rem;
-            font-family: "Poppins", sans-serif;
-            font-weight: 700;
-            font-size: 18px;
-            text-align: center;
-            text-decoration: none;
-            color: #000;
-            backface-visibility: hidden;
-            border: 4px solid black;
-            border-radius: 1rem;
-            margin-right:20px;
 
+        .selected-button, .show-roster-enabled, .active, .selected-roster-button {
+            background-color:#333 !important;
+            color:white;
         }
-        .bn3637:hover {
-            transition: transform 0.2s cubic-bezier(0.235, 0, 0.05, 0.95);
-            transform: perspective(1px) scale3d(1.044, 1.044, 1) translateZ(0) !important;
-            background-color:#000;
-        }
+
 
 
     </style>

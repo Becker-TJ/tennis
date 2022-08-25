@@ -39,6 +39,7 @@ Route::get('/createtournament', [TournamentController::class, 'showCreateTournam
 Route::get('/createtournament/{tournament}', [TournamentController::class, 'showEditTournament']);
 Route::post('/createtournament', [TournamentController::class, 'create']);
 Route::post('/createtournament/{tournament}', [TournamentController::class, 'edit']);
+Route::post('/edittournament', [TournamentController::class, 'edit']);
 
 Route::get('/tournaments', [TournamentController::class, 'showTournaments'])->name('tournaments');
 Route::get('/tournament/{tournament}', [TournamentController::class, 'showTournament'])->name('tournament');

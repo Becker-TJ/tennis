@@ -11,6 +11,21 @@
                 <div class="card">
                     <div id="tournament_id" style="display:none">{{$tournament->id}}</div>
                     <div id="selectingDoublesPartner" data-player-name="empty" data-player-id="0" data-value="false" style="display:none"></div>
+                    <div id="attendeeStatus" data-status="
+                    @if($hostUser){{"host"}}
+                    @elseif($userInviteStatus === "accepted")
+                    {{"attendee"}}
+                    @else
+                    {{"none"}}
+                    @endif
+                    " data-school="
+                    @if($userInviteStatus === "accepted")
+                        {{$user->school_id}}
+                    @else
+                        {{"0"}}
+                    @endif
+                    " data-school-name="
+                    @if($userInviteStatus === "accepted"){{$user->getSchool()->name}}@else{{"none"}}@endif" style="display:none"></div>
                     <div class="card-header">{{$tournament->name}}</div>
 {{--                    <button class="btn btn-primary col-md-2 offset-md-5" onclick="location.href='/createtournament/{{$tournament->id}}'" type="button">Edit Tournament</button>--}}
 
@@ -63,39 +78,61 @@
 
                     @if($hostUser)
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary col-md-2 offset-md-4" data-toggle="modal" data-target="#editTournamentModal">Edit Tournament</button>
-                        <button type="button" class="btn btn-primary col-md-2 offset-md-5" data-toggle="modal" data-target="#inviteTeamsModal">Invite Teams</button>
+                        <button type="button" class="btn button-in-row btn-primary col-md-2 offset-md-4" data-toggle="modal" data-target="#editTournamentModal">Edit Tournament</button>
+                        <button type="button" class="btn button-in-row btn-primary col-md-2 offset-md-5" data-toggle="modal" data-target="#inviteTeamsModal">Invite Teams</button>
                     </div>
                     @endif
 
-                    @if($userInviteStatus === 'pending')
-                    <div class="btn-group">
-                        <button type="button" id="decline_tournament_invitation_button" class="btn btn-primary col-md-2 offset-md-4" data-toggle="modal">Decline Tournament Invitation</button>
-                        <button type="button" id="accept_tournament_invitation_button" class="btn btn-primary col-md-2 offset-md-5" data-toggle="modal">Accept Tournament Invitation</button>
-                    </div>
+                    @if($userInviteStatus === 'pending' || ($tournament->privacy_setting === "Public" && Auth::check()))
+                        @if($userInviteStatus != "declined" && !$hostUser)
+                            <br>
+                        @endif
+                        <div class="btn-group">
+                            @if($userInviteStatus === 'pending' || $userInviteStatus === 'accepted' && !$hostUser)
+                                <button type="button" id="decline_tournament_invitation_button" class="btn btn-primary col-md-2 {{$userInviteStatus === 'pending' ? 'offset-md-4' : 'offset-md-5'}}" data-toggle="modal">
+                                    {{$userInviteStatus === 'pending' ? 'Decline Invitation' : 'Leave Tournament'}}
+                                </button>
+                            @endif
+                            @if(($userInviteStatus === "No Invite" && $tournament->privacy_setting === "Public") || $userInviteStatus === "pending")
+                                <button type="button" id="accept_tournament_invitation_button" class="btn btn-primary col-md-2 offset-md-5" data-toggle="modal">
+                                    {{$tournament->privacy_setting === "Public" && $userInviteStatus === "No Invite" ? 'Join Tournament' : 'Accept Tournament Invitation'}}
+                                </button>
+                            @endif
+                        </div>
                     @endif
 
                     <br>
 
-                    <div class="btn-group .btn-girls">
-                        <button id="girlsOneSingles" data-gender="Female" type="button" class="bracket-button btn btn-girls col-md-2 offset-md-2 selected-button">Girls 1 Singles</button>
-                        <button id="girlsTwoSingles" data-gender="Female" type="button" class="bracket-button btn btn-girls col-md-2 offset-md-5" data-toggle="modal">Girls 2 Singles</button>
-                        <button id="girlsOneDoubles" data-gender="Female" type="button" class="bracket-button btn btn-girls col-md-2 offset-md-5" data-toggle="modal">Girls 1 Doubles</button>
-                        <button id="girlsTwoDoubles" data-gender="Female" type="button" class="bracket-button btn btn-girls col-md-2 offset-md-5" data-toggle="modal">Girls 2 Doubles</button>
-                    </div>
+                    @if($tournament->gender === "Boys" || $tournament->gender === "Both")
+                        <div class="boys-buttons btn-group">
+                            <button id="boysOneSingles" data-gender="Male" type="button" class="bracket-button btn btn-boys col-md-2 offset-md-2 {{$tournament->gender === "Boys" || $tournament->gender === "Both" ? 'selected-button' : ''}}" data-toggle="modal">Boys 1 Singles</button>
+                            <button id="boysTwoSingles" data-gender="Male" type="button" class="bracket-button btn btn-boys col-md-2 offset-md-5" data-toggle="modal">Boys 2 Singles</button>
+                            <button id="boysOneDoubles" data-gender="Male" type="button" class="bracket-button btn btn-boys col-md-2 offset-md-5" data-toggle="modal">Boys 1 Doubles</button>
+                            <button id="boysTwoDoubles" data-gender="Male" type="button" class="bracket-button btn btn-boys col-md-2 offset-md-5" data-toggle="modal">Boys 2 Doubles</button>
+                        </div>
+                    @endif
 
-                    <div class="btn-group">
-                        <button id="boysOneSingles" data-gender="Male" type="button" class="bracket-button btn btn-boys col-md-2 offset-md-2" data-toggle="modal">Boys 1 Singles</button>
-                        <button id="boysTwoSingles" data-gender="Male" type="button" class="bracket-button btn btn-boys col-md-2 offset-md-5" data-toggle="modal">Boys 2 Singles</button>
-                        <button id="boysOneDoubles" data-gender="Male" type="button" class="bracket-button btn btn-boys col-md-2 offset-md-5" data-toggle="modal">Boys 1 Doubles</button>
-                        <button id="boysTwoDoubles" data-gender="Male" type="button" class="bracket-button btn btn-boys col-md-2 offset-md-5" data-toggle="modal">Boys 2 Doubles</button>
-                    </div>
+                    @if($tournament->gender === "Girls" || $tournament->gender === "Both")
+                        <div class="girls-buttons btn-group .btn-girls">
+                            <button id="girlsOneSingles" data-gender="Female" type="button" class="bracket-button btn btn-girls col-md-2
+                            @if($tournament->gender === "Girls" || $tournament->gender === "Girls"){{"give-top-border"}}@endif offset-md-2 {{$tournament->gender === "Girls" ? 'selected-button' : ''}}">Girls 1 Singles</button>
+                            <button id="girlsTwoSingles" data-gender="Female" type="button" class="bracket-button btn btn-girls col-md-2
+                            @if($tournament->gender === "Girls" || $tournament->gender === "Girls"){{"give-top-border"}}@endif
+                            offset-md-5" data-toggle="modal">Girls 2 Singles</button>
+                            <button id="girlsOneDoubles" data-gender="Female" type="button" class="bracket-button btn btn-girls col-md-2
+                            @if($tournament->gender === "Girls" || $tournament->gender === "Girls"){{"give-top-border"}}@endif offset-md-5" data-toggle="modal">Girls 1 Doubles</button>
+                            <button id="girlsTwoDoubles" data-gender="Female" type="button" class="bracket-button btn btn-girls col-md-2
+                            @if($tournament->gender === "Girls" || $tournament->gender === "Girls"){{"give-top-border"}}@endif offset-md-5" data-toggle="modal">Girls 2 Doubles</button>
+                        </div>
+                    @endif
+
+
 
                     <br>
 
                     <div class="btn-group .btn-girls">
-                        <button id="showEditRosterTable" type="button" class="col-md-1 offset-md-4 bn3637">Show Rosters</button>
-                         <select id="rosterSelect" name="rosterSelect" type="button" class="btn col-md-2 offset-md-7 form-control">
+                        <button id="showEditRosterTable" type="button" class="col-md-3 offset-md-3 button-in-row">Show Roster</button>
+                         <select id="rosterSelect" name="rosterSelect" type="button" class="btn col-md-3 offset-md-7 form-control">
 
                             @foreach($acceptedAttendees as $attendee)
                                 <option value="{{$attendee->school_id}}">{{$attendee->getSchool()->name}}</option>
@@ -115,7 +152,7 @@
                             <th scope="col">Seq.</th>
                             <th scope="col">id</th>
                             <th scope="col">Position</th>
-                            <th scope="col">Name</th>
+                            <th scope="col">Player</th>
                             <th scope="col">Grade</th>
                             <th scope="col">Actions</th>
                         </tr>
@@ -169,128 +206,132 @@
 
                     <div class="modal fade" id="editTournamentModal" tabindex="-1" role="dialog" aria-labelledby="editTournamentModal" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="editTournamentModal">Edit Tournament</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
+                            <form method="POST" action="/edittournament">
+                                @csrf
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="editTournamentModal">Edit Tournament</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="hidden" value="{{$tournament->id}}" name="tournament_id">
+
+                                        <div class="form-group row">
+                                            <label for="tournament_name" class="col-md-4 col-form-label text-md-right">Tournament Name</label>
+
+                                            <div class="col-md-6">
+                                                <input id="tournament_name" type="text" class="form-control" name="tournament_name" value="{{$tournament->name ?? ''}}" required autofocus autocomplete="off">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="location_name" class="col-md-4 col-form-label text-md-right">Location Name</label>
+
+                                            <div class="col-md-6">
+                                                <input id="location_name" type="text" class="form-control" name="location_name" value="{{$tournament->location_name ?? ''}}" required autocomplete="off">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="address" class="col-md-4 col-form-label text-md-right">Location Address</label>
+
+                                            <div class="col-md-6">
+                                                <input id="address" type="text" class="form-control" name="address" value="{{$tournament->address ?? ''}}" required autocomplete="off">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="date" class="col-md-4 col-form-label text-md-right">Date</label>
+                                            <div class="col-md-6">
+                                                <input id="date" type="date" class="form-control" name="date" value="{{$tournament->date ?? ''}}" required autocomplete="off">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="time" class="col-md-4 col-form-label text-md-right">Start Time</label>
+                                            <div class="col-md-6">
+                                                <input id="time" type="time" class="form-control" name="time" value="{{$tournament->time ?? ''}}" required value="08:00" autocomplete="off">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="team_count" class="col-md-4 col-form-label text-md-right">Number of Teams</label>
+                                            <div class="col-md-6">
+                                                <select class="form-control" id="team_count" name="team_count">
+                                                    <?php for($x = 8; $x == 8; $x++) {?>
+                                                    <option <?php if(isset($tournament)) {
+                                                        if($x == $tournament->team_count){
+                                                            echo "selected='selected'";
+                                                        }
+                                                    }?>
+                                                    >
+                                                        <?php echo $x;?>
+                                                    </option>
+                                                    <?php
+                                                    }?>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <div class="col-md-4 text-md-right">Gender</div>
+
+                                            <div class="btn-group btn-group-toggle col-md-6" data-toggle="buttons">
+                                                <label for="boys" class="btn btn-secondary {{$tournament->gender === "Boys" ? "active" : ""}}">
+                                                    <input class="form-control" type="radio" name="gender" id="boys" autocomplete="off" value="boys" {{$tournament->gender === "Boys" ? "checked" : ""}}> Boys
+                                                </label>
+                                                <label for="girls" class="btn btn-secondary {{$tournament->gender === "Girls" ? "active" : ""}}">
+                                                    <input class="form-control" type="radio" name="gender" id="girls" autocomplete="off" value="girls" {{$tournament->gender === "Girls" ? "checked" : ""}}> Girls
+                                                </label>
+                                                <label for="both" class="btn btn-secondary {{$tournament->gender === "Both" ? "active" : ""}}">
+                                                    <input class="form-control" type="radio" name="gender" id="both" autocomplete="off" value="both" {{$tournament->gender === "Both" ? "checked" : ""}}> Both
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="level" class="col-md-4 col-form-label text-md-right">Level</label>
+
+                                            <div class="btn-group btn-group-toggle col-md-6" data-toggle="buttons">
+                                                <label class="btn btn-secondary {{$tournament->level === "Varsity" ? "active" : ""}}">
+                                                    <input type="radio" name="level" id="level" autocomplete="off" value="varsity" {{$tournament->level === "Varsity" ? "checked" : ""}}> Varsity
+                                                </label>
+                                                <label class="btn btn-secondary {{$tournament->level === "Junior Varsity" ? "active" : ""}}">
+                                                    <input type="radio" name="level" id="level" autocomplete="off" value="junior varsity" {{$tournament->level === "Junior Varsity" ? "checked" : ""}}> JV
+                                                </label>
+                                                <label class="btn btn-secondary {{$tournament->level === "Junior High" ? "active" : ""}}">
+                                                    <input type="radio" name="level" id="level" autocomplete="off" value="junior high" {{$tournament->level === "Junior High" ? "checked" : ""}}> Junior High
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="alert alert-success col-md-12" role="alert">
+                                            <p>Public - Any team can join. First come, first served.</p>
+                                            <hr>
+                                            <p class="mb-0">Private - Only teams that you invite can join.  This option can be switched to Public at any time to fill teams if needed.</p>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="privacy_setting" class="col-md-4 col-form-label text-md-right">Public or Private</label>
+
+                                            <div class="btn-group btn-group-toggle col-md-6" data-toggle="buttons">
+                                                <label class="btn btn-secondary {{$tournament->privacy_setting === "Public" ? "active" : ""}}">
+                                                    <input type="radio" name="privacy_setting" id="privacy_setting" autocomplete="off" value="public" {{$tournament->privacy_setting === "Public" ? "checked" : ""}}> Public
+                                                </label>
+                                                <label class="btn btn-secondary {{$tournament->privacy_setting === "Private" ? "active" : ""}}">
+                                                    <input type="radio" name="privacy_setting" id="privacy_setting" autocomplete="off" value="private" {{$tournament->privacy_setting === "Private" ? "checked" : ""}}> Private
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary col-md-2" data-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-primary col-md-2">Save Changes</button>
+                                    </div>
                                 </div>
-                                <div class="modal-body">
-                                    <div class="form-group row">
-                                        <label for="tournament_name" class="col-md-4 col-form-label text-md-right">Tournament Name</label>
-
-                                        <div class="col-md-6">
-                                            <input id="tournament_name" type="text" class="form-control" name="tournament_name" value="{{$tournament->name ?? ''}}" required autofocus autocomplete="off">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label for="location_name" class="col-md-4 col-form-label text-md-right">Location Name</label>
-
-                                        <div class="col-md-6">
-                                            <input id="location_name" type="text" class="form-control" name="location_name" value="{{$tournament->location_name ?? ''}}" required autocomplete="off">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label for="address" class="col-md-4 col-form-label text-md-right">Location Address</label>
-
-                                        <div class="col-md-6">
-                                            <input id="address" type="text" class="form-control" name="address" value="{{$tournament->address ?? ''}}" required autocomplete="off">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label for="date" class="col-md-4 col-form-label text-md-right">Date</label>
-                                        <div class="col-md-6">
-                                            <input id="date" type="date" class="form-control" name="date" value="{{$tournament->date ?? ''}}" required autocomplete="off">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label for="time" class="col-md-4 col-form-label text-md-right">Start Time</label>
-                                        <div class="col-md-6">
-                                            <input id="time" type="time" class="form-control" name="time" value="{{$tournament->time ?? ''}}" required value="08:00" autocomplete="off">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label for="team_count" class="col-md-4 col-form-label text-md-right">Number of Teams</label>
-                                        <div class="col-md-6">
-                                            <select class="form-control" id="team_count" name="team_count">
-                                                <?php for($x = 4; $x <= 16; $x++) {?>
-                                                <option <?php if(isset($tournament)) {
-                                                    if($x == $tournament->team_count){
-                                                        echo "selected='selected'";
-                                                    }
-                                                }?>
-                                                >
-                                                    <?php echo $x;?>
-                                                </option>
-                                                <?php
-                                                }?>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <div class="col-md-4 text-md-right">Gender</div>
-
-                                        <div class="btn-group btn-group-toggle col-md-6" data-toggle="buttons">
-                                            <label for="boys" class="btn btn-secondary active">
-                                                <input class="form-control" type="radio" name="gender" id="boys" autocomplete="off" value="boys" checked> Boys
-                                            </label>
-                                            <label for="girls" class="btn btn-secondary">
-                                                <input class="form-control" type="radio" name="gender" id="girls" autocomplete="off" value="girls"> Girls
-                                            </label>
-                                            <label for="both" class="btn btn-secondary">
-                                                <input class="form-control" type="radio" name="gender" id="both" autocomplete="off" value="both"> Both
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label for="level" class="col-md-4 col-form-label text-md-right">Level</label>
-
-                                        <div class="btn-group btn-group-toggle col-md-6" data-toggle="buttons">
-                                            <label class="btn btn-secondary active">
-                                                <input type="radio" name="level" id="level" autocomplete="off" value="varsity" checked> Varsity
-                                            </label>
-                                            <label class="btn btn-secondary">
-                                                <input type="radio" name="level" id="level" autocomplete="off" value="jv"> JV
-                                            </label>
-                                            <label class="btn btn-secondary">
-                                                <input type="radio" name="level" id="level" autocomplete="off" value="junior high"> Junior High
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <div class="alert alert-success col-md-12" role="alert">
-                                        <p>Public - Any team can join. First come, first served.</p>
-                                        <hr>
-                                        <p class="mb-0">Private - Only teams that you invite can join.  This option can be switched to Public at any time to fill teams if needed.</p>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label for="privacy_setting" class="col-md-4 col-form-label text-md-right">Public or Private</label>
-
-                                        <div class="btn-group btn-group-toggle col-md-6" data-toggle="buttons">
-                                            <label class="btn btn-secondary active">
-                                                <input type="radio" name="privacy_setting" id="privacy_setting" autocomplete="off" value="public"
-                                                    checked> Public
-                                            </label>
-                                            <label class="btn btn-secondary">
-                                                <input type="radio" name="privacy_setting" id="privacy_setting" autocomplete="off" value="private"> Private
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary col-md-2" data-dismiss="modal">Cancel</button>
-                                    <button type="button" class="btn btn-primary col-md-2">Save Changes</button>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
 
@@ -415,7 +456,7 @@
             }
 
             .give-top-border {
-                border-top: 4px solid #333;
+                border-top: 4px solid #333 !important;
             }
 
             .give-bottom-border {

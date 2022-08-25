@@ -286,7 +286,7 @@ $(document).ready( function () {
         'columnDefs': [
             { targets: [0,1], visible: false },
             { targets: [2,4,5], orderable: false, 'className': 'center-align' },
-            { targets: [3], orderable:false}
+            { targets: [3], orderable:false, 'className': 'left-align'}
         ]
         //this will be useful for adding a button in the same line as the search bar for creating tournaments etc
         // "initComplete": function( settings, json ) {
@@ -485,9 +485,19 @@ $(document).ready( function () {
                 }
             }
         });
-        activateAddPlayerToTournamentActions();
-        activatePairDoublesPartnerActions();
+        var attendeeID = getAttendeeID();
+        var selectedID = parseInt($('#rosterSelect').find(':selected').val());
+        var match = (attendeeID === selectedID);
+        if(checkCoach() === "host" || (checkCoach() === "attendee" && match)) {
+            showEditRosterTableColumns();
+            activateAddPlayerToTournamentActions();
+            activatePairDoublesPartnerActions();
+        } else {
+            hideEditRosterTableColumns();
+        }
     }
+
+
 
     function activatePairDoublesPartnerActions() {
         $('.pairDoublesPartnersButton').click(function(e) {
@@ -567,6 +577,46 @@ $(document).ready( function () {
     fillBracketData();
     fillRosterTable();
 
+    function showSeedTableColumns() {
+        $('#seedsTable').DataTable().columns([2,7]).visible(true);
+    }
+
+    function showSeedTableActions() {
+        $('#seedsTable').DataTable().columns([7]).visible(true);
+    }
+
+    function hideSeedTableColumns() {
+        $('#seedsTable').DataTable().columns([2,7]).visible(false);
+    }
+
+    function showEditRosterTableColumns() {
+        $('#editRosterTable').DataTable().columns([5]).visible(true);
+    }
+
+    function hideEditRosterTableColumns() {
+        $('#editRosterTable').DataTable().columns([5]).visible(false);
+    }
+
+    function checkCoach() {
+        var attendeeStatus = $('#attendeeStatus').attr('data-status');
+        attendeeStatus = attendeeStatus.replace(/\s/g, '')
+        return attendeeStatus;
+    }
+
+    function getAttendeeID() {
+        var schoolID = $('#attendeeStatus').attr('data-school');
+        schoolID = schoolID.replace(/\s/g, '')
+        return parseInt(schoolID);
+    }
+
+    function getAttendeeSchoolName() {
+        var schoolName = $('#attendeeStatus').attr('data-school-name');
+        schoolName = schoolName.trimStart();
+        return (schoolName);
+    }
+
+    getAttendeeSchoolName();
+
     $('#editRosterTable').hide();
     function fillBracketData() {
         var tournament_id = $('#tournament_id').html();
@@ -587,9 +637,13 @@ $(document).ready( function () {
 
                 $('select[id*="court-select"]').hide();
 
+                hideSeedTableColumns();
+
                 $matches = data.matches;
-                if($matches.length === 0) {
-                    $('#seedsTable').DataTable().columns([2,7]).visible(true);
+                if($matches.length === 0 && checkCoach() === "host") {
+                    showSeedTableColumns();
+                } else if ($matches.length === 0 && checkCoach() === "attendee") {
+                    showSeedTableActions();
                 }
                 $courtCount = data.courtCount;
 
@@ -671,8 +725,10 @@ $(document).ready( function () {
 
                         if($value === "-" || $value === "BYE" || ($matches.length > 0)) {
                             $actions = ""
-                        } else {
+                        } else if (checkCoach() === "host" || (checkCoach() === "attendee" && getAttendeeSchoolName() === $schoolName)) {
                             $actions = '<img class="remove-seeded-player" data-id="remove-seeded-player" src="/images/x-icon.png"</img>';
+                        } else {
+                            $actions = "";
                         }
 
                         if($isASeed) {
@@ -794,7 +850,7 @@ $(document).ready( function () {
                 });
 
                 if($matches.length > 0) {
-                    $('#seedsTable').DataTable().columns([2,7]).visible(false);
+                    hideSeedTableColumns();
                 }
 
 
@@ -807,8 +863,6 @@ $(document).ready( function () {
         byes.each(function() {
             $(this).addClass('italicize');
         });
-
-
 
 
         activateRemoveSeededPlayerButtons();

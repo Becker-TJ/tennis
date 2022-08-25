@@ -141,7 +141,15 @@ class Tournament extends Model
         $attendees = SchoolAttendee::all()->where('tournament_id', '=', $tournament_id);
         $singles = false;
 
-        $brackets = ['girlsOneSingles', 'girlsTwoSingles', 'girlsOneDoubles', 'girlsTwoDoubles', 'boysOneSingles', 'boysTwoSingles', 'boysOneDoubles', 'boysTwoDoubles'];
+        if($this->gender === "Girls") {
+            $brackets = ['girlsOneSingles', 'girlsTwoSingles', 'girlsOneDoubles', 'girlsTwoDoubles'];
+        } else if ($this->gender === "Boys") {
+            $brackets = ['boysOneSingles', 'boysTwoSingles', 'boysOneDoubles', 'boysTwoDoubles'];
+        } else {
+            $brackets = ['girlsOneSingles', 'girlsTwoSingles', 'girlsOneDoubles', 'girlsTwoDoubles', 'boysOneSingles', 'boysTwoSingles', 'boysOneDoubles', 'boysTwoDoubles'];
+        }
+
+
 
         foreach($brackets as $bracket) {
             switch ($bracket) {
@@ -212,6 +220,12 @@ class Tournament extends Model
             array_shift($bracketPositionTitles);
             array_shift($bracketPositionTitles);
 
+            $teamCount = $this->team_count;
+            for($increment = 1; $increment <= $teamCount; $increment++) {
+                $seed = $increment.'_seed';
+                $bracketPositions->$seed = 0;
+            }
+
             if ($singles) {
                 $singlesPlayers = Player::all()
                     ->where('gender', '=', $gender)
@@ -244,131 +258,5 @@ class Tournament extends Model
         }
         return $bracketPositions;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//        $tournament_id = $this->id;
-//        $attendees = SchoolAttendee::all()->where('tournament_id', '=', $tournament_id);
-//        $singles = false;
-//
-//        $brackets = ['girlsOneSingles', 'girlsTwoSingles', 'girlsOneDoubles', 'girlsTwoDoubles', 'boysOneSingles', 'boysTwoSingles', 'boysOneDoubles', 'boysTwoDoubles'];
-//
-//        foreach($brackets as $bracket) {
-//            switch ($bracket) {
-//                case 'boysOneSingles':
-//                    $singles = true;
-//                    $gender = 'Male';
-//                    $position = [1];
-//                    $sort = 'boys_one_singles_rank';
-//                    break;
-//                case 'boysTwoSingles':
-//                    $singles = true;
-//                    $gender = 'Male';
-//                    $position = [2];
-//                    $sort = 'boys_two_singles_rank';
-//                    break;
-//                case 'boysOneDoubles':
-//                    $singles = false;
-//                    $gender = 'Male';
-//                    $position = [3, 4];
-//                    $sort = 'boys_one_doubles_rank';
-//                    break;
-//                case 'boysTwoDoubles':
-//                    $singles = false;
-//                    $gender = 'Male';
-//                    $position = [5, 6];
-//                    $sort = 'boys_two_doubles_rank';
-//                    break;
-//                case 'girlsOneSingles':
-//                    $singles = true;
-//                    $gender = 'Female';
-//                    $position = [1];
-//                    $sort = 'girls_one_singles_rank';
-//                    break;
-//                case 'girlsTwoSingles':
-//                    $singles = true;
-//                    $gender = 'Female';
-//                    $position = [2];
-//                    $sort = 'girls_two_singles_rank';
-//                    break;
-//                case 'girlsOneDoubles':
-//                    $singles = false;
-//                    $gender = 'Female';
-//                    $position = [3, 4];
-//                    $sort = 'girls_one_doubles_rank';
-//                    break;
-//                case 'girlsTwoDoubles':
-//                    $singles = false;
-//                    $gender = 'Female';
-//                    $sort = 'girls_two_doubles_rank';
-//                    break;
-//            }
-//
-//            $attendeeSchoolIDs = [];
-//            foreach ($attendees as $attendee) {
-//                $attendeeSchoolIDs[] = $attendee->school_id;
-//            }
-//
-//            $bracketPositions = BracketPosition::all()->where('tournament_id', '=', $tournament_id)->where('bracket', $bracket)->first();
-//            $bracketPositionClass = new BracketPosition;
-//            $bracketPositionTitles = $bracketPositionClass->getFillable();
-//            array_shift($bracketPositionTitles);
-//            array_shift($bracketPositionTitles);
-//
-//            if ($singles) {
-//                $singlesPlayers = Player::all()
-//                    ->where('gender', '=', $gender)
-//                    ->whereIn('school_id', $attendeeSchoolIDs)
-//                    ->whereIn('position', $position)
-//                    ->sortBy($sort);
-//
-//                if ($bracketPositions === null) {
-//                    $bracketPositions = new BracketPosition();
-//                    $bracketPositions->tournament_id = $tournament_id;
-//                    $bracketPositions->bracket = $bracket;
-//                }
-//
-//                $increment = 1;
-//                foreach ($singlesPlayers as $player) {
-//                    $seed = $increment.'_seed';
-//                    $bracketPositions->$seed = $player->id;
-//                    $increment++;
-//                }
-//                $bracketPositions->saveOrFail();
-//
-//            } else {
-//
-//                $doublesTeams = $this->getDoublesSortedByRank($bracket);
-//
-//                if ($bracketPositions == null) {
-//                    $bracketPositions = new BracketPosition();
-//                    $bracketPositions->tournament_id = $tournament_id;
-//                    $bracketPositions->bracket = $bracket;
-//                }
-//                $increment = 1;
-//                foreach ($doublesTeams as $team) {
-//                    $seed = $increment.'_seed';
-//                    $bracketPositions->$seed = $team['id'];
-//                    $increment++;
-//                }
-//                $bracketPositions->saveOrFail();
-//
-//            }
-//        }
-//        return $bracketPositions;
     }
 }

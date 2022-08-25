@@ -11,55 +11,57 @@
                     <div id="playerSortHeader" class="card-body">
                         <form method="POST" action="players">
                             @csrf
-                            <label for="conference_settings" class="col-md-3 col-form-label text-md-right">Class</label>
+                            <label for="conference_settings" class="format-label col-md-3 col-form-label text-md-right">Class</label>
                             <div id="conference_settings" class="btn-group btn-group-toggle col-md-6" data-toggle="buttons">
-                                <label class="btn btn-secondary @if($radioButtonSettings['conference_setting'] == "all_classes") active @endif" >
+                                <label class="first-button-in-row button-in-row btn btn-secondary @if($radioButtonSettings['conference_setting'] == "all_classes") active @endif" >
                                     <input type="radio" name="conference_setting" id="all_classes" autocomplete="off" value="all_classes"
                                            @if($radioButtonSettings['conference_setting'] == "all_classes") checked @endif> All
                                 </label>
-                                <label class="btn btn-secondary @if($radioButtonSettings['conference_setting'] == "6A") active @endif">
+                                <label class="button-in-row btn btn-secondary @if($radioButtonSettings['conference_setting'] == "6A") active @endif">
                                     <input type="radio" name="conference_setting" id="6A" autocomplete="off" value="6A"
                                            @if($radioButtonSettings['conference_setting'] == "6A") checked @endif> 6A
                                 </label>
-                                <label class="btn btn-secondary @if($radioButtonSettings['conference_setting'] == "5A") active @endif">
+                                <label class="last-button-in-row button-in-row btn btn-secondary @if($radioButtonSettings['conference_setting'] == "5A") active @endif">
                                     <input type="radio" name="conference_setting" id="5A" autocomplete="off" value="5A"
                                            @if($radioButtonSettings['conference_setting'] == "5A") checked @endif> 5A
                                 </label>
-                                <label class="btn btn-secondary @if($radioButtonSettings['conference_setting'] == "4A") active @endif">
+                                <label class="last-button-in-row button-in-row btn btn-secondary @if($radioButtonSettings['conference_setting'] == "4A") active @endif">
                                     <input type="radio" name="conference_setting" id="4A" autocomplete="off" value="4A"
                                     @if($radioButtonSettings['conference_setting'] == "4A") checked @endif> 4A
                                 </label>
                             </div>
-
-
-                            <label for="bracket_rank" class="col-md-3 col-form-label text-md-right">Bracket</label>
+                            <br>
+                            <br>
+                            <label for="bracket_rank" class="format-label col-md-3 col-form-label text-md-right">Bracket</label>
 
                             <div id="bracket_rank" class="btn-group btn-group-toggle col-md-6" data-toggle="buttons">
-                                <label class="btn btn-secondary @if($radioButtonSettings['bracket_rank'] == "boys_one_singles_rank") active @endif">
+                                <label class="button-in-row first-button-in-row btn btn-secondary @if($radioButtonSettings['bracket_rank'] == "boys_one_singles_rank") active @endif">
                                     <input type="radio" name="bracket_rank" id="one_singles" autocomplete="off" value="boys_one_singles_rank"
                                            @if($radioButtonSettings['bracket_rank'] == "boys_one_singles_rank") checked @endif> 1 Singles
                                 </label>
-                                <label class="btn btn-secondary @if($radioButtonSettings['bracket_rank'] == "boys_two_singles_rank") active @endif">
+                                <label class="button-in-row btn btn-secondary @if($radioButtonSettings['bracket_rank'] == "boys_two_singles_rank") active @endif">
                                     <input type="radio" name="bracket_rank" id="two_singles" autocomplete="off" value="boys_two_singles_rank"
                                            @if($radioButtonSettings['bracket_rank'] == "boys_two_singles_rank") checked @endif> 2 Singles
                                 </label>
-                                <label class="btn btn-secondary @if($radioButtonSettings['bracket_rank'] == "boys_one_doubles_rank") active @endif">
+                                <label class="button-in-row last-button-in-row btn btn-secondary @if($radioButtonSettings['bracket_rank'] == "boys_one_doubles_rank") active @endif">
                                     <input type="radio" name="bracket_rank" id="one_doubles" autocomplete="off" value="boys_one_doubles_rank"
                                            @if($radioButtonSettings['bracket_rank'] == "boys_one_doubles_rank") checked @endif> 1 Doubles
                                 </label>
-                                <label class="btn btn-secondary @if($radioButtonSettings['bracket_rank'] == "boys_two_doubles_rank") active @endif">
+                                <label class="button-in-row last-button-in-row btn btn-secondary @if($radioButtonSettings['bracket_rank'] == "boys_two_doubles_rank") active @endif">
                                     <input type="radio" name="bracket_rank" id="two_doubles" autocomplete="off" value="boys_two_doubles_rank"
                                            @if($radioButtonSettings['bracket_rank'] == "boys_two_doubles_rank") checked @endif> 2 Doubles
                                 </label>
                             </div>
+                            <br>
+                            <br>
 
-                            <label for="genders" class="col-md-3 col-form-label text-md-right">Gender</label>
+                            <label for="genders" class="format-label col-md-3 col-form-label text-md-right">Gender</label>
                             <div id="genders" class="btn-group btn-group-toggle col-md-6" data-toggle="buttons">
-                                <label for="boys" class="btn btn-secondary @if($radioButtonSettings['gender'] == "Male") active @endif">
+                                <label for="boys" class="button-in-row first-button-in-row btn btn-secondary @if($radioButtonSettings['gender'] == "Male") active @endif">
                                     <input class="form-control" type="radio" name="gender" id="boys" autocomplete="off" value="Male"
                                            @if($radioButtonSettings['gender'] == "Male") checked @endif> Boys
                                 </label>
-                                <label for="girls" class="btn btn-secondary @if($radioButtonSettings['gender'] == "Female") active @endif">
+                                <label for="girls" class="button-in-row btn btn-secondary @if($radioButtonSettings['gender'] == "Female") active @endif">
                                     <input class="form-control" type="radio" name="gender" id="girls" autocomplete="off" value="Female"
                                            @if($radioButtonSettings['gender'] == "Female") checked @endif> Girls
                                 </label>
@@ -67,7 +69,7 @@
 
                             <hr>
                             <div class="col-md-4 offset-md-4">
-                                <button id="updateByPlayerSortSettingsButton" type="submit" class="btn btn-primary col-md-6 offset-md-3">Update</button>
+                                <button id="updateByPlayerSortSettingsButton" type="submit" class="submit-button button-in-row btn btn-primary col-md-6 offset-md-3">Update</button>
                             </div>
 
                         </form>

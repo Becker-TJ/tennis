@@ -38,4 +38,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getSchool() {
+        $school = School::find($this->school_id);
+        return $school;
+    }
 }

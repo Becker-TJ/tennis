@@ -13,6 +13,7 @@ use App\SchoolAttendee;
 use App\SinglesMatch;
 use App\Tournament;
 use Illuminate\Http\Request;
+use Auth;
 
 class AjaxController extends Controller
 {
@@ -68,13 +69,18 @@ class AjaxController extends Controller
         $userSchoolID = Auth::user()->school_id;
 
         $schoolAttendee = SchoolAttendee::all()->where('tournament_id', '=', $tournamentID)->where('school_id', '=', $userSchoolID)->first();
+        if($schoolAttendee === null) {
+            $schoolAttendee = new SchoolAttendee;
+            $schoolAttendee->school_id = $userSchoolID;
+            $schoolAttendee->tournament_id = $tournamentID;
+        }
         $schoolAttendee->invite_status = 'accepted';
         $schoolAttendee->saveOrFail();
 
         $tournament = Tournament::find($tournamentID);
         $tournament->updateBracketPositionsWithAllAttendees();
 
-        return response()->json(['redirect_url'=> url('tournaments')]);
+        return response()->json(['redirect_url'=> url('tournament/' . $tournamentID)]);
     }
 
     public function removeSeededPlayer(Request $request) {
