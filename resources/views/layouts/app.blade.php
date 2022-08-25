@@ -286,8 +286,16 @@
             display: table;
         }
 
+        select:disabled {
+            background-color:white;
+            color:black;
+            appearance:none;
+            border:none;
+        }
+
         .score-input {
             text-align:center;
+            width:inherit;
         }
 
         .center-align{

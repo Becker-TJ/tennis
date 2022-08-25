@@ -627,13 +627,18 @@ $(document).ready( function () {
     function fillBracketData() {
         var tournament_id = $('#tournament_id').html();
         var requestedBracket = $('.selected-button').attr('id');
-
+        var attendeeStatus = $('#attendeeStatus').attr('data-status').trimStart().trimEnd();
+        if(attendeeStatus !== "host") {
+            $('.advanceable').removeClass('advanceable');
+            $('select[id*="court-select"]').attr('disabled', true);
+        }
         $.ajax({
             async: false,
             type:'POST',
             url:'/getBracketData',
             data:{tournament_id:tournament_id,requestedBracket:requestedBracket},
             success:function(data){
+
                 //repopulates tournament bracket with user selection of boys, girls, 1 singles, 2 singles, etc
                 // for(const seedNumber in data.seeds) {
                 //     $('#' + seedNumber + '-seed').html(data.seeds[seedNumber].first_name + ' ' + data.seeds[seedNumber].last_name);
@@ -700,8 +705,12 @@ $(document).ready( function () {
                             }
 
                             $('#' + $positionWithDashes).html($name);
+
+
                             if(!$nonAdvanceablePositions.includes($positionWithDashes) && $name != "") {
-                                $('#' + $positionWithDashes).addClass('advanceable');
+                                if(attendeeStatus === "host") {
+                                    $('#' + $positionWithDashes).addClass('advanceable');
+                                }
                             }
                         }
 

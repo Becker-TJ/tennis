@@ -106,44 +106,44 @@
                             <input type="text" name="school_id" class="form-control" id="school_id" value="{{$school->id}}">
                         </div>
                         <div class="form-group">
-                            <label for="new_player_first_name" class="col-form-label">First Name</label>
+                            <label for="new_player_first_name" class="format-label col-form-label">First Name</label>
                             <input type="text" name="new_player_first_name" class="form-control" id="new_player_first_name">
                         </div>
                         <div class="form-group">
-                            <label for="new_player_last_name" class="col-form-label">Last Name</label>
+                            <label for="new_player_last_name" class="format-label col-form-label">Last Name</label>
                             <input type="text" name="new_player_last_name" class="form-control" id="new_player_last_name">
                         </div>
                         <div class="form-group">
-                            <label style="padding-left:0" for="class" class="col-form-label col-md-12">Grade</label>
+                            <label style="padding-left:0" for="class" class="format-label col-form-label col-md-12">Grade</label>
                             <div class="btn-group btn-group-toggle col-md-12" data-toggle="buttons">
-                                <label class="btn btn-secondary active">
+                                <label class="button-in-row first-button-in-row btn btn-secondary active">
                                     <input type="radio" name="grade" id="grade" autocomplete="off" value="Freshman" checked> Freshman
                                 </label>
-                                <label class="btn btn-secondary">
+                                <label class="button-in-row btn btn-secondary">
                                     <input type="radio" name="grade" id="grade" autocomplete="off" value="Sophomore"> Sophomore
                                 </label>
-                                <label class="btn btn-secondary">
+                                <label class="button-in-row last-button-in-row btn btn-secondary">
                                     <input type="radio" name="grade" id="grade" autocomplete="off" value="Junior"> Junior
                                 </label>
-                                <label class="btn btn-secondary">
+                                <label class="button-in-row last-button-in-row btn btn-secondary">
                                     <input type="radio" name="grade" id="grade" autocomplete="off" value="Senior"> Senior
                                 </label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label style="padding-left:0" for="gender" class="col-form-label col-md-12">Gender</label>
+                            <label style="padding-left:0" for="gender" class="format-label 3col-form-label col-md-12">Gender</label>
                             <div class="btn-group btn-group-toggle col-md-12" data-toggle="buttons">
-                                <label class="col-md-3 offset-md-3 btn btn-secondary active">
+                                <label class="button-in-row first-button-in-row col-md-3 offset-md-3 btn btn-secondary active">
                                     <input type="radio" name="gender" id="gender" autocomplete="off" value="Male" checked>Boy
                                 </label>
-                                <label class="col-md-3 btn btn-secondary">
+                                <label class="col-md-3 button-in-row btn btn-secondary">
                                     <input type="radio" name="gender" id="gender" autocomplete="off" value="Female">Girl
                                 </label>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary col-md-2" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary col-md-2" id="addNewPlayerButton">Add</button>
+                            <button type="button" class="button-in-row cancel-button btn btn-secondary col-md-2" data-dismiss="modal">Close</button>
+                            <button type="submit" class="button-in-row submit-button btn btn-primary col-md-2" id="addNewPlayerButton">Add</button>
                         </div>
                     </form>
                 </div>
