@@ -71,6 +71,7 @@
                             <div class="col-md-4 offset-md-4">
                                 <button id="updateByPlayerSortSettingsButton" type="submit" class="submit-button button-in-row btn btn-primary col-md-6 offset-md-3">Update</button>
                             </div>
+                            <br>
 
                         </form>
 
@@ -99,4 +100,7 @@
             </div>
         </div>
     </div>
+@endsection
+@section('javascript')
+    <script type="text/javascript" src="{{ URL::asset('js/players.js') }}"></script>
 @endsection

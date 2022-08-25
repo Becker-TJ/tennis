@@ -91,6 +91,7 @@
             border: 4px solid #333;
             border-radius:20px;
             overflow:hidden;
+            width:100% !important;
         }
 
         #allSchoolsTable tr:first-child, #playerDisplayTable tr:first-child {
@@ -223,6 +224,15 @@
 
         .submit-button:hover {
             background-color: darkturquoise !important;
+            border: 4px solid black !important;
+        }
+
+        .cancel-button {
+            background-color:lightgray !important;
+        }
+
+        .cancel-button:hover {
+            background-color: gray !important;
             border: 4px solid black !important;
         }
 

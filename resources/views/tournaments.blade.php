@@ -1,12 +1,11 @@
 @extends('layouts.app')
 @section('title', 'Tournaments')
-
 @section('content')
     <br>
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-10">
-                <div class="card">
+                <div id="THECARD" class="card">
                     <div class="card-header">Tournaments</div>
                         <div class="card-body">
                             <div class="alert alert-success col-md-12" role="alert">
@@ -68,4 +67,7 @@
             </div>
         </div>
     </div>
+@endsection
+@section('javascript')
+    <script type="text/javascript" src="{{ URL::asset('js/tournaments.js') }}"></script>
 @endsection

@@ -1,11 +1,10 @@
+
 @extends('layouts.app')
 @section('title', $tournament->name)
 @section('content')
     <br>
 
-    <div class="container-fluid">
-
-
+    <div class="container-fluid content-fit">
         <div class="row justify-content-center">
             <div class="col-md-10">
                 <div class="card">
@@ -79,7 +78,7 @@
                     @if($hostUser)
                     <div class="btn-group">
                         <button type="button" class="btn button-in-row btn-primary col-md-2 offset-md-4" data-toggle="modal" data-target="#editTournamentModal">Edit Tournament</button>
-                        <button type="button" class="btn button-in-row btn-primary col-md-2 offset-md-5" data-toggle="modal" data-target="#inviteTeamsModal">Invite Teams</button>
+                        <button type="button" class="btn last-button-in-row button-in-row btn-primary col-md-2 offset-md-5" data-toggle="modal" data-target="#inviteTeamsModal">Invite Teams</button>
                     </div>
                     @endif
 
@@ -279,13 +278,13 @@
                                             <div class="col-md-4 text-md-right">Gender</div>
 
                                             <div class="btn-group btn-group-toggle col-md-6" data-toggle="buttons">
-                                                <label for="boys" class="btn btn-secondary {{$tournament->gender === "Boys" ? "active" : ""}}">
+                                                <label for="boys" class="first-button-in-row button-in-row btn btn-secondary {{$tournament->gender === "Boys" ? "active" : ""}}">
                                                     <input class="form-control" type="radio" name="gender" id="boys" autocomplete="off" value="boys" {{$tournament->gender === "Boys" ? "checked" : ""}}> Boys
                                                 </label>
-                                                <label for="girls" class="btn btn-secondary {{$tournament->gender === "Girls" ? "active" : ""}}">
+                                                <label for="girls" class="button-in-row btn btn-secondary {{$tournament->gender === "Girls" ? "active" : ""}}">
                                                     <input class="form-control" type="radio" name="gender" id="girls" autocomplete="off" value="girls" {{$tournament->gender === "Girls" ? "checked" : ""}}> Girls
                                                 </label>
-                                                <label for="both" class="btn btn-secondary {{$tournament->gender === "Both" ? "active" : ""}}">
+                                                <label for="both" class="button-in-row last-button-in-row btn btn-secondary {{$tournament->gender === "Both" ? "active" : ""}}">
                                                     <input class="form-control" type="radio" name="gender" id="both" autocomplete="off" value="both" {{$tournament->gender === "Both" ? "checked" : ""}}> Both
                                                 </label>
                                             </div>
@@ -295,13 +294,13 @@
                                             <label for="level" class="col-md-4 col-form-label text-md-right">Level</label>
 
                                             <div class="btn-group btn-group-toggle col-md-6" data-toggle="buttons">
-                                                <label class="btn btn-secondary {{$tournament->level === "Varsity" ? "active" : ""}}">
+                                                <label class="button-in-row first-button-in-row btn btn-secondary {{$tournament->level === "Varsity" ? "active" : ""}}">
                                                     <input type="radio" name="level" id="level" autocomplete="off" value="varsity" {{$tournament->level === "Varsity" ? "checked" : ""}}> Varsity
                                                 </label>
-                                                <label class="btn btn-secondary {{$tournament->level === "Junior Varsity" ? "active" : ""}}">
+                                                <label class="button-in-row btn btn-secondary {{$tournament->level === "Junior Varsity" ? "active" : ""}}">
                                                     <input type="radio" name="level" id="level" autocomplete="off" value="junior varsity" {{$tournament->level === "Junior Varsity" ? "checked" : ""}}> JV
                                                 </label>
-                                                <label class="btn btn-secondary {{$tournament->level === "Junior High" ? "active" : ""}}">
+                                                <label class="last-button-in-row button-in-row btn btn-secondary {{$tournament->level === "Junior High" ? "active" : ""}}">
                                                     <input type="radio" name="level" id="level" autocomplete="off" value="junior high" {{$tournament->level === "Junior High" ? "checked" : ""}}> Junior High
                                                 </label>
                                             </div>
@@ -317,18 +316,18 @@
                                             <label for="privacy_setting" class="col-md-4 col-form-label text-md-right">Public or Private</label>
 
                                             <div class="btn-group btn-group-toggle col-md-6" data-toggle="buttons">
-                                                <label class="btn btn-secondary {{$tournament->privacy_setting === "Public" ? "active" : ""}}">
+                                                <label class="button-in-row first-button-in-row btn btn-secondary {{$tournament->privacy_setting === "Public" ? "active" : ""}}">
                                                     <input type="radio" name="privacy_setting" id="privacy_setting" autocomplete="off" value="public" {{$tournament->privacy_setting === "Public" ? "checked" : ""}}> Public
                                                 </label>
-                                                <label class="btn btn-secondary {{$tournament->privacy_setting === "Private" ? "active" : ""}}">
+                                                <label class="button-in-row btn btn-secondary {{$tournament->privacy_setting === "Private" ? "active" : ""}}">
                                                     <input type="radio" name="privacy_setting" id="privacy_setting" autocomplete="off" value="private" {{$tournament->privacy_setting === "Private" ? "checked" : ""}}> Private
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary col-md-2" data-dismiss="modal">Cancel</button>
-                                        <button type="submit" class="btn btn-primary col-md-2">Save Changes</button>
+                                        <button type="button" class="button-in-row cancel-button btn btn-secondary col-md-3" data-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="submit-button button-in-row btn btn-primary col-md-3">Save Changes</button>
                                     </div>
                                 </div>
                             </form>
