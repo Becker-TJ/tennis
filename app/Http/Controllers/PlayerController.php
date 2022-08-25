@@ -109,11 +109,13 @@ PlayerController extends Controller
         ];
 
         $tableTitle = 'All Boys One Singles';
+        $bracketRank = 'boys_one_singles_rank';
 
         return view('players', [
             'players' => $players,
             'radioButtonSettings' => $radioButtonSettings,
             'tableTitle' => $tableTitle,
+            'bracket_rank' => $bracketRank
         ]);
     }
 
