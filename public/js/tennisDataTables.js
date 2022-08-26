@@ -70,6 +70,10 @@ $(document).ready( function () {
             { data: 'team_count' }, /* index = 5 */
 
         ],
+        "columnDefs": [
+            { "type": "date", "targets": 2 }
+        ],
+
         'order': [
             [2, 'desc']
         ],
