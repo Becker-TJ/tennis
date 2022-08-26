@@ -20,7 +20,7 @@
                             <div id="existing_schools" class="form-group row">
                                 <label for="school_id_to_tie" class="col-md-4 col-form-label text-md-right">Existing Schools</label>
                                 <div class="col-md-6">
-                                    <select class="select2 form-control" id="school_id_to_tie" name="school_id_to_tie">
+                                    <select class="form-control" id="school_id_to_tie" name="school_id_to_tie">
                                         <option value="" disabled selected>Select School</option>
                                         @foreach($schools as $school)
                                         <option value="{{ $school->id }}">

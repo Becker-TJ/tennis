@@ -5,6 +5,7 @@ $(document).ready( function () {
         $("#switch_button_name").html("Confirm");
     });
 
+
     $("#not_listed").change(function() {
         if (this.checked) {
             $("#confirm_school_button").attr('hidden', false);
@@ -20,6 +21,8 @@ $(document).ready( function () {
             $("#switch_button_name").html("Confirm");
         }
     });
+
+
 
 });
 

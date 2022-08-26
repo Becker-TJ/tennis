@@ -285,7 +285,7 @@
 
         select[id*='court-select'] {
             font-style:italic;
-            text-align:center;
+            text-align:center !important;
         }
 
         /* Clear floats (clearfix hack) */
