@@ -4,7 +4,10 @@ if (document.documentElement.clientWidth < 481) {
         'width=device-width, initial-scale=.55, maximum-scale=1.0, user-scalable=0');
 }
 
+$('#viewTournamentsNavTitle').addClass('active-nav-title');
+
 $(document).ready( function () {
+
 
     //related to dropdown sorting
     $('.select2').select2();

@@ -32,7 +32,7 @@
                                 <th scope="col">Position</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Grade</th>
-                                <th scope="col">Actions</th>
+                                <th scope="col">Edit</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -46,7 +46,6 @@
                                     <td class="table-cell">{{$player->grade}}</td>
                                     <td align="center" class="table-cell">
                                         <i class="material-icons edit-pen" data-toggle="modal" data-target="#editPlayerModal" style="color:green">mode_edit</i>
-                                        <i class="material-icons delete-trash-can" style="color:red">delete</i>
                                     </td>
                                 </tr>
                             @endforeach
@@ -62,7 +61,7 @@
                                 <th scope="col">Position</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Grade</th>
-                                <th scope="col">Actions</th>
+                                <th scope="col">Edit</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -76,7 +75,6 @@
                                     <td class="table-cell">{{$player->grade}}</td>
                                     <td align="center" class="table-cell">
                                         <i class="material-icons edit-pen" data-toggle="modal" data-target="#editPlayerModal" style="color:green">mode_edit</i>
-                                        <i class="material-icons delete-trash-can" style="color:red">delete</i>
                                     </td>
                                 </tr>
                             @endforeach
@@ -174,44 +172,44 @@
                             <input type="text" name="edit_player_id" class="form-control" id="edit_player_id" value="0">
                         </div>
                         <div class="form-group">
-                            <label for="edit_player_first_name" class="col-form-label">First Name</label>
+                            <label for="edit_player_first_name" class="format-label col-form-label">First Name</label>
                             <input type="text" name="edit_player_first_name" class="form-control" id="edit_player_first_name">
                         </div>
                         <div class="form-group">
-                            <label for="edit_player_last_name" class="col-form-label">Last Name</label>
+                            <label for="edit_player_last_name" class="format-label col-form-label">Last Name</label>
                             <input type="text" name="edit_player_last_name" class="form-control" id="edit_player_last_name">
                         </div>
                         <div class="form-group">
-                            <label style="padding-left:0" for="edit_grade" class="col-form-label col-md-12">Grade</label>
+                            <label style="padding-left:0" for="edit_grade" class="format-label col-form-label col-md-12">Grade</label>
                             <div class="btn-group btn-group-toggle col-md-12" data-toggle="buttons">
-                                <label class="btn btn-secondary" id="edit_grade_freshman">
+                                <label class="button-in-row first-button-in-row btn btn-secondary" id="edit_grade_freshman">
                                     <input type="radio" name="edit_grade" id="edit_grade_freshman_input" autocomplete="off" value="Freshman"> Freshman
                                 </label>
-                                <label class="btn btn-secondary" id="edit_grade_sophomore">
+                                <label class="button-in-row btn btn-secondary" id="edit_grade_sophomore">
                                     <input type="radio" name="edit_grade" id="edit_grade_sophomore_input" autocomplete="off" value="Sophomore"> Sophomore
                                 </label>
-                                <label class="btn btn-secondary" id="edit_grade_junior">
+                                <label class="button-in-row last-button-in-row btn btn-secondary" id="edit_grade_junior">
                                     <input type="radio" name="edit_grade" id="edit_grade_junior_input" autocomplete="off" value="Junior"> Junior
                                 </label>
-                                <label class="btn btn-secondary" id="edit_grade_senior">
+                                <label class="button-in-row last-button-in-row btn btn-secondary" id="edit_grade_senior">
                                     <input type="radio" name="edit_grade" id="edit_grade_senior_input" autocomplete="off" value="Senior"> Senior
                                 </label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label style="padding-left:0" for="edit-gender" class="col-form-label col-md-12">Gender</label>
+                            <label style="padding-left:0" for="edit-gender" class="format-label col-form-label col-md-12">Gender</label>
                             <div class="btn-group btn-group-toggle col-md-12" data-toggle="buttons">
-                                <label id="edit_gender_male" class="col-md-3 offset-md-3 btn btn-secondary">
+                                <label id="edit_gender_male" class="button-in-row first-button-in-row col-md-3 offset-md-3 btn btn-secondary">
                                     <input type="radio" name="edit_gender" id="edit_gender_male_input" autocomplete="off" value="Male" checked>Boy
                                 </label>
-                                <label id="edit_gender_female" class="col-md-3 btn btn-secondary">
+                                <label id="edit_gender_female" class="button-in-row col-md-3 btn btn-secondary">
                                     <input type="radio" name="edit_gender" id="edit_gender_female_input" autocomplete="off" value="Female">Girl
                                 </label>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary col-md-2" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary col-md-2" id="addNewPlayerButton">Save</button>
+                            <button type="button" class="button-in-row cancel-button btn btn-secondary col-md-2" data-dismiss="modal">Close</button>
+                            <button type="submit" class="button-in-row submit-button btn btn-primary col-md-2" id="addNewPlayerButton">Save</button>
                         </div>
                     </form>
                 </div>

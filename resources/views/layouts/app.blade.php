@@ -89,6 +89,14 @@
             background-color:lightgray;
         }
 
+        .navbar-brand {
+            color:ghostwhite !important;
+        }
+
+        .navbar-brand:hover {
+            color:#00ffbf !important;
+        }
+
         .card-header {
             font-weight:bold;
             font-size:32px;
@@ -96,6 +104,18 @@
             background-color: #00ffbf;
             border-bottom: 4px solid #333;
         }
+
+        #navbarDropdown, .nav-link {
+            padding:10px !important;
+            font-size:1.25rem;
+            color:ghostwhite !important;
+        }
+
+        #navbarDropdown:hover, .nav-link:hover {
+            color:#00ffbf !important;
+        }
+
+
 
         .card {
             border: 4px solid #333;
@@ -108,6 +128,9 @@
             text-align: left;
         }
 
+        .active-nav-title {
+            color:#00ffbf !important;
+        }
 
 
         tr.border_bottom td {
@@ -335,10 +358,6 @@
         }
 
 
-
-
-
-
         #invitesTable, #playerStatsTable, #girlsSchoolTable, #schoolTable {
             width:100% !important;
         }
@@ -411,6 +430,10 @@
         .selected-button, .show-roster-enabled, .active, .selected-roster-button {
             background-color:#333 !important;
             color:white;
+        }
+
+        .active-nav-title:hover {
+            color:mediumspringgreen !important;
         }
 
 

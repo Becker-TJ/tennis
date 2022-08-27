@@ -31,7 +31,7 @@
 					<!-- Nav -->
 						<nav id="nav">
 							<ul>
-								<li class="current"><a class="navbar-brand" href="{{ url('/') }}">
+								<li class="current"><a id="homeNavTitle" class="navbar-brand" href="{{ url('/') }}">
                                         {{ config('home', 'okhs.tennis') }}
                                     </a></li>
 {{--								<li>--}}
@@ -54,16 +54,16 @@
 {{--									</ul>--}}
 {{--								</li>--}}
 
-								<li><a class="navbar-brand" href="{{ url('/createtournament') }}">
+								<li><a id="createTournamentNavTitle" class="navbar-brand" href="{{ url('/createtournament') }}">
                                         {{ config('createtournament', 'Create Tournament') }}
                                     </a></li>
-								<li><a class="navbar-brand" href="{{ url('/tournaments') }}">
+								<li><a id="tournamentsNavTitle" class="navbar-brand" href="{{ url('/tournaments') }}">
                                         {{ config('tournaments', 'View Tournaments') }}
                                     </a></li>
-								<li><a class="navbar-brand" href="{{ url('/players') }}">
+								<li><a id="playersNavTitle" class="navbar-brand" href="{{ url('/players') }}">
                                         {{ config('players', 'Player Rankings') }}
                                     </a></li>
-                                <li><a class="navbar-brand" href="{{ url('/schools') }}">
+                                <li><a id="schoolsNavTitle" class="navbar-brand" href="{{ url('/schools') }}">
                                         {{ config('schools', 'View Schools') }}
                                     </a></li>
 
@@ -119,14 +119,14 @@
 						<div class="row gtr-200">
 							<section class="col-3 col-12-narrower">
 								<div class="box highlight">
-									<i class="icon solid major fa-trophy"></i>
+									<a href="/createtournament" class="home-page-icon icon solid major fa-trophy"></a>
 									<h3>Organize Tournaments</h3>
 									<p>Create, organize, and join tournaments.  Invite other schools.  Get your schedule organized for the year in a quick and clean fashion.</p>
 								</div>
 							</section>
 							<section class="col-3 col-12-narrower">
-								<div class="box highlight">
-									<i class="icon solid major fa-sitemap"></i>
+								<div class="teej box highlight">
+									<a href="/createtournament" class="home-page-icon icon solid major fa-sitemap"></a>
 									<h3>Run Tournament Brackets</h3>
 									<p>Run your tournament brackets.  All of them.
                                         Selecting winners, saving scores, and advancing each bracket (Girls, Boys, One Singles, Two Singles, One Doubles, Two Doubles) can all be done here.</p>
@@ -134,7 +134,7 @@
 							</section>
 							<section class="col-3 col-12-narrower">
 								<div class="box highlight">
-									<i class="icon solid major fa-line-chart"></i>
+									<a href="/players" class="home-page-icon icon solid major fa-line-chart"></a>
 									<h3>View Player Rankings</h3>
 									<p>Each and every result from tournaments are saved.  This means tournaments can be automatically seeded once there is enough match history.
                                         It also means players and coaches alike can see how they rank against the competition state wide.</p>
@@ -142,7 +142,7 @@
 							</section>
                             <section class="col-3 col-12-narrower">
                                 <div class="box highlight">
-                                    <i class="icon solid major fa-users"></i>
+                                    <a href="/tournaments" class="home-page-icon icon solid major fa-users"></a>
                                     <h3>For The Fans</h3>
                                     <p>Find what court your player(s) are on so you can go watch them play or check on how they are doing from afar.  As the tournament progresses, you will be able to get live updates on results and see who they play next.</p>
                                 </div>

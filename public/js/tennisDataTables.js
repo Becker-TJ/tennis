@@ -74,9 +74,9 @@ $(document).ready( function () {
             { "type": "date", "targets": 2 }
         ],
 
-        'order': [
-            [2, 'desc']
-        ],
+        // 'order': [
+        //     [2, 'desc']
+        // ],
 
 
 

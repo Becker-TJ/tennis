@@ -131,4 +131,7 @@
         </div>
     </div>
 </div>
+    @section('javascript')
+        <script type="text/javascript" src="{{ URL::asset('js/createtournament.js') }}"></script>
+    @endsection
 @endsection

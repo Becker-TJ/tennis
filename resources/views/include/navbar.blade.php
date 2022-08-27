@@ -1,6 +1,6 @@
 <nav id="permanent-navbar" class="navbar navbar-expand-lg navbar-light">
     <div class="container">
-        <a class="navbar-brand" href="{{ url('/') }}">
+        <a id="homeNavTitle" class="navbar-brand" href="{{ url('/') }}">
             {{ config('home', 'okhs.tennis') }}
         </a>
 {{--        <a class="navbar-brand" href="{{ url('/login') }}">--}}
@@ -37,16 +37,16 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
-                <a class="navbar-brand" href="{{ url('/createtournament') }}">
+                <a id="createTournamentNavTitle" class="navbar-brand" href="{{ url('/createtournament') }}">
                     {{ config('createtournament', 'Create Tournament') }}
                 </a>
-                <a class="navbar-brand" href="{{ url('/tournaments') }}">
+                <a id="viewTournamentsNavTitle" class="navbar-brand" href="{{ url('/tournaments') }}">
                     {{ config('tournaments', 'View Tournaments') }}
                 </a>
-                <a class="navbar-brand" href="{{ url('/players') }}">
+                <a id="playerRankingsNavTitle" class="navbar-brand" href="{{ url('/players') }}">
                     {{ config('players', 'Player Rankings') }}
                 </a>
-                <a class="navbar-brand" href="{{ url('/schools') }}">
+                <a id="viewSchoolsNavTitle" class="navbar-brand" href="{{ url('/schools') }}">
                     {{ config('schools', 'View Schools') }}
                 </a>
             </ul>
@@ -56,11 +56,11 @@
                 <!-- Authentication Links -->
                 @guest
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        <a id="loginNavTitle" class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                     </li>
                     @if (Route::has('register'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            <a id="registerNavTitle" class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                         </li>
                     @endif
                 @else

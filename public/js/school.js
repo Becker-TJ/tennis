@@ -4,7 +4,11 @@ if (document.documentElement.clientWidth < 481) {
         'width=device-width, initial-scale=.7, maximum-scale=1.0, user-scalable=0');
 }
 
+$('#viewSchoolsNavTitle').addClass('active-nav-title');
+
 $(document).ready( function () {
+
+
     var schoolTable = $('#schoolTable').DataTable( {
         paging:false,
         searching:false,
@@ -25,25 +29,7 @@ $(document).ready( function () {
 
     } );
 
-    var girlsSchoolTable = $('#girlsSchoolTable').DataTable( {
-        paging:false,
-        searching:false,
-        rowReorder: {
-            selector: '.reorder-cell',
-            snapX:true,
-        },
-        bInfo:false,
-        "lengthChange": false,
 
-        'columnDefs': [
-            { targets: [0,1], visible: false },
-            { targets: [2,3,4,5,6], orderable: false, "className": "center-align"},
-            {targets: [2], width: "5%" },
-            {targets: [6], width: "5%" },
-            {targets: [3], width: "15%" },
-        ]
-
-    } );
 
     $('#girlsSchoolTable').attr('hidden', true);
     checkCoach();
@@ -302,11 +288,11 @@ $(document).ready( function () {
 
                 'columnDefs': [
                     { targets: [0,1], visible: false },
-                    { targets: [2,3,4,5,6], orderable: false },
+                    { targets: [2,3,4,5,6], orderable: false, "className": "center-align"},
                     {targets: [2], width: "5%" },
+                    {targets: [6], width: "5%" },
+                    {targets: [3], width: "15%" },
                 ]
-
-
 
             } );
 
