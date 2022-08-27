@@ -33,6 +33,7 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous"
     >
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> {{--for table icons, edit pen and trash can--}}
 {{--    <link href="/bower_components/font-awesome/css/font-awesome.css"  rel="stylesheet">--}}
 {{--    <link href="/bower_components/datatables.net-plugins/integration/font-awesome/dataTables.fontAwesome.css"  rel="stylesheet">--}}
 
