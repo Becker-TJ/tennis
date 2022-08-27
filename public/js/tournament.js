@@ -451,7 +451,7 @@ $(document).ready( function () {
                         $actions = '<img class="add-player-to-tournament-action" data-id="add-player-to-tournament-action" src="/images/plus-sign.jpg">';
                     } else if ($realPlayer && !$fullTournament && selectingDoublesPartner) {
                         if($id != firstDoublesPlayerID) {
-                            $actions = '<button class="pairDoublesPartnersButton">Pair with ' + firstDoublesPlayerName + '</button>';
+                            $actions = '<button class="button-in-row pairDoublesPartnersButton">Pair with ' + firstDoublesPlayerName + '</button>';
                         } else {
                             $actions = "";
                         }
