@@ -30,9 +30,29 @@ $(document).ready( function () {
     } );
 
 
+    var girlsSchoolTable = $('#girlsSchoolTable').DataTable( {
+        paging:false,
+        searching:false,
+        rowReorder: {
+            selector: '.reorder-cell',
+            snapX:true,
+        },
+        bInfo:false,
+        "lengthChange": false,
 
-    $('#girlsSchoolTable').attr('hidden', true);
+        'columnDefs': [
+            { targets: [0,1], visible: false },
+            { targets: [2,3,4,5,6], orderable: false, "className": "center-align"},
+            {targets: [2], width: "5%" },
+            {targets: [6], width: "5%" },
+            {targets: [3], width: "15%" },
+        ]
+
+    } );
+
     checkCoach();
+    $('#girlsSchoolTable').attr('hidden', true);
+
     function checkCoach() {
         var isCoach = ($('#coach').attr('data-coach') === 'true');
 
@@ -43,81 +63,15 @@ $(document).ready( function () {
 
     }
 
-    var playerStatsTable = $('#playerStatsTable').DataTable( {
-        paging:false,
-        searching:true,
-        bInfo:false,
-        "lengthChange": false,
 
-        'columnDefs': [
-            { targets: [0,1], visible: false },
-            { targets: [2,3,4,5,6,7], orderable: true, "className": "center-align"},
-        ],
-
-        'columns': [
-            { data: 'seq' }, /* index = 0 */
-            { data: 'id' }, /* index = 1 */
-            { data: 'bracket'}, /*index = 2 */
-            { data: 'home_team'}, /*index = 3*/
-            { data: 'opponent_name' }, /* index = 4 */
-            { data: 'opponent_school'},/* index = 5 */
-            { data: 'score' }, /* index = 6 */
-            { data: 'win/loss' }, /* index = 7 */
-        ],
-
-    } );
-
-    $('.playerModalToggle').click(function(e) {
-        e.preventDefault();
-
-        var currentRow = $(this).closest('tr');
-        var tableGender = $('#playerForStatsModal').attr('data-player-table');
-
-        var data = $('#' + tableGender).DataTable().row(currentRow).data();
-        var playerID = data[1];
-        var playerName = data[4];
-        $('#playerStatsModalTitle').html('Match History - ' + playerName);
-        $('#playerForStatsModal').attr('data-player-id', playerID);
-        $('#playerStatsModal').modal('toggle');
-        $('#playerStatsTable').DataTable().columns([3]).visible(true);
-    });
-
-    $('#playerStatsModal').on('shown.bs.modal', function (e) {
-        var playerID = $('#playerForStatsModal').attr('data-player-id');
-        $playerStatsTable = $("#playerStatsTable").DataTable();
-        $playerStatsTable.clear().draw();
-        $increment = 1;
-        $.ajax({
-            type:'POST',
-            url:'/getPlayerStats',
-            data:{playerID:playerID},
-            success:function(matches){
-
-                matches.forEach(function($match, $index) {
-                    var row = $playerStatsTable.row.add({
-                        'seq': $increment,
-                        'id': $increment,
-                        'bracket': $match.bracket,
-                        'home_team': $match.home_team,
-                        'opponent_school': $match.opponent_school,
-                        'opponent_name': $match.opponent,
-                        'score': $match.score,
-                        'win/loss': $match.winOrLoss
-                    }).draw().node();
-                    $increment++;
-                });
-
-            }
-        });
-    });
 
     var varsityOrder = [
-        '1 Singles',
-        '2 Singles',
-        '1 Doubles',
-        '1 Doubles',
-        '2 Doubles',
-        '2 Doubles',
+        '#1 Singles',
+        '#2 Singles',
+        '#1 Doubles',
+        '#1 Doubles',
+        '#2 Doubles',
+        '#2 Doubles',
     ];
 
     function displayPositionNamesInCorrectOrder() {
@@ -274,57 +228,36 @@ $(document).ready( function () {
         $('#schoolTable').attr('hidden', true);
         $('#girlsSchoolTable').removeAttr('hidden');
 
+        checkCoach();
+        displayPositionNamesInCorrectOrder();
+        createPositionRowBorders();
 
-        if (! $.fn.DataTable.isDataTable('#girlsSchoolTable')) {
-            var girlsSchoolTable = $('#girlsSchoolTable').DataTable( {
-                paging:false,
-                searching:false,
-                rowReorder: {
-                    selector: '.reorder-cell',
-                    snapX:true,
-                },
-                bInfo:false,
-                "lengthChange": false,
-
-                'columnDefs': [
-                    { targets: [0,1], visible: false },
-                    { targets: [2,3,4,5,6], orderable: false, "className": "center-align"},
-                    {targets: [2], width: "5%" },
-                    {targets: [6], width: "5%" },
-                    {targets: [3], width: "15%" },
-                ]
-
-            } );
-
+        girlsSchoolTable.on('row-reordered', function (e, diff, edit) {
             displayPositionNamesInCorrectOrder();
             createPositionRowBorders();
+            var table = $("#girlsSchoolTable").DataTable();
 
-            girlsSchoolTable.on('row-reordered', function (e, diff, edit) {
-                displayPositionNamesInCorrectOrder();
-                createPositionRowBorders();
-                var table = $("#girlsSchoolTable").DataTable();
+            //drawing will update the data table with any changes made through reordering rows
+            table.one( 'draw', function () {
 
-                //drawing will update the data table with any changes made through reordering rows
-                table.one( 'draw', function () {
+                var updatedPositionOrder = [];
 
-                    var updatedPositionOrder = [];
-
-                    table.rows().every(function (rowIdx, tableLoop, rowLoop) {
-                        updatedPositionOrder.push(this.data());
-                    });
-
-                    $.ajax({
-                        type:'POST',
-                        url:'/savePlayerPositions',
-                        data:{updatedPositionOrder:updatedPositionOrder},
-                        success:function(data){
-                            console.log('saved positions.');
-                        }
-                    });
-
+                table.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                    updatedPositionOrder.push(this.data());
                 });
-            } );
-        }
+
+                $.ajax({
+                    type:'POST',
+                    url:'/savePlayerPositions',
+                    data:{updatedPositionOrder:updatedPositionOrder},
+                    success:function(data){
+                        console.log('saved positions.');
+                    }
+                });
+
+            });
+        } );
+
 
     });
 

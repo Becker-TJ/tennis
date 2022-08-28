@@ -25,21 +25,37 @@ PlayerController extends Controller
         }
 
         if($singles) {
+            $singles = 'true';
             if ($data['conference_setting'] == 'all_classes') {
-                $players = DB::table('players')->join('schools', 'players.school_id', 'schools.id')
-                    ->where('players.gender', $data['gender'])
-                    ->where('players.'.$data['bracket_rank'], '>', 0)
-                    ->orderBy('players.'.$data['bracket_rank'], 'asc')
-                    ->get();
+
+                $players = Player::all()->where('gender', $data['gender'])->where($data['bracket_rank'], '>', 0)->sortBy($data['bracket_rank']);
+                foreach($players as $player) {
+                    $school = $player->getSchool();
+                    $player->name = $school->name;
+                    $player->address = $school->address;
+                    $player->conference = $school->conference;
+                }
+
+
             } else {
-                $players = DB::table('players')->join('schools', 'players.school_id', 'schools.id')
-                    ->where('schools.conference', $data['conference_setting'])
-                    ->where('players.gender', $data['gender'])
-                    ->where('players.'.$data['bracket_rank'], '>', 0)
-                    ->orderBy('players.'.$data['bracket_rank'], 'asc')
-                    ->get();
+
+                $players = Player::all()->where('gender', $data['gender'])->where($data['bracket_rank'], '>', 0)->sortBy($data['bracket_rank']);
+                $correctPlayers = Collection::make([]);
+                foreach($players as $player) {
+                    $school = $player->getSchool();
+                    if($school->conference != $data['conference_setting']) {
+                        continue;
+                    } else {
+                        $player->name = $school->name;
+                        $player->address = $school->address;
+                        $player->conference = $school->conference;
+                        $correctPlayers[] = $player;
+                    }
+                }
+                $players = $correctPlayers;
             }
         } else {
+            $singles = 'false';
             $players = Collection::make([]);
             $doublesTeams = DoublesTeam::all()->sortBy($data['bracket_rank']);
             foreach($doublesTeams as $team) {
@@ -53,6 +69,8 @@ PlayerController extends Controller
                 $teamDetails->conference = $school->conference;
                 $teamDetails->name = $school->name;
                 $teamDetails->{$data['bracket_rank']} = $team->{$data['bracket_rank']};
+                $teamDetails->school_id = $school->id;
+                $teamDetails->id = $team->id;
                 $players[] = $teamDetails;
             }
         }
@@ -69,14 +87,14 @@ PlayerController extends Controller
             '5A' => '5A',
             '4A' => '4A',
             '3A' => '3A',
-            'girls_one_singles_rank' => 'One Singles',
-            'girls_two_singles_rank' => 'Two Singles',
-            'girls_one_doubles_rank' => 'One Doubles',
-            'girls_two_doubles_rank' => 'Two Doubles',
-            'boys_one_singles_rank' => 'One Singles',
-            'boys_two_singles_rank' => 'Two Singles',
-            'boys_one_doubles_rank' => 'One Doubles',
-            'boys_two_doubles_rank' => 'Two Doubles',
+            'girls_one_singles_rank' => '#1 Singles',
+            'girls_two_singles_rank' => '#2 Singles',
+            'girls_one_doubles_rank' => '#1 Doubles',
+            'girls_two_doubles_rank' => '#2 Doubles',
+            'boys_one_singles_rank' => '#1 Singles',
+            'boys_two_singles_rank' => '#2 Singles',
+            'boys_one_doubles_rank' => '#1 Doubles',
+            'boys_two_doubles_rank' => '#2 Doubles',
             'Male' => 'Boys',
             'Female' => 'Girls',
 
@@ -92,6 +110,7 @@ PlayerController extends Controller
             'players' => $players,
             'radioButtonSettings' => $radioButtonSettings,
             'tableTitle' => $tableTitle,
+            'singles' => $singles
         ]);
     }
 
@@ -108,14 +127,15 @@ PlayerController extends Controller
             'gender' => 'Male',
         ];
 
-        $tableTitle = 'All Boys One Singles';
+        $tableTitle = 'All Boys #1 Singles';
         $bracketRank = 'boys_one_singles_rank';
 
         return view('players', [
             'players' => $players,
             'radioButtonSettings' => $radioButtonSettings,
             'tableTitle' => $tableTitle,
-            'bracket_rank' => $bracketRank
+            'bracket_rank' => $bracketRank,
+            'singles' => 'true'
         ]);
     }
 

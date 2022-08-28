@@ -85,4 +85,5 @@
 @endsection
 @section('javascript')
     <script type="text/javascript" src="{{ URL::asset('js/addSchool.js') }}"></script>
+
 @endsection

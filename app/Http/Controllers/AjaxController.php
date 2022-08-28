@@ -202,14 +202,14 @@ class AjaxController extends Controller
             $brackets = ['girlsOneSingles', 'girlsTwoSingles', 'girlsOneDoubles', 'girlsTwoDoubles'];
         }
         $bracketsPrettyPrintAssociations = [
-            'girlsOneSingles' => 'One Singles',
-            'girlsTwoSingles' => 'Two Singles',
-            'girlsOneDoubles' => 'One Doubles',
-            'girlsTwoDoubles' => 'Two Doubles',
-            'boysOneSingles' => 'One Singles',
-            'boysTwoSingles' => 'Two Singles',
-            'boysOneDoubles' => 'One Doubles',
-            'boysTwoDoubles' => 'Two Doubles'
+            'girlsOneSingles' => '#1 Singles',
+            'girlsTwoSingles' => '#2 Singles',
+            'girlsOneDoubles' => '#1 Doubles',
+            'girlsTwoDoubles' => '#2 Doubles',
+            'boysOneSingles' => '#1 Singles',
+            'boysTwoSingles' => '#2 Singles',
+            'boysOneDoubles' => '#1 Doubles',
+            'boysTwoDoubles' => '#2 Doubles'
         ];
 
         $team_count = $tournament->team_count;
@@ -237,7 +237,7 @@ class AjaxController extends Controller
                 $newPlayer->real_player = false;
                 $newPlayer->bracket_name = $prettyName;
                 $correctPlayerOrder[] = $newPlayer;
-                if($prettyName === "One Doubles") {
+                if($prettyName === "#1 Doubles") {
                     $newPlayer = new Player;
                     $newPlayer->in_tournament = false;
                     $newPlayer->id = 0;
@@ -328,7 +328,7 @@ class AjaxController extends Controller
             }
         }
 
-        if(!$foundAPlayerInPreviousBracket && $bracketsPrettyPrintAssociations[$previousBracket] === "Two Doubles") {
+        if(!$foundAPlayerInPreviousBracket && $bracketsPrettyPrintAssociations[$previousBracket] === "#2 Doubles") {
             $newPlayer = new Player;
             $newPlayer->in_tournament = false;
             $newPlayer->id = 0;
@@ -648,14 +648,14 @@ class AjaxController extends Controller
         $doublesMatches = collect([]);
 
         $bracketsPrettyPrintAssociations = [
-            'girlsOneSingles' => 'One Singles',
-            'girlsTwoSingles' => 'Two Singles',
-            'girlsOneDoubles' => 'One Doubles',
-            'girlsTwoDoubles' => 'Two Doubles',
-            'boysOneSingles' => 'One Singles',
-            'boysTwoSingles' => 'Two Singles',
-            'boysOneDoubles' => 'One Doubles',
-            'boysTwoDoubles' => 'Two Doubles'
+            'girlsOneSingles' => '#1 Singles',
+            'girlsTwoSingles' => '#2 Singles',
+            'girlsOneDoubles' => '#1 Doubles',
+            'girlsTwoDoubles' => '#2 Doubles',
+            'boysOneSingles' => '#1 Singles',
+            'boysTwoSingles' => '#2 Singles',
+            'boysOneDoubles' => '#1 Doubles',
+            'boysTwoDoubles' => '#2 Doubles'
         ];
 
         foreach($doublesTeams as $doublesTeam) {
@@ -713,6 +713,53 @@ class AjaxController extends Controller
         $matches = $singlesMatches->merge($doublesMatches);
 
         return $matches;
+    }
+
+    public function getDoublesStats(Request $request) {
+        $request = $request->all();
+        $doublesTeam = DoublesTeam::find(intval($request['playerID']));
+        $doublesMatches = DoublesMatch::select("*")->where('winner', '=', $doublesTeam->id)->orWhere('loser', '=', $doublesTeam->id)->get()->sortBy('date')->sortBy('bracket');
+
+        $bracketsPrettyPrintAssociations = [
+            'girlsOneSingles' => '#1 Singles',
+            'girlsTwoSingles' => '#2 Singles',
+            'girlsOneDoubles' => '#1 Doubles',
+            'girlsTwoDoubles' => '#2 Doubles',
+            'boysOneSingles' => '#1 Singles',
+            'boysTwoSingles' => '#2 Singles',
+            'boysOneDoubles' => '#1 Doubles',
+            'boysTwoDoubles' => '#2 Doubles'
+        ];
+
+        $player_1 = Player::find($doublesTeam->player_1);
+        $player_2 = Player::find($doublesTeam->player_2);
+
+        $doublesTeamPlayerNames = $player_1->last_name . ' / ' . $player_2->last_name;
+
+        foreach($doublesMatches as $match) {
+            $match->home_team = $doublesTeamPlayerNames;
+            if($match->winner === $doublesTeam->id) {
+                $opponentID = $match->loser;
+                $match->winOrLoss = "W";
+            } else {
+                $opponentID = $match->winner;
+                $match->winOrLoss = "L";
+            }
+
+            $opponentDoublesTeam = DoublesTeam::find($opponentID);
+            $opponent_1 = Player::find($opponentDoublesTeam->player_1);
+            $opponent_2 = Player::find($opponentDoublesTeam->player_2);
+            $match->opponent = $opponent_1->last_name . ' / ' . $opponent_2->last_name;
+            if($opponent_1->getSchool()->name === $opponent_2->getSchool()->name) {
+                $opponentSchoolName = $opponent_1->getSchool()->name;
+            } else {
+                $opponentSchoolName = $opponent_1->getSchool()->name . ' / ' . $opponent_2->getSchool()->name;
+            }
+            $match->opponent_school = $opponentSchoolName;
+            $match->bracket = $bracketsPrettyPrintAssociations[$match->bracket];
+        }
+
+    return $doublesMatches;
     }
 
     public function getBracketData(Request $request)

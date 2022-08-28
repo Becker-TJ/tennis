@@ -3,6 +3,7 @@
 
 @section('content')
     <br>
+    <div id="playerForStatsModal" data-player-table="playerDisplayTable" data-singles={{$singles}} data-player-id="0" style="display:none"></div>
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -37,19 +38,19 @@
                             <div id="bracket_rank" class="btn-group btn-group-toggle col-md-6" data-toggle="buttons">
                                 <label class="button-in-row first-button-in-row btn btn-secondary @if($radioButtonSettings['bracket_rank'] == "boys_one_singles_rank") active @endif">
                                     <input type="radio" name="bracket_rank" id="one_singles" autocomplete="off" value="boys_one_singles_rank"
-                                           @if($radioButtonSettings['bracket_rank'] == "boys_one_singles_rank") checked @endif> 1 Singles
+                                           @if($radioButtonSettings['bracket_rank'] == "boys_one_singles_rank") checked @endif> #1 Singles
                                 </label>
                                 <label class="button-in-row btn btn-secondary @if($radioButtonSettings['bracket_rank'] == "boys_two_singles_rank") active @endif">
                                     <input type="radio" name="bracket_rank" id="two_singles" autocomplete="off" value="boys_two_singles_rank"
-                                           @if($radioButtonSettings['bracket_rank'] == "boys_two_singles_rank") checked @endif> 2 Singles
+                                           @if($radioButtonSettings['bracket_rank'] == "boys_two_singles_rank") checked @endif> #2 Singles
                                 </label>
                                 <label class="button-in-row last-button-in-row btn btn-secondary @if($radioButtonSettings['bracket_rank'] == "boys_one_doubles_rank") active @endif">
                                     <input type="radio" name="bracket_rank" id="one_doubles" autocomplete="off" value="boys_one_doubles_rank"
-                                           @if($radioButtonSettings['bracket_rank'] == "boys_one_doubles_rank") checked @endif> 1 Doubles
+                                           @if($radioButtonSettings['bracket_rank'] == "boys_one_doubles_rank") checked @endif> #1 Doubles
                                 </label>
                                 <label class="button-in-row last-button-in-row btn btn-secondary @if($radioButtonSettings['bracket_rank'] == "boys_two_doubles_rank") active @endif">
                                     <input type="radio" name="bracket_rank" id="two_doubles" autocomplete="off" value="boys_two_doubles_rank"
-                                           @if($radioButtonSettings['bracket_rank'] == "boys_two_doubles_rank") checked @endif> 2 Doubles
+                                           @if($radioButtonSettings['bracket_rank'] == "boys_two_doubles_rank") checked @endif> #2 Doubles
                                 </label>
                             </div>
                             <br>
@@ -78,19 +79,23 @@
                         <table id="playerDisplayTable" class="table table-striped">
                             <thead>
                             <tr class="fa fa-sort-name" align="center">
-                                <th scope="col">Rank</th>
+                                <th hidden scope="col">Seq</th>
+                                <th hidden scope="col">ID</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">School</th>
                                 <th scope="col">Class</th>
+                                <th scope="col">Rank</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($players as $player)
                                 <tr>
-                                    <td class="table-cell">{{$player->$bracket_rank}}</td>
-                                    <td class="table-cell">{{$player->first_name . ' ' . $player->last_name}}</td>
-                                    <td class="table-cell">{{$player->name}}</td>
+                                    <td hidden align="center" class="table-cell">{{$player->id}}</td>
+                                    <td hidden align="center" class="table-cell">{{$player->id}}</td>
+                                    <td class="table-cell"><button class="player button-in-row playerModalToggle">{{$player->first_name. ' ' . $player->last_name}}</button></td>
+                                    <td class="table-cell"><a href="/school/{{$player->school_id}}"><button class="button-in-row">{{$player->name}}</button></a></td>
                                     <td align="center" class="table-cell">{{$player->conference}}</td>
+                                    <td class="table-cell">{{$player->$bracket_rank}}</td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -100,7 +105,47 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="playerStatsModal" tabindex="-1" role="dialog" aria-labelledby="playerStatsModal" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="playerStatsModalTitle">Invite Teams</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <table id="playerStatsTable" class="display table table-striped">
+                        <thead>
+                        <tr class="fa fa-sort-name player_row" align="center">
+                            <th scope="col">Seq.</th>
+                            <th scope="col">id</th>
+                            <th scope="col">Bracket</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Opponent</th>
+                            <th scope="col">Opponent School</th>
+                            <th scope="col">Score</th>
+                            <th scope="col">Win/Loss</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="button-in-row cancel-button btn btn-secondary col-md-2" data-dismiss="modal">Close</button>
+                    <button id="invite_schools_button" type="button" class="button-in-row submit-button btn btn-primary col-md-2">Send / Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('javascript')
     <script type="text/javascript" src="{{ URL::asset('js/players.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/playerstatsmodal.js') }}"></script>
 @endsection

@@ -72,6 +72,7 @@ Route::post('/acceptInvite', [AjaxController::class, 'acceptInvite']);
 Route::post('/saveTournamentSeeds', [AjaxController::class, 'saveTournamentSeeds']);
 Route::post('/getPlayerDetails', [AjaxController::class, 'getPlayerDetails']);
 Route::post('/getPlayerStats', [AjaxController::class, 'getPlayerStats']);
+Route::post('/getDoublesStats', [AjaxController::class, 'getDoublesStats']);
 Route::post('/getBracketData', [AjaxController::class, 'getBracketData']);
 Route::post('/getRosterForTournament', [AjaxController::class, 'getRosterForTournament']);
 Route::post('/saveScore', [AjaxController::class, 'saveScore']);

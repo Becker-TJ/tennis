@@ -39,7 +39,7 @@
                                 >
                                     <td class="table-cell">
                                         <?php
-                                            echo '<a href="' . '/tournament/' . $tournament->id . '">' . $tournament->name . '</a>';
+                                            echo '<a href="' . '/tournament/' . $tournament->id . '"><button class="button-in-row">' . $tournament->name . '</button></a>';
                                         ?>
                                     </td>
                                     <td class="table-cell">{{$tournament->location_name}}</td>

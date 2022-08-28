@@ -414,12 +414,12 @@ $(document).ready( function () {
                 $fullTournament = data.fullTournament[bracket];
 
                 var brackets = [
-                    'One Singles',
-                    'Two Singles',
-                    'One Doubles',
-                    'One Doubles',
-                    'Two Doubles',
-                    'Two Doubles'
+                    '#1 Singles',
+                    '#2 Singles',
+                    '#1 Doubles',
+                    '#1 Doubles',
+                    '#2 Doubles',
+                    '#2 Doubles'
                 ]
 
                 $increment = 1;

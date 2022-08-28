@@ -20,12 +20,12 @@ $(document).ready( function () {
     } );
 
     var varsityOrder = [
-        '1 Singles',
-        '2 Singles',
-        '1 Doubles',
-        '1 Doubles',
-        '2 Doubles',
-        '2 Doubles',
+        '#1 Singles',
+        '#2 Singles',
+        '#1 Doubles',
+        '#1 Doubles',
+        '#2 Doubles',
+        '#2 Doubles',
     ];
 
     //this resets the order of the far left column for a school roster after a click and drag table row event(1 singles, 2 singles, etc)
@@ -44,15 +44,18 @@ $(document).ready( function () {
         paging:false,
         "lengthChange": false,
         'columns': [
-            { data: 'name' }, /* index = 0 */
-            { data: 'address' }, /* index = 1 */
-            { data: 'team_count' }, /* index = 2 */
-            { data: 'level' }, /* index = 3 */
+            { data: 'seq' }, /* index = 0 */
+            { data: 'id' }, /* index = 1 */
+            { data: 'name' }, /* index = 2 */
+            { data: 'school' }, /* index = 3 */
+            { data: 'class' }, /* index = 4 */
+            { data: 'rank' }, /* index = 5 */
         ],
-        'columnDefs': [ {
-            'orderable': false, /* true or false */
 
-        },{ targets: [3], "className": "center-align"}],
+
+
+
+        order: [[5, 'asc']],
 
     } );
 

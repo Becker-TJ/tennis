@@ -39,12 +39,12 @@ class SchoolController extends Controller
         $girls = Player::all()->where('school_id', '=', $school->id)->where('gender', '=', 'Female');
 
         $positionNamesOrder = [
-            '1 Singles',
-            '2 Singles',
-            '1 Doubles',
-            '1 Doubles',
-            '2 Doubles',
-            '2 Doubles',
+            '#1 Singles',
+            '#2 Singles',
+            '#1 Doubles',
+            '#1 Doubles',
+            '#2 Doubles',
+            '#2 Doubles',
         ];
 
         foreach ($boys as $player) {

@@ -23,7 +23,7 @@ class PlayerFactory extends Factory
         return [
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
-            'school_id' => $this->faker->randomDigit(),
+            'school_id' => $this->faker->numberBetween(1,20),
             'position' => $increment,
             'grade' => $randomClassOption,
             'gender' => $randomGender,

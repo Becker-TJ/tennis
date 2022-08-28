@@ -60,12 +60,12 @@
             font-size:20px;
         }
 
-        .player:hover {
-            cursor:pointer !important;
-            text-decoration:none !important;
-            color:blue !important;
-            font-weight:bold !important;
+        .dataTables_filter label {
+            font-weight:bold;
+            font-style:italic;
+            font-size:18px;
         }
+
 
         .tournament-sub-title {
             font-size: 20px;
@@ -401,7 +401,8 @@
         }
 
         input[type=search] {
-            border-radius:10px;
+            border-radius:15px;
+            border:4px solid black;
             margin-left:10px;
             text-align:center;
         }
@@ -431,6 +432,12 @@
             background-color:#333 !important;
             color:white;
         }
+
+        .selected-button:hover, .show-roster-enabled:hover, .active:hover, .selected-roster-button:hover {
+            background-color:#333 !important;
+            color:white;
+        }
+
 
         .active-nav-title:hover {
             color:mediumspringgreen !important;

@@ -20,7 +20,7 @@
                             <tbody>
                             @foreach($schools as $school)
                                 <tr>
-                                    <td class="table-cell"><a href="/school/{{$school->id}}">{{$school->name}}</a></td>
+                                    <td class="table-cell"><a href="/school/{{$school->id}}"><button class="button-in-row">{{$school->name}}</button></a></td>
                                     <td class="table-cell">{{$school->address}}</td>
                                     <td align="center" class="table-cell">{{$school->conference}}</td>
                                 </tr>

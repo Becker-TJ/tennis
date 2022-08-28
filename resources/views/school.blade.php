@@ -3,7 +3,7 @@
 
 @section('content')
     <br>
-    <div id="playerForStatsModal" data-player-table="schoolTable" data-player-id="0" style="display:none"></div>
+    <div id="playerForStatsModal" data-player-table="schoolTable" data-singles="true" data-player-id="0" style="display:none"></div>
     <div id="coach" data-coach="{{$isCoach ? 'true' : 'false'}}" style="display:none"></div>
 
     <div class="container-fluid">
@@ -42,7 +42,7 @@
                                     <td class="table-cell">{{$player->id}}</td>
                                     <td class="table-cell reorder-cell"><img class="reorder-icon" src="{{URL::to('/')}}/images/reorder-icon.png"></td>
                                     <td class="position_name_td position-title-td-highlight">{{$positionNamesOrder[$increment++]}}</td>
-                                    <td class="table-cell"><a class="player playerModalToggle">{{$player->first_name. ' ' . $player->last_name}}</a></td>
+                                    <td class="table-cell"><button class="button-in-row player playerModalToggle">{{$player->first_name. ' ' . $player->last_name}}</button></td>
                                     <td class="table-cell">{{$player->grade}}</td>
                                     <td align="center" class="table-cell">
                                         <i class="material-icons edit-pen" data-toggle="modal" data-target="#editPlayerModal" style="color:green">mode_edit</i>
@@ -71,7 +71,7 @@
                                     <td class="table-cell">{{$player->id}}</td>
                                     <td class="table-cell reorder-cell"><img class="reorder-icon" src="{{URL::to('/')}}/images/reorder-icon.png"></td>
                                     <td class="position_name_td position-title-td-highlight">{{$positionNamesOrder[$increment++]}}</td>
-                                    <td class="table-cell"><a class="player playerModalToggle">{{$player->first_name. ' ' . $player->last_name}}</a></td>
+                                    <td class="table-cell"><button class="player button-in-row playerModalToggle">{{$player->first_name. ' ' . $player->last_name}}</button></td>
                                     <td class="table-cell">{{$player->grade}}</td>
                                     <td align="center" class="table-cell">
                                         <i class="material-icons edit-pen" data-toggle="modal" data-target="#editPlayerModal" style="color:green">mode_edit</i>
@@ -249,8 +249,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary col-md-2" data-dismiss="modal">Close</button>
-                    <button id="invite_schools_button" type="button" class="btn btn-primary col-md-2">Send / Save</button>
+                    <button type="button" class="button-in-row cancel-button btn btn-secondary col-md-2" data-dismiss="modal">Close</button>
+                    <button id="invite_schools_button" type="button" class="button-in-row submit-button btn btn-primary col-md-2">Send / Save</button>
                 </div>
             </div>
         </div>
@@ -268,4 +268,5 @@
 @endsection
 @section('javascript')
     <script type="text/javascript" src="{{ URL::asset('js/school.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/playerstatsmodal.js') }}"></script>
 @endsection

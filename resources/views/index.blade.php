@@ -129,7 +129,7 @@
 									<i class="home-page-icon icon solid major fa-sitemap"></i>
 									<h3>Run Tournament Brackets</h3>
 									<p>Run your tournament brackets.  All of them.
-                                        Selecting winners, saving scores, and advancing each bracket (Girls, Boys, One Singles, Two Singles, One Doubles, Two Doubles) can all be done here.</p>
+                                        Selecting winners, saving scores, and advancing each bracket (Girls, Boys, #1 Singles, #2 Singles, #1 Doubles, #2 Doubles) can all be done here.</p>
 								</div>
 							</section>
 							<section class="col-3 col-12-narrower">
