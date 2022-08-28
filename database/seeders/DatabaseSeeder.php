@@ -325,8 +325,8 @@ class DatabaseSeeder extends Seeder
         $doublesTeam->saveOrFail();
 
         $mooreOneSingles = new Player;
-        $mooreOneSingles['first_name'] = 'Lily';
-        $mooreOneSingles['last_name'] = 'Truchet';
+        $mooreOneSingles['first_name'] = 'Ella';
+        $mooreOneSingles['last_name'] = 'Daugherty';
         $mooreOneSingles['position'] = 1;
         $mooreOneSingles['grade'] = 'Senior';
         $mooreOneSingles['gender'] = 'Female';
