@@ -52,8 +52,9 @@ $(document).ready( function () {
             { data: 'rank' }, /* index = 5 */
         ],
 
-
-
+        'columnDefs': [
+            { targets: [4, 5], "className": "center-align"}
+        ],
 
         order: [[5, 'asc']],
 
@@ -74,7 +75,9 @@ $(document).ready( function () {
 
         ],
         "columnDefs": [
-            { "type": "date", "targets": 2 }
+            { "type": "date", "targets": 2 },
+            { targets: [0, 1], "className": "left-align"},
+            { targets: [2, 4], "className": "center-align"}
         ],
 
         'order': [

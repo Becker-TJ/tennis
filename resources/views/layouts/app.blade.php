@@ -326,6 +326,10 @@
             border:none;
         }
 
+        #tournamentsTable td, #playerDisplayTable td, #allSchoolsTable td {
+            vertical-align: middle;
+        }
+
 
 
 
