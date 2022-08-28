@@ -218,7 +218,7 @@
                                         <input type="hidden" value="{{$tournament->id}}" name="tournament_id">
 
                                         <div class="form-group row">
-                                            <label for="tournament_name" class="col-md-4 col-form-label text-md-right">Tournament Name</label>
+                                            <label for="tournament_name" class="format-label col-md-4 col-form-label text-md-right">Tournament Name</label>
 
                                             <div class="col-md-6">
                                                 <input id="tournament_name" type="text" class="form-control" name="tournament_name" value="{{$tournament->name ?? ''}}" required autofocus autocomplete="off">
@@ -226,7 +226,7 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="location_name" class="col-md-4 col-form-label text-md-right">Location Name</label>
+                                            <label for="location_name" class="format-label col-md-4 col-form-label text-md-right">Location Name</label>
 
                                             <div class="col-md-6">
                                                 <input id="location_name" type="text" class="form-control" name="location_name" value="{{$tournament->location_name ?? ''}}" required autocomplete="off">
@@ -234,7 +234,7 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="address" class="col-md-4 col-form-label text-md-right">Location Address</label>
+                                            <label for="address" class="format-label col-md-4 col-form-label text-md-right">Location Address</label>
 
                                             <div class="col-md-6">
                                                 <input id="address" type="text" class="form-control" name="address" value="{{$tournament->address ?? ''}}" required autocomplete="off">
@@ -242,21 +242,21 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="date" class="col-md-4 col-form-label text-md-right">Date</label>
+                                            <label for="date" class="format-label col-md-4 col-form-label text-md-right">Date</label>
                                             <div class="col-md-6">
                                                 <input id="date" type="date" class="form-control" name="date" value="{{$tournament->date ?? ''}}" required autocomplete="off">
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="time" class="col-md-4 col-form-label text-md-right">Start Time</label>
+                                            <label for="time" class="format-label col-md-4 col-form-label text-md-right">Start Time</label>
                                             <div class="col-md-6">
                                                 <input id="time" type="time" class="form-control" name="time" value="{{$tournament->time ?? ''}}" required value="08:00" autocomplete="off">
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="team_count" class="col-md-4 col-form-label text-md-right">Number of Teams</label>
+                                            <label for="team_count" class="format-label col-md-4 col-form-label text-md-right">Number of Teams</label>
                                             <div class="col-md-6">
                                                 <select class="form-control" id="team_count" name="team_count">
                                                     <?php for($x = 8; $x == 8; $x++) {?>
@@ -275,7 +275,14 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <div class="col-md-4 text-md-right">Gender</div>
+                                            <label for="courts" class="format-label col-md-4 col-form-label text-md-right">Number Of Courts At Venue</label>
+                                            <div class="col-md-6">
+                                                <input class="form-control" type="number" id="quantity" name="courts" min="1" max="50">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="gender" class="format-label col-md-4 col-form-label text-md-right">Gender</label>
 
                                             <div class="btn-group btn-group-toggle col-md-6" data-toggle="buttons">
                                                 <label for="boys" class="first-button-in-row button-in-row btn btn-secondary {{$tournament->gender === "Boys" ? "active" : ""}}">
@@ -291,7 +298,7 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="level" class="col-md-4 col-form-label text-md-right">Level</label>
+                                            <label for="level" class="format-label col-md-4 col-form-label text-md-right">Level</label>
 
                                             <div class="btn-group btn-group-toggle col-md-6" data-toggle="buttons">
                                                 <label class="button-in-row first-button-in-row btn btn-secondary {{$tournament->level === "Varsity" ? "active" : ""}}">
@@ -313,7 +320,7 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="privacy_setting" class="col-md-4 col-form-label text-md-right">Public or Private</label>
+                                            <label for="privacy_setting" class="format-label col-md-4 col-form-label text-md-right">Public or Private</label>
 
                                             <div class="btn-group btn-group-toggle col-md-6" data-toggle="buttons">
                                                 <label class="button-in-row first-button-in-row btn btn-secondary {{$tournament->privacy_setting === "Public" ? "active" : ""}}">

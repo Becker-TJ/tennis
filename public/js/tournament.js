@@ -10,10 +10,10 @@ $(document).ready( function () {
 
 
     //related to dropdown sorting
-    $('.select2').select2();
-    $('.select2').select2({
-        width: 'resolve' // need to override the changed default
-    });
+    // $('.select2').select2();
+    // $('.select2').select2({
+    //     width: 'resolve' // need to override the changed default
+    // });
 
     $courtSelectMatchScoreInputAssociations = {
         'first-winners-round-one-top-score-input': 'first-first-round-court-select',
@@ -540,11 +540,13 @@ $(document).ready( function () {
     }
 
     //this helps ensure the dropdown in the invite teams modal works
-    $('#mySelect2').select2({
-        dropdownParent: $('#schools_to_invite').select2({
-            dropdownParent: $('#inviteTeamsModal')
-        })
-    });
+    // $('#mySelect2').select2({
+    //     dropdownParent: $('#schools_to_invite').select2({
+    //         dropdownParent: $('#inviteTeamsModal')
+    //     })
+    // });
+
+
 
 
     function activateAddPlayerToTournamentActions() {
@@ -1009,6 +1011,9 @@ $(document).ready( function () {
 
         $('#list_to_invite').html($htmlString);
 
+        //prevents first item in dropdown from locking
+        $("#schools_to_invite").val($("#target option:first").val());
+
         activateRemoveSchoolButton();
 
     });
@@ -1035,10 +1040,6 @@ $(document).ready( function () {
         });
     }
 
-    $('#select2-schools_to_invite-container').click(function() {
-        //this prevents the first option in the dropdown from locking after a selection has been made
-        $("#select2-schools_to_invite-results li:nth-child(2)").attr('aria-selected', false);
-    });
 
     $("#invite_schools_button").click(function(e){
         e.preventDefault();

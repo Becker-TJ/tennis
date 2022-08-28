@@ -73,7 +73,7 @@
 
                             <div hidden id="confirm_school_button" class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
-                                    <button id="switch_button_name" type="submit" class="btn btn-primary col-md-6 offset-md-3"></button>
+                                    <button id="switch_button_name" type="submit" class="submit-button button-in-row btn btn-primary col-md-6 offset-md-3"></button>
                                 </div>
                             </div>
                         </form>

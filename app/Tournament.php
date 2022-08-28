@@ -78,12 +78,16 @@ class Tournament extends Model
             $school = $attendee->getSchool();
             if ($requestedBracket === 'girlsOneDoubles') {
                 $doublesTeam = $school->getGirlsOneDoublesTeam();
+                $rankColumn = 'girls_one_doubles_rank';
             } else if ($requestedBracket === 'girlsTwoDoubles') {
                 $doublesTeam = $school->getGirlsTwoDoublesTeam();
+                $rankColumn = 'girls_two_doubles_rank';
             } else if ($requestedBracket === 'boysOneDoubles') {
                 $doublesTeam = $school->getBoysOneDoublesTeam();
+                $rankColumn = 'boys_one_doubles_rank';
             } else if ($requestedBracket === 'boysTwoDoubles') {
                 $doublesTeam = $school->getBoysTwoDoublesTeam();
+                $rankColumn = 'boys_two_doubles_rank';
             }
 
             $doublesTeams[$attendee->school_id] = $doublesTeam;
@@ -98,13 +102,24 @@ class Tournament extends Model
             $playerTwo = $team[1];
             if($playerOne != null && $playerTwo != null) {
                 $existingDoublesTeam = $doublesTeamClass->findDoublesTeam($playerOne->id, $playerTwo->id);
+                if(!$existingDoublesTeam) {
+                    $newDoublesTeam = new DoublesTeam;
+                    $newDoublesTeam->player_1 = $playerOne->id;
+                    $newDoublesTeam->player_2 = $playerTwo->id;
+                    $newDoublesTeam->boys_one_doubles_rank = 99999;
+                    $newDoublesTeam->boys_two_doubles_rank = 99999;
+                    $newDoublesTeam->girls_one_doubles_rank = 99999;
+                    $newDoublesTeam->girls_two_doubles_rank = 99999;
+                    $newDoublesTeam->saveOrFail();
+                    $existingDoublesTeam = $newDoublesTeam;
+                }
             } else {
                 $existingDoublesTeam = false;
             }
 
             if ($existingDoublesTeam) {
-                $team['rank'] = $existingDoublesTeam->girls_one_doubles_rank;
-                $ranks[] = $existingDoublesTeam->girls_one_doubles_rank;
+                $team['rank'] = $existingDoublesTeam->$rankColumn;
+                $ranks[] = $existingDoublesTeam->$rankColumn;
                 $team['id'] = $existingDoublesTeam->id;
             } else {
                 $team['rank'] = 99999;

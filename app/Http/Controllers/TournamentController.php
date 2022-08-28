@@ -221,7 +221,7 @@ class TournamentController extends Controller
 
 
         $school = School::find($tournament->host_id);
-        $schools = School::all();
+        $schools = School::all()->sortBy('name');
 //        $bracketPositions = BracketPosition::all()->where('tournament_id' ,'=', $tournament->id)->first();
 
         $allAttendees = SchoolAttendee::all()->where('tournament_id', '=', $tournament->id);
@@ -275,6 +275,8 @@ class TournamentController extends Controller
 
         $tournament = Tournament::find($tournamentID);
 
+        $updateBrackets = false;
+
         if(
             $tournament['team_count'] != $data['team_count'] ||
             $tournament['gender'] != ucwords($data['gender']) ||
@@ -288,7 +290,8 @@ class TournamentController extends Controller
         $tournament['address'] = $data['address'];
         $tournament['date'] = $data['date'];
         $tournament['time'] = $data['time'];
-        $tournament['team_count'] = $data['team_count'];
+        $tournament['team_count'] = intval($data['team_count']);
+        $tournament['courts'] = intval($data['courts']);
         $tournament['gender'] = ucwords($data['gender']);
         $tournament['level'] = ucwords($data['level']);
         $tournament['privacy_setting'] = ucwords($data['privacy_setting']);
@@ -315,7 +318,8 @@ class TournamentController extends Controller
         $tournament['address'] = $data['address'];
         $tournament['date'] = $data['date'];
         $tournament['time'] = $data['time'];
-        $tournament['team_count'] = $data['team_count'];
+        $tournament['team_count'] = intval($data['team_count']);
+        $tournament['courts'] = intval($data['courts']);
         $tournament['gender'] = ucwords($data['gender']);
         $tournament['level'] = ucwords($data['level']);
         $tournament['privacy_setting'] = ucwords($data['privacy_setting']);

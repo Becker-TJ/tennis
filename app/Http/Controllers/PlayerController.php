@@ -155,7 +155,7 @@ PlayerController extends Controller
         $data = $_POST;
         $players = Player::all();
         $schoolID = intval($data['school_id']);
-        $lastPosition = $players->where('school_id', $schoolID)->max('position');
+        $lastPosition = $players->where('school_id', $schoolID)->where('gender', '=', $data['gender'])->max('position');
 
         if (! $lastPosition) {
             $lastPosition = 0;

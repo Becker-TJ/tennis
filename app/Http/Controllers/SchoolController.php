@@ -15,7 +15,7 @@ class SchoolController extends Controller
 
     public function showAddSchool()
     {
-        $schools = School::all();
+        $schools = School::all()->sortBy('name');
 
         return view('addschool', [
             'schools' => $schools,
