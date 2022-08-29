@@ -33,15 +33,15 @@
                             <table id="tournament-headings" class="table" style="width:100%">
                                 <tbody>
                                 <tr>
-                                    <td><span class="tournament-sub-title">Date: </span>{{date('m-d-Y', strtotime($tournament->date))}} ({{date('g:ia', strtotime($tournament->time))}} Start)</td>
+                                    <td><span class="format-label tournament-sub-title">Date: </span>{{date('m-d-Y', strtotime($tournament->date))}} ({{date('g:ia', strtotime($tournament->time))}} Start)</td>
 
                                 </tr>
                                 <tr>
-                                    <td><span class="tournament-sub-title">Location: </span>{{$tournament->location_name}}</td>
+                                    <td><span class="format-label tournament-sub-title">Location: </span>{{$tournament->location_name}}</td>
 
                                 </tr>
                                 <tr>
-                                    <td><span class="tournament-sub-title">Address: </span>{{$tournament->address}}</td>
+                                    <td><span class="format-label tournament-sub-title">Address: </span>{{$tournament->address}}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -50,10 +50,10 @@
                             <table id="tournament-headings-second-column" class="table" style="width:100%">
                                 <tbody>
                                 <tr>
-                                    <td><span class="tournament-sub-title">Host: </span><a href="/school/{{$tournament->host_id}}">{{$tournament->getHost()->name}}</a></td>
+                                    <td><span class="format-label tournament-sub-title">Host: </span><a href="/school/{{$tournament->host_id}}">{{$tournament->getHost()->name}}</a></td>
                                 </tr>
                                 <tr>
-                                    <td><span class="tournament-sub-title">Participants: </span>
+                                    <td><span class="format-label tournament-sub-title">Participants: </span>
                                         <?php
                                             $iteration = 1;
                                             $lastIteration = count($acceptedAttendees);
