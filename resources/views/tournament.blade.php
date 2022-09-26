@@ -277,7 +277,7 @@
                                         <div class="form-group row">
                                             <label for="courts" class="format-label col-md-4 col-form-label text-md-right">Number Of Courts At Venue</label>
                                             <div class="col-md-6">
-                                                <input class="form-control" type="number" id="quantity" name="courts" min="1" max="50">
+                                                <input class="form-control" type="number" id="quantity" value="{{$tournament->courts ?? ''}}" name="courts" min="1" max="50">
                                             </div>
                                         </div>
 

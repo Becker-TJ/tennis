@@ -5,17 +5,13 @@ $(document).ready( function () {
     var allSchoolsTable = $('#allSchoolsTable').DataTable( {
         paging:false,
         searching:true,
-        rowReorder: {
-            selector: '.reorder-cell',
-            snapX:true,
-        },
-        bInfo:false,
         "lengthChange": false,
 
         'columnDefs': [
-            { targets: [0,1,2], orderable: true },
             { targets: [2], "className": "center-align"}
-        ]
+        ],
+
+        order: [[0, 'asc']],
 
     } );
 
@@ -107,7 +103,7 @@ $(document).ready( function () {
 
     displaySortIcons();
 
-    $('#tournamentsTable, #playerDisplayTable').on('order.dt', function () {
+    $('#tournamentsTable, #playerDisplayTable, #allSchoolsTable').on('order.dt', function () {
         $('.sort-icon').remove();
         displaySortIcons();
     } );
