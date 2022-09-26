@@ -88,12 +88,12 @@
                         @endif
                         <div class="btn-group">
                             @if($userInviteStatus === 'pending' || $userInviteStatus === 'accepted' && !$hostUser)
-                                <button type="button" id="decline_tournament_invitation_button" class="btn btn-primary col-md-2 {{$userInviteStatus === 'pending' ? 'offset-md-4' : 'offset-md-5'}}" data-toggle="modal">
+                                <button type="button" id="decline_tournament_invitation_button" class="btn button-in-row btn-primary col-md-2 {{$userInviteStatus === 'pending' ? 'offset-md-4' : 'offset-md-5'}}" data-toggle="modal">
                                     {{$userInviteStatus === 'pending' ? 'Decline Invitation' : 'Leave Tournament'}}
                                 </button>
                             @endif
                             @if(($userInviteStatus === "No Invite" && $tournament->privacy_setting === "Public") || $userInviteStatus === "pending")
-                                <button type="button" id="accept_tournament_invitation_button" class="btn btn-primary col-md-2 offset-md-5" data-toggle="modal">
+                                <button type="button" id="accept_tournament_invitation_button" class="btn last-button-in-row button-in-row btn-primary col-md-2 offset-md-5" data-toggle="modal">
                                     {{$tournament->privacy_setting === "Public" && $userInviteStatus === "No Invite" ? 'Join Tournament' : 'Accept Tournament Invitation'}}
                                 </button>
                             @endif
