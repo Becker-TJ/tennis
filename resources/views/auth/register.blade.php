@@ -62,6 +62,14 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="coaches-only-password" class="col-md-4 col-form-label text-md-right">{{ __('Coach Only Passcode') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="coaches-only-password" type="password" class="form-control" name="coaches_only_password" required autocomplete="new-password">
+                            </div>
+                        </div>
+
 {{--                        <div class="form-group row">--}}
 {{--                            <label for="coach-passcode" class="col-md-4 col-form-label text-md-right">{{ __('New Coach Passcode') }}</label>--}}
 

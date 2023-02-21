@@ -58,11 +58,21 @@ class SchoolController extends Controller
         $increment = 0;
 
 
-
+        // ORIGINAL CHECK
         if(Auth::check() && (Auth::user()->school_id === $school->id)) {
             $isCoach = true;
         } else {
             $isCoach = false;
+        }
+
+        // TEMPORARY EDIT, MUST FIX  - JUST USE ABOVE
+        $isCoach = false;
+        if(Auth::check() && (Auth::user()->school_id === $school->id)) {
+            $isCoach = true;
+        } else {
+            if(Auth::check()) {
+                $isCoach = true;
+            }
         }
 
         return view('school', [

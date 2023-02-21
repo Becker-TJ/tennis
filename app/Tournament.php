@@ -235,8 +235,8 @@ class Tournament extends Model
             array_shift($bracketPositionTitles);
             array_shift($bracketPositionTitles);
 
-            $teamCount = $this->team_count;
-            for($increment = 1; $increment <= $teamCount; $increment++) {
+            $maxTeams = 16;
+            for($increment = 1; $increment <= $maxTeams; $increment++) {
                 $seed = $increment.'_seed';
                 $bracketPositions->$seed = 0;
             }

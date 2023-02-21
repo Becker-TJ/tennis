@@ -9,9 +9,6 @@
             <div class="col-md-10">
                 <div class="card">
                     <div id="tournament_id" style="display:none">{{$tournament->id}}</div>
-                    @if(Auth::check())
-                        <div id="user_school_id" style="display:none">{{$user->school_id}}</div>
-                    @endif
                     <div id="selectingDoublesPartner" data-player-name="empty" data-player-id="0" data-value="false" style="display:none"></div>
                     <div id="attendeeStatus" data-status="
                     @if($hostUser){{"host"}}
@@ -29,7 +26,7 @@
                     " data-school-name="
                     @if($userInviteStatus === "accepted"){{$user->getSchool()->name}}@else{{"none"}}@endif" style="display:none"></div>
                     <div class="card-header">{{$tournament->name}}</div>
-{{--                    <button class="btn btn-primary col-md-2 offset-md-5" onclick="location.href='/createtournament/{{$tournament->id}}'" type="button">Edit Tournament</button>--}}
+                    {{--                    <button class="btn btn-primary col-md-2 offset-md-5" onclick="location.href='/createtournament/{{$tournament->id}}'" type="button">Edit Tournament</button>--}}
 
                     <div class="row">
                         <div class="col-lg-6">
@@ -58,18 +55,18 @@
                                 <tr>
                                     <td><span class="format-label tournament-sub-title">Participants: </span>
                                         <?php
-                                            $iteration = 1;
-                                            $lastIteration = count($acceptedAttendees);
-                                            foreach($acceptedAttendees as $attendee) {
-                                                if(is_object($attendee->getSchool())) {
-                                                    echo '<a href="' . '/school/' . $attendee->school_id . '">' . $attendee->getSchool()->name;
-                                                        if($iteration !== $lastIteration) {
-                                                            echo ',  ';
-                                                        }
-                                                        echo '</a>';
-                                                        $iteration++;
+                                        $iteration = 1;
+                                        $lastIteration = count($acceptedAttendees);
+                                        foreach($acceptedAttendees as $attendee) {
+                                            if(is_object($attendee->getSchool())) {
+                                                echo '<a href="' . '/school/' . $attendee->school_id . '">' . $attendee->getSchool()->name;
+                                                if($iteration !== $lastIteration) {
+                                                    echo ',  ';
                                                 }
+                                                echo '</a>';
+                                                $iteration++;
                                             }
+                                        }
                                         ?>
                                     </td>
                                 </tr>
@@ -79,10 +76,10 @@
                     </div>
 
                     @if($hostUser)
-                    <div class="btn-group">
-                        <button type="button" class="btn button-in-row btn-primary col-md-2 offset-md-4" data-toggle="modal" data-target="#editTournamentModal">Edit Tournament</button>
-                        <button type="button" class="btn last-button-in-row button-in-row btn-primary col-md-2 offset-md-5" data-toggle="modal" data-target="#inviteTeamsModal">Invite Teams</button>
-                    </div>
+                        <div class="btn-group">
+                            <button type="button" class="btn button-in-row btn-primary col-md-2 offset-md-4" data-toggle="modal" data-target="#editTournamentModal">Edit Tournament</button>
+                            <button type="button" class="btn last-button-in-row button-in-row btn-primary col-md-2 offset-md-5" data-toggle="modal" data-target="#inviteTeamsModal">Invite Teams</button>
+                        </div>
                     @endif
 
                     @if($userInviteStatus === 'pending' || ($tournament->privacy_setting === "Public" && Auth::check()))
@@ -95,9 +92,9 @@
                                     {{$userInviteStatus === 'pending' ? 'Decline Invitation' : 'Leave Tournament'}}
                                 </button>
                             @endif
-                            @if(($userInviteStatus === "No Invite" && $tournament->privacy_setting === "Public") || $userInviteStatus === "pending" || $userInviteStatus === "declined")
+                            @if(($userInviteStatus === "No Invite" && $tournament->privacy_setting === "Public") || $userInviteStatus === "pending")
                                 <button type="button" id="accept_tournament_invitation_button" class="btn last-button-in-row button-in-row btn-primary col-md-2 offset-md-5" data-toggle="modal">
-                                    {{$tournament->privacy_setting === "Public" && ($userInviteStatus === "No Invite" || $user) ? 'Join Tournament' : 'Accept Tournament Invitation'}}
+                                    {{$tournament->privacy_setting === "Public" && $userInviteStatus === "No Invite" ? 'Join Tournament' : 'Accept Tournament Invitation'}}
                                 </button>
                             @endif
                         </div>
@@ -128,13 +125,11 @@
                         </div>
                     @endif
 
-
-
                     <br>
 
                     <div class="btn-group .btn-girls">
                         <button id="showEditRosterTable" type="button" class="col-md-3 offset-md-3 button-in-row">Show Roster</button>
-                         <select id="rosterSelect" name="rosterSelect" type="button" class="btn col-md-3 offset-md-7 form-control">
+                        <select id="rosterSelect" name="rosterSelect" type="button" class="btn col-md-3 offset-md-7 form-control">
 
                             @foreach($acceptedAttendees as $attendee)
                                 <option value="{{$attendee->school_id}}">{{$attendee->getSchool()->name}}</option>
@@ -145,8 +140,6 @@
                     </div>
 
                     <br>
-
-
 
                     <table id="editRosterTable" class="display table table-striped">
                         <thead>
@@ -172,9 +165,6 @@
                         @endforeach
                         </tbody>
                     </table>
-
-
-
 
                     <table id="seedsTable" class="display table table-striped">
                         <thead>
@@ -269,9 +259,9 @@
                                                         }
                                                     }?>
                                                     >
-                                                        <?php echo $x;?>
+                                                            <?php echo $x;?>
                                                     </option>
-                                                    <?php
+                                                        <?php
                                                     }?>
                                                 </select>
                                             </div>
@@ -376,14 +366,14 @@
                                                 </select>
                                             </div>
                                         </div>
-{{--                                        <div class="form-group">--}}
-{{--                                            <div class="form-group row">--}}
-{{--                                                <label for="list_to_invite" class="col-md-4 col-form-label text-md-right">Invite List</label>--}}
-{{--                                                <div class="col-md-6">--}}
-{{--                                                    <ol id="list_to_invite"></ol>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
+                                        {{--                                        <div class="form-group">--}}
+                                        {{--                                            <div class="form-group row">--}}
+                                        {{--                                                <label for="list_to_invite" class="col-md-4 col-form-label text-md-right">Invite List</label>--}}
+                                        {{--                                                <div class="col-md-6">--}}
+                                        {{--                                                    <ol id="list_to_invite"></ol>--}}
+                                        {{--                                                </div>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        </div>--}}
 
                                         <table id="invitesTable" class="display table table-striped">
                                             <thead>
@@ -443,9 +433,47 @@
             </div>
         </div>
         <br>
+        <style>
+            #bracket {
+                margin-left: auto;
+                margin-right: auto;
+                font-size: 15px;
+                width: 100%;
+                table-layout:fixed;
+                overflow:scroll;
+            }
 
+            #bracket th,
+            #bracket td {
+                text-align: center;
+                padding:0;
+                width:200px;
+            }
+
+            #bracket tr {
+                height:35px;
+            }
+
+            .give-top-border {
+                border-top: 4px solid #333 !important;
+            }
+
+            .give-bottom-border {
+                border-bottom: 4px solid #333;
+            }
+
+            .give-right-border {
+                border-right: 4px solid #333;
+            }
+
+            .give-left-border {
+                border-left: 4px solid #333;
+            }
+        </style>
         <table id="bracket">
             <tr>
+                <th>New</th>
+                <th>New</th>
                 <th>Consolation Champion</th>
                 <th>Consolation Final</th>
                 <th>Consolation Semis</th>
@@ -453,21 +481,15 @@
                 <th>Winner's Semis</th>
                 <th>Winner's Final</th>
                 <th>Champion</th>
+                <th>SIXTEEN TEAMP CHAMPION</th>
             </tr>
             <tr>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="advanceable" id="1-seed"></td>
                 <td></td>
                 <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td id="1-seed-school" class="give-left-border give-top-border give-right-border advanceable"></td>
+                <td class="advanceable" id="1-seed">1 Seed</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -475,20 +497,35 @@
             <tr>
                 <td></td>
                 <td></td>
-                <td id="first-consolation-round-one-top"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td id="1-seed-school" class="give-left-border give-top-border give-right-border advanceable">1 seed school</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td id="first-consolation-round-one-top">First Consolation Round One Top</td>
                 <td class="give-left-border give-right-border">
                     <select id="first-first-round-court-select">
                     </select>
                 </td>
-                <td id="first-winners-round-one-top"></td>
+                <td id="first-winners-round-one-top">First Winners Round One Top</td>
                 <td></td>
                 <td></td>
             </tr>
             <tr>
                 <td></td>
                 <td></td>
+                <td></td>
+                <td></td>
                 <td class="give-top-border give-left-border"><input hidden class="score-input" type="text" id="first-consolation-round-one-top-score-input"></td>
-                <td id="8-seed" class="advanceable give-left-border give-right-border"></td>
+                <td id="16-seed" class="advanceable give-left-border give-right-border">16 seed</td>
                 <td class="give-top-border give-right-border"><input hidden class="score-input" type="text" id="first-winners-round-one-top-score-input"></td>
                 <td></td>
                 <td></td>
@@ -496,22 +533,28 @@
             <tr>
                 <td></td>
                 <td></td>
+                <td></td>
+                <td></td>
                 <td class="give-left-border"></td>
-                <td id="8-seed-school" class="give-top-border advanceable"></td>
+                <td id="16-seed-school" class="give-top-border advanceable">16 seed school</td>
                 <td class="give-right-border"></td>
                 <td></td>
                 <td></td>
             </tr>
             <tr>
                 <td></td>
-                <td id="first-consolation-round-two-top"></td>
+                <td></td>
+                <td></td>
+                <td id="first-consolation-round-two-top">First Consolation Round Two Top</td>
                 <td class="give-left-border"><select id="first-consolation-round-one-court-select"></select></td>
                 <td></td>
                 <td class="give-right-border"><select id="first-winners-round-one-court-select"></select></td>
-                <td id="first-winners-round-two-top"></td>
+                <td id="first-winners-round-two-top">First Winners Round Two Top</td>
                 <td></td>
             </tr>
             <tr>
+                <td></td>
+                <td></td>
                 <td></td>
                 <td class="give-top-border give-left-border"><input hidden class="score-input" type="text" id="first-consolation-round-two-top-score-input"></td>
                 <td class="give-left-border"></td>
@@ -522,24 +565,30 @@
             </tr>
             <tr>
                 <td></td>
+                <td></td>
+                <td></td>
                 <td class="give-left-border"></td>
                 <td class="give-left-border"></td>
-                <td class="advanceable" id="5-seed"></td>
+                <td class="advanceable" id="9-seed">9 seed</td>
                 <td class="give-right-border"></td>
                 <td class="give-right-border"></td>
                 <td></td>
             </tr>
             <tr>
                 <td></td>
-                <td class="give-left-border"></td>
-                <td id="first-consolation-round-one-bottom" class="give-left-border"></td>
-                <td id="5-seed-school" class="give-left-border give-right-border give-top-border advanceable"></td>
-                <td id="first-winners-round-one-bottom" class="give-right-border"></td>
+                <td></td>
+                <td id="first-consolation-round-three-top" class="give-bottom-border">First consolation round three top</td>
+                <td class="give-left-border"><select id="first-consolation-round-two-court-select"></select></td>
+                <td id="first-consolation-round-one-bottom" class="give-left-border">first consolation round one bottom</td>
+                <td id="9-seed-school" class="give-left-border give-right-border give-top-border advanceable">9 seed school</td>
+                <td id="first-winners-round-one-bottom" class="give-right-border">first winners round one bottom</td>
                 <td class="give-right-border"></td>
                 <td></td>
             </tr>
             <tr>
                 <td></td>
+                <td></td>
+                <td class="give-left-border"></td>
                 <td class="give-left-border"></td>
                 <td class="give-top-border"><input hidden class="score-input" type="text" id="first-consolation-round-one-bottom-score-input"></td>
                 <td class="give-left-border give-right-border">
@@ -551,173 +600,545 @@
             </tr>
             <tr>
                 <td></td>
+                <td></td>
+                <td class="give-left-border"></td>
                 <td class="give-left-border"></td>
                 <td></td>
-                <td id="4-seed" class="advanceable give-left-border give-right-border"></td>
+                <td id="8-seed" class="advanceable give-left-border give-right-border">8 seed</td>
                 <td></td>
                 <td class="give-right-border"></td>
                 <td></td>
             </tr>
             <tr>
                 <td></td>
+                <td></td>
+                <td class="give-left-border"></td>
                 <td class="give-left-border"></td>
                 <td></td>
-                <td id="4-seed-school" class="give-top-border advanceable"></td>
+                <td id="8-seed-school" class="give-top-border advanceable">8 seed school</td>
                 <td></td>
                 <td class="give-right-border"></td>
                 <td></td>
             </tr>
             <tr>
-                <td id="consolation-champion"></td>
-                <td class="give-left-border"><select id="first-consolation-round-two-court-select"></select></td>
+                <td></td>
+                <td></td>
+                <td class="give-left-border"></td>
+                <td id="first-consolation-round-two-bottom" class="give-left-border">First Consolation Round Two Bottom</td>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td class="give-right-border">
                     <select id="first-winners-round-two-court-select"></select>
                 </td>
-                <td id="champion"></td>
+                <td id="first-winners-round-three-top">First Winners Round Three Top</td>
             </tr>
             <tr>
-                <td class="give-top-border"><input hidden class="score-input" type="text" id="consolation-champion-score-input"></td>
-                <td class="give-left-border"></td>
+                <td></td>
+                <td></td>
+                <td class="give-left-border"><input hidden class="score-input" type="text" id="consolation-champion-score-input"></td>
+                <td class="give-top-border"></td>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td class="give-right-border"></td>
-                <td class="give-top-border"><input hidden class="score-input" type="text" id="champion-score-input"></td>
+                <td class="give-top-border give-right-border"><input hidden class="score-input" type="text" id="champion-score-input"></td>
             </tr>
             <tr>
                 <td></td>
+                <td></td>
                 <td class="give-left-border"></td>
                 <td></td>
-                <td class="advanceable" id="3-seed"></td>
+                <td></td>
+                <td class="advanceable" id="5-seed">5 seed</td>
                 <td></td>
                 <td class="give-right-border"></td>
-                <td></td>
+                <td class="give-right-border"></td>
             </tr>
             <tr>
                 <td></td>
-                <td class="give-left-border"></td>
+                <td id="first-consolation-round-four-top">First Consolation Round Four Top</td>
+                <td class="give-left-border"><select id="first-consolation-round-three-court-select"></select></td>
                 <td></td>
-                <td id="3-seed-school" class="give-left-border give-top-border give-right-border advanceable"></td>
+                <td></td>
+                <td id="5-seed-school" class="give-left-border give-top-border give-right-border advanceable">5 seed school</td>
                 <td></td>
                 <td class="give-right-border"></td>
-                <td></td>
+                <td class="give-right-border"></td>
             </tr>
             <tr>
                 <td></td>
+                <td class="give-top-border give-left-border"></td>
                 <td class="give-left-border"></td>
-                <td id="second-consolation-round-one-top"></td>
+                <td></td>
+                <td id="second-consolation-round-one-top">second consolation round one top</td>
                 <td class="give-left-border give-right-border">
                     <select id="third-first-round-court-select"></select>
                 </td>
-                <td id="second-winners-round-one-top"></td>
+                <td id="second-winners-round-one-top">second winners round one top</td>
                 <td class="give-right-border"></td>
-                <td></td>
+                <td class="give-right-border"></td>
             </tr>
             <tr>
                 <td></td>
                 <td class="give-left-border"></td>
+                <td class="give-left-border"></td>
+                <td></td>
                 <td class="give-top-border give-left-border"><input hidden class="score-input" type="text" id="second-consolation-round-one-top-score-input"></td>
-                <td id="6-seed" class="advanceable give-left-border give-right-border">6 seed</td>
+                <td id="12-seed" class="advanceable give-left-border give-right-border">12 seed</td>
                 <td class="give-top-border give-right-border"><input hidden class="score-input" type="text" id="second-winners-round-one-top-score-input"></td>
                 <td class="give-right-border"></td>
-                <td></td>
+                <td class="give-right-border"></td>
             </tr>
             <tr>
                 <td></td>
                 <td class="give-left-border"></td>
                 <td class="give-left-border"></td>
-                <td id="6-seed-school" class="give-top-border advanceable"></td>
-                <td class="give-right-border"></td>
-                <td class="give-right-border"></td>
                 <td></td>
+                <td class="give-left-border"></td>
+                <td id="12-seed-school" class="give-top-border advanceable">12 seed school</td>
+                <td class="give-right-border"></td>
+                <td class="give-right-border"></td>
+                <td class="give-right-border"></td>
             </tr>
             <tr>
                 <td></td>
-                <td id="first-consolation-round-two-bottom" class="give-left-border"></td>
+                <td class="give-left-border"></td>
+                <td class="give-left-border"></td>
+                <td id="second-consolation-round-two-top">Second Consolation Round Two Top</td>
                 <td class="give-left-border"><select id="second-consolation-round-one-court-select"></select></td>
                 <td></td>
                 <td class="give-right-border">
                     <select id="second-winners-round-one-court-select"></select>
                 </td>
-                <td id="first-winners-round-two-bottom" class="give-right-border"></td>
-                <td></td>
+                <td id="first-winners-round-two-bottom" class="give-right-border">First Winners Round Two Bottom</td>
+                <td class="give-right-border"></td>
             </tr>
             <tr>
                 <td></td>
-                <td class="give-top-border"><input hidden class="score-input" type="text" id="first-consolation-round-two-bottom-score-input"></td>
+                <td class="give-left-border"></td>
+                <td class="give-left-border"></td>
+                <td class="give-top-border give-left-border"><input hidden class="score-input" type="text" id="first-consolation-round-two-bottom-score-input"></td>
                 <td class="give-left-border"></td>
                 <td></td>
                 <td class="give-right-border"></td>
                 <td class="give-top-border"><input hidden class="score-input" type="text" id="first-winners-round-two-bottom-score-input"></td>
-                <td></td>
+                <td class="give-right-border"></td>
             </tr>
             <tr>
-                <td></td>
                 <td></td>
                 <td class="give-left-border"></td>
-                <td class="advanceable" id="7-seed">7 seed</td>
+                <td class="give-left-border"></td>
+                <td class="give-left-border"></td>
+                <td class="give-left-border"></td>
+                <td class="advanceable" id="13-seed">13 seed</td>
                 <td class="give-right-border"></td>
                 <td></td>
-                <td></td>
+                <td class="give-right-border"></td>
             </tr>
             <tr>
                 <td></td>
+                <td class="give-left-border"></td>
+                <td id="first-consolation-round-three-bottom" class="give-left-border give-bottom-border">First consolation round three bottom</td>
+                <td class="give-left-border"><select id="second-consolation-round-two-court-select"></select></td>
+                <td id="second-consolation-round-one-bottom" class="give-left-border">second consolation round one bottom</td>
+                <td id="13-seed-school" class="give-top-border give-right-border give-left-border advanceable">13 seed school</td>
+                <td id="second-winners-round-one-bottom" class="give-right-border">second winners round one bottom</td>
                 <td></td>
-                <td id="second-consolation-round-one-bottom" class="give-left-border"></td>
-                <td id="7-seed-school" class="give-top-border give-right-border give-left-border advanceable"></td>
-                <td id="second-winners-round-one-bottom" class="give-right-border"></td>
-                <td></td>
-                <td></td>
+                <td class="give-right-border"></td>
             </tr>
             <tr>
                 <td></td>
+                <td class="give-left-border"></td>
                 <td></td>
+                <td class="give-left-border"></td>
                 <td class="give-top-border"><input hidden class="score-input" type="text" id="second-consolation-round-one-bottom-score-input"></td>
                 <td class="give-left-border give-right-border">
                     <select id="fourth-first-round-court-select"></select>
                 </td>
                 <td class="give-top-border"><input hidden class="score-input" type="text" id="second-winners-round-one-bottom-score-input"></td>
                 <td></td>
-                <td></td>
+                <td class="give-right-border"></td>
             </tr>
             <tr>
                 <td></td>
+                <td class="give-left-border"></td>
+                <td></td>
+                <td class="give-left-border"></td>
+                <td></td>
+                <td id="4-seed" class="advanceable give-left-border give-right-border">4 seed</td>
                 <td></td>
                 <td></td>
-                <td id="2-seed" class="advanceable give-left-border give-right-border"></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="give-right-border"></td>
             </tr>
             <tr>
                 <td></td>
+                <td class="give-left-border"></td>
+                <td></td>
+                <td class="give-left-border"></td>
+                <td></td>
+                <td id="4-seed-school" class="give-top-border advanceable">4 seed school</td>
                 <td></td>
                 <td></td>
-                <td id="2-seed-school" class="give-top-border advanceable"></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="give-right-border"></td>
             </tr>
             <tr>
                 <td></td>
+                <td class="give-left-border"></td>
+                <td></td>
+                <td id="second-consolation-round-two-bottom" class="give-left-border give-bottom-border">Second Consolation Round Two Bottom</td>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
-                <td></td>
+                <td class="give-right-border"><select id="first-winners-round-three-court-select"></select></td>
+                <td id="champion">champion</td>
             </tr>
+            <tr>
+                <td></td>
+                <td class="give-left-border"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="give-right-border"></td>
+                <td class="give-top-border"></td>
+            </tr>
+{{--            NEW BRACKET--}}
+                <tr>
+                    <td></td>
+                    <td class="give-left-border"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="advanceable" id="3-seed">3 Seed</td>
+                    <td></td>
+                    <td></td>
+                    <td class="give-right-border"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="give-left-border"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td id="3-seed-school" class="give-left-border give-top-border give-right-border advanceable">3 seed school</td>
+                    <td></td>
+                    <td></td>
+                    <td class="give-right-border"></td>
+                </tr>
+                <tr>
+                    <td id="fifth-place">Fifth Place</td>
+                    <td class="give-left-border"><select id="first-consolation-round-four-court-select"></select></td>
+                    <td></td>
+                    <td></td>
+                    <td id="third-consolation-round-one-top">Third Consolation Round One Top</td>
+                    <td class="give-left-border give-right-border">
+                        <select id="fifth-first-round-court-select">
+                        </select>
+                    </td>
+                    <td id="third-winners-round-one-top">Third Winners Round One Top</td>
+                    <td></td>
+                    <td class="give-right-border"></td>
+                </tr>
+                <tr>
+                    <td class="give-top-border"></td>
+                    <td class="give-left-border"></td>
+                    <td></td>
+                    <td></td>
+                    <td class="give-top-border give-left-border"><input hidden class="score-input" type="text" id="first-consolation-round-one-top-score-input"></td>
+                    <td id="14-seed" class="advanceable give-left-border give-right-border">14 seed</td>
+                    <td class="give-top-border give-right-border"><input hidden class="score-input" type="text" id="first-winners-round-one-top-score-input"></td>
+                    <td></td>
+                    <td class="give-right-border"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="give-left-border"></td>
+                    <td></td>
+                    <td></td>
+                    <td class="give-left-border"></td>
+                    <td id="14-seed-school" class="give-top-border advanceable">14 seed school</td>
+                    <td class="give-right-border"></td>
+                    <td></td>
+                    <td class="give-right-border"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="give-left-border"></td>
+                    <td></td>
+                    <td id="third-consolation-round-two-top">Third Consolation Round Two Top</td>
+                    <td class="give-left-border"><select id="third-consolation-round-one-court-select"></select></td>
+                    <td></td>
+                    <td class="give-right-border"><select id="third-winners-round-one-court-select"></select></td>
+                    <td id="second-winners-round-two-top">Second Winners Round Two Top</td>
+                    <td class="give-right-border"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="give-left-border"></td>
+                    <td></td>
+                    <td class="give-top-border give-left-border"><input hidden class="score-input" type="text" id="first-consolation-round-two-top-score-input"></td>
+                    <td class="give-left-border"></td>
+                    <td></td>
+                    <td class="give-right-border"></td>
+                    <td class="give-top-border give-right-border"><input hidden class="score-input" type="text" id="first-winners-round-two-top-score-input"></td>
+                    <td class="give-right-border"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="give-left-border"></td>
+                    <td></td>
+                    <td class="give-left-border"></td>
+                    <td class="give-left-border"></td>
+                    <td class="advanceable" id="11-seed">11 seed</td>
+                    <td class="give-right-border"></td>
+                    <td class="give-right-border"></td>
+                    <td class="give-right-border"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="give-left-border"></td>
+                    <td id="second-consolation-round-three-top" class="give-bottom-border">Second Consolation Round Three Top</td>
+                    <td class="give-left-border"><select id="third-consolation-round-two-court-select"></select></td>
+                    <td id="third-consolation-round-one-bottom" class="give-left-border">Third consolation round one bottom</td>
+                    <td id="11-seed-school" class="give-left-border give-right-border give-top-border advanceable">11 seed school</td>
+                    <td id="third-winners-round-one-bottom" class="give-right-border">Third winners round one bottom</td>
+                    <td class="give-right-border"></td>
+                    <td class="give-right-border"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="give-left-border"></td>
+                    <td class="give-left-border"></td>
+                    <td class="give-left-border"></td>
+                    <td class="give-top-border"><input hidden class="score-input" type="text" id="first-consolation-round-one-bottom-score-input"></td>
+                    <td class="give-left-border give-right-border">
+                        <select id="sixth-first-round-court-select"></select>
+                    </td>
+                    <td class="give-top-border"><input hidden class="score-input" type="text" id="first-winners-round-one-bottom-score-input"></td>
+                    <td class="give-right-border"></td>
+                    <td class="give-right-border"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="give-left-border"></td>
+                    <td class="give-left-border"></td>
+                    <td class="give-left-border"></td>
+                    <td></td>
+                    <td id="6-seed" class="advanceable give-left-border give-right-border">6 seed</td>
+                    <td></td>
+                    <td class="give-right-border"></td>
+                    <td class="give-right-border"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="give-left-border"></td>
+                    <td class="give-left-border"></td>
+                    <td class="give-left-border"></td>
+                    <td></td>
+                    <td id="6-seed-school" class="give-top-border advanceable">6 seed school</td>
+                    <td></td>
+                    <td class="give-right-border"></td>
+                    <td class="give-right-border"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="give-left-border"></td>
+                    <td class="give-left-border" id="consolation-champion"></td>
+                    <td id="third-consolation-round-two-bottom" class="give-left-border give-bottom-border">Third Consolation Round Two Bottom</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="give-right-border">
+                        <select id="second-winners-round-two-court-select"></select>
+                    </td>
+                    <td id="first-winners-round-three-bottom" class="give-right-border">First Winners Round Three Bottom</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="give-left-border"></td>
+                    <td class="give-left-border"><input hidden class="score-input" type="text" id="consolation-champion-score-input"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="give-right-border"></td>
+                    <td class="give-top-border"><input hidden class="score-input" type="text" id="champion-score-input"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="give-left-border"></td>
+                    <td class="give-left-border"></td>
+                    <td></td>
+                    <td></td>
+                    <td class="advanceable" id="7-seed">7 seed</td>
+                    <td></td>
+                    <td class="give-right-border"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="give-left-border"></td>
+                    <td class="give-left-border"></td>
+                    <td></td>
+                    <td></td>
+                    <td id="7-seed-school" class="give-left-border give-top-border give-right-border advanceable">7 seed school</td>
+                    <td></td>
+                    <td class="give-right-border"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td id="first-consolation-round-four-bottom" class="give-left-border give-bottom-border">First Consolation Round Four Bottom</td>
+                    <td class="give-left-border"><select id="second-consolation-round-three-court-select"></select></td>
+                    <td></td>
+                    <td id="fourth-consolation-round-one-top">Fourth consolation round one top</td>
+                    <td class="give-left-border give-right-border">
+                        <select id="seventh-first-round-court-select"></select>
+                    </td>
+                    <td id="fourth-winners-round-one-top">Fourth winners round one top</td>
+                    <td class="give-right-border"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td class="give-left-border"></td>
+                    <td></td>
+                    <td class="give-top-border give-left-border"><input hidden class="score-input" type="text" id="second-consolation-round-one-top-score-input"></td>
+                    <td id="10-seed" class="advanceable give-left-border give-right-border">10 seed</td>
+                    <td class="give-top-border give-right-border"><input hidden class="score-input" type="text" id="second-winners-round-one-top-score-input"></td>
+                    <td class="give-right-border"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td class="give-left-border"></td>
+                    <td></td>
+                    <td class="give-left-border"></td>
+                    <td id="10-seed-school" class="give-top-border advanceable">10 seed school</td>
+                    <td class="give-right-border"></td>
+                    <td class="give-right-border"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td class="give-left-border"></td>
+                    <td id="fourth-consolation-round-two-top">Fourth Consolation Round Two Top</td>
+                    <td class="give-left-border"><select id="fourth-consolation-round-one-court-select"></select></td>
+                    <td></td>
+                    <td class="give-right-border">
+                        <select id="fourth-winners-round-one-court-select"></select>
+                    </td>
+                    <td id="second-winners-round-two-bottom" class="give-right-border">Second Winners Round Two Bottom</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td class="give-left-border"></td>
+                    <td class="give-top-border give-left-border"><input hidden class="score-input" type="text" id="first-consolation-round-two-bottom-score-input"></td>
+                    <td class="give-left-border"></td>
+                    <td></td>
+                    <td class="give-right-border"></td>
+                    <td class="give-top-border"><input hidden class="score-input" type="text" id="first-winners-round-two-bottom-score-input"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td class="give-left-border"></td>
+                    <td class="give-left-border"></td>
+                    <td class="give-left-border"></td>
+                    <td class="advanceable" id="15-seed">15 seed</td>
+                    <td class="give-right-border"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td id="second-consolation-round-three-bottom" class="give-left-border give-bottom-border">Second Consolation Round Three Bottom</td>
+                    <td class="give-left-border"><select id="fourth-consolation-round-two-court-select"></select></td>
+                    <td id="fourth-consolation-round-one-bottom" class="give-left-border">Fourth consolation round one bottom</td>
+                    <td id="15-seed-school" class="give-top-border give-right-border give-left-border advanceable">15 seed school</td>
+                    <td id="fourth-winners-round-one-bottom" class="give-right-border">Fourth winners round one bottom</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="give-left-border"></td>
+                    <td class="give-top-border"><input hidden class="score-input" type="text" id="second-consolation-round-one-bottom-score-input"></td>
+                    <td class="give-left-border give-right-border">
+                        <select id="eighth-first-round-court-select"></select>
+                    </td>
+                    <td class="give-top-border"><input hidden class="score-input" type="text" id="second-winners-round-one-bottom-score-input"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="give-left-border"></td>
+                    <td></td>
+                    <td id="2-seed" class="advanceable give-left-border give-right-border">2 seed</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="give-left-border"></td>
+                    <td></td>
+                    <td id="2-seed-school" class="give-top-border advanceable">2 seed school</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td id="fourth-consolation-round-two-bottom" class="give-left-border give-bottom-border">Fourth Consolation Round Two Bottom</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+            </table>
+    </div>
             <table id="bracket">
                 <tr>
                     <th></th>
-                    <th>Seventh Place</th>
                     <th></th>
+                    <th>Playoff for 13th</th>
                     <th></th>
+                    <th>Playoff for 9th</th>
                     <th></th>
-                    <th>Third Place</th>
                     <th></th>
                 </tr>
                 <tr>
@@ -731,11 +1152,11 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td id="first-consolation-lower-bracket-round-one-top"></td>
+                    <td id="first-consolation-lower-bracket-round-one-top">First Consolation Lower Bracket Round One Top</td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td id="first-winners-lower-bracket-round-one-top"></td>
+                    <td id="first-winners-lower-bracket-round-one-top">First Winners Lower Bracket Round One Top</td>
                     <td></td>
                 </tr>
                 <tr>
@@ -748,7 +1169,7 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td id="seventh-place"></td>
+                    <td id="seventh-place">Seventh Place</td>
                     <td class="give-left-border">
                         <select id="seventh-place-court-select"></select>
                     </td>
@@ -758,7 +1179,7 @@
                     <td class="give-right-border">
                         <select id="third-place-court-select"></select>
                     </td>
-                    <td id="third-place"></td>
+                    <td id="third-place">Third Place</td>
                 </tr>
                 <tr>
                     <td class="give-top-border"><input hidden class="score-input" type="text" id="seventh-place-score-input"></td>
@@ -771,11 +1192,11 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td id="first-consolation-lower-bracket-round-one-bottom" class="give-left-border"></td>
+                    <td id="first-consolation-lower-bracket-round-one-bottom" class="give-left-border">First Consolation Lower Bracket Round One Bottom</td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td id="first-winners-lower-bracket-round-one-bottom" class="give-right-border"></td>
+                    <td id="first-winners-lower-bracket-round-one-bottom" class="give-right-border">First Winners Lower Bracket Round One Bottom</td>
                     <td></td>
                 </tr>
                 <tr>
@@ -789,7 +1210,7 @@
                 </tr>
             </table>
         </table>
-    </div>
+
 
 @endsection
 @section('javascript')

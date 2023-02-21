@@ -139,7 +139,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="button-in-row cancel-button btn btn-secondary col-md-2" data-dismiss="modal">Close</button>
-                    <button id="invite_schools_button" type="button" class="button-in-row submit-button btn btn-primary col-md-2">Send / Save</button>
                 </div>
             </div>
         </div>

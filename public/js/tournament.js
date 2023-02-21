@@ -662,6 +662,7 @@ $(document).ready( function () {
                     showSeedTableActions();
                 }
                 $courtCount = data.courtCount;
+                $teamCount = data.teamCount;
 
                 $bracketPositions = data.bracketPositions;
                 $nonAdvanceablePositions = ['champion', 'consolation-champion', 'third-place', 'seventh-place'];
@@ -719,7 +720,7 @@ $(document).ready( function () {
                             }
                         }
 
-                        if(!$isASeed) {
+                        if(!$isASeed || $teamCount < $increment) {
                             continue;
                         }
 
@@ -737,8 +738,6 @@ $(document).ready( function () {
                             }).draw();
                             continue;
                         }
-
-
 
                         $positionConference = $position + '_conference';
                         $positionID = $position + '_id';
@@ -1082,8 +1081,11 @@ $(document).ready( function () {
                     }
                     inviteStatus = $(this).find('td:nth-child(2)').text();
                     if(inviteStatus === 'Not Sent') {
-                        $(this).find('td:nth-child(2)').text('Pending');
-                        $(this).addClass('pending-invite');
+                        // $(this).find('td:nth-child(2)').text('Pending');
+                        // $(this).addClass('pending-invite');
+                        //TEMPORARY EDIT, MUST FIX
+                        $(this).find('td:nth-child(2)').text('Accepted');
+                        $(this).addClass('accepted-invite');
                     }
                 });
                 alert('Invites Sent and Changes Saved.')
@@ -1097,7 +1099,7 @@ $(document).ready( function () {
         e.preventDefault();
 
         var tournament_id = $('#tournament_id').html();
-        var user_school_id = 80;
+        var user_school_id = $('#user_school_id').html();;
 
         $.ajax({
             type:'POST',

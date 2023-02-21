@@ -407,7 +407,9 @@ class AjaxController extends Controller
             $school_id = intval($ID);
             $invite_status = $inviteStatuses[$key];
             if($invite_status === 'not sent') {
-                $invite_status = 'pending';
+//                $invite_status = 'pending';
+                //TEMPORARY EDIT, MUST FIX
+                $invite_status = 'accepted';
             }
 
             $attendee = $attendees->where('school_id', '=', $school_id)->first();
@@ -902,7 +904,8 @@ class AjaxController extends Controller
                 'bracketPositions' => $bracketPositions,
                 'matches' => $matches,
                 'courtCount' => $tournament->courts,
-                'courtsInUse' => $courtsInUse
+                'courtsInUse' => $courtsInUse,
+                'teamCount' => $tournament->team_count
             ]);
 
         } else {
@@ -980,7 +983,8 @@ class AjaxController extends Controller
                 'bracketPositions' => $bracketPositions,
                 'matches' => $matches,
                 'courtCount' => $tournament->courts,
-                'courtsInUse' => $courtsInUse
+                'courtsInUse' => $courtsInUse,
+                'teamCount' => $tournament->team_count
             ]);
         }
     }

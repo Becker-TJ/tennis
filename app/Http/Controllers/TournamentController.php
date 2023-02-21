@@ -17,6 +17,7 @@ class TournamentController extends Controller
 {
     public function __construct()
     {
+        $this->bracketViewsByTeamCount = [8 => 'tournament', 16 => 'sixteen'];
 //        $this->middleware('check.school');
     }
 
@@ -251,8 +252,7 @@ class TournamentController extends Controller
             ->sortBy('girls_one_singles_rank');
 
 
-
-        return view('tournament', [
+        return view($this->bracketViewsByTeamCount[$tournament->team_count], [
             'tournament' => $tournament,
             'school' => $school,
             'allAttendees' => $allAttendees,
@@ -266,7 +266,9 @@ class TournamentController extends Controller
             'userInviteStatus' => $userInviteStatus,
             'user' => $user
         ]);
+
     }
+
 
     public function edit(Request $request)
     {
