@@ -17,6 +17,39 @@ use Auth;
 
 class AjaxController extends Controller
 {
+    //screwed the column names up in the table and cannot rename them through a migration midseason due to composer package issue
+    public array $columnsWithHyphens = [
+        'third-winners-round-one-top',
+        'third-winners-round-one-bottom',
+        'fourth-winners-round-one-top',
+        'fourth-winners-round-one-bottom',
+        'second-winners-round-two-top',
+        'second-winners-round-two-bottom',
+        'first-winners-round-three-top',
+        'first-winners-round-three-bottom',
+        'third-consolation-round-one-top',
+        'third-consolation-round-one-bottom',
+        'fourth-consolation-round-one-top',
+        'fourth-consolation-round-one-bottom',
+        'second-consolation-round-two-top',
+        'second-consolation-round-two-bottom',
+        'third-consolation-round-two-top',
+        'third-consolation-round-two-bottom',
+        'fourth-consolation-round-two-top',
+        'fourth-consolation-round-two-bottom',
+        'first-consolation-round-three-top',
+        'first-consolation-round-three-bottom',
+        'second-consolation-round-three-top',
+        'second-consolation-round-three-bottom',
+        'first-consolation-round-four-top',
+        'first-consolation-round-four-bottom',
+        'fifth-place',
+        'seventh-place'
+    ];
+
+
+
+
     public function savePlayerPositions(Request $request)
     {
         $input = $request->all();
@@ -564,11 +597,20 @@ class AjaxController extends Controller
         $loser = intval($scoreData['loser']);
         $winnerBracketPosition = $scoreData['winnerBracketPosition'];
         $loserBracketPosition = $scoreData['loserBracketPosition'];
-        $newWinnerBracketPosition = str_replace('-', '_', $scoreData['newWinnerBracketPosition']);
+        if(!in_array($scoreData['newWinnerBracketPosition'], $this->columnsWithHyphens)) {
+            $newWinnerBracketPosition = str_replace('-', '_', $scoreData['newWinnerBracketPosition']);
+        } else {
+            $newWinnerBracketPosition = $scoreData['newWinnerBracketPosition'];
+        }
 
         $bracketPositions->$newWinnerBracketPosition = $winner;
         if (isset($scoreData['newLoserBracketPosition']) && $scoreData['newLoserBracketPosition'] != 'skip') {
-            $newLoserBracketPosition = str_replace('-', '_', $scoreData['newLoserBracketPosition']);
+            if(!in_array($scoreData['newLoserBracketPosition'], $this->columnsWithHyphens)) {
+                $newLoserBracketPosition = str_replace('-', '_', $scoreData['newWinnerBracketPosition']);
+            } else {
+                $newLoserBracketPosition = $scoreData['newLoserBracketPosition'];
+            }
+
             $bracketPositions->$newLoserBracketPosition = $loser;
         }
         $bracketPositions->saveOrFail();

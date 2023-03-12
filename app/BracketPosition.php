@@ -29,7 +29,7 @@ class BracketPosition extends Model
         'third_place',
         'first_consolation_lower_bracket_round_one_top',
         'first_consolation_lower_bracket_round_one_bottom',
-        'seventh_place',
+        'seventh-place',
     ];
 
     public $matchupAssociations = [
