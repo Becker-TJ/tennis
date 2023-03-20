@@ -606,7 +606,7 @@ class AjaxController extends Controller
         $bracketPositions->$newWinnerBracketPosition = $winner;
         if (isset($scoreData['newLoserBracketPosition']) && $scoreData['newLoserBracketPosition'] != 'skip') {
             if(!in_array($scoreData['newLoserBracketPosition'], $this->columnsWithHyphens)) {
-                $newLoserBracketPosition = str_replace('-', '_', $scoreData['newWinnerBracketPosition']);
+                $newLoserBracketPosition = str_replace('-', '_', $scoreData['newLoserBracketPosition']);
             } else {
                 $newLoserBracketPosition = $scoreData['newLoserBracketPosition'];
             }
