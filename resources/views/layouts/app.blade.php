@@ -37,7 +37,7 @@
 {{--    <link href="/bower_components/font-awesome/css/font-awesome.css"  rel="stylesheet">--}}
 {{--    <link href="/bower_components/datatables.net-plugins/integration/font-awesome/dataTables.fontAwesome.css"  rel="stylesheet">--}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> {{-- icons --}}
     <link href="https://cdn.datatables.net/rowreorder/1.2.6/css/rowReorder.dataTables.min.css" rel="stylesheet"> {{--for styling dragging table rows --}}
 
     <link href="{{ asset('css/tennis.css') }}" rel="stylesheet">

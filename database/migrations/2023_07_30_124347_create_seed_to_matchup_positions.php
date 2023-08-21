@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSchoolAttendeesTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateSchoolAttendeesTable extends Migration
      */
     public function up()
     {
-        Schema::create('school_attendees', function (Blueprint $table) {
+        Schema::create('seed_to_matchup_positions', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
-            $table->unsignedInteger('school_id');
-            $table->unsignedInteger('tournament_id');
-            $table->string('invite_status')->default('accepted');
+            $table->string('bracket_type');
+            $table->string('seed');
+            $table->string('matchup_position');
         });
     }
 
@@ -29,6 +28,6 @@ class CreateSchoolAttendeesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('school_attendees');
+        Schema::dropIfExists('seed_to_matchup_positions');
     }
-}
+};

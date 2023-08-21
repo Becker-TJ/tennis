@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\BracketPosition;
 use App\DoublesMatch;
+use App\BracketPathway;
 use App\Player;
+use App\Result;
 use App\School;
 use App\SchoolAttendee;
 use App\SinglesMatch;
@@ -220,7 +222,6 @@ class TournamentController extends Controller
             }
         }
 
-
         $school = School::find($tournament->host_id);
         $schools = School::all()->sortBy('name');
 //        $bracketPositions = BracketPosition::all()->where('tournament_id' ,'=', $tournament->id)->first();
@@ -251,8 +252,9 @@ class TournamentController extends Controller
             ->whereIn('school_id', $attendeeSchoolIDs)
             ->sortBy('girls_one_singles_rank');
 
-
-        return view($this->bracketViewsByTeamCount[$tournament->team_count], [
+//        $this->bracketViewsByTeamCount[$tournament->team_count]
+        //TEMPORARY FIX
+        return view('tournament', [
             'tournament' => $tournament,
             'school' => $school,
             'allAttendees' => $allAttendees,
@@ -268,7 +270,6 @@ class TournamentController extends Controller
         ]);
 
     }
-
 
     public function edit(Request $request)
     {
@@ -339,5 +340,32 @@ class TournamentController extends Controller
         $tournament->updateBracketPositionsWithAllAttendees();
 
         return redirect()->route('tournament', ['tournament' => $tournament->id]);
+    }
+
+    public function saveResult(Request $request)
+    {
+        $scoreData = $request->all();
+        $tournamentID = intval($scoreData['tournament_id']);
+        $bracket = $scoreData['bracket'];
+        $matchupNumber = intval($scoreData['matchupNumber']);
+
+        $result = Result::all()
+            ->where('tournament_id', '=', $tournamentID)
+            ->where('bracket', '=', $bracket)
+            ->where('matchup', '=', $matchupNumber)
+            ->first();
+        if ($result == null) {
+            $result = new Result;
+        }
+
+        $result->bracket = $bracket;
+        $result->matchup = $matchupNumber;
+        $result->winner = intval($scoreData['winningPlayer']['id']);
+        $result->loser = intval($scoreData['losingPlayer']['id']);
+        $result->tournament_id = $tournamentID;
+        $result->score = $scoreData['score'];
+        $result->saveOrFail();
+
+        return response()->json(['success'=>'Saved Score.']);
     }
 }

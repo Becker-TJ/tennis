@@ -62,7 +62,7 @@ Route::get('/message', function () {
 Route::post('/getmsg', [AjaxController::class, 'index']);
 
 Route::post('/savePlayerPositions', [AjaxController::class, 'savePlayerPositions']);
-Route::post('/saveCourtSelection', [AjaxController::class, 'saveCourtSelection']);
+Route::post('/saveCourt', [AjaxController::class, 'saveCourt']);
 Route::post('/inviteSchools', [AjaxController::class, 'inviteSchools']);
 Route::post('/removeSeededPlayer', [AjaxController::class, 'removeSeededPlayer']);
 Route::post('/addNewSeededPlayer', [AjaxController::class, 'addNewSeededPlayer']);
@@ -76,25 +76,9 @@ Route::post('/getDoublesStats', [AjaxController::class, 'getDoublesStats']);
 Route::post('/getBracketData', [AjaxController::class, 'getBracketData']);
 Route::post('/getRosterForTournament', [AjaxController::class, 'getRosterForTournament']);
 Route::post('/saveScore', [AjaxController::class, 'saveScore']);
-Route::post('/saveMatch', [AjaxController::class, 'saveMatch']);
+Route::post('/saveResult', [TournamentController::class, 'saveResult']);
 Route::post('/saveBasicMatch', [AjaxController::class, 'saveBasicMatch']);
-Route::post('/compareCoachPasscode', [AjaxController::class, 'compareCoachPasscode']);
 Route::post('/checkIfCoach', [AjaxController::class, 'checkIfCoach']);
-
-//Route::get('/posts/{post}', function ($post) {
-//    $posts = [
-//        'my-first-post' => 'Hello, this is my first blog post!',
-//        'my-second-post' => 'Now I am getting the hang of this blogging thing.'
-//    ];
-//
-//    if(! array_key_exists($post, $posts)) {
-//        abort(404, 'Sorry that post was not found.');
-//    }
-//
-//    return view('post', [
-//        'post' => $post[$post]
-//    ]);
-//});
 
 Auth::routes();
 
